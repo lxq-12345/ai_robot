@@ -14,6 +14,8 @@ setup(
             "share/ai_robot_sim/config",
             [
                 "../../config/sim_base.yaml",
+                "../../config/ekf_sim.yaml",
+                "../../config/s1_m4_dependency_status.yaml",
                 "../../config/sim_sensor_diagnostics.yaml",
                 "../../config/sim_sensors.yaml",
             ],
@@ -28,8 +30,10 @@ setup(
     license="Apache-2.0",
     entry_points={
         "console_scripts": [
+            "camera_image_monitor = ai_robot_sim.camera_image_monitor:main",
             "cmd_vel_guard = ai_robot_sim.cmd_vel_guard:main",
             "manual_motion_demo = ai_robot_sim.manual_motion_demo:main",
+            "scan_obstacle_monitor = ai_robot_sim.scan_obstacle_monitor:main",
         ],
     },
 )
