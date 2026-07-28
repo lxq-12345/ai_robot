@@ -34,6 +34,7 @@ setup(
     license="Apache-2.0",
     entry_points={
         "console_scripts": [
+            "capability_task_manager = ai_robot_sim.capability_task_manager:main",
             "camera_image_monitor = ai_robot_sim.camera_image_monitor:main",
             "cmd_vel_guard = ai_robot_sim.cmd_vel_guard:main",
             "manual_motion_demo = ai_robot_sim.manual_motion_demo:main",

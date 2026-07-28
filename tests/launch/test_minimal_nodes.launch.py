@@ -36,3 +36,16 @@ class TestMinimalNodes(unittest.TestCase):
         proc_output.assertWaitFor(
             "ai_robot_py_example:ready", process=python_node, timeout=10
         )
+
+
+@launch_testing.post_shutdown_test()
+class TestMinimalNodesShutdown(unittest.TestCase):
+    def test_nodes_exit_cleanly(
+        self, proc_info, cpp_node, python_node
+    ):
+        launch_testing.asserts.assertExitCodes(
+            proc_info, process=cpp_node
+        )
+        launch_testing.asserts.assertExitCodes(
+            proc_info, process=python_node
+        )

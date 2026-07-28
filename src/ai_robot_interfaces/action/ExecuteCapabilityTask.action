@@ -1,0 +1,30 @@
+string task_id
+string capability
+geometry_msgs/PoseStamped target_pose
+float32 timeout_sec
+bool require_scan
+bool require_image
+---
+uint8 SUCCEEDED=0
+uint8 INVALID_TASK=1
+uint8 OUT_OF_BOUNDS=2
+uint8 NAVIGATION_FAILED=3
+uint8 TIMED_OUT=4
+uint8 CANCELED=5
+uint8 SENSOR_UNAVAILABLE=6
+uint8 SAFETY_TRIGGERED=7
+uint8 outcome
+string task_id
+string detail
+bool replayed
+float32 elapsed_sec
+float32 minimum_scan_range
+uint32 image_width
+uint32 image_height
+---
+uint8 VALIDATING=1
+uint8 NAVIGATING=2
+uint8 PERCEIVING=3
+uint8 phase
+string status
+float32 elapsed_sec
