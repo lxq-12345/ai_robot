@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="s1_m5_navigation">
+    <include><uri>model://ground_plane</uri></include>
+    <include><uri>model://sun</uri></include>
+    <model name="north_wall"><static>true</static><pose>0 3 0.5 0 0 0</pose><link name="link"><collision name="collision"><geometry><box><size>8 0.15 1</size></box></geometry></collision><visual name="visual"><geometry><box><size>8 0.15 1</size></box></geometry></visual></link></model>
+    <model name="south_wall"><static>true</static><pose>0 -3 0.5 0 0 0</pose><link name="link"><collision name="collision"><geometry><box><size>8 0.15 1</size></box></geometry></collision><visual name="visual"><geometry><box><size>8 0.15 1</size></box></geometry></visual></link></model>
+    <model name="east_wall"><static>true</static><pose>4 0 0.5 0 0 0</pose><link name="link"><collision name="collision"><geometry><box><size>0.15 6 1</size></box></geometry></collision><visual name="visual"><geometry><box><size>0.15 6 1</size></box></geometry></visual></link></model>
+    <model name="west_wall"><static>true</static><pose>-4 0 0.5 0 0 0</pose><link name="link"><collision name="collision"><geometry><box><size>0.15 6 1</size></box></geometry></collision><visual name="visual"><geometry><box><size>0.15 6 1</size></box></geometry></visual></link></model>
+    <model name="central_obstacle"><static>true</static><pose>1 0.7 0.5 0 0 0</pose><link name="link"><collision name="collision"><geometry><box><size>0.8 1.2 1</size></box></geometry></collision><visual name="visual"><geometry><box><size>0.8 1.2 1</size></box></geometry></visual></link></model>
+  </world>
+</sdf>
