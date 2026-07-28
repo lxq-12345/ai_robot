@@ -10,7 +10,14 @@ setup(
     data_files=[
         ("share/ament_index/resource_index/packages", ["resource/ai_robot_sim"]),
         ("share/ai_robot_sim", ["package.xml"]),
-        ("share/ai_robot_sim/config", ["../../config/sim_base.yaml"]),
+        (
+            "share/ai_robot_sim/config",
+            [
+                "../../config/sim_base.yaml",
+                "../../config/sim_sensor_diagnostics.yaml",
+                "../../config/sim_sensors.yaml",
+            ],
+        ),
         ("share/ai_robot_sim/launch", glob("launch/*.py")),
     ],
     install_requires=["setuptools"],

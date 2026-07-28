@@ -1,0 +1,24 @@
+sim_sensors:
+  laser:
+    topic: /scan
+    frame_id: laser_link
+    samples: 360
+    update_rate_hz: 10
+    min_range_m: 0.12
+    max_range_m: 8.0
+  camera:
+    image_topic: /camera/image_raw
+    info_topic: /camera/camera_info
+    frame_id: camera_link
+    width: 640
+    height: 480
+    update_rate_hz: 10
+  imu:
+    topic: /imu/data
+    frame_id: imu_link
+    update_rate_hz: 50
+  encoder:
+    topic: /joint_states
+    left_joint: left_wheel_joint
+    right_joint: right_wheel_joint
+    update_rate_hz: 50

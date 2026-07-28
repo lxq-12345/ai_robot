@@ -1,0 +1,40 @@
+diagnostics:
+  update_rate_hz: 1
+  sensors:
+    laser:
+      topic: /scan
+      message: sensor_msgs/msg/LaserScan
+      frame_id: laser_link
+      min_frequency_hz: 5.0
+      expected_frequency_hz: 10.0
+    camera_image:
+      topic: /camera/image_raw
+      message: sensor_msgs/msg/Image
+      frame_id: camera_link
+      min_frequency_hz: 5.0
+      expected_frequency_hz: 10.0
+    camera_info:
+      topic: /camera/camera_info
+      message: sensor_msgs/msg/CameraInfo
+      frame_id: camera_link
+      min_frequency_hz: 5.0
+      expected_frequency_hz: 10.0
+    imu:
+      topic: /imu/data
+      message: sensor_msgs/msg/Imu
+      frame_id: imu_link
+      min_frequency_hz: 25.0
+      expected_frequency_hz: 50.0
+    encoder:
+      topic: /joint_states
+      message: sensor_msgs/msg/JointState
+      joints:
+        - left_wheel_joint
+        - right_wheel_joint
+      min_frequency_hz: 25.0
+      expected_frequency_hz: 50.0
+  rules:
+    - Sensor messages must publish with the configured frame_id.
+    - Topic frequency below min_frequency_hz is considered a diagnostic warning.
+    - Missing topic or stale messages are considered diagnostic errors.
+    - Encoder diagnostics require both left and right wheel joints.

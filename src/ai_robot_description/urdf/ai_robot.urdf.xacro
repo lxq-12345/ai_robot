@@ -6,6 +6,14 @@
   <xacro:property name="wheel_radius" value="0.075"/>
   <xacro:property name="wheel_width" value="0.035"/>
   <xacro:property name="wheel_y" value="0.18"/>
+  <xacro:property name="laser_samples" value="360"/>
+  <xacro:property name="laser_min_angle" value="-3.14159"/>
+  <xacro:property name="laser_max_angle" value="3.14159"/>
+  <xacro:property name="laser_min_range" value="0.12"/>
+  <xacro:property name="laser_max_range" value="8.0"/>
+  <xacro:property name="camera_width" value="640"/>
+  <xacro:property name="camera_height" value="480"/>
+  <xacro:property name="camera_hfov" value="1.047"/>
 
   <link name="base_footprint"/>
   <joint name="base_footprint_joint" type="fixed">
@@ -108,5 +116,129 @@
       <joint_name>left_wheel_joint</joint_name>
       <joint_name>right_wheel_joint</joint_name>
     </plugin>
+  </gazebo>
+
+  <gazebo reference="laser_link">
+    <sensor name="ai_robot_laser" type="ray">
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>${laser_samples}</samples>
+            <resolution>1</resolution>
+            <min_angle>${laser_min_angle}</min_angle>
+            <max_angle>${laser_max_angle}</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>${laser_min_range}</min>
+          <max>${laser_max_range}</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="ai_robot_laser_scan" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <remapping>~/out:=/scan</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>laser_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="camera_link">
+    <sensor name="ai_robot_camera" type="camera">
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <camera>
+        <horizontal_fov>${camera_hfov}</horizontal_fov>
+        <image>
+          <width>${camera_width}</width>
+          <height>${camera_height}</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>8.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.005</stddev>
+        </noise>
+      </camera>
+      <plugin name="ai_robot_camera_driver" filename="libgazebo_ros_camera.so">
+        <ros>
+          <remapping>image_raw:=/camera/image_raw</remapping>
+          <remapping>camera_info:=/camera/camera_info</remapping>
+        </ros>
+        <camera_name>camera</camera_name>
+        <frame_name>camera_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="imu_link">
+    <sensor name="ai_robot_imu" type="imu">
+      <always_on>true</always_on>
+      <update_rate>50</update_rate>
+      <imu>
+        <angular_velocity>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.0002</stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.0002</stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.0002</stddev>
+            </noise>
+          </z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+            </noise>
+          </z>
+        </linear_acceleration>
+      </imu>
+      <plugin name="ai_robot_imu_driver" filename="libgazebo_ros_imu_sensor.so">
+        <ros>
+          <remapping>~/out:=/imu/data</remapping>
+        </ros>
+        <initial_orientation_as_reference>false</initial_orientation_as_reference>
+        <frame_name>imu_link</frame_name>
+      </plugin>
+    </sensor>
   </gazebo>
 </robot>

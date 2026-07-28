@@ -19,12 +19,16 @@
 | /tf_static | tf2_msgs/msg/TFMessage | 静态坐标变换证据 | 否 |
 | /odom | nav_msgs/msg/Odometry | 底盘与定位证据 | 否 |
 | /scan | sensor_msgs/msg/LaserScan | 雷达链路证据 | 否 |
+| /camera/image_raw | sensor_msgs/msg/Image | 相机图像链路证据 | 否 |
+| /camera/camera_info | sensor_msgs/msg/CameraInfo | 相机内参链路证据 | 否 |
+| /imu/data | sensor_msgs/msg/Imu | IMU链路证据 | 否 |
+| /joint_states | sensor_msgs/msg/JointState | 仿真编码器链路证据 | 否 |
 | /diagnostics | diagnostic_msgs/msg/DiagnosticArray | 健康状态证据 | 否 |
 
 ## 命令模板
 
 ```bash
-ros2 bag record -o resources/rosbag/{record_id} /tf /tf_static /odom /scan /diagnostics
+ros2 bag record -o resources/rosbag/{record_id} /tf /tf_static /odom /scan /camera/image_raw /camera/camera_info /imu/data /joint_states /diagnostics
 ros2 bag info resources/rosbag/{record_id}
 ros2 bag play resources/rosbag/{record_id}
 ```
