@@ -19,15 +19,17 @@ def test_robot_localization_ekf_config_tracks_odom_and_imu_inputs():
     assert params["odom_frame"] == "odom"
     assert params["base_link_frame"] == "base_link"
     assert params["world_frame"] == "odom"
+    assert params["publish_tf"] is False
 
 
-def test_missing_mature_dependencies_are_recorded_for_m4():
+def test_mature_dependencies_are_available_for_m4():
     with DEPENDENCY_STATUS.open(encoding="utf-8") as stream:
         deps = yaml.safe_load(stream)["s1_m4_dependencies"]
 
     assert deps["robot_localization"]["apt_package"] == "ros-humble-robot-localization"
-    assert deps["robot_localization"]["status"] in ("available", "missing")
-    assert deps["robot_localization"]["blocker"] == "sudo_password_required"
+    assert deps["robot_localization"]["status"] == "available"
+    assert deps["robot_localization"]["blocker"] == "none"
     assert deps["image_proc"]["apt_package"] == "ros-humble-image-proc"
-    assert deps["image_proc"]["status"] in ("available", "missing")
+    assert deps["image_proc"]["status"] == "available"
+    assert deps["image_proc"]["blocker"] == "none"
     assert deps["cv_bridge"]["status"] == "available"

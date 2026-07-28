@@ -2,15 +2,15 @@ s1_m4_dependencies:
   robot_localization:
     apt_package: ros-humble-robot-localization
     required_for: encoder_imu_ekf_fusion
-    status: missing
+    status: available
     install_attempt: sudo apt-get update && sudo apt-get install -y ros-humble-robot-localization ros-humble-image-proc
-    blocker: sudo_password_required
+    blocker: none
   image_proc:
     apt_package: ros-humble-image-proc
     required_for: mature_camera_processing_resource
-    status: missing
+    status: available
     install_attempt: sudo apt-get update && sudo apt-get install -y ros-humble-robot-localization ros-humble-image-proc
-    blocker: sudo_password_required
+    blocker: none
   cv_bridge:
     ros_package: cv_bridge
     required_for: future_image_processing_adapters
