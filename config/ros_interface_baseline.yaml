@@ -1,0 +1,71 @@
+interface_baseline_version: 1.0
+namespace: /ai_robot
+naming:
+  nodes: lower_snake_case
+  topics: lower_snake_case
+  services: lower_snake_case
+  actions: lower_snake_case
+  frames: lower_snake_case
+topics:
+  command_velocity:
+    name: /cmd_vel
+    message: geometry_msgs/msg/Twist
+    qos: reliable_depth_10
+    owner: safety_supervisor
+    note: Only the safety-supervised command path may publish in later milestones.
+  odometry:
+    name: /odom
+    message: nav_msgs/msg/Odometry
+    qos: reliable_depth_10
+    owner: base_driver
+  laser_scan:
+    name: /scan
+    message: sensor_msgs/msg/LaserScan
+    qos: sensor_data
+    owner: lidar_driver
+  camera_image:
+    name: /camera/image_raw
+    message: sensor_msgs/msg/Image
+    qos: sensor_data
+    owner: camera_driver
+  camera_info:
+    name: /camera/camera_info
+    message: sensor_msgs/msg/CameraInfo
+    qos: sensor_data
+    owner: camera_driver
+  imu:
+    name: /imu/data
+    message: sensor_msgs/msg/Imu
+    qos: sensor_data
+    owner: imu_driver
+  diagnostics:
+    name: /diagnostics
+    message: diagnostic_msgs/msg/DiagnosticArray
+    qos: reliable_depth_10
+    owner: diagnostics
+services:
+  robot_status:
+    name: /ai_robot/get_robot_status
+    message: ai_robot_interfaces/srv/GetRobotStatus
+    status: reserved_until_interface_package
+actions:
+  navigate_to_pose:
+    name: /ai_robot/navigate_to_pose
+    message: nav2_msgs/action/NavigateToPose
+    status: candidate_for_nav2_adapter
+qos_profiles:
+  reliable_depth_10:
+    reliability: reliable
+    durability: volatile
+    history: keep_last
+    depth: 10
+  sensor_data:
+    reliability: best_effort
+    durability: volatile
+    history: keep_last
+    depth: 5
+rules:
+  - Topic, service, action, node, and frame names use lowercase snake_case.
+  - Message types use standard ROS 2 messages unless a versioned project interface is approved.
+  - Interface changes require contract tests and an update to this baseline.
+  - AI Agent work must not publish directly to /cmd_vel.

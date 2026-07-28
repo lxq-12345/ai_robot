@@ -12,6 +12,7 @@ fi
 set +u
 source "$ros_setup"
 set -u
+export PATH="/usr/bin:$PATH"
 
 for command in colcon ros2 rviz2 gazebo gzserver; do
   if ! command -v "$command" >/dev/null 2>&1; then
