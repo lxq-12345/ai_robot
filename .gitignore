@@ -1,0 +1,27 @@
+# ROS 2 / colcon generated artifacts
+build/
+install/
+log/
+
+# ROS bag recordings and local runtime output
+*.bag
+*.db3
+*.mcap
+
+# Local secrets and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local documentation and rule-file backups
+docs/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
