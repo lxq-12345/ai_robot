@@ -9,8 +9,8 @@ export PATH="/usr/bin:$PATH"
 
 "$project_root/tests/test_workspace_layout.sh"
 
-python3 -m unittest "$project_root/tests/unit/test_python_example.py"
-python3 -m pytest "$project_root/tests/contract/test_interface_baseline.py"
+python3 -m unittest discover -s "$project_root/tests/unit" -p "test_*.py"
+python3 -m pytest "$project_root/tests/contract"
 
 colcon --log-base "$project_root/log" test \
   --base-paths "$project_root/src" \
@@ -24,3 +24,5 @@ source "$project_root/install/setup.bash"
 set -u
 export PATH="/usr/bin:$PATH"
 launch_test "$project_root/tests/launch/test_minimal_nodes.launch.py"
+launch_test "$project_root/tests/launch/test_cmd_vel_guard.launch.py"
+launch_test "$project_root/tests/launch/test_sim_base_motion.launch.py"
