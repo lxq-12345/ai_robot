@@ -14,7 +14,7 @@ SCENARIO = (
     PROJECT_ROOT
     / "tests"
     / "scenario"
-    / "S1-M5-M6人工体验验收.md"
+    / "S1-1-M5-M6人工体验验收.md"
 )
 
 

@@ -14,7 +14,7 @@ setup(
     zip_safe=True,
     maintainer="lxq-12345",
     maintainer_email="167375205+lxq-12345@users.noreply.github.com",
-    description="S1-M1 minimal Python ROS 2 node example.",
+    description="S1-1-M1 minimal Python ROS 2 node example.",
     license="Apache-2.0",
     entry_points={
         "console_scripts": [

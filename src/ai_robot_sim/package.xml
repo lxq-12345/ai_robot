@@ -2,7 +2,7 @@
 <package format="3">
   <name>ai_robot_sim</name>
   <version>0.1.0</version>
-  <description>S1-M2 Gazebo Classic simulation and command guard.</description>
+  <description>S1-1-M2 Gazebo Classic simulation and command guard.</description>
   <maintainer email="167375205+lxq-12345@users.noreply.github.com">lxq-12345</maintainer>
   <license>Apache-2.0</license>
   <buildtool_depend>ament_python</buildtool_depend>

@@ -371,7 +371,7 @@ def run_m6(node: ManualExperience) -> list[tuple[str, bool]]:
 
 def parse_args(args=None):
     parser = argparse.ArgumentParser(
-        description="Guided S1-M5 and S1-M6 Gazebo experience test."
+        description="Guided S1-1-M5 and S1-1-M6 Gazebo experience test."
     )
     parser.add_argument(
         "--scenario",
@@ -392,7 +392,7 @@ def main(args=None) -> None:
     results: list[tuple[str, bool]] = []
     exit_code = 0
     try:
-        print("S1-M5/M6 guided manual experience test (Gazebo only)")
+        print("S1-1-M5/M6 guided manual experience test (Gazebo only)")
         print("No direct /cmd_vel or /cmd_vel_raw publication is used.")
         node.wait_until_ready()
         node.set_initial_pose()

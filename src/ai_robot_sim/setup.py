@@ -30,7 +30,7 @@ setup(
     zip_safe=True,
     maintainer="lxq-12345",
     maintainer_email="167375205+lxq-12345@users.noreply.github.com",
-    description="S1-M2 Gazebo Classic simulation and command guard.",
+    description="S1-1-M2 Gazebo Classic simulation and command guard.",
     license="Apache-2.0",
     entry_points={
         "console_scripts": [
