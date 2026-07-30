@@ -3,7 +3,7 @@ set -euo pipefail
 
 project_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-for path in README.md AGENTS.md skills/会话管理协议.md plan mem src config scripts tests resources tests/unit tests/launch tests/contract tests/scenario tests/evidence; do
+for path in README.md AGENTS.md skills/会话管理协议.md plan mem learning learning/README.md learning/ROS2仿真机器人 learning/bks src config scripts tests resources tests/unit tests/launch tests/contract tests/scenario tests/evidence; do
   if [[ ! -e "$project_root/$path" ]]; then
     echo "Required project path not found: $path" >&2
     exit 1

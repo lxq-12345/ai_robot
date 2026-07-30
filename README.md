@@ -1,12 +1,12 @@
 # AI Robot
 
-This repository is the ROS 2 workspace for an indoor differential-drive mobile robot. The active milestone is `S1-1-M0`, the engineering and management baseline.
+This repository is the ROS 2 workspace for an indoor differential-drive mobile robot. Simulation milestones `S1-1-M0` through `S1-1-M6` are complete; the current work is the PU1 learning unit before `S1-1-G1`.
 
 ## Scope
 
 - Phase 1: ROS 2 robot development.
 - Phase 2: AI Agent development, after `S1-2-G1` only.
-- No AI model integration, AI Agent implementation, or physical robot operation is included in `S1-1-M0`.
+- No AI model integration, AI Agent implementation, or physical robot operation is included in the current learning stage.
 
 ## Prerequisites
 
@@ -20,6 +20,7 @@ This repository is the ROS 2 workspace for an indoor differential-drive mobile r
 ```text
 src/        ROS 2 packages
 config/     runtime configuration
+learning/   versioned learning materials
 scripts/    environment, build, and test entry points
 tests/      workspace-level checks
 resources/  maps, models, and other resources
