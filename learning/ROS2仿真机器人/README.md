@@ -1,6 +1,6 @@
 # ROS 2仿真机器人课程
 
-版本：v1.2
+版本：v1.3
 
 ## 1. 课程定位
 
@@ -30,9 +30,9 @@ PU1“项目总体架构与工程资源”由五个章节组成：
 |---|---|---|---|
 | PU1-01 项目总体架构 | `source/PU1/PU1-01_项目总体架构_v1.2.md` | `html/PU1/PU1-01_项目总体架构_v1.2.html` | 教材检查通过 |
 | PU1-02 工作空间与目录 | `source/PU1/PU1-02_工作空间与目录_v1.0.md` | `html/PU1/PU1-02_工作空间与目录_v1.0.html` | 已编写，待教材检查 |
-| PU1-03 程序包与工程资源 | `source/PU1/PU1-03_程序包与工程资源_v1.0.md` | `html/PU1/PU1-03_程序包与工程资源_v1.0.html` | 待编写 |
-| PU1-04 对象与链路概览 | `source/PU1/PU1-04_对象与链路概览_v1.0.md` | `html/PU1/PU1-04_对象与链路概览_v1.0.html` | 待编写 |
-| PU1-05 实体迁移概览 | `source/PU1/PU1-05_实体迁移概览_v1.0.md` | `html/PU1/PU1-05_实体迁移概览_v1.0.html` | 待编写 |
+| PU1-03 程序包与工程资源 | `source/PU1/PU1-03_程序包与工程资源_v1.0.md` | `html/PU1/PU1-03_程序包与工程资源_v1.0.html` | 已编写，待教材检查 |
+| PU1-04 对象与链路概览 | `source/PU1/PU1-04_对象与链路概览_v1.0.md` | `html/PU1/PU1-04_对象与链路概览_v1.0.html` | 已编写，待教材检查 |
+| PU1-05 实体迁移概览 | `source/PU1/PU1-05_实体迁移概览_v1.0.md` | `html/PU1/PU1-05_实体迁移概览_v1.0.html` | 已编写，待教材检查 |
 
 原合集`PU1_项目总体架构与工程资源_v1.0.md`已归档到`bks/PU1/`，不再作为当前有效教材。
 
@@ -44,8 +44,8 @@ PU1-05负责建立实体迁移的总体认识；PU3至PU9分别结合模型、�
 
 ```bash
 /usr/bin/python3 scripts/render_learning_html.py \
-  learning/ROS2仿真机器人/source/PU1/PU1-02_工作空间与目录_v1.0.md \
-  learning/ROS2仿真机器人/html/PU1/PU1-02_工作空间与目录_v1.0.html
+  learning/ROS2仿真机器人/source/PU1/PU1-05_实体迁移概览_v1.0.md \
+  learning/ROS2仿真机器人/html/PU1/PU1-05_实体迁移概览_v1.0.html
 ```
 
 生成后必须检查链接、图片、目录、桌面与移动排版，并确认HTML与Markdown版本一致。

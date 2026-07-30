@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">仿真机器人向实体机器人迁移概览</title>
+  <desc id="desc">展示仿真实现、稳定ROS 2契约和实体实现三层，以及实体开发的安全验收顺序。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#46555f"/>
+    </marker>
+    <style>
+      .title { font: 700 30px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #17212b; }
+      .subtitle { font: 400 16px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #52616d; }
+      .head { font: 700 22px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #17212b; }
+      .name { font: 700 16px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #20313d; }
+      .detail { font: 400 14px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #43515c; }
+      .step { font: 700 15px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #20313d; }
+      .box { stroke-width: 2; rx: 7; }
+      .line { fill: none; stroke: #46555f; stroke-width: 2.2; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="800" fill="#f7f9fa"/>
+  <text x="52" y="52" class="title">仿真机器人向实体机器人迁移概览</text>
+  <text x="52" y="80" class="subtitle">保留稳定契约，替换执行与设备来源；所有实体能力都必须重新标定、测试和安全验收</text>
+
+  <rect x="42" y="112" width="322" height="470" fill="#edf4f8" stroke="#7293ae" class="box"/>
+  <text x="203" y="148" text-anchor="middle" class="head">S1-1 仿真实现</text>
+  <rect x="72" y="176" width="262" height="68" fill="#ffffff" stroke="#7293ae" class="box"/>
+  <text x="203" y="202" text-anchor="middle" class="name">Gazebo差速插件</text>
+  <text x="203" y="224" text-anchor="middle" class="detail">电机、车轮、编码器与里程计</text>
+  <rect x="72" y="264" width="262" height="68" fill="#ffffff" stroke="#7293ae" class="box"/>
+  <text x="203" y="290" text-anchor="middle" class="name">Gazebo传感器插件</text>
+  <text x="203" y="312" text-anchor="middle" class="detail">雷达、相机与IMU数据</text>
+  <rect x="72" y="352" width="262" height="68" fill="#ffffff" stroke="#7293ae" class="box"/>
+  <text x="203" y="378" text-anchor="middle" class="name">仿真模型与世界</text>
+  <text x="203" y="400" text-anchor="middle" class="detail">理想尺寸、碰撞、摩擦、仿真时间</text>
+  <rect x="72" y="440" width="262" height="102" fill="#ffffff" stroke="#7293ae" class="box"/>
+  <text x="203" y="467" text-anchor="middle" class="name">仿真安全与测试</text>
+  <text x="203" y="490" text-anchor="middle" class="detail">速度守卫、超时停车</text>
+  <text x="203" y="512" text-anchor="middle" class="detail">故障注入、场景回归</text>
+
+  <rect x="429" y="112" width="342" height="470" fill="#eef7ef" stroke="#75a87f" class="box"/>
+  <text x="600" y="148" text-anchor="middle" class="head">原则上复用的ROS 2契约</text>
+  <rect x="462" y="176" width="276" height="68" fill="#ffffff" stroke="#75a87f" class="box"/>
+  <text x="600" y="202" text-anchor="middle" class="name">Topic与消息</text>
+  <text x="600" y="220" text-anchor="middle" class="detail">/cmd_vel · /odom · /scan</text>
+  <text x="600" y="239" text-anchor="middle" class="detail">/camera/* · /imu/data</text>
+  <rect x="462" y="264" width="276" height="68" fill="#ffffff" stroke="#75a87f" class="box"/>
+  <text x="600" y="290" text-anchor="middle" class="name">TF语义</text>
+  <text x="600" y="312" text-anchor="middle" class="detail">map → odom → base_link → sensor_link</text>
+  <rect x="462" y="352" width="276" height="68" fill="#ffffff" stroke="#75a87f" class="box"/>
+  <text x="600" y="378" text-anchor="middle" class="name">上层功能</text>
+  <text x="600" y="400" text-anchor="middle" class="detail">融合、SLAM、定位、Nav2、能力Action</text>
+  <rect x="462" y="440" width="276" height="102" fill="#ffffff" stroke="#75a87f" class="box"/>
+  <text x="600" y="467" text-anchor="middle" class="name">契约与回归</text>
+  <text x="600" y="490" text-anchor="middle" class="detail">名称、类型、QoS、Frame、错误语义</text>
+  <text x="600" y="512" text-anchor="middle" class="detail">实体环境必须重新验证</text>
+
+  <rect x="836" y="112" width="322" height="470" fill="#fff3e8" stroke="#c88e51" class="box"/>
+  <text x="997" y="148" text-anchor="middle" class="head">S1-2 实体实现</text>
+  <rect x="866" y="176" width="262" height="68" fill="#ffffff" stroke="#c88e51" class="box"/>
+  <text x="997" y="202" text-anchor="middle" class="name">底盘硬件接口</text>
+  <text x="997" y="224" text-anchor="middle" class="detail">MCU、电机、驱动器与编码器</text>
+  <rect x="866" y="264" width="262" height="68" fill="#ffffff" stroke="#c88e51" class="box"/>
+  <text x="997" y="290" text-anchor="middle" class="name">实体传感器驱动</text>
+  <text x="997" y="312" text-anchor="middle" class="detail">雷达、相机、IMU及设备状态</text>
+  <rect x="866" y="352" width="262" height="68" fill="#ffffff" stroke="#c88e51" class="box"/>
+  <text x="997" y="378" text-anchor="middle" class="name">实测模型与标定</text>
+  <text x="997" y="400" text-anchor="middle" class="detail">轮径、轮距、外参、噪声、协方差</text>
+  <rect x="866" y="440" width="262" height="102" fill="#ffffff" stroke="#c88e51" class="box"/>
+  <text x="997" y="467" text-anchor="middle" class="name">硬件安全与现场测试</text>
+  <text x="997" y="490" text-anchor="middle" class="detail">急停、失联停车、电源与底层保护</text>
+  <text x="997" y="512" text-anchor="middle" class="detail">架空、低速、限定区域、人工监护</text>
+
+  <path d="M364 347 H429" class="line"/>
+  <path d="M771 347 H836" class="line"/>
+  <text x="396" y="332" text-anchor="middle" class="detail">抽象</text>
+  <text x="803" y="332" text-anchor="middle" class="detail">适配</text>
+
+  <rect x="42" y="612" width="1116" height="146" fill="#ffffff" stroke="#a2adb4" class="box"/>
+  <text x="62" y="642" class="head">实体开发与验收顺序</text>
+  <rect x="65" y="669" width="180" height="55" fill="#e8f1f6" stroke="#7293ae" class="box"/>
+  <text x="155" y="692" text-anchor="middle" class="step">S1-1-G1</text>
+  <text x="155" y="713" text-anchor="middle" class="detail">仿真准入与接口冻结</text>
+  <rect x="278" y="669" width="180" height="55" fill="#fff3e8" stroke="#c88e51" class="box"/>
+  <text x="368" y="692" text-anchor="middle" class="step">S1-2-M0</text>
+  <text x="368" y="713" text-anchor="middle" class="detail">选型与安全准备</text>
+  <rect x="491" y="669" width="180" height="55" fill="#fff3e8" stroke="#c88e51" class="box"/>
+  <text x="581" y="692" text-anchor="middle" class="step">S1-2-M1～M2</text>
+  <text x="581" y="713" text-anchor="middle" class="detail">单元、标定与集成</text>
+  <rect x="704" y="669" width="180" height="55" fill="#fff3e8" stroke="#c88e51" class="box"/>
+  <text x="794" y="692" text-anchor="middle" class="step">S1-2-M3～M4</text>
+  <text x="794" y="713" text-anchor="middle" class="detail">导航与稳定化</text>
+  <rect x="917" y="669" width="218" height="55" fill="#eef7ef" stroke="#75a87f" class="box"/>
+  <text x="1026" y="692" text-anchor="middle" class="step">S1-2-G1</text>
+  <text x="1026" y="713" text-anchor="middle" class="detail">阶段1验收后才可进入阶段2</text>
+  <path d="M245 696 H278" class="line"/>
+  <path d="M458 696 H491" class="line"/>
+  <path d="M671 696 H704" class="line"/>
+  <path d="M884 696 H917" class="line"/>
+</svg>
