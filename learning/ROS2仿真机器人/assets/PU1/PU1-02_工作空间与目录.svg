@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">ai_robot_ws工作空间目录职责</title>
+  <desc id="desc">工作空间根目录包含受版本管理的源文件和由colcon生成的build、install、log目录。源文件经项目构建脚本生成构建中间产物、运行安装空间和日志。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#435463"/>
+    </marker>
+    <style>
+      .title { font: 700 30px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #17212b; }
+      .subtitle { font: 400 16px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #52616d; }
+      .box-title { font: 700 22px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #17212b; }
+      .row-title { font: 700 17px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #20313d; }
+      .row-text { font: 400 15px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #344955; }
+      .tag { font: 700 13px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; }
+      .arrow { stroke: #435463; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="#f6f8fa"/>
+  <text x="600" y="48" text-anchor="middle" class="title">ai_robot_ws工作空间目录职责</text>
+  <text x="600" y="76" text-anchor="middle" class="subtitle">编辑权威源文件，通过项目脚本构建；生成目录用于运行、诊断和复现</text>
+
+  <rect x="390" y="100" width="420" height="68" rx="6" fill="#ffffff" stroke="#7d8e9b" stroke-width="2"/>
+  <text x="600" y="130" text-anchor="middle" class="box-title">/home/ubuntu/ai_robot_ws</text>
+  <text x="600" y="153" text-anchor="middle" class="row-text">ROS 2工作空间根目录与Git仓库根目录</text>
+
+  <path d="M600 168 L600 207" class="arrow"/>
+
+  <rect x="60" y="218" width="590" height="390" rx="6" fill="#e4f1e7" stroke="#39874b" stroke-width="2"/>
+  <text x="355" y="253" text-anchor="middle" class="box-title">权威源文件与项目资料</text>
+  <rect x="500" y="232" width="126" height="25" rx="4" fill="#ffffff" opacity="0.92"/>
+  <text x="563" y="250" text-anchor="middle" class="tag" fill="#286b38">按规则编辑</text>
+
+  <rect x="85" y="278" width="540" height="58" rx="4" fill="#ffffff" stroke="#98b8a0"/>
+  <text x="105" y="303" class="row-title">src/</text>
+  <text x="175" y="303" class="row-text">ROS 2程序包、节点、Launch、URDF和运行资源</text>
+  <text x="105" y="325" class="row-text">colcon只把含package.xml等清单的目录识别为程序包</text>
+
+  <rect x="85" y="348" width="540" height="58" rx="4" fill="#ffffff" stroke="#98b8a0"/>
+  <text x="105" y="373" class="row-title">config/ · resources/</text>
+  <text x="304" y="373" class="row-text">参数基线、地图、模型和资源卡</text>
+  <text x="105" y="395" class="row-text">修改安装副本前，先找到这里或程序包中的源文件</text>
+
+  <rect x="85" y="418" width="540" height="58" rx="4" fill="#ffffff" stroke="#98b8a0"/>
+  <text x="105" y="443" class="row-title">scripts/ · tests/</text>
+  <text x="269" y="443" class="row-text">统一构建、测试入口及自动/人工证据</text>
+  <text x="105" y="465" class="row-text">项目操作优先使用受控脚本，不绕开既有入口</text>
+
+  <rect x="85" y="488" width="540" height="92" rx="4" fill="#ffffff" stroke="#98b8a0"/>
+  <text x="105" y="513" class="row-title">plan/ · learning/ · mem/ · skills/</text>
+  <text x="105" y="538" class="row-text">规划、教材、当前状态、备忘与执行规则</text>
+  <text x="105" y="562" class="row-text">正文修改遵守版本归档，历史文件不回写</text>
+
+  <path d="M650 370 L746 370" class="arrow"/>
+  <text x="700" y="332" text-anchor="middle" class="tag" fill="#435463">build.sh</text>
+  <text x="700" y="352" text-anchor="middle" class="tag" fill="#435463">调用colcon</text>
+
+  <rect x="760" y="218" width="380" height="390" rx="6" fill="#e8eef3" stroke="#536d80" stroke-width="2"/>
+  <text x="875" y="253" text-anchor="middle" class="box-title">构建生成空间</text>
+  <rect x="995" y="232" width="120" height="25" rx="4" fill="#ffffff" opacity="0.92"/>
+  <text x="1055" y="250" text-anchor="middle" class="tag" fill="#435b6d">禁止直接编辑</text>
+
+  <rect x="790" y="284" width="320" height="82" rx="4" fill="#ffffff" stroke="#8fa2b0"/>
+  <text x="815" y="313" class="row-title">build/</text>
+  <text x="895" y="313" class="row-text">每个程序包的构建中间产物</text>
+  <text x="815" y="340" class="row-text">测试结果、缓存和编译输出</text>
+
+  <rect x="790" y="386" width="320" height="82" rx="4" fill="#ffffff" stroke="#8fa2b0"/>
+  <text x="815" y="415" class="row-title">install/</text>
+  <text x="900" y="415" class="row-text">可运行的安装空间与setup脚本</text>
+  <text x="815" y="442" class="row-text">内容来自源码安装规则，可重新生成</text>
+
+  <rect x="790" y="488" width="320" height="82" rx="4" fill="#ffffff" stroke="#8fa2b0"/>
+  <text x="815" y="517" class="row-title">log/</text>
+  <text x="875" y="517" class="row-text">构建、测试过程日志</text>
+  <text x="815" y="544" class="row-text">排错时读取，不作为源代码修改</text>
+
+  <rect x="60" y="642" width="1080" height="76" rx="6" fill="#f7e8df" stroke="#a45e3f" stroke-width="2"/>
+  <text x="85" y="673" class="row-title">本机辅助目录：</text>
+  <text x="225" y="673" class="row-text">docs/仅本地保留；.git/、.pytest_cache/、__pycache__/及工具隐藏目录不属于可编辑工程源码</text>
+  <text x="85" y="699" class="row-text">先判断“权威源文件、生成副本、历史归档还是工具状态”，再决定读取、修改或忽略。</text>
+</svg>

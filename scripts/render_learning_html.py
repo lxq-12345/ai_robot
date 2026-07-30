@@ -237,6 +237,7 @@ PAGE_TEMPLATE = """<!doctype html>
       h1 {{ font-size: 29px; }}
       h2 {{ font-size: 23px; }}
       h3 {{ font-size: 19px; }}
+      .headerlink {{ display: none; }}
     }}
     @media print {{
       body {{ background: #ffffff; font-size: 11pt; }}
