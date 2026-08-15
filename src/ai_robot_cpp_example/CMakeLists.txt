@@ -26,12 +26,24 @@ install(DIRECTORY include/ DESTINATION include)
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
+  find_package(ament_cmake_pytest REQUIRED)
+  set(test_ros_log_dir "${CMAKE_CURRENT_BINARY_DIR}/ros_log")
+  file(MAKE_DIRECTORY "${test_ros_log_dir}")
 
   ament_add_gtest(test_status_formatter test/test_status_formatter.cpp)
   target_include_directories(test_status_formatter PRIVATE include)
 
   ament_add_gtest(test_baseline_node test/test_baseline_node.cpp)
   target_link_libraries(test_baseline_node baseline_node_lib)
+
+  ament_add_pytest_test(test_baseline_node_launch test/test_baseline_node_launch.py)
+
+  set_tests_properties(
+    test_status_formatter
+    test_baseline_node
+    test_baseline_node_launch
+    PROPERTIES ENVIRONMENT "ROS_LOG_DIR=${test_ros_log_dir}"
+  )
 endif()
 
 ament_export_targets(export_baseline_node_lib HAS_LIBRARY_TARGET)
