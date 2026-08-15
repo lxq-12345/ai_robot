@@ -11,6 +11,7 @@ setup(
         ("share/ai_robot_py_example", ["package.xml"]),
     ],
     install_requires=["setuptools"],
+    tests_require=["pytest"],
     zip_safe=True,
     maintainer="lxq-12345",
     maintainer_email="167375205+lxq-12345@users.noreply.github.com",
