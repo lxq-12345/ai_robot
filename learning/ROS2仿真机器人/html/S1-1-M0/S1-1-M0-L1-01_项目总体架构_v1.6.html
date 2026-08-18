@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M0-L1-01 项目总体架构</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 本单元要解决什么问题</a></li>
+<li><a href="#2">2. 五层总体架构</a><ul>
+<li><a href="#21-ai">2.1 AI层</a></li>
+<li><a href="#22-airos-2">2.2 AI—ROS 2任务接口层</a></li>
+<li><a href="#23-ros-2">2.3 ROS 2机器人软件层</a></li>
+<li><a href="#24">2.4 仿真执行层</a></li>
+<li><a href="#25">2.5 未来硬件驱动层</a></li>
+</ul>
+</li>
+<li><a href="#3">3. 功能模块之间的关系</a><ul>
+<li><a href="#31">3.1 底盘与安全</a></li>
+<li><a href="#32">3.2 传感器与状态估计</a></li>
+<li><a href="#33">3.3 建图、定位和导航</a></li>
+<li><a href="#34-tf">3.4 TF连接所有空间数据</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 上层任务如何进入机器人</a></li>
+<li><a href="#5">5. 当前实现边界</a><ul>
+<li><a href="#_1">当前已经实现</a></li>
+<li><a href="#_2">当前尚未实施</a></li>
+</ul>
+</li>
+<li><a href="#6">6. 常见理解误区</a><ul>
+<li><a href="#1ai-agent">误区1：任务管理器就是AI Agent</a></li>
+<li><a href="#2executecapabilitytaskairos-2">误区2：ExecuteCapabilityTask就是完整的AI—ROS 2任务接口层</a></li>
+<li><a href="#3nav2">误区3：Nav2直接控制电机</a></li>
+<li><a href="#4_1">误区4：仿真通过后实体机器人一定能直接运行</a></li>
+<li><a href="#5slam">误区5：SLAM、定位和导航是一回事</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 本单元总结</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+<li><a href="#10">10. 外部参考资料</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 本单元要解决什么问题</a></li>
+<li><a href="#2">2. 五层总体架构</a><ul>
+<li><a href="#21-ai">2.1 AI层</a></li>
+<li><a href="#22-airos-2">2.2 AI—ROS 2任务接口层</a></li>
+<li><a href="#23-ros-2">2.3 ROS 2机器人软件层</a></li>
+<li><a href="#24">2.4 仿真执行层</a></li>
+<li><a href="#25">2.5 未来硬件驱动层</a></li>
+</ul>
+</li>
+<li><a href="#3">3. 功能模块之间的关系</a><ul>
+<li><a href="#31">3.1 底盘与安全</a></li>
+<li><a href="#32">3.2 传感器与状态估计</a></li>
+<li><a href="#33">3.3 建图、定位和导航</a></li>
+<li><a href="#34-tf">3.4 TF连接所有空间数据</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 上层任务如何进入机器人</a></li>
+<li><a href="#5">5. 当前实现边界</a><ul>
+<li><a href="#_1">当前已经实现</a></li>
+<li><a href="#_2">当前尚未实施</a></li>
+</ul>
+</li>
+<li><a href="#6">6. 常见理解误区</a><ul>
+<li><a href="#1ai-agent">误区1：任务管理器就是AI Agent</a></li>
+<li><a href="#2executecapabilitytaskairos-2">误区2：ExecuteCapabilityTask就是完整的AI—ROS 2任务接口层</a></li>
+<li><a href="#3nav2">误区3：Nav2直接控制电机</a></li>
+<li><a href="#4_1">误区4：仿真通过后实体机器人一定能直接运行</a></li>
+<li><a href="#5slam">误区5：SLAM、定位和导航是一回事</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 本单元总结</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+<li><a href="#10">10. 外部参考资料</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m0-l1-01">S1-1-M0-L1-01 项目总体架构<a class="headerlink" href="#s1-1-m0-l1-01" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M0 工程与管理基线<br>\n&gt; 所属学习子单元：S1-1-M0-L1 项目架构、工作空间与目录<br>
+教材单元：1/5<br>
+版本：v1.6<br>
+适用项目：<code>/home/ubuntu/ai_robot_ws</code><br>
+适用环境：Ubuntu 22.04、ROS 2 Humble<br>
+学习边界：只学习架构和接口关系，不实现AI Agent，不执行实体机器人操作。</p>
+</blockquote>
+<h2 id="1">1. 本单元要解决什么问题<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>学习一个机器人项目时，首先需要知道系统由哪些层组成、每层负责什么，以及一条任务如何从上层传递到底盘和传感器。</p>
+<p>完成本单元后，您应能解释：</p>
+<ol>
+<li>AI层、AI—ROS 2任务接口层、ROS 2机器人软件层、仿真执行层和未来硬件驱动层的职责；</li>
+<li>当前项目已经实现了哪些层，哪些层尚未开发；</li>
+<li>底盘、传感器、建图、定位、导航和安全模块如何协作；</li>
+<li>上层结构化任务如何进入机器人系统并返回结果；</li>
+<li>为什么AI不能直接控制电机或发布底盘速度。</li>
+</ol>
+<p><a href="../../assets/S1-1-M0/S1-1-M0-L1-01_项目总体架构.svg"><img alt="AI机器人项目五层架构" src="../../assets/S1-1-M0/S1-1-M0-L1-01_项目总体架构.svg"></a></p>
+<p>图1：AI机器人项目五层架构。当前实现和学习对象集中在ROS 2机器人软件层与仿真执行层；AI层和AI—ROS 2任务接口层属于阶段 2，当前只学习其职责边界。图片较小时可点击查看原图。</p>
+<h2 id="2">2. 五层总体架构<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>项目采用以下分层：</p>
+<pre><code class="language-text">用户或测试程序
+        |
+        v
+AI层（阶段 2，未实现）
+        |
+        | 高层任务计划
+        v
+AI—ROS 2任务接口层（阶段 2，未实现）
+        |
+        | 受约束的机器人能力请求
+        v
+ROS 2机器人软件层（阶段 1）
+包含能力接口契约和非AI任务执行端
+        |
+        +-------------------------+
+        |                         |
+        v                         v
+仿真执行层                 未来硬件驱动层
+Gazebo模型与插件            MCU、驱动器和实体传感器
+</code></pre>
+<p>分层的目的不是把系统画得复杂，而是限制职责：</p>
+<ul>
+<li>上层描述“做什么”；</li>
+<li>ROS 2功能层决定“怎样安全完成”；</li>
+<li>仿真或硬件层负责“实际执行和产生数据”。</li>
+</ul>
+<h3 id="21-ai">2.1 AI层<a class="headerlink" href="#21-ai" title="Permanent link">&para;</a></h3>
+<p>AI层属于阶段 2，当前没有实现，也不会在ROS 2学习阶段启动。</p>
+<p>未来职责包括：</p>
+<ul>
+<li>理解文字、语音、图片或视频；</li>
+<li>识别用户意图；</li>
+<li>形成高层任务计划；</li>
+<li>选择经过批准的机器人能力；</li>
+<li>根据结构化结果向用户解释任务状态。</li>
+</ul>
+<p>AI层禁止：</p>
+<ul>
+<li>直接控制电机或驱动器；</li>
+<li>直接发布<code>/cmd_vel</code>；</li>
+<li>绕过Nav2、任务管理器或安全守卫；</li>
+<li>自行运行任意Shell命令；</li>
+<li>未经确认就把语义地点转换为物理坐标。</li>
+</ul>
+<p>核心原则是：AI只能请求受约束的机器人能力，不能接管底盘实时控制。</p>
+<h3 id="22-airos-2">2.2 AI—ROS 2任务接口层<a class="headerlink" href="#22-airos-2" title="Permanent link">&para;</a></h3>
+<p>AI—ROS 2任务接口层属于阶段 2，是AI Agent与ROS 2机器人能力之间的适配、约束和治理边界。当前尚未实现。</p>
+<p>它未来负责：</p>
+<ul>
+<li>接收AI Agent形成的高层结构化任务；</li>
+<li>把语义地点或语义对象转换为经过确认的物理目标；</li>
+<li>校验任务Schema、参数、权限、机器人能力和安全前提；</li>
+<li>把合法任务映射到白名单ROS 2 Action、Service或受控Topic；</li>
+<li>管理任务关联ID、超时、取消、并发和幂等语义；</li>
+<li>汇总机器人执行进度、结果和异常，转换为AI Agent可使用的结构化反馈；</li>
+<li>阻止AI绕过Nav2、安全守卫或硬件安全直接控制底盘。</li>
+</ul>
+<p>任务接口层不负责路径规划、实时运动控制、传感器驱动或硬件急停，也不能替代ROS 2机器人软件层。</p>
+<h3 id="23-ros-2">2.3 ROS 2机器人软件层<a class="headerlink" href="#23-ros-2" title="Permanent link">&para;</a></h3>
+<p>ROS 2机器人软件层是当前阶段 1系统的主体。为使机器人能够脱离AI独立运行和测试，阶段 1已经实现了任务接口层未来可调用的下游能力契约：</p>
+<pre><code class="language-text">src/ai_robot_interfaces/action/ExecuteCapabilityTask.action
+</code></pre>
+<p>该Action包含任务ID、能力名称、物理目标位姿、超时时间、传感器要求、执行阶段反馈，以及成功、失败、取消、超时和安全触发等结果。它定义的是“ROS 2机器人提供什么受控能力”，不是自然语言理解、语义目标物理化或完整的AI—ROS 2任务接口层。</p>
+<p>当前非AI任务执行节点是：</p>
+<pre><code class="language-text">src/ai_robot_sim/ai_robot_sim/capability_task_manager.py
+</code></pre>
+<p>任务管理器只接收已经物理化的能力请求，校验ROS 2执行参数，调用Nav2，检查传感器和安全状态，并返回结构化结果。它不理解自然语言、不把“去厨房”转换为地图坐标，也不调用大模型，因此属于阶段 1的ROS 2机器人软件层。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>主要职责</th>
+<th>当前实现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>机器人模型</td>
+<td>描述车体、车轮、关节和传感器安装关系</td>
+<td><code>ai_robot_description</code></td>
+</tr>
+<tr>
+<td>底盘控制</td>
+<td>接收安全速度，产生运动和里程计</td>
+<td>Gazebo差速插件</td>
+</tr>
+<tr>
+<td>安全监督</td>
+<td>限速、命令超时停车和传感器新鲜度检查</td>
+<td><code>cmd_vel_guard.py</code></td>
+</tr>
+<tr>
+<td>传感器</td>
+<td>发布雷达、相机、IMU和轮状态</td>
+<td>Gazebo传感器插件</td>
+</tr>
+<tr>
+<td>状态估计</td>
+<td>融合里程计和IMU</td>
+<td><code>robot_localization</code> EKF</td>
+</tr>
+<tr>
+<td>建图</td>
+<td>根据雷达、里程计和TF建立地图</td>
+<td><code>slam_toolbox</code></td>
+</tr>
+<tr>
+<td>定位</td>
+<td>在已有地图中估计机器人位置</td>
+<td>AMCL</td>
+</tr>
+<tr>
+<td>导航</td>
+<td>规划、控制、避障、恢复和取消</td>
+<td>Nav2</td>
+</tr>
+<tr>
+<td>感知监测</td>
+<td>检查雷达和相机数据链</td>
+<td>项目传感器监测节点</td>
+</tr>
+<tr>
+<td>任务管理</td>
+<td>组织导航、感知、异常和结果返回</td>
+<td><code>capability_task_manager.py</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>这些模块通过Node、Topic、Service、Action、Parameter和TF组成ROS图。</p>
+<h3 id="24">2.4 仿真执行层<a class="headerlink" href="#24" title="Permanent link">&para;</a></h3>
+<p>当前项目使用Gazebo Classic模拟：</p>
+<ul>
+<li>差速底盘；</li>
+<li>左右车轮；</li>
+<li>激光雷达；</li>
+<li>相机；</li>
+<li>IMU；</li>
+<li>室内世界和障碍物；</li>
+<li>里程计和关节状态。</li>
+</ul>
+<p>仿真执行层向上发布标准ROS 2接口。上层导航和任务管理不应依赖Gazebo内部细节。</p>
+<h3 id="25">2.5 未来硬件驱动层<a class="headerlink" href="#25" title="Permanent link">&para;</a></h3>
+<p><code>S1-1-G1</code>通过后，项目才能进入实体机器人子阶段。届时Gazebo组件将被真实设备替换：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>仿真实现</th>
+<th>未来实体实现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gazebo差速插件</td>
+<td>MCU、电机驱动器、编码器和底盘驱动</td>
+</tr>
+<tr>
+<td>Gazebo激光雷达</td>
+<td>实体雷达及ROS 2驱动</td>
+</tr>
+<tr>
+<td>Gazebo相机</td>
+<td>USB、RealSense或Orbbec等实体相机驱动</td>
+</tr>
+<tr>
+<td>Gazebo IMU</td>
+<td>实体IMU驱动</td>
+</tr>
+<tr>
+<td>仿真故障注入</td>
+<td>急停、电池、通信失联和设备诊断</td>
+</tr>
+</tbody>
+</table></div>
+<p>迁移时原则上保留Topic、消息类型、TF名称、导航接口和任务结果语义。硬件协议、标定、供电和实体安全回路必须重新实现和验收。</p>
+<h2 id="3">3. 功能模块之间的关系<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 底盘与安全<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p>底盘不能直接接受任意来源的速度。当前安全运动链为：</p>
+<pre><code class="language-text">Nav2或受控演示程序
+→ /cmd_vel_raw
+→ cmd_vel_guard
+→ /cmd_vel
+→ Gazebo差速底盘
+</code></pre>
+<p><code>cmd_vel_guard</code>在中间执行限速、命令超时停车和必要的传感器状态检查。</p>
+<h3 id="32">3.2 传感器与状态估计<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<p>Gazebo模拟传感器发布：</p>
+<pre><code class="language-text">/scan
+/camera/image_raw
+/camera/camera_info
+/imu/data
+/joint_states
+</code></pre>
+<p>底盘同时发布<code>/odom</code>。EKF可以融合里程计和IMU，生成更稳定的状态估计。</p>
+<h3 id="33">3.3 建图、定位和导航<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<p>三者不是同一个功能：</p>
+<ul>
+<li>SLAM负责在未知环境中建立地图，并估计机器人相对地图的位置；</li>
+<li>AMCL负责在已有地图中定位；</li>
+<li>Nav2使用地图、定位、传感器和TF规划并执行导航。</li>
+</ul>
+<p>主要关系为：</p>
+<pre><code class="language-text">/scan + /odom + TF
+        |
+        v
+SLAM建图
+        |
+        v
+保存地图
+        |
+        v
+地图 + AMCL + /scan + TF
+        |
+        v
+机器人定位
+        |
+        v
+Nav2规划、控制和避障
+</code></pre>
+<h3 id="34-tf">3.4 TF连接所有空间数据<a class="headerlink" href="#34-tf" title="Permanent link">&para;</a></h3>
+<p>项目TF基线是：</p>
+<pre><code class="language-text">map
+└── odom
+    └── base_link
+        ├── laser_link
+        ├── camera_link
+        └── imu_link
+</code></pre>
+<ul>
+<li>SLAM或定位系统负责<code>map -&gt; odom</code>；</li>
+<li>底盘里程计或状态估计负责<code>odom -&gt; base_link</code>；</li>
+<li>机器人模型负责<code>base_link -&gt; sensor_link</code>。</li>
+</ul>
+<p>发布职责必须唯一，否则系统可能出现跳变或冲突。</p>
+<h2 id="4">4. 上层任务如何进入机器人<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>结构化任务的完整链路是：</p>
+<pre><code class="language-text">阶段 1测试程序
+或未来AI—ROS 2任务接口层（阶段 2）
+    |
+    | ExecuteCapabilityTask目标
+    v
+capability_task_manager
+    |
+    | 校验任务、目标、超时、传感器和安全条件
+    v
+Nav2 NavigateToPose
+    |
+    | 规划和控制
+    v
+/cmd_vel_raw
+    |
+    v
+cmd_vel_guard
+    |
+    v
+/cmd_vel
+    |
+    v
+Gazebo差速底盘
+    |
+    +--&gt; /odom、/joint_states和TF
+    +--&gt; 到点后检查雷达和图像
+    |
+    v
+Action反馈和结构化结果
+</code></pre>
+<p>任务执行期间可以反馈<code>VALIDATING</code>、<code>NAVIGATING</code>和<code>PERCEIVING</code>阶段。最终结果可以表示成功、非法任务、越界、导航失败、超时、取消、传感器不可用或安全触发。</p>
+<p>这条链路体现了两项重要设计：</p>
+<ol>
+<li>上层发出任务目标，不直接控制每一时刻的轮速；</li>
+<li>安全控制分布在任务校验、Nav2、安全守卫和底盘执行多个环节。</li>
+</ol>
+<h2 id="5">5. 当前实现边界<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="_1">当前已经实现<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>ROS 2机器人能力Action契约；</li>
+<li>非AI能力任务执行端；</li>
+<li>Gazebo底盘和传感器；</li>
+<li>安全速度链；</li>
+<li>EKF、SLAM、AMCL和Nav2；</li>
+<li>正常、取消、超时和故障场景测试。</li>
+</ul>
+<h3 id="_2">当前尚未实施<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AI大模型和AI Agent；</li>
+<li>AI—ROS 2任务接口层，包括语义目标物理化、能力映射和面向AI的反馈适配；</li>
+<li>实体MCU和电机驱动；</li>
+<li>实体雷达、相机和IMU驱动；</li>
+<li>硬件急停和电源安全回路；</li>
+<li>实体机器人上电、运动和硬件测试。</li>
+</ul>
+<p>不能把规划中的未来模块当成已经存在的系统能力。</p>
+<h2 id="6">6. 常见理解误区<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<h3 id="1ai-agent">误区1：任务管理器就是AI Agent<a class="headerlink" href="#1ai-agent" title="Permanent link">&para;</a></h3>
+<p>不是。任务管理器执行固定的结构化Schema和状态机，不理解自然语言。</p>
+<h3 id="2executecapabilitytaskairos-2">误区2：ExecuteCapabilityTask就是完整的AI—ROS 2任务接口层<a class="headerlink" href="#2executecapabilitytaskairos-2" title="Permanent link">&para;</a></h3>
+<p>不是。<code>ExecuteCapabilityTask</code>是阶段 1提供的ROS 2机器人能力契约。完整任务接口层属于阶段 2，还要负责语义目标物理化、能力映射、权限与任务级合法性校验，以及面向AI Agent的反馈适配。</p>
+<h3 id="3nav2">误区3：Nav2直接控制电机<a class="headerlink" href="#3nav2" title="Permanent link">&para;</a></h3>
+<p>不是。Nav2生成速度请求，速度还要经过安全守卫，再由仿真插件或未来底盘驱动执行。</p>
+<h3 id="4_1">误区4：仿真通过后实体机器人一定能直接运行<a class="headerlink" href="#4_1" title="Permanent link">&para;</a></h3>
+<p>不是。实体阶段还要处理驱动、标定、时延、噪声、供电、急停和机械误差。</p>
+<h3 id="5slam">误区5：SLAM、定位和导航是一回事<a class="headerlink" href="#5slam" title="Permanent link">&para;</a></h3>
+<p>不是。SLAM建立地图，定位确定机器人在地图中的位置，导航负责规划并移动到目标。</p>
+<h2 id="7">7. 本单元总结<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>当前机器人主体是ROS 2机器人软件层，不是AI层。</li>
+<li>AI—ROS 2任务接口层属于阶段 2，当前尚未实现。</li>
+<li>阶段 1实现的是ROS 2机器人能力契约和非AI任务执行端，为未来任务接口层提供受控下游入口。</li>
+<li>Gazebo和未来实体驱动是两套底层实现，应共享稳定的上层接口。</li>
+<li>底盘、安全、传感器、TF、定位和导航构成连续功能链。</li>
+<li>AI未来只能通过任务接口层调用白名单能力，不能直接发布速度或控制电机。</li>
+</ol>
+<h2 id="8">8. 理解检查<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>请用自己的话回答：</p>
+<ol>
+<li>五个系统层分别负责什么，哪些层当前尚未开发？</li>
+<li>AI—ROS 2任务接口层与阶段 1能力接口契约有什么区别？</li>
+<li>为什么<code>capability_task_manager</code>不是AI Agent，也不是完整的AI—ROS 2任务接口层？</li>
+<li><code>/cmd_vel_raw -&gt; cmd_vel_guard -&gt; /cmd_vel</code>解决什么问题？</li>
+<li>SLAM、AMCL和Nav2的职责有什么区别？</li>
+<li>从仿真迁移到实体机器人时，哪些接口应保留，哪些实现必须替换？</li>
+</ol>
+<p>本章理解检查完成后，再进入S1-1-M0-L1-02“工作空间与目录”。</p>
+<h2 id="9">9. 项目内依据<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>plan/AI机器人开发项目计划_v1.17.md</code></li>
+<li><code>plan/ROS2机器人开发规划_v1.12.md</code></li>
+<li><code>plan/ROS2仿真机器人学习计划_v1.8.md</code></li>
+<li><code>config/ros_interface_baseline.yaml</code></li>
+<li><code>config/tf_frame_baseline.yaml</code></li>
+<li><code>src/ai_robot_interfaces/action/ExecuteCapabilityTask.action</code></li>
+<li><code>src/ai_robot_sim/ai_robot_sim/capability_task_manager.py</code></li>
+<li><code>src/ai_robot_sim/ai_robot_sim/cmd_vel_guard.py</code></li>
+<li><code>src/ai_robot_sim/launch/nav2_bringup.launch.py</code></li>
+<li><code>tests/contract/test_s1_m6_task_contract.py</code></li>
+</ul>
+<h2 id="10">10. 外部参考资料<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>资料名称</th>
+<th>来源</th>
+<th>适用版本</th>
+<th>用途</th>
+<th>链接</th>
+<th>查阅日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interfaces: topics, services, actions</td>
+<td>ROS 2官方文档</td>
+<td>Humble</td>
+<td>理解ROS 2通信接口</td>
+<td>https://docs.ros.org/en/humble/Concepts/Basic/Interfaces-Topics-Services-Actions.html</td>
+<td>2026-07-29</td>
+</tr>
+<tr>
+<td>Understanding nodes</td>
+<td>ROS 2官方文档</td>
+<td>Humble</td>
+<td>理解节点和ROS图</td>
+<td>https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html</td>
+<td>2026-07-29</td>
+</tr>
+<tr>
+<td>Navigation Concepts</td>
+<td>Nav2官方文档</td>
+<td>Nav2</td>
+<td>理解导航架构和TF职责</td>
+<td>https://docs.nav2.org/concepts/</td>
+<td>2026-07-29</td>
+</tr>
+</tbody>
+</table></div>
+<p>外部资料用于扩展学习。本项目实际节点名称、任务接口、安全速度链和文件位置以“项目内依据”为准。</p>
+      <div class="footer">源文件：S1-1-M0-L1-01_项目总体架构_v1.6.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

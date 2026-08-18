@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M0-L1-02 工作空间与目录</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 本单元要解决什么问题</a></li>
+<li><a href="#2-ros-2">2. 什么是ROS 2工作空间</a><ul>
+<li><a href="#21">2.1 如何确认工作空间根目录</a></li>
+<li><a href="#22-ros-2">2.2 系统ROS 2与项目工作空间</a></li>
+</ul>
+</li>
+<li><a href="#3-ros-2">3. ROS 2工作空间的四个核心目录</a><ul>
+<li><a href="#31-src">3.1 src/：源码空间</a></li>
+<li><a href="#32-build">3.2 build/：构建中间空间</a></li>
+<li><a href="#33-install">3.3 install/：安装与运行空间</a></li>
+<li><a href="#34-log">3.4 log/：构建和测试日志空间</a></li>
+<li><a href="#35">3.5 四个目录之间的关系</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 项目扩展目录的实际职责</a><ul>
+<li><a href="#41">4.1 配置在哪里</a></li>
+<li><a href="#42">4.2 模型、世界和地图在哪里</a></li>
+<li><a href="#43">4.3 操作入口和测试在哪里</a></li>
+</ul>
+</li>
+<li><a href="#5">5. 权威源文件与安装副本</a></li>
+<li><a href="#6">6. 可以编辑、只读观察和应当忽略的目录</a><ul>
+<li><a href="#61">6.1 可以按任务编辑</a></li>
+<li><a href="#62">6.2 只读观察或按流程再生</a></li>
+<li><a href="#63">6.3 不作为工程源码的本机目录</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 只读观察方法</a><ul>
+<li><a href="#71">7.1 查看顶层结构</a></li>
+<li><a href="#72-git">7.2 列出Git管理的文件</a></li>
+<li><a href="#73">7.3 快速查找文件</a></li>
+<li><a href="#74-colcon">7.4 列出colcon识别的程序包</a></li>
+<li><a href="#75">7.5 检查当前修改</a></li>
+</ul>
+</li>
+<li><a href="#8">8. 常见问题与首查位置</a><ul>
+<li><a href="#81">8.1 修改了配置，但运行结果没有变化</a></li>
+<li><a href="#82-ros2-runros2-launch">8.2 ros2 run或ros2 launch找不到项目程序包</a></li>
+<li><a href="#83-srccolcon-list">8.3 一个src/子目录没有出现在colcon list</a></li>
+<li><a href="#84-gitbuildinstalllog">8.4 Git中没有看到build/、install/和log/</a></li>
+<li><a href="#85-docsgit">8.5 在docs/中看到重要文件，为什么Git没有跟踪</a></li>
+</ul>
+</li>
+<li><a href="#9">9. 本单元总结</a></li>
+<li><a href="#10">10. 理解检查</a></li>
+<li><a href="#11">11. 项目内依据</a></li>
+<li><a href="#12">12. 外部参考资料</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 本单元要解决什么问题</a></li>
+<li><a href="#2-ros-2">2. 什么是ROS 2工作空间</a><ul>
+<li><a href="#21">2.1 如何确认工作空间根目录</a></li>
+<li><a href="#22-ros-2">2.2 系统ROS 2与项目工作空间</a></li>
+</ul>
+</li>
+<li><a href="#3-ros-2">3. ROS 2工作空间的四个核心目录</a><ul>
+<li><a href="#31-src">3.1 src/：源码空间</a></li>
+<li><a href="#32-build">3.2 build/：构建中间空间</a></li>
+<li><a href="#33-install">3.3 install/：安装与运行空间</a></li>
+<li><a href="#34-log">3.4 log/：构建和测试日志空间</a></li>
+<li><a href="#35">3.5 四个目录之间的关系</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 项目扩展目录的实际职责</a><ul>
+<li><a href="#41">4.1 配置在哪里</a></li>
+<li><a href="#42">4.2 模型、世界和地图在哪里</a></li>
+<li><a href="#43">4.3 操作入口和测试在哪里</a></li>
+</ul>
+</li>
+<li><a href="#5">5. 权威源文件与安装副本</a></li>
+<li><a href="#6">6. 可以编辑、只读观察和应当忽略的目录</a><ul>
+<li><a href="#61">6.1 可以按任务编辑</a></li>
+<li><a href="#62">6.2 只读观察或按流程再生</a></li>
+<li><a href="#63">6.3 不作为工程源码的本机目录</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 只读观察方法</a><ul>
+<li><a href="#71">7.1 查看顶层结构</a></li>
+<li><a href="#72-git">7.2 列出Git管理的文件</a></li>
+<li><a href="#73">7.3 快速查找文件</a></li>
+<li><a href="#74-colcon">7.4 列出colcon识别的程序包</a></li>
+<li><a href="#75">7.5 检查当前修改</a></li>
+</ul>
+</li>
+<li><a href="#8">8. 常见问题与首查位置</a><ul>
+<li><a href="#81">8.1 修改了配置，但运行结果没有变化</a></li>
+<li><a href="#82-ros2-runros2-launch">8.2 ros2 run或ros2 launch找不到项目程序包</a></li>
+<li><a href="#83-srccolcon-list">8.3 一个src/子目录没有出现在colcon list</a></li>
+<li><a href="#84-gitbuildinstalllog">8.4 Git中没有看到build/、install/和log/</a></li>
+<li><a href="#85-docsgit">8.5 在docs/中看到重要文件，为什么Git没有跟踪</a></li>
+</ul>
+</li>
+<li><a href="#9">9. 本单元总结</a></li>
+<li><a href="#10">10. 理解检查</a></li>
+<li><a href="#11">11. 项目内依据</a></li>
+<li><a href="#12">12. 外部参考资料</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m0-l1-02">S1-1-M0-L1-02 工作空间与目录<a class="headerlink" href="#s1-1-m0-l1-02" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M0 工程与管理基线<br>\n&gt; 所属学习子单元：S1-1-M0-L1 项目架构、工作空间与目录<br>
+教材单元：2/5<br>
+版本：v1.4<br>
+适用项目：<code>/home/ubuntu/ai_robot_ws</code><br>
+适用环境：Ubuntu 22.04、ROS 2 Humble、colcon<br>
+学习边界：只学习工作空间和目录职责，不修改工程基线，不执行仿真运动或实体机器人操作。</p>
+</blockquote>
+<h2 id="1">1. 本单元要解决什么问题<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>机器人项目中的同一份配置可能同时出现在源码目录和安装目录，构建后还会出现大量中间文件与日志。如果不知道哪一份是权威源文件，就容易发生“改了文件但运行结果不变”“修改被下一次构建覆盖”或“把生成文件提交到Git”等问题。</p>
+<p>完成本单元后，您应能：</p>
+<ol>
+<li>确认当前是否位于项目工作空间根目录；</li>
+<li>说明<code>src/</code>、<code>build/</code>、<code>install/</code>和<code>log/</code>的区别；</li>
+<li>找到规划、教材、状态、配置、模型、地图、脚本和测试的实际位置；</li>
+<li>判断一个目录是权威源文件、构建生成空间、历史归档还是本机工具状态；</li>
+<li>知道修改源文件后为什么需要重新构建并重新加载工作空间环境；</li>
+<li>在不修改项目的前提下，用只读命令观察工作空间结构。</li>
+</ol>
+<p><a href="../../assets/S1-1-M0/S1-1-M0-L1-02_工作空间与目录.svg"><img alt="ai_robot_ws工作空间目录职责" src="../../assets/S1-1-M0/S1-1-M0-L1-02_工作空间与目录.svg"></a></p>
+<p>图1：<code>ai_robot_ws</code>目录职责。左侧是按项目规则维护的权威源文件和资料，右侧是由构建与测试过程生成的空间。图片较小时可点击查看原图。</p>
+<h2 id="2-ros-2">2. 什么是ROS 2工作空间<a class="headerlink" href="#2-ros-2" title="Permanent link">&para;</a></h2>
+<p>ROS 2工作空间是组织、构建、安装和测试一组ROS 2程序包的目录。当前项目的工作空间根目录是：</p>
+<pre><code class="language-text">/home/ubuntu/ai_robot_ws
+</code></pre>
+<p>它同时也是本项目Git仓库的根目录。工作空间根目录下既包含ROS 2标准目录，也包含项目治理、教材、资源和测试目录。</p>
+<h3 id="21">2.1 如何确认工作空间根目录<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>在终端中可以执行以下只读命令：</p>
+<pre><code class="language-bash">pwd
+git rev-parse --show-toplevel
+</code></pre>
+<p>在本项目中，两条命令预期都指向：</p>
+<pre><code class="language-text">/home/ubuntu/ai_robot_ws
+</code></pre>
+<p>还可以检查几个根目录标志：</p>
+<pre><code class="language-bash">test -f AGENTS.md
+test -f README.md
+test -d src
+test -d config
+test -d tests
+</code></pre>
+<p>这些检查没有输出且退出码为0，表示相应路径存在。单独看到一个<code>src/</code>目录并不能证明它就是本项目根目录，还应结合Git根目录和项目规则文件判断。</p>
+<h3 id="22-ros-2">2.2 系统ROS 2与项目工作空间<a class="headerlink" href="#22-ros-2" title="Permanent link">&para;</a></h3>
+<p>本项目运行在两个叠加环境之上：</p>
+<pre><code class="language-text">/opt/ros/humble
+    ↓ 系统ROS 2基础环境
+/home/ubuntu/ai_robot_ws/install
+    ↓ 当前项目安装空间
+项目节点、Launch、接口和资源
+</code></pre>
+<p>构建前，项目脚本加载系统ROS 2环境：</p>
+<pre><code class="language-bash">source /opt/ros/humble/setup.bash
+</code></pre>
+<p>构建完成后，需要加载项目安装空间：</p>
+<pre><code class="language-bash">source /home/ubuntu/ai_robot_ws/install/setup.bash
+</code></pre>
+<p>加载环境只是让当前Shell能够找到已安装的程序包、可执行文件和资源，不会修改源码。</p>
+<h2 id="3-ros-2">3. ROS 2工作空间的四个核心目录<a class="headerlink" href="#3-ros-2" title="Permanent link">&para;</a></h2>
+<h3 id="31-src">3.1 <code>src/</code>：源码空间<a class="headerlink" href="#31-src" title="Permanent link">&para;</a></h3>
+<p><code>src/</code>保存供colcon发现和构建的ROS 2程序包源文件。当前<code>colcon list</code>识别出五个程序包：</p>
+<pre><code class="language-text">ai_robot_cpp_example
+ai_robot_description
+ai_robot_interfaces
+ai_robot_py_example
+ai_robot_sim
+</code></pre>
+<p>程序包通常通过<code>package.xml</code>以及<code>CMakeLists.txt</code>或<code>setup.py</code>声明自身。<code>src/</code>中存在目录不等于它已经是可构建程序包；例如预留目录只有在具备有效程序包清单后，才会出现在<code>colcon list</code>结果中。</p>
+<p><code>src/</code>中的典型权威源文件包括：</p>
+<ul>
+<li>C++和Python节点源代码；</li>
+<li><code>package.xml</code>依赖与元数据；</li>
+<li><code>CMakeLists.txt</code>或<code>setup.py</code>构建安装规则；</li>
+<li>Launch文件；</li>
+<li>URDF/Xacro机器人模型；</li>
+<li>程序包随运行安装的世界、地图和其他资源；</li>
+<li>程序包内部测试。</li>
+</ul>
+<p>修改这些文件时应遵守当前里程碑、接口、安全和测试规则。</p>
+<h3 id="32-build">3.2 <code>build/</code>：构建中间空间<a class="headerlink" href="#32-build" title="Permanent link">&para;</a></h3>
+<p><code>build/</code>由colcon创建，通常按程序包保存：</p>
+<ul>
+<li>CMake缓存和编译中间产物；</li>
+<li>Python构建元数据；</li>
+<li>测试结果；</li>
+<li>colcon生成的内部文件。</li>
+</ul>
+<p><code>build/</code>不是源码目录。出现编译错误时可以读取其中的测试结果或构建信息辅助诊断，但不应直接编辑里面的文件来“修复”项目。</p>
+<p>原因是这些文件由构建过程生成，下一次构建可能覆盖修改；真正的修复应回到<code>src/</code>、<code>config/</code>或构建脚本中的权威源文件。</p>
+<h3 id="33-install">3.3 <code>install/</code>：安装与运行空间<a class="headerlink" href="#33-install" title="Permanent link">&para;</a></h3>
+<p><code>install/</code>保存构建完成后可供ROS 2运行和发现的内容，包括：</p>
+<ul>
+<li><code>setup.bash</code>、<code>local_setup.bash</code>等环境脚本；</li>
+<li>每个程序包安装后的可执行文件和Python模块；</li>
+<li><code>share/&lt;package&gt;/</code>中的Launch、配置、模型、地图及程序包清单；</li>
+<li>ROS 2索引需要的资源。</li>
+</ul>
+<p>当前项目使用colcon默认的隔离安装布局，因此通常能看到：</p>
+<pre><code class="language-text">install/&lt;package_name&gt;/
+</code></pre>
+<p><code>install/</code>中的文件是安装副本，不是首选编辑位置。修改安装副本即使暂时生效，也会在重新构建后丢失，并且Git无法正确记录源文件变化。</p>
+<h3 id="34-log">3.4 <code>log/</code>：构建和测试日志空间<a class="headerlink" href="#34-log" title="Permanent link">&para;</a></h3>
+<p><code>log/</code>保存colcon构建、测试和结果汇总产生的日志。排错时常用：</p>
+<pre><code class="language-text">log/latest_build/
+log/latest_test/
+</code></pre>
+<p>不同版本的colcon和不同命令可能生成略有不同的子目录，但基本用途相同：</p>
+<ul>
+<li>查看实际执行的构建或测试命令；</li>
+<li>查看标准输出和错误输出；</li>
+<li>确定哪个程序包首先失败；</li>
+<li>保留一次运行的诊断线索。</li>
+</ul>
+<p><code>log/</code>可以读取和引用为临时诊断依据，但它不是规划、源码或正式测试证据的替代品。需要长期保留的人工证据应按模板写入<code>tests/evidence/</code>。</p>
+<h3 id="35">3.5 四个目录之间的关系<a class="headerlink" href="#35" title="Permanent link">&para;</a></h3>
+<pre><code class="language-text">src/中的程序包源文件
+        |
+        | ./scripts/build.sh
+        v
+build/中的构建中间产物
+        |
+        v
+install/中的可运行安装结果
+
+构建和测试过程
+        |
+        v
+log/中的诊断日志
+</code></pre>
+<p>项目的<code>./scripts/build.sh</code>明确把四个路径固定为：</p>
+<pre><code class="language-text">--base-paths   /home/ubuntu/ai_robot_ws/src
+--build-base   /home/ubuntu/ai_robot_ws/build
+--install-base /home/ubuntu/ai_robot_ws/install
+--log-base     /home/ubuntu/ai_robot_ws/log
+</code></pre>
+<p>因此，本项目不依赖“当前碰巧在哪个目录执行”来猜测输出位置。</p>
+<h2 id="4">4. 项目扩展目录的实际职责<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>ROS 2只规定工作空间和程序包构建机制。完整机器人项目还需要规划、配置、测试、教材和证据管理。本项目根目录中的主要路径如下。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>路径</th>
+<th>当前职责</th>
+<th>典型内容</th>
+<th>是否直接编辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/</code></td>
+<td>ROS 2程序包源码</td>
+<td>节点、Launch、Action、URDF、世界和程序包资源</td>
+<td>按任务和规则编辑</td>
+</tr>
+<tr>
+<td><code>config/</code></td>
+<td>跨程序包配置基线</td>
+<td>接口、TF、底盘、传感器、EKF、SLAM、AMCL参数</td>
+<td>按任务和测试编辑</td>
+</tr>
+<tr>
+<td><code>resources/</code></td>
+<td>项目级工程资源</td>
+<td>对象资源矩阵、第三方资源卡；预留地图和模型目录</td>
+<td>按资源流程编辑</td>
+</tr>
+<tr>
+<td><code>scripts/</code></td>
+<td>统一操作入口</td>
+<td>环境检查、构建、测试、人工体验和教材渲染脚本</td>
+<td>审查后编辑</td>
+</tr>
+<tr>
+<td><code>tests/</code></td>
+<td>工作空间级验证</td>
+<td>单元、Launch、契约、场景测试和证据模板</td>
+<td>按测试目标编辑</td>
+</tr>
+<tr>
+<td><code>plan/</code></td>
+<td>当前有效规划</td>
+<td>总计划、ROS 2规划、学习计划</td>
+<td>正文修改必须升版归档</td>
+</tr>
+<tr>
+<td><code>plan/bks/</code></td>
+<td>历史规划</td>
+<td>被新版本替代的规划</td>
+<td>只读，不回写历史</td>
+</tr>
+<tr>
+<td><code>learning/</code></td>
+<td>正式学习教材体系</td>
+<td>Markdown源稿、图片、HTML和教材归档</td>
+<td>按教材版本规则编辑</td>
+</tr>
+<tr>
+<td><code>mem/当前状态.md</code></td>
+<td>当前动态状态</td>
+<td>当前阶段、目标、依据、风险和下一步</td>
+<td>状态变化时更新</td>
+</tr>
+<tr>
+<td><code>mem/备忘-*.md</code></td>
+<td>历史决策与结果</td>
+<td>任务结论、验证结果和纠错记录</td>
+<td>新建后不改历史</td>
+</tr>
+<tr>
+<td><code>skills/</code></td>
+<td>执行与会话规则</td>
+<td><code>会话管理协议.md</code></td>
+<td>修改前备份并升版</td>
+</tr>
+<tr>
+<td><code>docs/</code></td>
+<td>本地参考与规则备份</td>
+<td>技术参考、原稿和备份</td>
+<td>本地使用，不上传GitHub</td>
+</tr>
+<tr>
+<td><code>README.md</code></td>
+<td>项目入口说明</td>
+<td>环境、目录、命令和安全边界</td>
+<td>按项目变化更新</td>
+</tr>
+<tr>
+<td><code>AGENTS.md</code></td>
+<td>项目执行规则</td>
+<td>启动、版本、测试和安全要求</td>
+<td>修改前备份并升版</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="41">4.1 配置在哪里<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p>当前主要配置位于<code>config/</code>根目录，例如：</p>
+<pre><code class="language-text">config/ros_interface_baseline.yaml
+config/tf_frame_baseline.yaml
+config/sim_base.yaml
+config/sim_sensors.yaml
+config/ekf_sim.yaml
+config/slam_sim.yaml
+config/amcl_sim.yaml
+</code></pre>
+<p>这些文件是项目维护的配置源。<code>ai_robot_sim/setup.py</code>在构建时把部分配置安装到：</p>
+<pre><code class="language-text">install/ai_robot_sim/share/ai_robot_sim/config/
+</code></pre>
+<p>如果运行时使用安装后的配置，应修改<code>config/</code>中的源文件、重新构建，再重新加载工作空间；不要把<code>install/.../config/</code>当成长期编辑位置。</p>
+<h3 id="42">4.2 模型、世界和地图在哪里<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p>机器人模型源文件：</p>
+<pre><code class="language-text">src/ai_robot_description/urdf/ai_robot.urdf.xacro
+</code></pre>
+<p>当前仿真世界和导航地图：</p>
+<pre><code class="language-text">src/ai_robot_sim/worlds/s1_m5_navigation.world
+src/ai_robot_sim/maps/s1_m5_navigation.yaml
+src/ai_robot_sim/maps/s1_m5_navigation.pgm
+</code></pre>
+<p>这些资源属于程序包运行内容，构建后会安装到对应程序包的<code>share/</code>目录。<code>resources/maps/</code>和<code>resources/models/</code>是项目级资源预留位置；判断实际运行使用哪一份资源时，应继续查看Launch文件和程序包安装规则，不能只根据目录名称猜测。</p>
+<h3 id="43">4.3 操作入口和测试在哪里<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<p>统一入口：</p>
+<pre><code class="language-text">scripts/check_environment.sh
+scripts/build.sh
+scripts/test.sh
+scripts/start_m5_m6_manual_experience.sh
+</code></pre>
+<p>测试目录按责任范围划分：</p>
+<pre><code class="language-text">src/&lt;package&gt;/test/  单包单元、资源契约和包级Launch测试
+tests/contract/      工作空间公共接口、配置和结构契约
+tests/integration/   多包、ROS图和第三方组件组合测试
+tests/system/        整机端到端与Gate测试
+tests/scenario/      人工场景与观察说明
+tests/evidence/      rosbag和人工证据模板
+</code></pre>
+<p>完整规则见<code>tests/README.md</code>。执行项目前应优先采用已经审查的脚本和测试入口。直接拼接一组不同参数的命令，可能绕过项目环境选择、安全入口或证据要求。</p>
+<h2 id="5">5. 权威源文件与安装副本<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>判断一个文件是否应该修改，可以沿以下顺序检查：</p>
+<pre><code class="language-text">文件位于build/、install/或log/？
+    |
+    +-- 是：默认视为生成文件，只读观察
+    |
+    +-- 否：它是否位于plan/bks/、教材bks/或历史备忘？
+            |
+            +-- 是：历史归档，只读
+            |
+            +-- 否：它是否位于src/、config/、scripts/、tests/等受管目录？
+                    |
+                    +-- 是：可能是权威源文件，但仍需符合当前任务和修改规则
+                    |
+                    +-- 否：先查README、规划和Git状态，不猜测
+</code></pre>
+<p>一个实用判断是查看文件是否被Git跟踪：</p>
+<pre><code class="language-bash">git ls-files -- path/to/file
+</code></pre>
+<p>有输出表示它被Git管理，但“被Git管理”不自动等于“当前任务允许修改”。例如历史规划同样被Git管理，却不能回写。</p>
+<h2 id="6">6. 可以编辑、只读观察和应当忽略的目录<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 可以按任务编辑<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>src/</code>中的程序包源文件；</li>
+<li><code>config/</code>中的配置源；</li>
+<li><code>scripts/</code>中的项目脚本；</li>
+<li><code>tests/</code>中的测试和证据模板；</li>
+<li><code>resources/</code>中的受控资源；</li>
+<li>当前有效的<code>plan/</code>、<code>learning/</code>、<code>mem/当前状态.md</code>和规则文件，但必须遵守各自版本要求。</li>
+</ul>
+<p>“可以编辑”不表示可以随意修改。仍需有明确任务、保留版本历史并执行相应测试。</p>
+<h3 id="62">6.2 只读观察或按流程再生<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>build/</code>；</li>
+<li><code>install/</code>；</li>
+<li><code>log/</code>；</li>
+<li><code>plan/bks/</code>；</li>
+<li>课程<code>bks/</code>；</li>
+<li>已形成的历史备忘。</li>
+</ul>
+<p>前三项是构建生成空间，后三项是历史记录。它们只读的原因不同，不能混为一类。</p>
+<h3 id="63">6.3 不作为工程源码的本机目录<a class="headerlink" href="#63" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>.git/</code>：Git内部数据库，不手工编辑；</li>
+<li><code>.pytest_cache/</code>、<code>__pycache__/</code>：测试或Python缓存；</li>
+<li><code>.agents/</code>、<code>.codex/</code>：工具管理的隐藏状态，不作为当前项目规划和源码依据；</li>
+<li><code>docs/</code>：本项目约定为本地参考与备份目录，被<code>.gitignore</code>排除，不上传GitHub。</li>
+</ul>
+<p>缓存和工具状态即使出现在工作空间根目录，也不属于机器人功能实现。</p>
+<h2 id="7">7. 只读观察方法<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>以下命令用于学习和定位，不修改工程：</p>
+<h3 id="71">7.1 查看顶层结构<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">find . -maxdepth 1 -mindepth 1 -printf '%f\n' | sort
+</code></pre>
+<h3 id="72-git">7.2 列出Git管理的文件<a class="headerlink" href="#72-git" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">git ls-files
+</code></pre>
+<h3 id="73">7.3 快速查找文件<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">rg --files src config scripts tests resources
+</code></pre>
+<p>例如查找Launch文件：</p>
+<pre><code class="language-bash">rg --files src tests | rg 'launch|launch.py'
+</code></pre>
+<h3 id="74-colcon">7.4 列出colcon识别的程序包<a class="headerlink" href="#74-colcon" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">source /opt/ros/humble/setup.bash
+colcon list
+</code></pre>
+<p>当前预期识别五个程序包。程序包职责和内部结构将在S1-1-M1-L1-01详细学习。</p>
+<h3 id="75">7.5 检查当前修改<a class="headerlink" href="#75" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">git status --short
+</code></pre>
+<p>学习观察开始和结束时都可以执行。若出现未预期修改，应先停止并确定来源，不应直接删除或覆盖。</p>
+<h2 id="8">8. 常见问题与首查位置<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<h3 id="81">8.1 修改了配置，但运行结果没有变化<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<p>首查：</p>
+<ol>
+<li>修改的是<code>config/</code>或程序包中的源文件，还是<code>install/</code>副本；</li>
+<li>修改后是否重新执行<code>./scripts/build.sh</code>；</li>
+<li>当前Shell是否重新加载<code>install/setup.bash</code>；</li>
+<li>Launch文件实际引用的是哪个路径。</li>
+</ol>
+<h3 id="82-ros2-runros2-launch">8.2 <code>ros2 run</code>或<code>ros2 launch</code>找不到项目程序包<a class="headerlink" href="#82-ros2-runros2-launch" title="Permanent link">&para;</a></h3>
+<p>首查：</p>
+<ol>
+<li><code>./scripts/build.sh</code>是否通过；</li>
+<li><code>install/setup.bash</code>是否存在；</li>
+<li>当前终端是否加载系统ROS 2和项目安装空间；</li>
+<li><code>colcon list</code>是否能识别相应程序包。</li>
+</ol>
+<h3 id="83-srccolcon-list">8.3 一个<code>src/</code>子目录没有出现在<code>colcon list</code><a class="headerlink" href="#83-srccolcon-list" title="Permanent link">&para;</a></h3>
+<p>目录可能只是预留边界，还没有<code>package.xml</code>和构建清单。不要因为目录名像程序包就假定它已经可构建。</p>
+<h3 id="84-gitbuildinstalllog">8.4 Git中没有看到<code>build/</code>、<code>install/</code>和<code>log/</code><a class="headerlink" href="#84-gitbuildinstalllog" title="Permanent link">&para;</a></h3>
+<p>这是正常现象。这三个目录由构建过程生成，已经写入<code>.gitignore</code>，不应作为普通源码提交。</p>
+<h3 id="85-docsgit">8.5 在<code>docs/</code>中看到重要文件，为什么Git没有跟踪<a class="headerlink" href="#85-docsgit" title="Permanent link">&para;</a></h3>
+<p>本项目根据用户要求把<code>docs/</code>作为本地参考和备份目录，不上传GitHub。当前有效规划、教材、状态和规则应分别从<code>plan/</code>、<code>learning/</code>、<code>mem/</code>、<code>skills/</code>和<code>AGENTS.md</code>读取，不能把<code>docs/</code>中的原稿自动当成有效版本。</p>
+<h2 id="9">9. 本单元总结<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>/home/ubuntu/ai_robot_ws</code>同时是ROS 2工作空间根目录和Git仓库根目录。</li>
+<li><code>src/</code>保存程序包源文件，<code>build/</code>保存中间产物，<code>install/</code>保存可运行安装结果，<code>log/</code>保存构建和测试日志。</li>
+<li>修改应回到权威源文件；<code>build/</code>、<code>install/</code>和<code>log/</code>不得作为长期编辑位置。</li>
+<li><code>config/</code>、<code>resources/</code>、<code>scripts/</code>和<code>tests/</code>分别管理配置、工程资源、受控入口和验证。</li>
+<li><code>plan/</code>、<code>learning/</code>、<code>mem/</code>和<code>skills/</code>分别管理规划、教材、状态备忘和执行规则，并有不同的版本与历史保护要求。</li>
+<li>同名文件出现于源码和安装空间时，应通过Launch引用与安装规则确认真实来源。</li>
+</ol>
+<h2 id="10">10. 理解检查<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<p>请用自己的话回答：</p>
+<ol>
+<li>如何确认当前终端位于本项目工作空间根目录？</li>
+<li><code>src/</code>、<code>build/</code>、<code>install/</code>和<code>log/</code>各自保存什么？</li>
+<li>为什么不能直接修改<code>install/ai_robot_sim/share/ai_robot_sim/config/</code>中的配置？</li>
+<li>当前机器人模型、仿真世界和导航地图的源文件分别在哪里？</li>
+<li><code>plan/bks/</code>与<code>build/</code>都不应直接修改，但原因有什么不同？</li>
+<li>一个<code>src/</code>子目录为什么可能不会出现在<code>colcon list</code>结果中？</li>
+<li>如果修改源码后<code>ros2 launch</code>仍使用旧行为，应依次检查哪些位置？</li>
+</ol>
+<p>完成理解检查后，先进入S1-1-M0-L2“环境、构建、运行与项目管理”；完成M0学习后再进入S1-1-M1-L1-01“程序包与工程资源”。</p>
+<h2 id="11">11. 项目内依据<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>README.md</code></li>
+<li><code>.gitignore</code></li>
+<li><code>AGENTS.md</code></li>
+<li><code>plan/AI机器人开发项目计划_v1.17.md</code></li>
+<li><code>plan/ROS2机器人开发规划_v1.12.md</code></li>
+<li><code>plan/ROS2仿真机器人学习计划_v1.8.md</code></li>
+<li><code>tests/README.md</code></li>
+<li><code>scripts/build.sh</code></li>
+<li><code>scripts/test.sh</code></li>
+<li><code>src/ai_robot_sim/setup.py</code></li>
+<li><code>tests/test_workspace_layout.sh</code></li>
+<li><code>learning/README.md</code></li>
+<li><code>learning/ROS2仿真机器人/README.md</code></li>
+</ul>
+<h2 id="12">12. 外部参考资料<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>资料名称</th>
+<th>来源</th>
+<th>适用版本</th>
+<th>用途</th>
+<th>链接</th>
+<th>查阅日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What is a Workspace?</td>
+<td>colcon官方文档</td>
+<td>colcon</td>
+<td>理解源码、构建、安装和日志空间</td>
+<td>https://colcon.readthedocs.io/en/released/user/what-is-a-workspace.html</td>
+<td>2026-07-29</td>
+</tr>
+<tr>
+<td>Quick start</td>
+<td>colcon官方文档</td>
+<td>colcon</td>
+<td>理解<code>list</code>、<code>build</code>、<code>test</code>和环境加载顺序</td>
+<td>https://colcon.readthedocs.io/en/main/user/quick-start.html</td>
+<td>2026-07-29</td>
+</tr>
+<tr>
+<td>Log Files</td>
+<td>colcon官方文档</td>
+<td>colcon</td>
+<td>理解构建与测试日志目录</td>
+<td>https://colcon.readthedocs.io/en/released/user/log-files.html</td>
+<td>2026-07-29</td>
+</tr>
+</tbody>
+</table></div>
+<p>外部资料用于解释colcon通用机制。本项目实际目录、构建参数、版本管理和安全边界以“项目内依据”为准。</p>
+      <div class="footer">源文件：S1-1-M0-L1-02_工作空间与目录_v1.4.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

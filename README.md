@@ -1,6 +1,6 @@
 # AI Robot
 
-This repository is the ROS 2 workspace for an indoor differential-drive mobile robot. Simulation milestones `S1-1-M0` through `S1-1-M6` are complete; the current work is the PU1 learning unit before `S1-1-G1`.
+This repository is the ROS 2 workspace for an indoor differential-drive mobile robot. Simulation milestones `S1-1-M0` through `S1-1-M6` are complete; the current work follows the M-aligned ROS 2 learning plan before `S1-1-G1`.
 
 ## Scope
 
