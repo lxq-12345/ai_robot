@@ -1,4 +1,6 @@
+import os
 import subprocess
+import tempfile
 import time
 import unittest
 from pathlib import Path
@@ -14,6 +16,10 @@ from launch_ros.actions import Node
 from rcl_interfaces.srv import GetParameters
 from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
 from tf2_msgs.msg import TFMessage
+
+
+ros_log_dir = tempfile.mkdtemp(prefix="ai_robot_description_ros_log_")
+os.environ.setdefault("ROS_LOG_DIR", ros_log_dir)
 
 
 @pytest.mark.launch_test

@@ -27,6 +27,7 @@ setup(
         ("share/ai_robot_sim/launch", glob("launch/*.py")),
     ],
     install_requires=["setuptools"],
+    tests_require=["pytest"],
     zip_safe=True,
     maintainer="lxq-12345",
     maintainer_email="167375205+lxq-12345@users.noreply.github.com",

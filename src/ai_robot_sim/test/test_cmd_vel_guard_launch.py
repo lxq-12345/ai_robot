@@ -1,13 +1,23 @@
+import os
+import tempfile
 import time
 import unittest
 
 import launch
+import launch.actions
+import launch.events
 import launch_ros.actions
 import launch_testing
+import pytest
 import rclpy
 from geometry_msgs.msg import Twist
 
 
+ros_log_dir = tempfile.mkdtemp(prefix="ai_robot_sim_ros_log_")
+os.environ.setdefault("ROS_LOG_DIR", ros_log_dir)
+
+
+@pytest.mark.launch_test
 def generate_test_description():
     guard = launch_ros.actions.Node(
         package="ai_robot_sim",
@@ -26,6 +36,10 @@ def generate_test_description():
         [
             guard,
             launch_testing.actions.ReadyToTest(),
+            launch.actions.TimerAction(
+                period=10.0,
+                actions=[launch.actions.EmitEvent(event=launch.events.Shutdown())],
+            ),
         ]
     ), {"guard": guard}
 

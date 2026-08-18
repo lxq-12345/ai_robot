@@ -2,6 +2,8 @@ import time
 import unittest
 
 import launch
+import launch.actions
+import launch.events
 import launch_testing
 import pytest
 import rclpy
@@ -19,7 +21,16 @@ def generate_test_description():
 
     return (
         launch.LaunchDescription(
-            [baseline_node, launch_testing.actions.ReadyToTest()]
+            [
+                baseline_node,
+                launch_testing.actions.ReadyToTest(),
+                launch.actions.TimerAction(
+                    period=10.0,
+                    actions=[
+                        launch.actions.EmitEvent(event=launch.events.Shutdown())
+                    ],
+                ),
+            ]
         ),
         {"baseline_node": baseline_node},
     )

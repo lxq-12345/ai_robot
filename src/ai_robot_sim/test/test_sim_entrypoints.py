@@ -1,9 +1,9 @@
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-SIM_LAUNCH = PROJECT_ROOT / "src" / "ai_robot_sim" / "launch" / "sim_bringup.launch.py"
-MANUAL_DEMO = PROJECT_ROOT / "src" / "ai_robot_sim" / "ai_robot_sim" / "manual_motion_demo.py"
+PACKAGE_ROOT = Path(__file__).resolve().parents[1]
+SIM_LAUNCH = PACKAGE_ROOT / "launch" / "sim_bringup.launch.py"
+MANUAL_DEMO = PACKAGE_ROOT / "ai_robot_sim" / "manual_motion_demo.py"
 
 
 def test_sim_bringup_exposes_gui_launch_argument():

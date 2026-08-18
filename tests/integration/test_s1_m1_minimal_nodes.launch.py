@@ -1,6 +1,8 @@
 import unittest
 
 import launch
+import launch.actions
+import launch.events
 import launch_testing
 import pytest
 from launch_ros.actions import Node
@@ -20,7 +22,17 @@ def generate_test_description():
     )
     return (
         launch.LaunchDescription(
-            [cpp_node, python_node, launch_testing.actions.ReadyToTest()]
+            [
+                cpp_node,
+                python_node,
+                launch_testing.actions.ReadyToTest(),
+                launch.actions.TimerAction(
+                    period=10.0,
+                    actions=[
+                        launch.actions.EmitEvent(event=launch.events.Shutdown())
+                    ],
+                ),
+            ]
         ),
         {"cpp_node": cpp_node, "python_node": python_node},
     )

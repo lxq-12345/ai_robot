@@ -1,14 +1,8 @@
-import sys
 import unittest
-from pathlib import Path
 
 from geometry_msgs.msg import Twist
 
-
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(PROJECT_ROOT / "src" / "ai_robot_sim"))
-
-from ai_robot_sim.cmd_vel_guard import VelocityLimit, clamp_twist  # noqa: E402
+from ai_robot_sim.cmd_vel_guard import VelocityLimit, clamp_twist
 
 
 class TestCmdVelGuard(unittest.TestCase):
