@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">AI机器人项目五层架构</title>
+  <desc id="desc">从用户输入，经阶段 2的AI层与AI—ROS 2任务接口层，进入阶段 1的ROS 2机器人软件层，再连接仿真执行层和未来硬件驱动层。阶段 1测试程序直接调用ROS 2机器人能力接口。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#435463"/>
+    </marker>
+    <style>
+      .title { font: 700 30px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #17212b; }
+      .subtitle { font: 400 16px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #52616d; }
+      .layer-title { font: 700 22px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #17212b; }
+      .layer-text { font: 400 15px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #283844; }
+      .tag { font: 700 13px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; }
+      .arrow { stroke: #435463; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="#f6f8fa"/>
+  <text x="600" y="48" text-anchor="middle" class="title">AI机器人项目五层架构</text>
+  <text x="600" y="76" text-anchor="middle" class="subtitle">上层描述任务，ROS 2组织能力，仿真或硬件负责执行</text>
+
+  <rect x="390" y="105" width="420" height="70" rx="6" fill="#ffffff" stroke="#8796a3" stroke-width="2"/>
+  <text x="600" y="135" text-anchor="middle" class="layer-title">用户输入</text>
+  <text x="600" y="159" text-anchor="middle" class="layer-text">文字、语音、图片或视频</text>
+
+  <path d="M600 175 L600 205" class="arrow"/>
+
+  <rect x="300" y="215" width="600" height="88" rx="6" fill="#f7e8a4" stroke="#bd8b18" stroke-width="2"/>
+  <text x="600" y="248" text-anchor="middle" class="layer-title">AI层</text>
+  <text x="600" y="274" text-anchor="middle" class="layer-text">理解用户意图并选择受约束的机器人能力</text>
+  <rect x="755" y="229" width="124" height="25" rx="4" fill="#ffffff" opacity="0.9"/>
+  <text x="817" y="247" text-anchor="middle" class="tag" fill="#8a5c00">阶段 2 未实现</text>
+
+  <path d="M600 303 L600 333" class="arrow"/>
+  <text x="620" y="324" class="subtitle">高层任务计划</text>
+
+  <rect x="300" y="343" width="600" height="88" rx="6" fill="#d8edf8" stroke="#2474a6" stroke-width="2"/>
+  <text x="600" y="376" text-anchor="middle" class="layer-title">AI—ROS 2任务接口层</text>
+  <text x="600" y="402" text-anchor="middle" class="layer-text">语义目标物理化 · 合法性校验 · 能力映射 · 反馈适配</text>
+  <rect x="755" y="357" width="124" height="25" rx="4" fill="#ffffff" opacity="0.9"/>
+  <text x="817" y="375" text-anchor="middle" class="tag" fill="#155d88">阶段 2 未实现</text>
+
+  <path d="M600 431 L600 461" class="arrow"/>
+  <text x="620" y="452" class="subtitle">受约束的机器人能力请求</text>
+
+  <rect x="170" y="471" width="860" height="112" rx="6" fill="#dcefdc" stroke="#39874b" stroke-width="2"/>
+  <text x="600" y="505" text-anchor="middle" class="layer-title">ROS 2机器人软件层（阶段 1）</text>
+  <text x="600" y="533" text-anchor="middle" class="layer-text">能力接口契约 · 非AI任务执行端 · Nav2 · 感知 · 安全</text>
+  <text x="600" y="559" text-anchor="middle" class="layer-text">ExecuteCapabilityTask是下游能力入口，不是完整的AI—ROS 2任务接口层</text>
+
+  <path d="M430 583 L350 633" class="arrow"/>
+  <path d="M770 583 L850 633" class="arrow"/>
+
+  <rect x="90" y="643" width="500" height="86" rx="6" fill="#e8eef3" stroke="#536d80" stroke-width="2"/>
+  <text x="340" y="677" text-anchor="middle" class="layer-title">仿真执行层</text>
+  <text x="340" y="704" text-anchor="middle" class="layer-text">Gazebo底盘、传感器、世界和障碍物</text>
+
+  <rect x="610" y="643" width="500" height="86" rx="6" fill="#f7dfd5" stroke="#a94f32" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="860" y="677" text-anchor="middle" class="layer-title">未来硬件驱动层</text>
+  <text x="860" y="704" text-anchor="middle" class="layer-text">MCU、电机驱动、编码器、实体传感器和急停</text>
+</svg>

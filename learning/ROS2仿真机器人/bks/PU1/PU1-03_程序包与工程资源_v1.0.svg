@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">程序包与工程资源关系</title>
+  <desc id="desc">五个项目程序包位于源码空间，通过配置、脚本、测试和资源卡与ROS 2及第三方成熟组件集成。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#435463"/>
+    </marker>
+    <style>
+      .title { font: 700 30px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #17212b; }
+      .subtitle { font: 400 16px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #52616d; }
+      .group { font: 700 22px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #17212b; }
+      .name { font: 700 17px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #20313d; }
+      .text { font: 400 14px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #344955; }
+      .tag { font: 700 13px "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; }
+      .arrow { stroke: #435463; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="#f6f8fa"/>
+  <text x="600" y="48" text-anchor="middle" class="title">程序包与工程资源关系</text>
+  <text x="600" y="76" text-anchor="middle" class="subtitle">程序包承载运行能力，工程资源规定接口、配置、测试、来源和证据</text>
+
+  <rect x="55" y="108" width="710" height="500" rx="6" fill="#e5f1e8" stroke="#39874b" stroke-width="2"/>
+  <text x="410" y="143" text-anchor="middle" class="group">当前可由colcon识别的项目程序包</text>
+  <rect x="600" y="122" width="140" height="25" rx="4" fill="#ffffff"/>
+  <text x="670" y="140" text-anchor="middle" class="tag" fill="#286b38">共5个，阶段 1</text>
+
+  <rect x="80" y="174" width="315" height="105" rx="5" fill="#ffffff" stroke="#99b6a0"/>
+  <text x="100" y="204" class="name">ai_robot_cpp_example</text>
+  <text x="100" y="230" class="text">ament_cmake最小C++节点</text>
+  <text x="100" y="254" class="text">baseline_node · GTest样例</text>
+
+  <rect x="425" y="174" width="315" height="105" rx="5" fill="#ffffff" stroke="#99b6a0"/>
+  <text x="445" y="204" class="name">ai_robot_py_example</text>
+  <text x="445" y="230" class="text">ament_python最小Python节点</text>
+  <text x="445" y="254" class="text">console_scripts安装入口</text>
+
+  <rect x="80" y="302" width="315" height="105" rx="5" fill="#ffffff" stroke="#99b6a0"/>
+  <text x="100" y="332" class="name">ai_robot_description</text>
+  <text x="100" y="358" class="text">URDF/Xacro机器人模型</text>
+  <text x="100" y="382" class="text">车体、车轮、传感器和Gazebo插件</text>
+
+  <rect x="425" y="302" width="315" height="105" rx="5" fill="#ffffff" stroke="#99b6a0"/>
+  <text x="445" y="332" class="name">ai_robot_interfaces</text>
+  <text x="445" y="358" class="text">项目自定义ROS 2接口</text>
+  <text x="445" y="382" class="text">ExecuteCapabilityTask.action</text>
+
+  <rect x="160" y="430" width="520" height="145" rx="5" fill="#ffffff" stroke="#99b6a0"/>
+  <text x="420" y="462" text-anchor="middle" class="name">ai_robot_sim</text>
+  <text x="420" y="489" text-anchor="middle" class="text">仿真启动、安全守卫、诊断监测、任务执行和人工体验入口</text>
+  <text x="420" y="515" text-anchor="middle" class="text">Launch · Python节点 · 配置安装 · 世界 · 地图</text>
+  <text x="420" y="541" text-anchor="middle" class="text">集成Gazebo、Nav2、SLAM Toolbox、AMCL和robot_localization</text>
+
+  <rect x="805" y="108" width="340" height="222" rx="6" fill="#e8eef3" stroke="#536d80" stroke-width="2"/>
+  <text x="975" y="143" text-anchor="middle" class="group">第三方成熟组件</text>
+  <text x="835" y="180" class="name">系统ROS 2 / apt依赖</text>
+  <text x="835" y="208" class="text">Gazebo ROS插件 · robot_state_publisher</text>
+  <text x="835" y="233" class="text">Nav2 · AMCL · SLAM Toolbox</text>
+  <text x="835" y="258" class="text">robot_localization · 标准消息与Launch</text>
+  <text x="835" y="288" class="text">项目不复制其源码；通过依赖、参数、</text>
+  <text x="835" y="312" class="text">适配节点和契约测试完成集成</text>
+
+  <path d="M805 250 L765 250" class="arrow"/>
+
+  <rect x="805" y="358" width="340" height="250" rx="6" fill="#f7e8df" stroke="#a45e3f" stroke-width="2"/>
+  <text x="975" y="393" text-anchor="middle" class="group">工作空间级工程资源</text>
+  <text x="835" y="432" class="name">config/</text>
+  <text x="930" y="432" class="text">接口、TF、底盘、传感器和算法参数</text>
+  <text x="835" y="468" class="name">tests/</text>
+  <text x="930" y="468" class="text">单元、Launch、契约、场景与证据</text>
+  <text x="835" y="504" class="name">resources/</text>
+  <text x="955" y="504" class="text">对象矩阵、资源卡和准入流程</text>
+  <text x="835" y="540" class="name">scripts/</text>
+  <text x="940" y="540" class="text">环境、构建、测试和受控体验入口</text>
+  <text x="835" y="576" class="text">这些资源支持程序包，但不自动成为ROS 2程序包</text>
+
+  <path d="M805 480 L765 480" class="arrow"/>
+
+  <rect x="55" y="642" width="1090" height="72" rx="6" fill="#ffffff" stroke="#8b99a4" stroke-width="2"/>
+  <text x="80" y="674" class="name">预留目录不等于已实现程序包：</text>
+  <text x="330" y="674" class="text">ai_robot_bringup · ai_robot_navigation · ai_robot_perception · ai_robot_hardware · ai_robot_agent</text>
+  <text x="80" y="698" class="text">只有具备有效package.xml和构建清单并出现在colcon list中，才按当前程序包讲解。</text>
+</svg>
