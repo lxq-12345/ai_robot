@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M1-L3-01 实体迁移概览</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 本单元要解决什么问题</a></li>
+<li><a href="#2">2. 三类迁移内容</a><ul>
+<li><a href="#21">2.1 原则上可复用</a></li>
+<li><a href="#22">2.2 必须替换</a></li>
+<li><a href="#23">2.3 必须新增或强化</a></li>
+</ul>
+</li>
+<li><a href="#3">3. 底盘迁移</a><ul>
+<li><a href="#31">3.1 仿真阶段</a></li>
+<li><a href="#32">3.2 实体阶段</a></li>
+<li><a href="#33">3.3 必须重新验证</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 传感器迁移</a><ul>
+<li><a href="#41">4.1 雷达</a></li>
+<li><a href="#42">4.2 相机</a></li>
+<li><a href="#43-imu">4.3 IMU</a></li>
+<li><a href="#44">4.4 编码器</a></li>
+</ul>
+</li>
+<li><a href="#5-tf">5. 模型、TF与标定迁移</a></li>
+<li><a href="#6">6. 上层算法如何复用</a><ul>
+<li><a href="#61">6.1 融合</a></li>
+<li><a href="#62-slam">6.2 SLAM与定位</a></li>
+<li><a href="#63-nav2">6.3 Nav2</a></li>
+<li><a href="#64">6.4 结构化能力任务</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 接口稳定不等于参数不变</a></li>
+<li><a href="#8">8. 实体安全是新增的独立层</a></li>
+<li><a href="#9-gate">9. 迁移顺序与Gate约束</a><ul>
+<li><a href="#91-s1-1-g1gate">9.1 S1-1-G1：进入实体开发的前置Gate</a></li>
+<li><a href="#92-s1-2-m0s1-2-m4">9.2 S1-2-M0至S1-2-M4</a></li>
+<li><a href="#93-s1-2-g1-1">9.3 S1-2-G1：阶段 1验收</a></li>
+</ul>
+</li>
+<li><a href="#10">10. 迁移验证矩阵</a></li>
+<li><a href="#11">11. 常见理解误区</a><ul>
+<li><a href="#1_1">误区1：仿真通过后，实体只需安装驱动</a></li>
+<li><a href="#2topic">误区2：Topic名称和类型一致就代表完全兼容</a></li>
+<li><a href="#3_1">误区3：软件安全停车可以替代硬件急停</a></li>
+<li><a href="#4_1">误区4：上层算法复用就不必重新调参</a></li>
+<li><a href="#5">误区5：本章已经确定了实体硬件方案</a></li>
+</ul>
+</li>
+<li><a href="#12">12. 本单元总结</a></li>
+<li><a href="#13">13. 理解检查</a></li>
+<li><a href="#14">14. 项目内依据</a></li>
+<li><a href="#15">15. 外部参考资料</a><ul>
+<li><a href="#1-writing-a-hardware-component">1. Writing a Hardware Component</a></li>
+<li><a href="#2-gazebo_ros2_control">2. gazebo_ros2_control</a></li>
+<li><a href="#3-rep-105-coordinate-frames-for-mobile-platforms">3. REP 105: Coordinate Frames for Mobile Platforms</a></li>
+<li><a href="#4-navigation-concepts">4. Navigation Concepts</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 本单元要解决什么问题</a></li>
+<li><a href="#2">2. 三类迁移内容</a><ul>
+<li><a href="#21">2.1 原则上可复用</a></li>
+<li><a href="#22">2.2 必须替换</a></li>
+<li><a href="#23">2.3 必须新增或强化</a></li>
+</ul>
+</li>
+<li><a href="#3">3. 底盘迁移</a><ul>
+<li><a href="#31">3.1 仿真阶段</a></li>
+<li><a href="#32">3.2 实体阶段</a></li>
+<li><a href="#33">3.3 必须重新验证</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 传感器迁移</a><ul>
+<li><a href="#41">4.1 雷达</a></li>
+<li><a href="#42">4.2 相机</a></li>
+<li><a href="#43-imu">4.3 IMU</a></li>
+<li><a href="#44">4.4 编码器</a></li>
+</ul>
+</li>
+<li><a href="#5-tf">5. 模型、TF与标定迁移</a></li>
+<li><a href="#6">6. 上层算法如何复用</a><ul>
+<li><a href="#61">6.1 融合</a></li>
+<li><a href="#62-slam">6.2 SLAM与定位</a></li>
+<li><a href="#63-nav2">6.3 Nav2</a></li>
+<li><a href="#64">6.4 结构化能力任务</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 接口稳定不等于参数不变</a></li>
+<li><a href="#8">8. 实体安全是新增的独立层</a></li>
+<li><a href="#9-gate">9. 迁移顺序与Gate约束</a><ul>
+<li><a href="#91-s1-1-g1gate">9.1 S1-1-G1：进入实体开发的前置Gate</a></li>
+<li><a href="#92-s1-2-m0s1-2-m4">9.2 S1-2-M0至S1-2-M4</a></li>
+<li><a href="#93-s1-2-g1-1">9.3 S1-2-G1：阶段 1验收</a></li>
+</ul>
+</li>
+<li><a href="#10">10. 迁移验证矩阵</a></li>
+<li><a href="#11">11. 常见理解误区</a><ul>
+<li><a href="#1_1">误区1：仿真通过后，实体只需安装驱动</a></li>
+<li><a href="#2topic">误区2：Topic名称和类型一致就代表完全兼容</a></li>
+<li><a href="#3_1">误区3：软件安全停车可以替代硬件急停</a></li>
+<li><a href="#4_1">误区4：上层算法复用就不必重新调参</a></li>
+<li><a href="#5">误区5：本章已经确定了实体硬件方案</a></li>
+</ul>
+</li>
+<li><a href="#12">12. 本单元总结</a></li>
+<li><a href="#13">13. 理解检查</a></li>
+<li><a href="#14">14. 项目内依据</a></li>
+<li><a href="#15">15. 外部参考资料</a><ul>
+<li><a href="#1-writing-a-hardware-component">1. Writing a Hardware Component</a></li>
+<li><a href="#2-gazebo_ros2_control">2. gazebo_ros2_control</a></li>
+<li><a href="#3-rep-105-coordinate-frames-for-mobile-platforms">3. REP 105: Coordinate Frames for Mobile Platforms</a></li>
+<li><a href="#4-navigation-concepts">4. Navigation Concepts</a></li>
+</ul>
+</li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m1-l3-01">S1-1-M1-L3-01 实体迁移概览<a class="headerlink" href="#s1-1-m1-l3-01" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M1 资源、接口与测试基线<br>\n&gt; 所属学习子单元：S1-1-M1-L3 仿真到实体的接口基线<br>
+教材单元：5/5<br>
+版本：v1.0<br>
+适用项目：<code>/home/ubuntu/ai_robot_ws</code><br>
+适用环境：Ubuntu 22.04、ROS 2 Humble<br>
+学习边界：只建立仿真到实体的总体迁移认识；不确定硬件品牌，不开发驱动，不对实体机器人上电、运动、发布控制命令或执行硬件测试。</p>
+</blockquote>
+<h2 id="1">1. 本单元要解决什么问题<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>从仿真机器人迁移到实体机器人，不是把Gazebo关闭后启动几个驱动就结束。正确目标是：</p>
+<blockquote>
+<p>尽量保持经过验收的ROS 2接口和上层能力稳定，用实体底盘、传感器驱动及硬件安全机制替换仿真执行来源，再在真实物理条件下重新标定和验收。</p>
+</blockquote>
+<p>完成本单元后，您应能：</p>
+<ol>
+<li>说明仿真插件与实体设备或驱动的大致对应关系；</li>
+<li>区分原则上可复用、必须替换和必须新增的内容；</li>
+<li>解释为什么相同Topic名称不代表实体能力自动通过；</li>
+<li>说明实体阶段必须补充的协议、标定、电源、时延和安全工作；</li>
+<li>说明<code>S1-1-G1</code>、<code>S1-2-M0</code>至<code>S1-2-M4</code>、<code>S1-2-G1</code>的顺序；</li>
+<li>明确当前学习不构成任何实体硬件操作授权。</li>
+</ol>
+<p><a href="../../assets/S1-1-M1/S1-1-M1-L3-01_实体迁移概览.svg"><img alt="实体迁移概览" src="../../assets/S1-1-M1/S1-1-M1-L3-01_实体迁移概览.svg"></a></p>
+<p>图1：从仿真实现经过稳定ROS 2契约迁移到实体实现，并重新完成安全与能力验收。</p>
+<h2 id="2">2. 三类迁移内容<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 原则上可复用<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>在接口契约保持兼容的前提下，以下内容原则上可继续使用：</p>
+<ul>
+<li>Topic、消息、Action及错误语义；</li>
+<li><code>map → odom → base_link → sensor_link</code>的TF语义；</li>
+<li><code>robot_state_publisher</code>及机器人描述组织方式；</li>
+<li><code>robot_localization</code>融合框架；</li>
+<li>SLAM Toolbox、地图管理、AMCL和Nav2；</li>
+<li>阶段 1结构化能力Action与任务状态逻辑；</li>
+<li>Launch组合方式、诊断框架、rosbag流程和测试分层；</li>
+<li>面向公共接口的契约测试和一部分场景测试。</li>
+</ul>
+<p>“原则上可复用”有两个前提：</p>
+<ol>
+<li><code>S1-1-G1</code>对实体接口形成明确冻结结论；</li>
+<li>实体实现重新通过接口、时序、精度、安全和场景验收。</li>
+</ol>
+<p>它不表示配置无需改变，也不表示仿真测试结果可以替代实体测试。</p>
+<h3 id="22">2.2 必须替换<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>仿真实现</th>
+<th>实体实现方向</th>
+<th>保持的抽象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gazebo差速插件</td>
+<td>MCU通信、底盘硬件接口、电机驱动和编码器</td>
+<td>接收安全速度，发布里程计和设备状态</td>
+</tr>
+<tr>
+<td>Gazebo雷达插件</td>
+<td>具体雷达的ROS 2驱动或适配节点</td>
+<td>发布<code>LaserScan</code>及正确Frame</td>
+</tr>
+<tr>
+<td>Gazebo相机插件</td>
+<td>USB、网络或专用相机驱动</td>
+<td>发布图像和相机标定信息</td>
+</tr>
+<tr>
+<td>Gazebo IMU插件</td>
+<td>实体IMU驱动</td>
+<td>发布角速度、加速度、方向和协方差</td>
+</tr>
+<tr>
+<td>Gazebo世界与物理</td>
+<td>真实场地、摩擦、载荷和动态障碍</td>
+<td>上层场景目标与安全约束</td>
+</tr>
+<tr>
+<td>仿真时间</td>
+<td>系统时钟及可能的设备硬件时钟</td>
+<td>时间戳单调、可比较、可同步</td>
+</tr>
+</tbody>
+</table></div>
+<p>替换的是数据和执行的来源，不是随意更改公共接口。</p>
+<h3 id="23">2.3 必须新增或强化<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>实体阶段必须增加仿真无法完整代表的内容：</p>
+<ul>
+<li>MCU协议、串口、CAN、USB或Ethernet通信；</li>
+<li>电机驱动、编码器计数、设备状态和底层故障码；</li>
+<li>电源、电池、保险、供电裕量、散热和带宽核算；</li>
+<li>硬件急停、安全回路、通信失联停车和底层速度限制；</li>
+<li>真实尺寸、轮径、轮距、传感器外参和IMU方向标定；</li>
+<li>时延、丢包、抖动、断连、温度、供电和设备重连测试；</li>
+<li>架空、低速、限定区域和有人监护的现场测试流程；</li>
+<li>安装、维护、故障诊断、版本锁定和回退证据。</li>
+</ul>
+<h2 id="3">3. 底盘迁移<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 仿真阶段<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p>当前Gazebo差速插件：</p>
+<ul>
+<li>接收<code>/cmd_vel</code>；</li>
+<li>根据轮径、轮距和动力学驱动车轮；</li>
+<li>发布<code>/odom</code>；</li>
+<li>发布<code>odom → base_link</code>；</li>
+<li>由关节状态插件发布车轮关节状态。</li>
+</ul>
+<h3 id="32">3.2 实体阶段<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<p>实体底盘通常需要一个硬件驱动或<code>ros2_control</code>硬件组件：</p>
+<pre><code class="language-text">/cmd_vel
+→ 安全监督
+→ 底盘控制器或硬件接口
+→ MCU协议
+→ 电机驱动器
+→ 电机与车轮
+
+编码器
+→ MCU或驱动
+→ 硬件接口
+→ /odom与设备状态
+</code></pre>
+<p>具体采用哪种控制器、总线和协议，要在硬件选型后决定。当前教材不能把<code>ros2_control</code>、CAN或某个厂商驱动写成已确定方案。</p>
+<h3 id="33">3.3 必须重新验证<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<ul>
+<li>左右轮方向、编码器正负号和计数比例；</li>
+<li>真实轮径、轮距、减速比和速度上限；</li>
+<li>直线、转向、停车和制动距离；</li>
+<li>命令超时、通信失联、驱动故障和急停；</li>
+<li>里程计方向、尺度、协方差和TF发布责任；</li>
+<li>地面摩擦、轮滑、负载、电量对运动的影响。</li>
+</ul>
+<h2 id="4">4. 传感器迁移<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 雷达<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p>仿真雷达插件被实体雷达驱动替换，但上层仍希望获得：</p>
+<pre><code class="language-text">/scan
+sensor_msgs/msg/LaserScan
+frame_id: laser_link
+</code></pre>
+<p>实体阶段需验证扫描角度、距离范围、频率、遮挡、反射异常、时间戳、QoS和安装外参。</p>
+<h3 id="42">4.2 相机<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p>仿真相机插件被实体相机驱动替换，上层接口原则上保持<code>/camera/image_raw</code>和<code>/camera/camera_info</code>。实体阶段还需处理曝光、畸变、帧率、编码、带宽、标定、USB或网络稳定性。</p>
+<h3 id="43-imu">4.3 IMU<a class="headerlink" href="#43-imu" title="Permanent link">&para;</a></h3>
+<p>仿真IMU插件被实体IMU驱动替换。必须核对坐标轴方向、单位、重力、零偏、漂移、协方差、时间戳和安装方向。错误的轴向或协方差会直接影响EKF、定位和导航。</p>
+<h3 id="44">4.4 编码器<a class="headerlink" href="#44" title="Permanent link">&para;</a></h3>
+<p>仿真插件内部生成的轮运动反馈，在实体阶段来自真实编码器。需要确认：</p>
+<ul>
+<li>每转计数与减速比；</li>
+<li>左右轮正方向；</li>
+<li>溢出和重置；</li>
+<li>采样频率与通信时延；</li>
+<li>断线、跳变和异常计数处理。</li>
+</ul>
+<h2 id="5-tf">5. 模型、TF与标定迁移<a class="headerlink" href="#5-tf" title="Permanent link">&para;</a></h2>
+<p>URDF/Xacro结构可以继续使用，但参数必须依据实物测量更新：</p>
+<ul>
+<li>机体长宽高、质量、重心和惯量；</li>
+<li>轮径、轮宽、轮距和轮轴位置；</li>
+<li>雷达、相机和IMU相对<code>base_link</code>的位置与姿态；</li>
+<li>碰撞轮廓和Nav2机器人Footprint；</li>
+<li>传感器外参及其测量方法。</li>
+</ul>
+<p>TF Frame名称和语义应保持稳定，但变换数值必须来自真实安装。实体设备驱动发布的消息<code>frame_id</code>必须与TF树一致。</p>
+<h2 id="6">6. 上层算法如何复用<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 融合<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<p><code>robot_localization</code>可以继续融合编码器里程计和IMU，但输入噪声、协方差、频率和异常特性已经改变，必须重新配置和验证。</p>
+<h3 id="62-slam">6.2 SLAM与定位<a class="headerlink" href="#62-slam" title="Permanent link">&para;</a></h3>
+<p>SLAM Toolbox、地图服务器和AMCL可以继续使用，但实体环境会带来真实反射、轮滑、动态人员、时间同步和计算资源限制。地图精度与定位稳定性必须在目标场地实测。</p>
+<h3 id="63-nav2">6.3 Nav2<a class="headerlink" href="#63-nav2" title="Permanent link">&para;</a></h3>
+<p>Nav2的软件结构和Action原则上可复用，但至少要重新核对：</p>
+<ul>
+<li>机器人尺寸和Footprint；</li>
+<li>速度、加速度、转向与制动距离；</li>
+<li>里程计与定位误差；</li>
+<li>全局和局部Costmap；</li>
+<li>障碍层、膨胀半径、规划器和控制器；</li>
+<li>网络、设备故障和安全停车对导航的影响。</li>
+</ul>
+<h3 id="64">6.4 结构化能力任务<a class="headerlink" href="#64" title="Permanent link">&para;</a></h3>
+<p><code>ExecuteCapabilityTask</code>的任务ID、目标、反馈、结果和错误语义原则上可以继续使用。底层导航、感知、设备状态和安全证据必须换成实体系统的真实结果，并在<code>S1-2-G1</code>前完成冻结和验收。</p>
+<h2 id="7">7. 接口稳定不等于参数不变<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>迁移时可保持：</p>
+<pre><code class="language-text">/cmd_vel        geometry_msgs/msg/Twist
+/odom           nav_msgs/msg/Odometry
+/scan           sensor_msgs/msg/LaserScan
+/camera/*       sensor_msgs图像接口
+/imu/data       sensor_msgs/msg/Imu
+</code></pre>
+<p>但以下内容通常必须重新确定：</p>
+<ul>
+<li>QoS是否适应实体网络和设备发布方式；</li>
+<li>发布频率、时延、超时和数据新鲜度阈值；</li>
+<li>速度、加速度和安全距离；</li>
+<li>传感器噪声、协方差和滤波参数；</li>
+<li>TF数值、机器人轮廓和地图分辨率；</li>
+<li>设备故障码、诊断级别和恢复策略。</li>
+</ul>
+<p>稳定接口的价值是缩小变化范围，使上层节点不必因为换设备而全面重写；它不是跳过实体标定和测试的理由。</p>
+<h2 id="8">8. 实体安全是新增的独立层<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>软件发布零速度不能替代硬件急停。实体安全至少应形成多层保护：</p>
+<ol>
+<li>上层任务和导航可取消；</li>
+<li><code>cmd_vel_guard</code>限制速度并处理命令超时；</li>
+<li>底盘控制器或MCU处理通信失联和设备异常；</li>
+<li>驱动器提供电气或运动保护；</li>
+<li>独立硬件急停切断或阻止危险运动；</li>
+<li>调试人员在限定区域监护并能立即停止系统。</li>
+</ol>
+<p>每层都要有明确责任、测试方法和证据。不能只验证“正常能走”，还要验证断连、超时、故障和急停时能安全停下。</p>
+<h2 id="9-gate">9. 迁移顺序与Gate约束<a class="headerlink" href="#9-gate" title="Permanent link">&para;</a></h2>
+<h3 id="91-s1-1-g1gate">9.1 <code>S1-1-G1</code>：进入实体开发的前置Gate<a class="headerlink" href="#91-s1-1-g1gate" title="Permanent link">&para;</a></h3>
+<p>只有仿真能力验收通过并形成实体接口冻结清单、硬件选型表和安全方案，才允许进入实体机器人开发。当前学习发生在<code>S1-1-G1</code>前，不表示Gate已经通过。</p>
+<h3 id="92-s1-2-m0s1-2-m4">9.2 <code>S1-2-M0</code>至<code>S1-2-M4</code><a class="headerlink" href="#92-s1-2-m0s1-2-m4" title="Permanent link">&para;</a></h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>里程碑</th>
+<th>重点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>S1-2-M0</code></td>
+<td>硬件与成熟资源定型，完成兼容性PoC、通信拓扑、电源和安全准备</td>
+</tr>
+<tr>
+<td><code>S1-2-M1</code></td>
+<td>MCU、电机、编码器、底盘和各传感器独立单元测试</td>
+</tr>
+<tr>
+<td><code>S1-2-M2</code></td>
+<td>运动、感知、融合、标定、急停和失联安全集成</td>
+</tr>
+<tr>
+<td><code>S1-2-M3</code></td>
+<td>实体SLAM、定位、Nav2、避障和异常场景</td>
+</tr>
+<tr>
+<td><code>S1-2-M4</code></td>
+<td>长稳、恢复、部署、维护、回归和版本回退</td>
+</tr>
+</tbody>
+</table></div>
+<p>测试从离线、架空、低速和限定区域逐步扩大，始终保留人工急停。</p>
+<h3 id="93-s1-2-g1-1">9.3 <code>S1-2-G1</code>：阶段 1验收<a class="headerlink" href="#93-s1-2-g1-1" title="Permanent link">&para;</a></h3>
+<p>只有实体机器人能够脱离AI独立完成能力验收，公共接口、消息、QoS、TF和错误码冻结，安全与长稳测试通过，才能进入阶段 2或接入AI Agent。</p>
+<h2 id="10">10. 迁移验证矩阵<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>可复用内容</th>
+<th>替换或新增内容</th>
+<th>实体验证重点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>底盘</td>
+<td>速度与里程计接口、TF语义</td>
+<td>MCU、驱动器、编码器、硬件接口</td>
+<td>方向、尺度、时延、停车、失联</td>
+</tr>
+<tr>
+<td>雷达</td>
+<td><code>LaserScan</code>接口与Frame语义</td>
+<td>实体驱动、安装和供电</td>
+<td>范围、频率、遮挡、时间戳、外参</td>
+</tr>
+<tr>
+<td>相机</td>
+<td>图像与CameraInfo接口</td>
+<td>实体驱动、标定和带宽</td>
+<td>分辨率、编码、帧率、稳定性</td>
+</tr>
+<tr>
+<td>IMU</td>
+<td><code>Imu</code>接口</td>
+<td>实体驱动和安装</td>
+<td>轴向、零偏、漂移、协方差</td>
+</tr>
+<tr>
+<td>TF与模型</td>
+<td>Frame名称和树结构</td>
+<td>实测尺寸与外参</td>
+<td>唯一发布、方向、数值精度</td>
+</tr>
+<tr>
+<td>SLAM/定位</td>
+<td>算法框架和地图接口</td>
+<td>实体参数与场地地图</td>
+<td>精度、漂移、重定位和恢复</td>
+</tr>
+<tr>
+<td>Nav2</td>
+<td>Action和组件结构</td>
+<td>Footprint、速度、Costmap参数</td>
+<td>到达率、避障、制动和安全</td>
+</tr>
+<tr>
+<td>能力任务</td>
+<td>Schema、反馈和结果语义</td>
+<td>实体状态与安全证据</td>
+<td>成功、失败、取消、超时、幂等</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="11">11. 常见理解误区<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<h3 id="1_1">误区1：仿真通过后，实体只需安装驱动<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h3>
+<p>不正确。实体新增了设备协议、电源、时延、标定、故障、安全和现场环境问题。</p>
+<h3 id="2topic">误区2：Topic名称和类型一致就代表完全兼容<a class="headerlink" href="#2topic" title="Permanent link">&para;</a></h3>
+<p>还需验证QoS、频率、时间戳、Frame、数值单位、协方差、时延和异常语义。</p>
+<h3 id="3_1">误区3：软件安全停车可以替代硬件急停<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
+<p>不可以。软件、通信、计算机或电源本身都可能故障，实体系统需要独立硬件保护。</p>
+<h3 id="4_1">误区4：上层算法复用就不必重新调参<a class="headerlink" href="#4_1" title="Permanent link">&para;</a></h3>
+<p>不正确。算法可以复用，真实噪声、运动学、轮廓和场地参数必须重新测量。</p>
+<h3 id="5">误区5：本章已经确定了实体硬件方案<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
+<p>没有。本章只说明对象、接口和迁移方法；具体硬件在<code>S1-2-M0</code>定型。</p>
+<h2 id="12">12. 本单元总结<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<ol>
+<li>仿真迁移的核心是稳定ROS 2契约、替换设备实现、重新完成实体验收。</li>
+<li>Gazebo底盘和传感器插件分别对应实体硬件接口与设备驱动。</li>
+<li>上层融合、SLAM、定位、Nav2和能力Action原则上可复用，但必须重新配置和验证。</li>
+<li>实体阶段新增协议、电源、标定、时延、断连和硬件安全问题。</li>
+<li>相同Topic名称不等于实体能力自动合格。</li>
+<li><code>S1-1-G1</code>未通过不得进入实体开发，<code>S1-2-G1</code>未通过不得进入阶段 2。</li>
+<li>当前课程不授权任何实体机器人上电、运动或硬件测试。</li>
+</ol>
+<h2 id="13">13. 理解检查<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<ol>
+<li>仿真差速插件迁移到实体后由哪些对象替代？</li>
+<li>哪些ROS 2接口原则上可以保持稳定？</li>
+<li>为什么URDF结构可复用但参数仍需重测？</li>
+<li>相机和IMU迁移时各需增加哪些验证？</li>
+<li>为什么软件零速度命令不能替代硬件急停？</li>
+<li><code>S1-2-M0</code>至<code>S1-2-M4</code>各解决什么问题？</li>
+<li><code>S1-1-G1</code>和<code>S1-2-G1</code>分别约束什么？</li>
+<li>“接口复用”与“跳过实体测试”有什么根本区别？</li>
+</ol>
+<p>完成理解检查后形成S1-1-M1学习结论，再按开发进度进入S1-1-M2-L1机器人模型、坐标系与仿真环境学习。</p>
+<h2 id="14">14. 项目内依据<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>plan/ROS2机器人开发规划_v1.10.md</code></li>
+<li><code>resources/S1-1-M1对象资源矩阵.md</code></li>
+<li><code>resources/S1-1-M1第三方资源卡与准入流程.md</code></li>
+<li><code>config/ros_interface_baseline.yaml</code></li>
+<li><code>config/tf_frame_baseline.yaml</code></li>
+<li><code>src/ai_robot_description/urdf/ai_robot.urdf.xacro</code></li>
+<li><code>src/ai_robot_sim/launch/</code></li>
+</ul>
+<h2 id="15">15. 外部参考资料<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<h3 id="1-writing-a-hardware-component">1. Writing a Hardware Component<a class="headerlink" href="#1-writing-a-hardware-component" title="Permanent link">&para;</a></h3>
+<p><strong>来源</strong>：ros2_control官方文档</p>
+<p><strong>适用版本</strong>：ROS 2 Humble、ros2_control Humble</p>
+<p><strong>用途</strong>：理解实体执行器和传感器如何通过硬件组件接入ROS 2控制框架</p>
+<p><strong>链接</strong>：https://control.ros.org/humble/doc/ros2_control/hardware_interface/doc/writing_new_hardware_component.html</p>
+<p><strong>查阅日期</strong>：2026-07-29</p>
+<h3 id="2-gazebo_ros2_control">2. gazebo_ros2_control<a class="headerlink" href="#2-gazebo_ros2_control" title="Permanent link">&para;</a></h3>
+<p><strong>来源</strong>：ros2_control官方文档</p>
+<p><strong>适用版本</strong>：ROS 2 Humble、Gazebo Classic</p>
+<p><strong>用途</strong>：比较Gazebo中的控制插件与实体硬件接口的职责</p>
+<p><strong>链接</strong>：https://control.ros.org/humble/doc/gazebo_ros2_control/doc/index.html</p>
+<p><strong>查阅日期</strong>：2026-07-29</p>
+<h3 id="3-rep-105-coordinate-frames-for-mobile-platforms">3. REP 105: Coordinate Frames for Mobile Platforms<a class="headerlink" href="#3-rep-105-coordinate-frames-for-mobile-platforms" title="Permanent link">&para;</a></h3>
+<p><strong>来源</strong>：ROS Enhancement Proposals</p>
+<p><strong>适用版本</strong>：ROS移动机器人通用约定</p>
+<p><strong>用途</strong>：理解仿真与实体系统中<code>map</code>、<code>odom</code>和<code>base_link</code>语义应保持一致</p>
+<p><strong>链接</strong>：https://www.ros.org/reps/rep-0105.html</p>
+<p><strong>查阅日期</strong>：2026-07-29</p>
+<h3 id="4-navigation-concepts">4. Navigation Concepts<a class="headerlink" href="#4-navigation-concepts" title="Permanent link">&para;</a></h3>
+<p><strong>来源</strong>：Nav2官方文档</p>
+<p><strong>适用版本</strong>：Nav2</p>
+<p><strong>用途</strong>：理解实体迁移时可复用的导航组件及其数据依赖</p>
+<p><strong>链接</strong>：https://docs.nav2.org/concepts/</p>
+<p><strong>查阅日期</strong>：2026-07-29</p>
+      <div class="footer">源文件：S1-1-M1-L3-01_实体迁移概览_v1.2.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>
