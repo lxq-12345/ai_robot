@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M3-L1-01 传感器与环境数据</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 学习目标</a></li>
+<li><a href="#2">2. 传感器对象与接口</a></li>
+<li><a href="#3">3. 数据有效性</a></li>
+<li><a href="#4">4. 自动测试阅读与局部复现</a></li>
+<li><a href="#5-guicli">5. GUI与CLI观察</a></li>
+<li><a href="#6">6. 常见问题、安全停止与恢复</a></li>
+<li><a href="#7">7. 实体迁移与证据</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 学习目标</a></li>
+<li><a href="#2">2. 传感器对象与接口</a></li>
+<li><a href="#3">3. 数据有效性</a></li>
+<li><a href="#4">4. 自动测试阅读与局部复现</a></li>
+<li><a href="#5-guicli">5. GUI与CLI观察</a></li>
+<li><a href="#6">6. 常见问题、安全停止与恢复</a></li>
+<li><a href="#7">7. 实体迁移与证据</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m3-l1-01">S1-1-M3-L1-01 传感器与环境数据<a class="headerlink" href="#s1-1-m3-l1-01" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M3 仿真传感器单元<br>
+所属学习子单元：S1-1-M3-L1 传感器与环境数据<br>
+章节序号：S1-1-M3-L1-01<br>
+教材版本：v1.0<br>
+涉及程序包：<code>ai_robot_description</code>、<code>ai_robot_sim</code>及Gazebo ROS传感器插件<br>
+安全边界：GUI运动观察只使用项目受控演示入口，不直接发布速度Topic。</p>
+</blockquote>
+<h2 id="1">1. 学习目标<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>理解激光雷达、相机、IMU和轮关节状态如何由模型与Gazebo生成，消息中的时间戳、Frame、尺寸、范围和QoS如何与场景及TF对应。Topic存在只是第一层证据，消息有效且能转换到<code>base_link</code>才形成可用数据链。</p>
+<h2 id="2">2. 传感器对象与接口<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>Topic</th>
+<th>消息</th>
+<th>Frame</th>
+<th align="right">设计频率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>激光雷达</td>
+<td><code>/scan</code></td>
+<td><code>sensor_msgs/LaserScan</code></td>
+<td><code>laser_link</code></td>
+<td align="right">10 Hz</td>
+</tr>
+<tr>
+<td>相机图像</td>
+<td><code>/camera/image_raw</code></td>
+<td><code>sensor_msgs/Image</code></td>
+<td><code>camera_link</code></td>
+<td align="right">10 Hz</td>
+</tr>
+<tr>
+<td>相机参数</td>
+<td><code>/camera/camera_info</code></td>
+<td><code>sensor_msgs/CameraInfo</code></td>
+<td><code>camera_link</code></td>
+<td align="right">10 Hz</td>
+</tr>
+<tr>
+<td>IMU</td>
+<td><code>/imu/data</code></td>
+<td><code>sensor_msgs/Imu</code></td>
+<td><code>imu_link</code></td>
+<td align="right">50 Hz</td>
+</tr>
+<tr>
+<td>轮状态</td>
+<td><code>/joint_states</code></td>
+<td><code>sensor_msgs/JointState</code></td>
+<td>关节名</td>
+<td align="right">50 Hz</td>
+</tr>
+</tbody>
+</table></div>
+<p>静态定义位于Xacro，公共参数位于<code>config/sim_sensors.yaml</code>，诊断阈值位于<code>config/sim_sensor_diagnostics.yaml</code>。运行数据由Gazebo插件发布。</p>
+<h2 id="3">3. 数据有效性<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>雷达应有360个采样，角度覆盖机器人周向，量程<code>0.12–8.0 m</code>；相机应为<code>640×480</code>且有非空数据；CameraInfo尺寸应与图像一致；IMU数值应为有限值且方向协方差可用；JointState必须同时含左右轮名称、位置和速度。</p>
+<p>传感器通常使用best-effort、volatile的sensor-data QoS，降低实时数据积压。用不兼容QoS订阅时可能“Topic存在但收不到消息”。</p>
+<h2 id="4">4. 自动测试阅读与局部复现<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>插件静态声明位于<code>src/ai_robot_description/test/test_gazebo_plugins.py</code>；运行数据由<code>tests/integration/test_s1_m3_sensors.launch.py</code>检查；公共参数和诊断规则由<code>tests/contract/test_s1_m3_sensor_contract.py</code>检查。</p>
+<p>本章可在正式GUI练习前执行M3自动前置：</p>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+./scripts/build.sh
+source install/setup.bash
+/usr/bin/python3 -m pytest tests/contract/test_s1_m3_sensor_contract.py
+launch_test tests/integration/test_s1_m3_sensors.launch.py
+</code></pre>
+<p>完整断言解释和M3证据汇总留给L2。</p>
+<h2 id="5-guicli">5. GUI与CLI观察<a class="headerlink" href="#5-guicli" title="Permanent link">&para;</a></h2>
+<p>按<code>tests/scenario/S1-1-M3传感器GUI观察说明.md</code>启动Gazebo和RViz2。使用<code>ros2 topic list</code>、<code>ros2 topic info --verbose</code>、<code>ros2 topic hz</code>和一次消息查看确认接口；在RViz2显示LaserScan、Image或RobotModel/TF。</p>
+<p>正常现象是雷达轮廓与障碍物一致、图像与Gazebo视角一致、IMU和轮状态持续更新、传感器Frame能转换到<code>base_link</code>。需要运动观察时只运行<code>ros2 run ai_robot_sim manual_motion_demo</code>。</p>
+<h2 id="6">6. 常见问题、安全停止与恢复<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Topic缺失：查插件加载、Launch和传感器<code>always_on</code>；</li>
+<li>有Topic无数据：查QoS、仿真是否暂停和插件日志；</li>
+<li>Frame错误：查Xacro插件<code>frame_name</code>和TF；</li>
+<li>图像为空或尺寸不符：查相机插件和编码；</li>
+<li>IMU含NaN：查插件、时间和物理状态；</li>
+<li>JointState缺轮：查关节状态插件的关节列表。</li>
+</ul>
+<p>停止时先等待受控演示停车，按<code>Ctrl+C</code>退出观察和Launch，确认Gazebo节点退出。不得把仿真GUI操作扩展为实体设备测试。</p>
+<h2 id="7">7. 实体迁移与证据<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>实体阶段保留Topic和Frame语义，替换Gazebo插件为驱动，并新增标定、时间同步、真实噪声、遮挡和断线诊断。证据记录自动前置、Topic/QoS、消息字段、GUI截图、操作者和待补问题。</p>
+<h2 id="8">8. 理解检查<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Topic存在为什么不能证明传感器可用？</li>
+<li>LaserScan的Frame和量程分别说明什么？</li>
+<li>CameraInfo为什么必须与图像配套？</li>
+<li>JointState为什么归入传感器学习？</li>
+<li>QoS不兼容会表现为什么现象？</li>
+</ol>
+<h2 id="9">9. 项目内依据<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>src/ai_robot_description/urdf/ai_robot.urdf.xacro</code></li>
+<li><code>config/sim_sensors.yaml</code></li>
+<li><code>config/sim_sensor_diagnostics.yaml</code></li>
+<li><code>tests/contract/test_s1_m3_sensor_contract.py</code></li>
+<li><code>tests/integration/test_s1_m3_sensors.launch.py</code></li>
+<li><code>tests/scenario/S1-1-M3传感器GUI观察说明.md</code></li>
+</ul>
+      <div class="footer">源文件：S1-1-M3-L1-01_传感器与环境数据_v1.0.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

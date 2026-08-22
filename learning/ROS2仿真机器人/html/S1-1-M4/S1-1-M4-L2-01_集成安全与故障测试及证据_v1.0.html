@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M4-L2-01 集成、安全与故障测试及证据</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 测试目标</a></li>
+<li><a href="#2">2. 测试矩阵</a></li>
+<li><a href="#3">3. 规定执行顺序</a></li>
+<li><a href="#4">4. 故障与超时解释</a></li>
+<li><a href="#5">5. 失败定位方法</a></li>
+<li><a href="#6-m4">6. 证据与M4学习结论</a></li>
+<li><a href="#7">7. 理解检查</a></li>
+<li><a href="#8">8. 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 测试目标</a></li>
+<li><a href="#2">2. 测试矩阵</a></li>
+<li><a href="#3">3. 规定执行顺序</a></li>
+<li><a href="#4">4. 故障与超时解释</a></li>
+<li><a href="#5">5. 失败定位方法</a></li>
+<li><a href="#6-m4">6. 证据与M4学习结论</a></li>
+<li><a href="#7">7. 理解检查</a></li>
+<li><a href="#8">8. 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m4-l2-01">S1-1-M4-L2-01 集成、安全与故障测试及证据<a class="headerlink" href="#s1-1-m4-l2-01" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M4 运动、感知与安全集成<br>
+所属学习子单元：S1-1-M4-L2 集成、安全与故障测试及证据<br>
+章节序号：S1-1-M4-L2-01<br>
+教材版本：v1.0<br>
+测试层级：公共契约、跨包Launch、故障与超时安全<br>
+结论边界：只验证仿真集成，实体安全需S1-2独立验证。</p>
+</blockquote>
+<h2 id="1">1. 测试目标<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>M4不重复M2/M3单元测试，而是验证多个已通过单元组合后仍保持正确接口、TF、诊断、融合和安全行为。关键风险是单独正常、组合后因QoS、时间、重复发布、超时或启动顺序而失败。</p>
+<h2 id="2">2. 测试矩阵<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>测试</th>
+<th>组合对象</th>
+<th>关键断言</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_s1_m4_integration_contract.py</code></td>
+<td>EKF配置与依赖</td>
+<td>30 Hz、二维、输入、Frame、禁重复TF、依赖可用</td>
+</tr>
+<tr>
+<td><code>test_s1_m4_motion_safety.launch.py</code></td>
+<td>底盘、守卫、反馈</td>
+<td>编码器、里程计、TF、限速、超时停车</td>
+</tr>
+<tr>
+<td><code>test_s1_m4_sensor_processing.launch.py</code></td>
+<td>雷达、相机、监测</td>
+<td>原始数据、固定TF、诊断状态和值</td>
+</tr>
+<tr>
+<td><code>test_s1_m4_ekf_fusion.launch.py</code></td>
+<td>里程计、IMU、EKF</td>
+<td>融合输出、有限值、Frame、干净退出</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3">3. 规定执行顺序<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+./scripts/build.sh
+source install/setup.bash
+/usr/bin/python3 -m pytest tests/contract/test_s1_m4_integration_contract.py
+launch_test tests/integration/test_s1_m4_motion_safety.launch.py
+launch_test tests/integration/test_s1_m4_sensor_processing.launch.py
+launch_test tests/integration/test_s1_m4_ekf_fusion.launch.py
+</code></pre>
+<p>运行中不得手工注入未审查命令。测试自身使用受控发布者和超时条件，结束后应自动Shutdown。</p>
+<h2 id="4">4. 故障与超时解释<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>运动安全测试先建立正常数据，再停止命令输入，验证守卫在规定时间内发布零速度。传感器处理测试验证监测节点能从真实仿真消息形成诊断。EKF测试要求两个输入都可用，运动后融合输出发生变化且没有NaN。</p>
+<p>故障测试的目标不是让系统“永不报错”，而是错误能够在预期层被发现、输出安全状态并留下可定位日志。</p>
+<h2 id="5">5. 失败定位方法<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>按前置依赖从下到上排查：Gazebo与模型→原始Topic→TF→安全守卫或监测节点→EKF→最终诊断/融合输出。首个未满足条件是主要证据。偶发超时需记录轮次、耗时和系统负载，不能只用一次复跑通过抹去。</p>
+<p>测试失败时保留日志，不删除断言、不扩大容差、不禁用安全检查。若进程未退出，记录残留PID/节点并清理后再复测。</p>
+<h2 id="6-m4">6. 证据与M4学习结论<a class="headerlink" href="#6-m4" title="Permanent link">&para;</a></h2>
+<p>证据记录四个测试入口、每条链的前置与关键断言、首查位置、耗时、偶发问题、进程清理和学员解释。M4-L1、L2均通过后才能形成M4学习结论。自动结果不能外推为实体安全通过。</p>
+<h2 id="7">7. 理解检查<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>M4集成测试与M2/M3单元测试有什么差别？</li>
+<li>为什么故障注入前必须建立正常基线？</li>
+<li>EKF无输出时为什么先查原始Topic而不是调参数？</li>
+<li>一次复跑通过能否删除偶发超时记录？</li>
+<li>哪些M4结论不能迁移到实体机器人？</li>
+</ol>
+<h2 id="8">8. 项目内依据<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>tests/contract/test_s1_m4_integration_contract.py</code></li>
+<li><code>tests/integration/test_s1_m4_motion_safety.launch.py</code></li>
+<li><code>tests/integration/test_s1_m4_sensor_processing.launch.py</code></li>
+<li><code>tests/integration/test_s1_m4_ekf_fusion.launch.py</code></li>
+<li><code>config/ekf_sim.yaml</code></li>
+<li><code>tests/evidence/test_evidence_template.md</code></li>
+<li><code>tests/README.md</code></li>
+</ul>
+      <div class="footer">源文件：S1-1-M4-L2-01_集成安全与故障测试及证据_v1.0.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

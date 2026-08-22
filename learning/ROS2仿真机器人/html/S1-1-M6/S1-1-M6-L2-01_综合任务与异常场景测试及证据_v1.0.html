@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M6-L2-01 综合任务与异常场景测试及证据</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 测试目标与层级</a></li>
+<li><a href="#2">2. 规定执行顺序</a></li>
+<li><a href="#3">3. 异常断言解释</a></li>
+<li><a href="#4">4. 系统测试边界</a></li>
+<li><a href="#5">5. 失败定位与清理</a></li>
+<li><a href="#6-m6">6. 证据与M6学习结论</a></li>
+<li><a href="#7">7. 理解检查</a></li>
+<li><a href="#8">8. 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 测试目标与层级</a></li>
+<li><a href="#2">2. 规定执行顺序</a></li>
+<li><a href="#3">3. 异常断言解释</a></li>
+<li><a href="#4">4. 系统测试边界</a></li>
+<li><a href="#5">5. 失败定位与清理</a></li>
+<li><a href="#6-m6">6. 证据与M6学习结论</a></li>
+<li><a href="#7">7. 理解检查</a></li>
+<li><a href="#8">8. 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m6-l2-01">S1-1-M6-L2-01 综合任务与异常场景测试及证据<a class="headerlink" href="#s1-1-m6-l2-01" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M6 仿真机器人综合验收<br>
+所属学习子单元：S1-1-M6-L2 综合任务与异常场景测试及证据<br>
+章节序号：S1-1-M6-L2-01<br>
+教材版本：v1.0<br>
+测试层级：Action契约、任务管理器集成、真实Nav2系统、人工体验<br>
+结论边界：形成M6学习证据，不代替S1-1-G1接口冻结和准入结论。</p>
+</blockquote>
+<h2 id="1">1. 测试目标与层级<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>M6需要同时证明接口稳定、任务管理器异常映射正确、真实Nav2链能够到点感知，以及人工可观察反馈和重放。任何单层通过都不足以证明综合能力。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>测试</th>
+<th>主要风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>契约</td>
+<td><code>test_s1_m6_task_contract.py</code></td>
+<td>Action字段、枚举、安全边界漂移</td>
+</tr>
+<tr>
+<td>人工入口契约</td>
+<td><code>test_s1_m5_m6_manual_experience_contract.py</code></td>
+<td>绕过Action或直接发布速度</td>
+</tr>
+<tr>
+<td>集成</td>
+<td><code>test_s1_m6_task_manager.launch.py</code></td>
+<td>异常、并发、取消、缓存、资源边界</td>
+</tr>
+<tr>
+<td>系统</td>
+<td><code>test_s1_m6_end_to_end.launch.py</code></td>
+<td>真实Nav2、到点感知、重放和总耗时</td>
+</tr>
+<tr>
+<td>人工</td>
+<td>M5/M6人工体验</td>
+<td>反馈、结果、GUI和停止体验</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="2">2. 规定执行顺序<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+./scripts/build.sh
+source install/setup.bash
+/usr/bin/python3 -m pytest \
+  tests/contract/test_s1_m6_task_contract.py \
+  tests/contract/test_s1_m5_m6_manual_experience_contract.py
+launch_test tests/integration/test_s1_m6_task_manager.launch.py
+launch_test tests/system/test_s1_m6_end_to_end.launch.py
+</code></pre>
+<p>自动测试通过后，由学员执行<code>tests/scenario/S1-1-M5-M6人工体验验收.md</code>中的M6观察项。</p>
+<h2 id="3">3. 异常断言解释<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<ul>
+<li>非法与越界：请求被拒绝或以固定业务结果终止；</li>
+<li>导航失败与超时：不会伪装成功，底盘最终停止；</li>
+<li>取消：Action进入CANCELED并释放当前任务；</li>
+<li>传感器中断：需要的数据不新鲜时返回SENSOR_UNAVAILABLE；</li>
+<li>安全触发：返回SAFETY_TRIGGERED并停止；</li>
+<li>并发拒绝：第二任务不能争用当前执行；</li>
+<li>幂等重放：结果快速返回，不重复驱动底盘；</li>
+<li>资源边界：缓存数量和内存增长受限。</li>
+</ul>
+<h2 id="4">4. 系统测试边界<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>端到端测试使用真实Nav2而非假服务，验证导航到点、雷达与图像结果、反馈阶段、Action状态、速度守卫和重放。它不测试自然语言、不接入AI，也不证明实体环境中的导航与感知。</p>
+<p>假Nav2集成测试用于可控覆盖异常分支；真实Nav2系统测试用于证明实际组合。两者互补，不能互相替代。</p>
+<h2 id="5">5. 失败定位与清理<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>契约失败查接口和Launch静态边界；集成异常失败查任务状态机、假服务和超时；系统导航失败沿M5链排查；到点感知失败查消息新鲜度；重放失败查缓存键和重复运动；退出失败查Action实体和Shutdown。</p>
+<p>保留首个失败、反馈时间线和进程日志。测试完成后确认任务管理器、Nav2、Gazebo和辅助服务全部退出。</p>
+<h2 id="6-m6">6. 证据与M6学习结论<a class="headerlink" href="#6-m6" title="Permanent link">&para;</a></h2>
+<p>证据至少包含提交号、四类自动测试、每个异常枚举、反馈阶段、真实导航结果、传感器摘要、重放耗时、内存边界、人工GUI、停止和清理。L1/L2均通过后形成M6学习结论；随后仍需独立准备S1-1-G1，不得直接进入实体阶段。</p>
+<h2 id="7">7. 理解检查<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>假Nav2集成测试和真实Nav2系统测试为什么都需要？</li>
+<li>业务结果枚举怎样避免把异常写成成功？</li>
+<li>幂等重放需要哪些时间和运动证据？</li>
+<li>为什么M6通过仍不能宣布S1-1-G1通过？</li>
+<li>哪些证据证明任务管理器没有绕过安全链？</li>
+</ol>
+<h2 id="8">8. 项目内依据<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>tests/contract/test_s1_m6_task_contract.py</code></li>
+<li><code>tests/contract/test_s1_m5_m6_manual_experience_contract.py</code></li>
+<li><code>tests/integration/test_s1_m6_task_manager.launch.py</code></li>
+<li><code>tests/system/test_s1_m6_end_to_end.launch.py</code></li>
+<li><code>tests/scenario/S1-1-M5-M6人工体验验收.md</code></li>
+<li><code>tests/evidence/test_evidence_template.md</code></li>
+<li><code>tests/README.md</code></li>
+</ul>
+      <div class="footer">源文件：S1-1-M6-L2-01_综合任务与异常场景测试及证据_v1.0.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

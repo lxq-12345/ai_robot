@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M5-L3-01 Nav2自主导航</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 学习目标</a></li>
+<li><a href="#2">2. 导航链路</a></li>
+<li><a href="#3-action">3. 生命周期与Action</a></li>
+<li><a href="#4">4. 自动测试与人工入口</a></li>
+<li><a href="#5">5. 正常现象与安全场景</a></li>
+<li><a href="#6">6. 常见问题与停止</a></li>
+<li><a href="#7">7. 实体迁移与证据</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 学习目标</a></li>
+<li><a href="#2">2. 导航链路</a></li>
+<li><a href="#3-action">3. 生命周期与Action</a></li>
+<li><a href="#4">4. 自动测试与人工入口</a></li>
+<li><a href="#5">5. 正常现象与安全场景</a></li>
+<li><a href="#6">6. 常见问题与停止</a></li>
+<li><a href="#7">7. 实体迁移与证据</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m5-l3-01-nav2">S1-1-M5-L3-01 Nav2自主导航<a class="headerlink" href="#s1-1-m5-l3-01-nav2" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M5 SLAM、定位与Nav2<br>
+所属学习子单元：S1-1-M5-L3 Nav2自主导航<br>
+章节序号：S1-1-M5-L3-01<br>
+教材版本：v1.0<br>
+涉及组件：Nav2、AMCL、地图服务器、Gazebo、<code>cmd_vel_guard</code><br>
+安全边界：通过Nav2 Action或项目人工体验入口下达目标；不直接发布速度Topic。</p>
+</blockquote>
+<h2 id="1">1. 学习目标<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>理解Nav2生命周期、NavigateToPose Action、全局规划、局部控制、代价地图、行为树、取消、恢复、动态障碍和扫描超时安全。导航成功不仅是“机器人动了”，还要求目标状态、路径、安全速度链和清理都正确。</p>
+<h2 id="2">2. 导航链路<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<pre><code class="language-text">目标位姿
+→ bt_navigator
+→ planner_server / global costmap
+→ controller_server / local costmap
+→ velocity_smoother
+→ /cmd_vel_raw
+→ cmd_vel_guard
+→ /cmd_vel
+→ Gazebo底盘
+→ /odom、TF、/scan反馈
+</code></pre>
+<p><code>nav2_bringup.launch.py</code>先建立定位，再包含Nav2 bringup，并把Nav2的<code>/cmd_vel</code>重映射到<code>/cmd_vel_raw</code>。安全守卫是所有速度命令进入底盘前的统一边界。</p>
+<h2 id="3-action">3. 生命周期与Action<a class="headerlink" href="#3-action" title="Permanent link">&para;</a></h2>
+<p>地图、定位和Nav2服务器必须进入Active后才提供完整能力。Action包含目标接受、反馈、取消和最终状态；“请求已发送”不等于目标已接受，“目标已接受”也不等于成功到达。</p>
+<p>全局规划绕开静态障碍，局部控制根据实时扫描和代价地图生成速度；行为树协调规划、控制、清图和恢复。目标在障碍物内时应产生可解释结果，而不是无界等待。</p>
+<h2 id="4">4. 自动测试与人工入口<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+./scripts/build.sh
+source install/setup.bash
+launch_test tests/integration/test_s1_m5_nav2.launch.py
+launch_test tests/integration/test_s1_m5_temporary_obstacle.launch.py
+launch_test tests/integration/test_s1_m5_scan_timeout.launch.py
+</code></pre>
+<p>人工体验按<code>tests/scenario/S1-1-M5-M6人工体验验收.md</code>和<code>scripts/start_m5_m6_manual_experience.sh</code>执行。它通过Action下达目标，支持取消和观察安全停车，不直接发布速度命令。</p>
+<h2 id="5">5. 正常现象与安全场景<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<ul>
+<li>所有关键生命周期节点进入Active；</li>
+<li>可达目标被接受并最终SUCCEEDED；</li>
+<li>全局路径绕开静态障碍；</li>
+<li>取消目标最终为CANCELED并停止；</li>
+<li>临时障碍进入雷达和局部代价地图，移除后清除；</li>
+<li>扫描陈旧时守卫发布零速度并阻止继续运动；</li>
+<li><code>/cmd_vel</code>不超过项目线速度和角速度上限。</li>
+</ul>
+<h2 id="6">6. 常见问题与停止<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Action不可用：查生命周期和命名；</li>
+<li>目标拒绝或超时：查地图、定位、服务器状态；</li>
+<li>有路径不运动：查控制器、局部代价地图和速度链；</li>
+<li>原地振荡：查目标容差、障碍膨胀和DWB轨迹；</li>
+<li>障碍不响应：查<code>/scan</code>、Frame和local costmap；</li>
+<li>取消后仍动：立即判定安全失败，查Action状态和守卫输出。</li>
+</ul>
+<p>人工场景异常时先使用其安全停止步骤，再<code>Ctrl+C</code>退出启动器；确认Gazebo、Nav2、任务管理器和速度守卫退出。</p>
+<h2 id="7">7. 实体迁移与证据<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>实体阶段保持NavigateToPose语义和安全速度链，但地图、定位、足迹、加速度、代价地图、控制器和恢复策略必须现场调参与验收。证据记录目标、路径、Action状态、障碍响应、速度限制、停止和日志。</p>
+<h2 id="8">8. 理解检查<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ol>
+<li>为什么Nav2速度必须重映射到<code>/cmd_vel_raw</code>？</li>
+<li>Lifecycle Active与Action server可见有什么关系？</li>
+<li>全局规划和局部控制分别处理什么？</li>
+<li>取消成功后还需要观察什么？</li>
+<li>扫描超时为什么必须在安全守卫处形成零速度？</li>
+</ol>
+<h2 id="9">9. 项目内依据<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>src/ai_robot_sim/launch/nav2_bringup.launch.py</code></li>
+<li><code>tests/integration/test_s1_m5_nav2.launch.py</code></li>
+<li><code>tests/integration/test_s1_m5_temporary_obstacle.launch.py</code></li>
+<li><code>tests/integration/test_s1_m5_scan_timeout.launch.py</code></li>
+<li><code>tests/scenario/S1-1-M5-M6人工体验验收.md</code></li>
+</ul>
+      <div class="footer">源文件：S1-1-M5-L3-01_Nav2自主导航_v1.0.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

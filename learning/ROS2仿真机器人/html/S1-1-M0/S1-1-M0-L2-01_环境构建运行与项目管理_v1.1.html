@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M0-L2-01 环境、构建、运行与项目管理</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 本章要解决什么问题</a></li>
+<li><a href="#2">2. 学习目标和完成边界</a></li>
+<li><a href="#3-ros-2">3. ROS 2环境是分层加载的</a><ul>
+<li><a href="#31-ros-2underlay">3.1 系统ROS 2是Underlay</a></li>
+<li><a href="#32-overlay">3.2 项目安装空间是Overlay</a></li>
+<li><a href="#33-sourceshell">3.3 source只影响当前Shell</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 环境检查入口</a></li>
+<li><a href="#5-colcon">5. colcon构建链</a><ul>
+<li><a href="#51">5.1 四个空间</a></li>
+<li><a href="#52">5.2 项目构建入口</a></li>
+<li><a href="#53">5.3 增量构建与重新加载</a></li>
+<li><a href="#54">5.4 怎样读构建结果</a></li>
+</ul>
+</li>
+<li><a href="#6">6. 加载并确认项目程序包</a></li>
+<li><a href="#7">7. 安全的运行与观察</a></li>
+<li><a href="#8">8. 标准测试入口在什么位置</a></li>
+<li><a href="#9-git">9. Git项目状态观察</a><ul>
+<li><a href="#91">9.1 工作区和分支</a></li>
+<li><a href="#92">9.2 最近提交和上游</a></li>
+<li><a href="#93">9.3 三种归档状态</a></li>
+</ul>
+</li>
+<li><a href="#10">10. 正式练习</a><ul>
+<li><a href="#101">10.1 环境检查</a></li>
+<li><a href="#102">10.2 构建与安装空间</a></li>
+<li><a href="#103">10.3 非运动节点运行</a></li>
+<li><a href="#104-git">10.4 Git只读观察</a></li>
+<li><a href="#105">10.5 练习结论</a></li>
+</ul>
+</li>
+<li><a href="#11">11. 常见问题与首查位置</a><ul>
+<li><a href="#111-ros_distro">11.1 ROS_DISTRO为空</a></li>
+<li><a href="#112-installsetupbash">11.2 install/setup.bash不存在</a></li>
+<li><a href="#113-ros2-runpackageexecutable">11.3 ros2 run提示package或executable不存在</a></li>
+<li><a href="#114">11.4 运行行为像旧版本</a></li>
+<li><a href="#115">11.5 测试找不到项目可执行程序</a></li>
+<li><a href="#116-git">11.6 Git显示非预期修改</a></li>
+</ul>
+</li>
+<li><a href="#12">12. 停止、恢复与安全边界</a></li>
+<li><a href="#13">13. 对实体迁移的意义</a></li>
+<li><a href="#14">14. 本章总结</a></li>
+<li><a href="#15">15. 理解检查</a></li>
+<li><a href="#16">16. 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 本章要解决什么问题</a></li>
+<li><a href="#2">2. 学习目标和完成边界</a></li>
+<li><a href="#3-ros-2">3. ROS 2环境是分层加载的</a><ul>
+<li><a href="#31-ros-2underlay">3.1 系统ROS 2是Underlay</a></li>
+<li><a href="#32-overlay">3.2 项目安装空间是Overlay</a></li>
+<li><a href="#33-sourceshell">3.3 source只影响当前Shell</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 环境检查入口</a></li>
+<li><a href="#5-colcon">5. colcon构建链</a><ul>
+<li><a href="#51">5.1 四个空间</a></li>
+<li><a href="#52">5.2 项目构建入口</a></li>
+<li><a href="#53">5.3 增量构建与重新加载</a></li>
+<li><a href="#54">5.4 怎样读构建结果</a></li>
+</ul>
+</li>
+<li><a href="#6">6. 加载并确认项目程序包</a></li>
+<li><a href="#7">7. 安全的运行与观察</a></li>
+<li><a href="#8">8. 标准测试入口在什么位置</a></li>
+<li><a href="#9-git">9. Git项目状态观察</a><ul>
+<li><a href="#91">9.1 工作区和分支</a></li>
+<li><a href="#92">9.2 最近提交和上游</a></li>
+<li><a href="#93">9.3 三种归档状态</a></li>
+</ul>
+</li>
+<li><a href="#10">10. 正式练习</a><ul>
+<li><a href="#101">10.1 环境检查</a></li>
+<li><a href="#102">10.2 构建与安装空间</a></li>
+<li><a href="#103">10.3 非运动节点运行</a></li>
+<li><a href="#104-git">10.4 Git只读观察</a></li>
+<li><a href="#105">10.5 练习结论</a></li>
+</ul>
+</li>
+<li><a href="#11">11. 常见问题与首查位置</a><ul>
+<li><a href="#111-ros_distro">11.1 ROS_DISTRO为空</a></li>
+<li><a href="#112-installsetupbash">11.2 install/setup.bash不存在</a></li>
+<li><a href="#113-ros2-runpackageexecutable">11.3 ros2 run提示package或executable不存在</a></li>
+<li><a href="#114">11.4 运行行为像旧版本</a></li>
+<li><a href="#115">11.5 测试找不到项目可执行程序</a></li>
+<li><a href="#116-git">11.6 Git显示非预期修改</a></li>
+</ul>
+</li>
+<li><a href="#12">12. 停止、恢复与安全边界</a></li>
+<li><a href="#13">13. 对实体迁移的意义</a></li>
+<li><a href="#14">14. 本章总结</a></li>
+<li><a href="#15">15. 理解检查</a></li>
+<li><a href="#16">16. 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m0-l2-01">S1-1-M0-L2-01 环境、构建、运行与项目管理<a class="headerlink" href="#s1-1-m0-l2-01" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M0 工程与管理基线<br>
+所属学习子单元：S1-1-M0-L2 环境、构建、运行与项目管理<br>
+章节序号：S1-1-M0-L2-01<br>
+教材版本：v1.1<br>
+适用项目：<code>/home/ubuntu/ai_robot_ws</code><br>
+适用环境：Ubuntu 22.04、ROS 2 Humble、colcon、Git<br>
+学习边界：只运行环境检查、构建、非运动示例节点和Git只读观察；不执行实体机器人操作，不启动AI Agent，不把本章练习记作M0-L3测试结论。</p>
+</blockquote>
+<h2 id="1">1. 本章要解决什么问题<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>拥有ROS 2源码并不等于当前终端能够运行它。一个可重复的工作过程至少要回答：</p>
+<ol>
+<li>当前Shell是否加载了正确的ROS 2发行版；</li>
+<li>colcon从哪里读取源码，又把结果写到哪里；</li>
+<li>为什么构建成功后仍可能找不到项目程序包；</li>
+<li>如何运行一个不会驱动机器人的示例节点并正常停止；</li>
+<li>标准测试入口在构建流程中的位置；</li>
+<li>如何用Git判断当前文件、提交和远端是否一致；</li>
+<li>哪些输出是工程结果，哪些只是临时生成物或聊天结论。</li>
+</ol>
+<p>本章学习的是工程操作链路，不深入测试断言。M0-L3将单独学习工程基线测试与证据。</p>
+<h2 id="2">2. 学习目标和完成边界<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>完成讲解和正式练习后，学员应能够：</p>
+<ul>
+<li>解释系统ROS 2环境与项目安装环境的先后关系；</li>
+<li>使用项目脚本检查环境并读懂成功、失败和退出码；</li>
+<li>解释<code>src/</code>、<code>build/</code>、<code>install/</code>和<code>log/</code>在构建链中的关系；</li>
+<li>使用统一脚本完成增量构建；</li>
+<li>在新终端中正确加载项目安装空间；</li>
+<li>运行、观察并停止一个不产生机器人运动的示例节点；</li>
+<li>说明<code>scripts/test.sh</code>为什么必须在构建之后运行；</li>
+<li>使用只读Git命令判断分支、工作区、最近提交和远端配置；</li>
+<li>说明本地提交、推送和远端核验为什么是三个不同状态。</li>
+</ul>
+<p>本章完成不表示M0学习结项。M0-L3测试与证据未完成前，M0学习状态仍不能标记为完成。</p>
+<h2 id="3-ros-2">3. ROS 2环境是分层加载的<a class="headerlink" href="#3-ros-2" title="Permanent link">&para;</a></h2>
+<h3 id="31-ros-2underlay">3.1 系统ROS 2是Underlay<a class="headerlink" href="#31-ros-2underlay" title="Permanent link">&para;</a></h3>
+<p>ROS 2 Humble安装在：</p>
+<pre><code class="language-text">/opt/ros/humble/
+</code></pre>
+<p>加载系统环境：</p>
+<pre><code class="language-bash">source /opt/ros/humble/setup.bash
+</code></pre>
+<p>这一步让当前Shell获得ROS 2命令、系统程序包、Python模块、共享库和索引路径。可以观察：</p>
+<pre><code class="language-bash">echo &quot;$ROS_DISTRO&quot;
+command -v ros2
+command -v colcon
+</code></pre>
+<p>本项目预期<code>ROS_DISTRO</code>为<code>humble</code>。</p>
+<h3 id="32-overlay">3.2 项目安装空间是Overlay<a class="headerlink" href="#32-overlay" title="Permanent link">&para;</a></h3>
+<p>项目构建成功后生成：</p>
+<pre><code class="language-text">/home/ubuntu/ai_robot_ws/install/setup.bash
+</code></pre>
+<p>加载项目环境：</p>
+<pre><code class="language-bash">source /home/ubuntu/ai_robot_ws/install/setup.bash
+</code></pre>
+<p>Overlay把本项目程序包叠加到系统ROS 2之上。正确顺序是：</p>
+<pre><code class="language-text">系统ROS 2 Humble setup
+        ↓
+项目install/setup.bash
+        ↓
+ros2 run、ros2 launch和测试发现项目程序包
+</code></pre>
+<p>项目的<code>install/setup.bash</code>通常会保留构建时的Underlay关系，但显式先加载系统环境更容易理解和排错。</p>
+<h3 id="33-sourceshell">3.3 <code>source</code>只影响当前Shell<a class="headerlink" href="#33-sourceshell" title="Permanent link">&para;</a></h3>
+<p>在终端A执行<code>source</code>，不会自动改变终端B。新开终端后如果出现“package not found”，首先确认该终端是否加载了项目安装空间。</p>
+<p><code>source</code>也不会永久修改源码或程序包。它只改变当前进程及其子进程的环境变量。</p>
+<h2 id="4">4. 环境检查入口<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>项目环境检查入口是：</p>
+<pre><code class="language-bash">./scripts/check_environment.sh
+</code></pre>
+<p>脚本执行以下检查：</p>
+<ol>
+<li><code>/opt/ros/humble/setup.bash</code>存在；</li>
+<li>加载ROS 2 Humble环境；</li>
+<li><code>colcon</code>、<code>ros2</code>、<code>rviz2</code>、<code>gazebo</code>和<code>gzserver</code>命令可定位；</li>
+<li><code>src/</code>、<code>config/</code>、<code>scripts/</code>、<code>tests/</code>和<code>resources/</code>目录存在；</li>
+<li>输出ROS 2发行版和工作空间路径。</li>
+</ol>
+<p>当前正常输出的核心形式是：</p>
+<pre><code class="language-text">ROS_DISTRO=humble
+Workspace baseline check passed: /home/ubuntu/ai_robot_ws
+</code></pre>
+<p>脚本使用<code>set -euo pipefail</code>。这意味着未处理的命令失败、未定义变量或管道失败会使脚本返回非零退出码。成功文本不能取代退出码，但在交互终端中两者应一致。</p>
+<p>只读环境检查不会构建程序包，也不会启动机器人节点。</p>
+<h2 id="5-colcon">5. colcon构建链<a class="headerlink" href="#5-colcon" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 四个空间<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<pre><code class="language-text">src/       权威源码和程序包资源
+  │
+  │ colcon build
+  ▼
+build/     编译、生成和中间产物
+  │
+  ▼
+install/   可供ROS 2发现和运行的安装结果
+
+log/       构建与测试过程日志
+</code></pre>
+<p><code>build/</code>、<code>install/</code>和<code>log/</code>是生成空间，不作为长期源码编辑位置，也不提交Git。</p>
+<h3 id="52">5.2 项目构建入口<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<p>标准命令是：</p>
+<pre><code class="language-bash">./scripts/build.sh
+</code></pre>
+<p>脚本把colcon路径固定为：</p>
+<pre><code class="language-text">--base-paths   /home/ubuntu/ai_robot_ws/src
+--build-base   /home/ubuntu/ai_robot_ws/build
+--install-base /home/ubuntu/ai_robot_ws/install
+--log-base     /home/ubuntu/ai_robot_ws/log
+</code></pre>
+<p>因此无论脚本从哪个目录被调用，项目根路径都由脚本自身计算。不过课程练习统一从项目根目录执行，便于观察和记录。</p>
+<h3 id="53">5.3 增量构建与重新加载<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<p>colcon默认复用已有构建结果。源码变化后再次运行<code>./scripts/build.sh</code>通常是增量构建。</p>
+<p>构建成功后，已经打开的终端仍可能保留旧环境。稳妥顺序是：</p>
+<pre><code class="language-bash">./scripts/build.sh
+source install/setup.bash
+</code></pre>
+<p>新终端则重新执行系统环境和项目环境加载。</p>
+<p>不要为了“彻底一点”随意删除<code>build/</code>、<code>install/</code>和<code>log/</code>。清理构建会增加耗时，也可能掩盖应当定位的依赖或配置问题；只有明确需要干净构建时才按项目任务处理。</p>
+<h3 id="54">5.4 怎样读构建结果<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<p>重点观察：</p>
+<ul>
+<li>哪些程序包被发现；</li>
+<li>哪个程序包首先出现<code>stderr</code>或<code>Failed</code>；</li>
+<li>最终Summary中成功、失败和中止数量；</li>
+<li>命令退出码是否为0；</li>
+<li><code>log/latest_build/</code>中的对应日志。</li>
+</ul>
+<p>后续程序包的失败可能是前序依赖失败造成的。排错时先处理第一个真实失败，而不是只看最后一行。</p>
+<h2 id="6">6. 加载并确认项目程序包<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>构建并加载Overlay后，可以执行：</p>
+<pre><code class="language-bash">ros2 pkg prefix ai_robot_py_example
+ros2 pkg executables ai_robot_py_example
+ros2 pkg prefix ai_robot_sim
+</code></pre>
+<p>正常情况下，<code>ros2 pkg prefix</code>指向工作空间<code>install/</code>中的对应程序包，而不是<code>src/</code>。</p>
+<p>如果<code>colcon list</code>能看到程序包但<code>ros2 pkg prefix</code>看不到，通常说明“源码发现”已经成功，但“安装空间未构建或当前Shell未加载”。这是两个不同阶段。</p>
+<h2 id="7">7. 安全的运行与观察<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>本章只运行不产生底盘运动的Python示例节点。</p>
+<p>终端1：</p>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 run ai_robot_py_example baseline_node
+</code></pre>
+<p>预期日志包含：</p>
+<pre><code class="language-text">ai_robot_py_example:ready
+</code></pre>
+<p>保持终端1运行，在终端2执行：</p>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 node list
+ros2 node info /baseline_py_node
+</code></pre>
+<p>预期能够看到<code>/baseline_py_node</code>。观察完成后回到终端1按<code>Ctrl+C</code>，确认节点正常退出。</p>
+<p>本章禁止启动运动演示、直接发布<code>/cmd_vel</code>或<code>/cmd_vel_raw</code>。即使当前是仿真学习，也不能把与本章无关的运动命令混入工程基线练习。</p>
+<h2 id="8">8. 标准测试入口在什么位置<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>标准全量测试入口是：</p>
+<pre><code class="language-bash">./scripts/test.sh
+</code></pre>
+<p>它按以下顺序执行：</p>
+<pre><code class="language-text">工作空间目录契约
+→ 加载已构建的install空间
+→ 所有程序包注册测试
+→ 公共契约测试
+→ M1至M6跨包集成测试
+→ M6系统测试
+</code></pre>
+<p>测试脚本要求<code>install/setup.bash</code>已经存在；没有构建时会提示先运行<code>./scripts/build.sh</code>。ROS测试日志统一写入项目<code>log/test/</code>。</p>
+<p>本章只理解入口、顺序和前置条件。正式阅读测试注册、执行基线测试、解释断言并记录证据属于M0-L3。不要把AI此前执行的全量回归直接记为自己的M0-L3学习证据。</p>
+<h2 id="9-git">9. Git项目状态观察<a class="headerlink" href="#9-git" title="Permanent link">&para;</a></h2>
+<h3 id="91">9.1 工作区和分支<a class="headerlink" href="#91" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">git status --short --branch
+git branch --show-current
+</code></pre>
+<p><code>git status --short --branch</code>同时显示当前分支、上游关系和文件变化。没有文件条目表示工作区没有未提交变化，但不自动表示本地已经推送远端。</p>
+<h3 id="92">9.2 最近提交和上游<a class="headerlink" href="#92" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">git log -1 --oneline
+git branch -vv
+git remote -v
+</code></pre>
+<p>这些命令分别回答：</p>
+<ul>
+<li>当前<code>HEAD</code>是什么提交；</li>
+<li>当前分支跟踪哪个上游，是否领先或落后；</li>
+<li><code>origin</code>指向哪个远端仓库。</li>
+</ul>
+<h3 id="93">9.3 三种归档状态<a class="headerlink" href="#93" title="Permanent link">&para;</a></h3>
+<pre><code class="language-text">工作区干净
+≠ 已创建本地提交
+≠ 已推送并核验远端
+</code></pre>
+<p>项目里程碑归档顺序是：</p>
+<pre><code class="language-text">测试与安全检查
+→ 更新状态和备忘
+→ 本地提交
+→ 推送origin
+→ 读取远端提交号
+→ 确认本地不领先上游
+</code></pre>
+<p>本章练习只做Git只读观察，不创建提交、不修改远端。教材和项目文件的实际归档由当前任务流程统一完成。</p>
+<h2 id="10">10. 正式练习<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<p>以下步骤必须由学员亲自执行。AI此前运行相同命令只算技术验证，不算正式练习。</p>
+<h3 id="101">10.1 环境检查<a class="headerlink" href="#101" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+pwd
+./scripts/check_environment.sh
+echo &quot;$ROS_DISTRO&quot;
+command -v ros2
+command -v colcon
+</code></pre>
+<p>记录环境检查是否通过、ROS 2发行版以及<code>ros2</code>、<code>colcon</code>的实际路径。</p>
+<h3 id="102">10.2 构建与安装空间<a class="headerlink" href="#102" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">./scripts/build.sh
+source install/setup.bash
+ros2 pkg prefix ai_robot_py_example
+ros2 pkg executables ai_robot_py_example
+</code></pre>
+<p>记录构建Summary、安装前缀和可执行入口。</p>
+<h3 id="103">10.3 非运动节点运行<a class="headerlink" href="#103" title="Permanent link">&para;</a></h3>
+<p>按第7节使用两个终端启动并观察<code>baseline_node</code>。记录节点名称、关键日志和<code>Ctrl+C</code>退出结果。</p>
+<h3 id="104-git">10.4 Git只读观察<a class="headerlink" href="#104-git" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">git status --short --branch
+git branch --show-current
+git log -1 --oneline
+git branch -vv
+git remote -v
+</code></pre>
+<p>记录当前分支、最近提交、上游分支、是否领先或落后，以及工作区是否存在非预期变化。</p>
+<h3 id="105">10.5 练习结论<a class="headerlink" href="#105" title="Permanent link">&para;</a></h3>
+<p>练习完成后回答：</p>
+<ol>
+<li>系统ROS 2和项目Overlay分别提供什么；</li>
+<li>为什么构建成功后还要加载<code>install/setup.bash</code>；</li>
+<li><code>colcon list</code>可见但<code>ros2 pkg prefix</code>不可见说明问题可能在哪一层；</li>
+<li>构建失败时为什么先找第一个失败程序包；</li>
+<li>工作区干净为什么不等于远端归档完成。</li>
+</ol>
+<h2 id="11">11. 常见问题与首查位置<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<h3 id="111-ros_distro">11.1 <code>ROS_DISTRO</code>为空<a class="headerlink" href="#111-ros_distro" title="Permanent link">&para;</a></h3>
+<p>当前Shell没有加载系统ROS 2。执行<code>source /opt/ros/humble/setup.bash</code>，再重新检查。</p>
+<h3 id="112-installsetupbash">11.2 <code>install/setup.bash</code>不存在<a class="headerlink" href="#112-installsetupbash" title="Permanent link">&para;</a></h3>
+<p>工作空间尚未成功构建。先执行<code>./scripts/build.sh</code>，并处理第一个构建失败。</p>
+<h3 id="113-ros2-runpackageexecutable">11.3 <code>ros2 run</code>提示package或executable不存在<a class="headerlink" href="#113-ros2-runpackageexecutable" title="Permanent link">&para;</a></h3>
+<p>依次检查构建Summary、<code>install/setup.bash</code>、当前Shell环境、<code>ros2 pkg prefix</code>和程序包安装规则。</p>
+<h3 id="114">11.4 运行行为像旧版本<a class="headerlink" href="#114" title="Permanent link">&para;</a></h3>
+<p>确认修改发生在<code>src/</code>或<code>config/</code>权威源，重新构建，并在当前Shell重新加载<code>install/setup.bash</code>。不要直接修补<code>install/</code>副本。</p>
+<h3 id="115">11.5 测试找不到项目可执行程序<a class="headerlink" href="#115" title="Permanent link">&para;</a></h3>
+<p>确认先构建并加载安装空间。项目标准<code>scripts/test.sh</code>已经处理这一顺序，单独拼命令时容易遗漏。</p>
+<h3 id="116-git">11.6 Git显示非预期修改<a class="headerlink" href="#116-git" title="Permanent link">&para;</a></h3>
+<p>停止后续写操作，先用<code>git status --short</code>和<code>git diff</code>确认来源。不得用重置或覆盖命令清除自己不了解的修改。</p>
+<h2 id="12">12. 停止、恢复与安全边界<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<ul>
+<li>普通示例节点使用<code>Ctrl+C</code>停止；</li>
+<li>若命令长时间无输出，先确认它是常驻节点还是实际卡住；</li>
+<li>不使用<code>kill -9</code>作为默认停止方式；</li>
+<li>不直接操作<code>.git/</code>、<code>build/</code>或<code>install/</code>内部文件；</li>
+<li>不运行实体机器人驱动，不上电，不发布运动命令；</li>
+<li>不启动AI Agent或阶段2组件；</li>
+<li>发现环境、规划和实际入口不一致时，先修正规则或记录冲突，不靠临时命令绕过。</li>
+</ul>
+<h2 id="13">13. 对实体迁移的意义<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<p>实体机器人仍需要同样的环境、构建、Overlay和Git归档纪律，但实体阶段还会增加驱动依赖、设备权限、实时诊断和现场安全授权。</p>
+<p>本章的命令不能自动获得实体操作权限。即使软件构建和测试通过，实体上电与运动仍必须由用户当次明确授权，并满足S1-1-G1和后续实体阶段准入条件。</p>
+<h2 id="14">14. 本章总结<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<ol>
+<li>ROS 2运行环境由系统Underlay和项目Overlay分层组成；</li>
+<li><code>source</code>只影响当前Shell，新终端需要重新加载；</li>
+<li><code>./scripts/check_environment.sh</code>验证系统命令和工作空间基线；</li>
+<li><code>./scripts/build.sh</code>把<code>src/</code>构建为<code>build/</code>和<code>install/</code>，日志写入<code>log/</code>；</li>
+<li>ROS 2运行项目程序包依赖已经构建并加载的<code>install/setup.bash</code>；</li>
+<li>本章只运行非运动示例节点，观察后使用<code>Ctrl+C</code>正常退出；</li>
+<li><code>./scripts/test.sh</code>是统一回归入口，测试与证据学习留到M0-L3；</li>
+<li>Git工作区、本地提交和远端归档是三个不同层次。</li>
+</ol>
+<h2 id="15">15. 理解检查<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<p>请在正式练习前先用自己的话回答：</p>
+<ol>
+<li>Underlay和Overlay分别是什么？加载顺序为什么重要？</li>
+<li>为什么终端A加载工作空间后，终端B仍可能找不到项目包？</li>
+<li><code>src/</code>、<code>build/</code>、<code>install/</code>和<code>log/</code>如何形成构建链？</li>
+<li>环境检查通过能否证明所有机器人功能测试通过？为什么？</li>
+<li><code>scripts/test.sh</code>为什么检查<code>install/setup.bash</code>？</li>
+<li>本章为什么选择<code>ai_robot_py_example/baseline_node</code>而不选择底盘运动演示？</li>
+<li>如何只读判断本地分支是否跟踪<code>origin/main</code>？</li>
+<li>为什么“工作区干净”不能作为远端归档完成证据？</li>
+</ol>
+<p>理解检查完成并由AI教员讲解确认后，再执行第10节正式练习。练习完成后进入M0-L3工程基线测试与证据，不直接跳到M1。</p>
+<h2 id="16">16. 项目内依据<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>README.md</code></li>
+<li><code>AGENTS.md</code></li>
+<li><code>plan/AI机器人开发项目计划_v1.17.md</code></li>
+<li><code>plan/ROS2机器人开发规划_v1.12.md</code></li>
+<li><code>plan/ROS2仿真机器人学习计划_v1.8.md</code></li>
+<li><code>learning/README.md</code></li>
+<li><code>learning/ROS2仿真机器人/README.md</code></li>
+<li><code>scripts/check_environment.sh</code></li>
+<li><code>scripts/build.sh</code></li>
+<li><code>scripts/test.sh</code></li>
+<li><code>tests/test_workspace_layout.sh</code></li>
+<li><code>tests/README.md</code></li>
+</ul>
+<p>本章与学习计划v1.8逐项对应：环境加载、工作空间构建、安装空间加载、标准测试入口和Git状态观察均已进入正文与正式练习；更深入的测试注册、失败定位和证据解释留给M0-L3。
+- <code>.gitignore</code></p>
+<p>本章以项目内当前实现为准，不使用外部链接替代教材正文。</p>
+      <div class="footer">源文件：S1-1-M0-L2-01_环境构建运行与项目管理_v1.1.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M1-L1-01 程序包与工程资源</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 本单元要解决什么问题</a></li>
+<li><a href="#2-ros-2">2. 如何认定一个ROS 2程序包</a></li>
+<li><a href="#3">3. 五个当前程序包</a><ul>
+<li><a href="#31-ai_robot_cpp_example">3.1 ai_robot_cpp_example</a></li>
+<li><a href="#32-ai_robot_py_example">3.2 ai_robot_py_example</a></li>
+<li><a href="#33-ai_robot_description">3.3 ai_robot_description</a></li>
+<li><a href="#34-ai_robot_interfaces">3.4 ai_robot_interfaces</a></li>
+<li><a href="#35-ai_robot_sim">3.5 ai_robot_sim</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 每个程序包中的资源类型</a><ul>
+<li><a href="#41-packagexml">4.1 package.xml</a></li>
+<li><a href="#42-cmakeliststxtsetuppy">4.2 CMakeLists.txt与setup.py</a></li>
+<li><a href="#43">4.3 节点源文件</a></li>
+<li><a href="#44-launch">4.4 Launch文件</a></li>
+<li><a href="#45">4.5 配置、模型、世界和地图</a></li>
+</ul>
+</li>
+<li><a href="#5">5. 工作空间级工程资源</a><ul>
+<li><a href="#51">5.1 配置基线</a></li>
+<li><a href="#52">5.2 测试资源</a></li>
+<li><a href="#53">5.3 资源矩阵与准入卡</a></li>
+<li><a href="#54">5.4 统一脚本</a></li>
+</ul>
+</li>
+<li><a href="#6">6. 项目自研与第三方组件的边界</a><ul>
+<li><a href="#61">6.1 项目自研或项目维护</a></li>
+<li><a href="#62">6.2 第三方成熟组件</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 根据功能需求查找资源</a></li>
+<li><a href="#8">8. 只读观察方法</a></li>
+<li><a href="#9">9. 常见理解误区</a><ul>
+<li><a href="#1srcros-2">误区1：src/下每个目录都是ROS 2程序包</a></li>
+<li><a href="#2">误区2：一个功能只对应一个文件</a></li>
+<li><a href="#3_1">误区3：第三方组件不需要项目测试</a></li>
+<li><a href="#4ai_robot_interfaces">误区4：ai_robot_interfaces已经实现任务执行</a></li>
+<li><a href="#5ai_robot_agentai-agent">误区5：预留ai_robot_agent目录表示AI Agent已接入</a></li>
+</ul>
+</li>
+<li><a href="#v18">v1.8学习闭环</a></li>
+<li><a href="#10">10. 本单元总结</a></li>
+<li><a href="#11">11. 理解检查</a></li>
+<li><a href="#12">12. 项目内依据</a></li>
+<li><a href="#13">13. 外部参考资料</a><ul>
+<li><a href="#1-creating-your-first-ros-2-package">1. Creating your first ROS 2 package</a></li>
+<li><a href="#2-launch">2. Launch</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 本单元要解决什么问题</a></li>
+<li><a href="#2-ros-2">2. 如何认定一个ROS 2程序包</a></li>
+<li><a href="#3">3. 五个当前程序包</a><ul>
+<li><a href="#31-ai_robot_cpp_example">3.1 ai_robot_cpp_example</a></li>
+<li><a href="#32-ai_robot_py_example">3.2 ai_robot_py_example</a></li>
+<li><a href="#33-ai_robot_description">3.3 ai_robot_description</a></li>
+<li><a href="#34-ai_robot_interfaces">3.4 ai_robot_interfaces</a></li>
+<li><a href="#35-ai_robot_sim">3.5 ai_robot_sim</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 每个程序包中的资源类型</a><ul>
+<li><a href="#41-packagexml">4.1 package.xml</a></li>
+<li><a href="#42-cmakeliststxtsetuppy">4.2 CMakeLists.txt与setup.py</a></li>
+<li><a href="#43">4.3 节点源文件</a></li>
+<li><a href="#44-launch">4.4 Launch文件</a></li>
+<li><a href="#45">4.5 配置、模型、世界和地图</a></li>
+</ul>
+</li>
+<li><a href="#5">5. 工作空间级工程资源</a><ul>
+<li><a href="#51">5.1 配置基线</a></li>
+<li><a href="#52">5.2 测试资源</a></li>
+<li><a href="#53">5.3 资源矩阵与准入卡</a></li>
+<li><a href="#54">5.4 统一脚本</a></li>
+</ul>
+</li>
+<li><a href="#6">6. 项目自研与第三方组件的边界</a><ul>
+<li><a href="#61">6.1 项目自研或项目维护</a></li>
+<li><a href="#62">6.2 第三方成熟组件</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 根据功能需求查找资源</a></li>
+<li><a href="#8">8. 只读观察方法</a></li>
+<li><a href="#9">9. 常见理解误区</a><ul>
+<li><a href="#1srcros-2">误区1：src/下每个目录都是ROS 2程序包</a></li>
+<li><a href="#2">误区2：一个功能只对应一个文件</a></li>
+<li><a href="#3_1">误区3：第三方组件不需要项目测试</a></li>
+<li><a href="#4ai_robot_interfaces">误区4：ai_robot_interfaces已经实现任务执行</a></li>
+<li><a href="#5ai_robot_agentai-agent">误区5：预留ai_robot_agent目录表示AI Agent已接入</a></li>
+</ul>
+</li>
+<li><a href="#v18">v1.8学习闭环</a></li>
+<li><a href="#10">10. 本单元总结</a></li>
+<li><a href="#11">11. 理解检查</a></li>
+<li><a href="#12">12. 项目内依据</a></li>
+<li><a href="#13">13. 外部参考资料</a><ul>
+<li><a href="#1-creating-your-first-ros-2-package">1. Creating your first ROS 2 package</a></li>
+<li><a href="#2-launch">2. Launch</a></li>
+</ul>
+</li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m1-l1-01">S1-1-M1-L1-01 程序包与工程资源<a class="headerlink" href="#s1-1-m1-l1-01" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M1 资源、接口与测试基线<br>
+所属学习子单元：S1-1-M1-L1 程序包与工程资源<br>
+章节序号：S1-1-M1-L1-01<br>
+版本：v1.3<br>
+适用项目：<code>/home/ubuntu/ai_robot_ws</code><br>
+适用环境：Ubuntu 22.04、ROS 2 Humble<br>
+学习边界：认识当前程序包和工程资源，不把预留目录或阶段 2模块写成已实现功能。</p>
+</blockquote>
+<h2 id="1">1. 本单元要解决什么问题<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>工作空间中的“目录”“ROS 2程序包”“可执行节点”“第三方依赖”和“工程资源”不是同一个概念。一个目录可以只是预留边界；一个程序包可以安装多个节点和Launch；配置与测试也可能位于程序包之外。</p>
+<p>完成本单元后，您应能：</p>
+<ol>
+<li>用<code>colcon list</code>确认当前真实程序包，而不是根据目录名猜测；</li>
+<li>说明五个项目程序包的职责、构建类型和关键文件；</li>
+<li>找到节点、Launch、配置、URDF/Xacro、世界、地图和测试入口；</li>
+<li>区分项目自研程序包、第三方成熟组件和工作空间级工程资源；</li>
+<li>根据一个功能需求判断首先查看哪个程序包或资源目录；</li>
+<li>说明为什么预留的<code>ai_robot_hardware</code>或<code>ai_robot_agent</code>目录不是当前实现。</li>
+</ol>
+<p><a href="../../assets/S1-1-M1/S1-1-M1-L1-01_程序包与工程资源.svg"><img alt="程序包与工程资源关系" src="../../assets/S1-1-M1/S1-1-M1-L1-01_程序包与工程资源.svg"></a></p>
+<p>图1：当前五个程序包、第三方成熟组件和工作空间级工程资源的关系。</p>
+<h2 id="2-ros-2">2. 如何认定一个ROS 2程序包<a class="headerlink" href="#2-ros-2" title="Permanent link">&para;</a></h2>
+<p>本项目以colcon实际识别结果为准：</p>
+<pre><code class="language-bash">source /opt/ros/humble/setup.bash
+colcon list
+</code></pre>
+<p>当前结果为：</p>
+<pre><code class="language-text">ai_robot_cpp_example
+ai_robot_description
+ai_robot_interfaces
+ai_robot_py_example
+ai_robot_sim
+</code></pre>
+<p>程序包至少需要有效的<code>package.xml</code>，并根据构建类型提供<code>CMakeLists.txt</code>或<code>setup.py</code>等构建清单。</p>
+<p>以下目录目前只是规划中的职责边界：</p>
+<pre><code class="language-text">src/ai_robot_bringup/
+src/ai_robot_navigation/
+src/ai_robot_perception/
+src/ai_robot_hardware/
+src/ai_robot_agent/
+</code></pre>
+<p>它们没有出现在当前<code>colcon list</code>结果中，因此不能说这些程序包已经建立，更不能把其中规划的功能当成当前能力。特别是<code>ai_robot_agent</code>属于阶段 2边界，当前没有实现。</p>
+<h2 id="3">3. 五个当前程序包<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="31-ai_robot_cpp_example">3.1 <code>ai_robot_cpp_example</code><a class="headerlink" href="#31-ai_robot_cpp_example" title="Permanent link">&para;</a></h3>
+<p><strong>定位</strong>：S1-1-M1建立的最小C++节点和单元测试样例。</p>
+<p><strong>构建类型</strong>：<code>ament_cmake</code>。</p>
+<p>关键文件：</p>
+<pre><code class="language-text">src/ai_robot_cpp_example/
+├── package.xml
+├── CMakeLists.txt
+├── include/ai_robot_cpp_example/status_formatter.hpp
+├── src/baseline_node.cpp
+└── test/test_status_formatter.cpp
+</code></pre>
+<p>安装后的可执行入口：</p>
+<pre><code class="language-text">ros2 run ai_robot_cpp_example baseline_node
+</code></pre>
+<p>测试使用<code>ament_cmake_gtest</code>。这个包的目的不是实现机器人业务，而是证明C++程序包、节点、安装和GTest链路可工作。</p>
+<h3 id="32-ai_robot_py_example">3.2 <code>ai_robot_py_example</code><a class="headerlink" href="#32-ai_robot_py_example" title="Permanent link">&para;</a></h3>
+<p><strong>定位</strong>：S1-1-M1建立的最小Python节点样例。</p>
+<p><strong>构建类型</strong>：<code>ament_python</code>。</p>
+<p>关键文件：</p>
+<pre><code class="language-text">src/ai_robot_py_example/
+├── package.xml
+├── setup.py
+├── setup.cfg
+├── resource/ai_robot_py_example
+└── ai_robot_py_example/
+    ├── __init__.py
+    └── baseline_node.py
+</code></pre>
+<p><code>setup.py</code>通过<code>console_scripts</code>建立：</p>
+<pre><code class="language-text">baseline_node = ai_robot_py_example.baseline_node:main
+</code></pre>
+<p>安装后的入口：</p>
+<pre><code class="language-text">ros2 run ai_robot_py_example baseline_node
+</code></pre>
+<p>该程序包负责的Python测试位于：</p>
+<pre><code class="language-text">src/ai_robot_py_example/test/test_python_example.py
+</code></pre>
+<p>它由<code>colcon test --packages-select ai_robot_py_example</code>正式发现，不从项目根目录修改<code>sys.path</code>导入源码。跨包契约、集成和系统测试的位置另见<code>tests/README.md</code>。</p>
+<h3 id="33-ai_robot_description">3.3 <code>ai_robot_description</code><a class="headerlink" href="#33-ai_robot_description" title="Permanent link">&para;</a></h3>
+<p><strong>定位</strong>：机器人几何、关节、传感器安装关系和Gazebo仿真插件描述。</p>
+<p><strong>构建类型</strong>：<code>ament_cmake</code>。</p>
+<p>当前核心文件：</p>
+<pre><code class="language-text">src/ai_robot_description/urdf/ai_robot.urdf.xacro
+</code></pre>
+<p>模型包含：</p>
+<ul>
+<li><code>base_footprint</code>与<code>base_link</code>；</li>
+<li>左右车轮及连续关节；</li>
+<li><code>laser_link</code>、<code>camera_link</code>和<code>imu_link</code>；</li>
+<li>差速底盘、关节状态、雷达、相机和IMU Gazebo插件。</li>
+</ul>
+<p><code>CMakeLists.txt</code>把<code>urdf/</code>和<code>launch/</code>目录安装到程序包<code>share</code>空间。当前该包的<code>launch/</code>没有有效Launch文件；模型由<code>ai_robot_sim/launch/sim_bringup.launch.py</code>读取并启动。</p>
+<p>这说明“模型属于description包”和“总启动入口属于sim包”可以同时成立。</p>
+<h3 id="34-ai_robot_interfaces">3.4 <code>ai_robot_interfaces</code><a class="headerlink" href="#34-ai_robot_interfaces" title="Permanent link">&para;</a></h3>
+<p><strong>定位</strong>：项目自定义ROS 2接口定义。</p>
+<p><strong>构建类型</strong>：<code>ament_cmake</code>加<code>rosidl_default_generators</code>。</p>
+<p>当前接口：</p>
+<pre><code class="language-text">src/ai_robot_interfaces/action/ExecuteCapabilityTask.action
+</code></pre>
+<p>它定义阶段 1机器人能力Action的目标、反馈和结果，包括任务ID、能力名、目标位姿、超时、传感器要求、执行阶段和结果枚举。</p>
+<p>该Action是ROS 2机器人能力契约，不是阶段 2的完整AI—ROS 2任务接口层。接口包不包含任务执行逻辑，实际执行端位于<code>ai_robot_sim</code>。</p>
+<h3 id="35-ai_robot_sim">3.5 <code>ai_robot_sim</code><a class="headerlink" href="#35-ai_robot_sim" title="Permanent link">&para;</a></h3>
+<p><strong>定位</strong>：当前仿真机器人集成包。</p>
+<p><strong>构建类型</strong>：<code>ament_python</code>。</p>
+<p>它承担四类工作：</p>
+<ol>
+<li>安装和启动Gazebo、模型、定位、导航及任务链；</li>
+<li>提供项目自研的安全、监测、任务和体验节点；</li>
+<li>安装仿真配置、世界和地图；</li>
+<li>组合第三方成熟组件形成可测试系统。</li>
+</ol>
+<p>Python可执行入口：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>可执行入口</th>
+<th>源文件</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cmd_vel_guard</code></td>
+<td><code>cmd_vel_guard.py</code></td>
+<td>限速、命令超时和雷达新鲜度保护</td>
+</tr>
+<tr>
+<td><code>scan_obstacle_monitor</code></td>
+<td><code>scan_obstacle_monitor.py</code></td>
+<td>雷达障碍距离诊断</td>
+</tr>
+<tr>
+<td><code>camera_image_monitor</code></td>
+<td><code>camera_image_monitor.py</code></td>
+<td>图像与相机信息诊断</td>
+</tr>
+<tr>
+<td><code>capability_task_manager</code></td>
+<td><code>capability_task_manager.py</code></td>
+<td>非AI能力任务执行、反馈和结果</td>
+</tr>
+<tr>
+<td><code>manual_motion_demo</code></td>
+<td><code>manual_motion_demo.py</code></td>
+<td>受控仿真运动演示</td>
+</tr>
+<tr>
+<td><code>manual_m5_m6_experience</code></td>
+<td><code>manual_m5_m6_experience.py</code></td>
+<td>M5/M6人工体验入口</td>
+</tr>
+</tbody>
+</table></div>
+<p>Launch入口：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Launch文件</th>
+<th>主要组合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sim_bringup.launch.py</code></td>
+<td>Gazebo、模型、<code>robot_state_publisher</code>、生成机器人、速度安全守卫</td>
+</tr>
+<tr>
+<td><code>slam_bringup.launch.py</code></td>
+<td>仿真基础、SLAM Toolbox、地图保存和生命周期管理</td>
+</tr>
+<tr>
+<td><code>localization_bringup.launch.py</code></td>
+<td>仿真基础、静态地图、AMCL和生命周期管理</td>
+</tr>
+<tr>
+<td><code>nav2_bringup.launch.py</code></td>
+<td>定位系统、Nav2导航栈、速度输出重映射</td>
+</tr>
+<tr>
+<td><code>m6_bringup.launch.py</code></td>
+<td>Nav2系统和<code>capability_task_manager</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>包内运行资源：</p>
+<pre><code class="language-text">src/ai_robot_sim/worlds/s1_m5_navigation.world
+src/ai_robot_sim/maps/s1_m5_navigation.yaml
+src/ai_robot_sim/maps/s1_m5_navigation.pgm
+</code></pre>
+<p><code>setup.py</code>还会把根目录<code>config/</code>中的仿真配置安装到<code>share/ai_robot_sim/config/</code>。</p>
+<h2 id="4">4. 每个程序包中的资源类型<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="41-packagexml">4.1 <code>package.xml</code><a class="headerlink" href="#41-packagexml" title="Permanent link">&para;</a></h3>
+<p><code>package.xml</code>记录名称、版本、许可证、维护者、构建工具和依赖。例如：</p>
+<ul>
+<li><code>ai_robot_cpp_example</code>依赖<code>rclcpp</code>；</li>
+<li><code>ai_robot_py_example</code>依赖<code>rclpy</code>；</li>
+<li><code>ai_robot_description</code>运行时依赖Xacro、<code>robot_state_publisher</code>和Gazebo插件；</li>
+<li><code>ai_robot_interfaces</code>依赖消息生成工具和<code>geometry_msgs</code>；</li>
+<li><code>ai_robot_sim</code>依赖项目接口、标准消息、Nav2消息、Gazebo ROS和Launch。</li>
+</ul>
+<p>它是包级依赖依据，不应只根据Python <code>import</code>或C++ <code>#include</code>猜依赖。</p>
+<h3 id="42-cmakeliststxtsetuppy">4.2 <code>CMakeLists.txt</code>与<code>setup.py</code><a class="headerlink" href="#42-cmakeliststxtsetuppy" title="Permanent link">&para;</a></h3>
+<p>二者负责把源码变成安装空间中的可执行文件和资源：</p>
+<ul>
+<li>CMake包使用<code>add_executable</code>、<code>install</code>和<code>ament_package</code>；</li>
+<li>Python包使用<code>setuptools.setup</code>、<code>data_files</code>和<code>console_scripts</code>；</li>
+<li>自定义接口包使用<code>rosidl_generate_interfaces</code>。</li>
+</ul>
+<p>如果文件存在于源码中却没有被安装，运行时通过<code>ros2 run</code>或<code>get_package_share_directory</code>可能找不到它。</p>
+<h3 id="43">4.3 节点源文件<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<p>节点源文件实现运行逻辑。一个Python文件不一定安装为可执行节点，必须查看<code>setup.py</code>中的<code>console_scripts</code>；一个C++源文件也必须由CMake创建并安装目标。</p>
+<h3 id="44-launch">4.4 Launch文件<a class="headerlink" href="#44-launch" title="Permanent link">&para;</a></h3>
+<p>Launch用于声明参数、包含其他Launch、启动节点、设置重映射和选择资源。它表达“哪些组件以什么组合启动”，不是组件内部算法实现。</p>
+<h3 id="45">4.5 配置、模型、世界和地图<a class="headerlink" href="#45" title="Permanent link">&para;</a></h3>
+<p>资源可能位于包内，也可能由工作空间根目录统一管理后安装进包：</p>
+<ul>
+<li>URDF/Xacro：<code>ai_robot_description/urdf/</code>；</li>
+<li>世界和地图：<code>ai_robot_sim/worlds/</code>、<code>ai_robot_sim/maps/</code>；</li>
+<li>当前仿真参数源：根目录<code>config/</code>；</li>
+<li>安装副本：<code>install/&lt;package&gt;/share/&lt;package&gt;/...</code>。</li>
+</ul>
+<h2 id="5">5. 工作空间级工程资源<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 配置基线<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<p><code>config/</code>不仅保存运行参数，也保存接口与TF契约：</p>
+<pre><code class="language-text">config/ros_interface_baseline.yaml
+config/tf_frame_baseline.yaml
+config/sim_base.yaml
+config/sim_sensors.yaml
+config/ekf_sim.yaml
+config/slam_sim.yaml
+config/amcl_sim.yaml
+</code></pre>
+<p>接口基线规定名称、消息和QoS；TF基线规定Frame及唯一发布职责；其他YAML规定仿真和算法参数。</p>
+<h3 id="52">5.2 测试资源<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<p><code>tests/</code>按风险和范围组织：</p>
+<ul>
+<li><code>unit/</code>：普通逻辑和最小节点；</li>
+<li><code>launch/</code>：多节点及仿真启动测试；</li>
+<li><code>contract/</code>：接口、配置、文件结构和约束；</li>
+<li><code>scenario/</code>：人工观察与体验说明；</li>
+<li><code>evidence/</code>：rosbag和人工证据模板。</li>
+</ul>
+<p>包内测试与工作空间级测试互补：前者紧贴包内代码，后者验证跨包契约和完整链路。</p>
+<h3 id="53">5.3 资源矩阵与准入卡<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<p>必须阅读：</p>
+<pre><code class="language-text">resources/S1-1-M1对象资源矩阵.md
+resources/S1-1-M1第三方资源卡与准入流程.md
+</code></pre>
+<p>对象资源矩阵回答：</p>
+<ul>
+<li>机器人对象是什么；</li>
+<li>候选成熟资源是什么；</li>
+<li>仿真和实体分别怎样实现；</li>
+<li>用什么方法测试。</li>
+</ul>
+<p>资源卡记录来源、许可证、版本、兼容性、接口、资源需求、测试和回退。第三方组件进入项目依赖前必须经过准入流程。</p>
+<h3 id="54">5.4 统一脚本<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<p><code>scripts/</code>固定环境、构建、测试和人工体验入口。脚本不属于ROS 2程序包，但保证多个程序包以一致方式构建和验收。</p>
+<h2 id="6">6. 项目自研与第三方组件的边界<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 项目自研或项目维护<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<ul>
+<li>五个<code>ai_robot_*</code>有效程序包；</li>
+<li>项目Action定义；</li>
+<li>安全守卫、监测、任务执行和人工体验节点；</li>
+<li>项目Launch组合、参数、模型、地图和世界；</li>
+<li>接口、TF、资源和测试基线。</li>
+</ul>
+<h3 id="62">6.2 第三方成熟组件<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<p>当前系统通过Ubuntu/ROS 2安装使用：</p>
+<ul>
+<li>Gazebo Classic和<code>gazebo_ros</code>插件；</li>
+<li><code>robot_state_publisher</code>与Xacro；</li>
+<li><code>robot_localization</code>；</li>
+<li>SLAM Toolbox；</li>
+<li>Nav2、AMCL和地图服务器；</li>
+<li>ROS 2标准消息、Launch和生命周期组件。</li>
+</ul>
+<p>本仓库不复制这些组件的上游源码。项目主要通过以下方式集成：</p>
+<pre><code class="language-text">package.xml依赖
+→ Launch组合
+→ YAML参数
+→ Topic/Action重映射
+→ 薄封装节点
+→ 契约、Launch和场景测试
+</code></pre>
+<p>第三方组件内部算法通常不在本项目重复做白盒测试；本项目重点验证版本、启动、接口、参数、异常行为、安全边界和系统集成。</p>
+<h2 id="7">7. 根据功能需求查找资源<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>想查的问题</th>
+<th>首查位置</th>
+<th>继续追踪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>机器人形状、轮距或传感器安装</td>
+<td><code>ai_robot_description/urdf/</code></td>
+<td>TF基线、Gazebo插件配置</td>
+</tr>
+<tr>
+<td>速度为何被限制或停车</td>
+<td><code>cmd_vel_guard.py</code></td>
+<td><code>config/sim_base.yaml</code>、安全Launch测试</td>
+</tr>
+<tr>
+<td>雷达或相机是否有数据</td>
+<td>URDF传感器插件</td>
+<td><code>sim_sensors.yaml</code>、监测节点和传感器测试</td>
+</tr>
+<tr>
+<td>系统怎样启动</td>
+<td><code>ai_robot_sim/launch/</code></td>
+<td>被包含的第三方Launch和安装资源</td>
+</tr>
+<tr>
+<td>导航任务怎样进入系统</td>
+<td><code>ExecuteCapabilityTask.action</code></td>
+<td><code>capability_task_manager.py</code>、M6测试</td>
+</tr>
+<tr>
+<td>地图从哪里加载</td>
+<td><code>localization_bringup.launch.py</code></td>
+<td><code>ai_robot_sim/maps/</code></td>
+</tr>
+<tr>
+<td>接口名称和QoS依据</td>
+<td><code>ros_interface_baseline.yaml</code></td>
+<td>契约测试和节点源文件</td>
+</tr>
+<tr>
+<td>第三方组件能否采用</td>
+<td>资源卡与准入流程</td>
+<td>版本、许可证、最小验证和回退</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="8">8. 只读观察方法<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">source /opt/ros/humble/setup.bash
+colcon list
+</code></pre>
+<p>查看一个包的源文件：</p>
+<pre><code class="language-bash">rg --files src/ai_robot_sim
+</code></pre>
+<p>查看包清单中的依赖：</p>
+<pre><code class="language-bash">sed -n '1,180p' src/ai_robot_sim/package.xml
+</code></pre>
+<p>查看Python可执行入口：</p>
+<pre><code class="language-bash">rg -n 'console_scripts|=' src/ai_robot_sim/setup.py
+</code></pre>
+<p>查看Launch组合：</p>
+<pre><code class="language-bash">rg -n 'package=|executable=|IncludeLaunchDescription' src/ai_robot_sim/launch
+</code></pre>
+<p>这些命令只用于观察。正式学习练习仍按学习计划逐步执行和记录证据。</p>
+<h2 id="9">9. 常见理解误区<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<h3 id="1srcros-2">误区1：<code>src/</code>下每个目录都是ROS 2程序包<a class="headerlink" href="#1srcros-2" title="Permanent link">&para;</a></h3>
+<p>不是。以<code>colcon list</code>和有效构建清单为准。</p>
+<h3 id="2">误区2：一个功能只对应一个文件<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p>通常不是。例如导航涉及Launch、Nav2参数、地图、TF、传感器、安全守卫和测试。</p>
+<h3 id="3_1">误区3：第三方组件不需要项目测试<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
+<p>不正确。可以不重复上游内部算法白盒测试，但必须验证本项目使用的版本、接口、参数和异常边界。</p>
+<h3 id="4ai_robot_interfaces">误区4：<code>ai_robot_interfaces</code>已经实现任务执行<a class="headerlink" href="#4ai_robot_interfaces" title="Permanent link">&para;</a></h3>
+<p>不是。接口包只定义契约；执行逻辑在<code>capability_task_manager</code>。</p>
+<h3 id="5ai_robot_agentai-agent">误区5：预留<code>ai_robot_agent</code>目录表示AI Agent已接入<a class="headerlink" href="#5ai_robot_agentai-agent" title="Permanent link">&para;</a></h3>
+<p>不是。阶段 2尚未开始，预留目录不构成实现。</p>
+<h2 id="v18">v1.8学习闭环<a class="headerlink" href="#v18" title="Permanent link">&para;</a></h2>
+<p>本章只做资源识别和测试入口确认。学员应为五个程序包分别找到<code>package.xml</code>、构建文件、主要源码或接口、安装资源和<code>test/</code>；再为M1至M6各选择一个工作空间级契约或集成测试，说明“一个包服务多个M”为什么不等于“测完整个包就完成所有M”。</p>
+<p>自动检查以<code>colcon list</code>和测试注册的只读检查为主，不在本章运行M2至M6整套功能。正常现象是五个包均由colcon识别，包内测试位于责任包，跨包测试位于根<code>tests/</code>。找不到包时先查manifest、构建类型和Overlay；找不到测试时先查注册，而不是移动文件或修改<code>sys.path</code>。</p>
+<p>本章不发布控制命令。学习证据应记录五包职责、第三方组件边界、每类测试的真实路径和学员解释；结论不能外推为M2至M6学习完成。</p>
+<h2 id="10">10. 本单元总结<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<ol>
+<li>当前工作空间有五个有效项目程序包。</li>
+<li>C++包、Python包、模型包、接口包和仿真集成包承担不同职责。</li>
+<li>节点是否可运行取决于构建和安装入口，不只取决于源文件存在。</li>
+<li>Launch负责组合，配置负责参数，测试负责验证，资源卡负责第三方准入。</li>
+<li>项目通过依赖、参数、适配和测试复用成熟组件，不把第三方源码直接混入自研包。</li>
+<li>规划中的预留目录和阶段 2模块不能当作当前实现。</li>
+</ol>
+<h2 id="11">11. 理解检查<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<ol>
+<li>当前五个有效程序包分别是什么？</li>
+<li><code>ai_robot_description</code>为什么不负责仿真总启动？</li>
+<li><code>ai_robot_interfaces</code>和<code>ai_robot_sim</code>在能力任务中分别负责什么？</li>
+<li>如何确认一个Python文件已安装为ROS 2可执行入口？</li>
+<li>根目录<code>config/</code>为什么能出现在<code>ai_robot_sim</code>安装空间？</li>
+<li>包内测试与工作空间级契约测试有什么区别？</li>
+<li>项目复用Nav2或SLAM Toolbox时仍需验证哪些内容？</li>
+<li>为什么<code>ai_robot_hardware</code>和<code>ai_robot_agent</code>当前不能列为有效程序包？</li>
+</ol>
+<p>完成理解检查后，再进入S1-1-M1-L2-01“对象与链路概览”。</p>
+<h2 id="12">12. 项目内依据<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>src/*/package.xml</code></li>
+<li><code>src/ai_robot_cpp_example/CMakeLists.txt</code></li>
+<li><code>src/ai_robot_py_example/setup.py</code></li>
+<li><code>src/ai_robot_description/CMakeLists.txt</code></li>
+<li><code>src/ai_robot_interfaces/CMakeLists.txt</code></li>
+<li><code>src/ai_robot_sim/setup.py</code></li>
+<li><code>src/ai_robot_sim/launch/</code></li>
+<li><code>config/ros_interface_baseline.yaml</code></li>
+<li><code>config/tf_frame_baseline.yaml</code></li>
+<li><code>resources/S1-1-M1对象资源矩阵.md</code></li>
+<li><code>resources/S1-1-M1第三方资源卡与准入流程.md</code></li>
+<li><code>tests/</code></li>
+<li><code>tests/README.md</code></li>
+<li><code>plan/ROS2仿真机器人学习计划_v1.8.md</code></li>
+</ul>
+<h2 id="13">13. 外部参考资料<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<h3 id="1-creating-your-first-ros-2-package">1. Creating your first ROS 2 package<a class="headerlink" href="#1-creating-your-first-ros-2-package" title="Permanent link">&para;</a></h3>
+<p><strong>来源</strong>：ROS 2 Humble官方文档</p>
+<p><strong>适用版本</strong>：ROS 2 Humble</p>
+<p><strong>用途</strong>：理解<code>package.xml</code>、<code>ament_cmake</code>和<code>ament_python</code>程序包结构</p>
+<p><strong>链接</strong>：https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html</p>
+<p><strong>查阅日期</strong>：2026-07-29</p>
+<h3 id="2-launch">2. Launch<a class="headerlink" href="#2-launch" title="Permanent link">&para;</a></h3>
+<p><strong>来源</strong>：ROS 2 Humble官方文档</p>
+<p><strong>适用版本</strong>：ROS 2 Humble</p>
+<p><strong>用途</strong>：理解Launch如何组合节点、参数、重映射和其他Launch文件</p>
+<p><strong>链接</strong>：https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-Main.html</p>
+<p><strong>查阅日期</strong>：2026-07-29</p>
+<p>外部资料用于理解通用程序包和Launch机制；当前程序包数量、文件、职责和安装规则以本项目源码为准。</p>
+      <div class="footer">源文件：S1-1-M1-L1-01_程序包与工程资源_v1.3.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

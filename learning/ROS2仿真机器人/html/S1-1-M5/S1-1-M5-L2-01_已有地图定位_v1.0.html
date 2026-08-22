@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M5-L2-01 已有地图定位</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 学习目标</a></li>
+<li><a href="#2">2. 定位链路</a></li>
+<li><a href="#3">3. 初始位姿与粒子估计</a></li>
+<li><a href="#4">4. 自动测试</a></li>
+<li><a href="#5">5. 人工观察</a></li>
+<li><a href="#6">6. 常见问题、安全停止与恢复</a></li>
+<li><a href="#7">7. 证据与实体迁移</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 学习目标</a></li>
+<li><a href="#2">2. 定位链路</a></li>
+<li><a href="#3">3. 初始位姿与粒子估计</a></li>
+<li><a href="#4">4. 自动测试</a></li>
+<li><a href="#5">5. 人工观察</a></li>
+<li><a href="#6">6. 常见问题、安全停止与恢复</a></li>
+<li><a href="#7">7. 证据与实体迁移</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m5-l2-01">S1-1-M5-L2-01 已有地图定位<a class="headerlink" href="#s1-1-m5-l2-01" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M5 SLAM、定位与Nav2<br>
+所属学习子单元：S1-1-M5-L2 已有地图定位<br>
+章节序号：S1-1-M5-L2-01<br>
+教材版本：v1.0<br>
+涉及组件：Map Server、AMCL、Lifecycle Manager、Gazebo仿真<br>
+学习边界：定位使用项目基准地图；实体地图与定位精度另行验证。</p>
+</blockquote>
+<h2 id="1">1. 学习目标<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>理解地图服务器如何发布静态地图，AMCL如何结合地图、扫描、里程计和初始位姿估计机器人位置，以及<code>map -&gt; odom</code>为何由定位组件发布。学员应能区分“地图加载成功”和“定位已经建立”。</p>
+<h2 id="2">2. 定位链路<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<pre><code class="language-text">地图YAML/PGM → map_server → /map
+/map + /scan + odom/TF + /initialpose
+→ AMCL粒子估计
+→ map -&gt; odom
+</code></pre>
+<p><code>config/amcl_sim.yaml</code>固定<code>map</code>、<code>odom</code>、<code>base_link</code>和<code>/scan</code>，使用差速运动模型，粒子数100至500。<code>localization_bringup.launch.py</code>启动基础仿真、地图服务器、AMCL和生命周期管理器。</p>
+<h2 id="3">3. 初始位姿与粒子估计<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>AMCL不知道机器人在地图中的绝对起点，需要初始位姿和协方差。初始位姿应在可通行区域，方向与仿真一致。粒子逐步收敛后，<code>map -&gt; odom</code>把全局地图坐标与局部连续里程计连接起来。</p>
+<p>错误初始位姿、地图与场景不一致、扫描Frame错误或机器人静止缺少观测变化，都可能导致收敛慢或错误定位。</p>
+<h2 id="4">4. 自动测试<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p><code>tests/integration/test_s1_m5_localization.launch.py</code>验证地图重载、<code>map</code> Frame、初始位姿注入和AMCL发布<code>map -&gt; odom</code>。</p>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+./scripts/build.sh
+source install/setup.bash
+launch_test tests/integration/test_s1_m5_localization.launch.py
+</code></pre>
+<p>测试通过说明项目组合链可建立定位，不证明所有初始位姿和环境变化下的精度。</p>
+<h2 id="5">5. 人工观察<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>启动<code>ros2 launch ai_robot_sim localization_bringup.launch.py gui:=true</code>，在RViz2加载Map、LaserScan、RobotModel、TF和PoseArray；使用RViz2的2D Pose Estimate设置初始位姿。正常现象是地图加载，粒子围绕合理位姿收敛，雷达轮廓与地图墙体对齐，<code>map -&gt; odom</code>出现且连续。</p>
+<h2 id="6">6. 常见问题、安全停止与恢复<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<ul>
+<li>地图为空：查YAML路径、图像和生命周期；</li>
+<li>无<code>map -&gt; odom</code>：查AMCL状态、初始位姿、扫描和TF；</li>
+<li>粒子不收敛：查初始位姿、地图/世界一致性和扫描；</li>
+<li>定位跳变：查里程计、时间、噪声和重复TF；</li>
+<li>方向反转：查初始四元数和坐标约定。</li>
+</ul>
+<p>本章不下达导航目标。异常时停止Launch并保存地图、TF和AMCL日志。不得把仿真定位精度外推到实体机器人。</p>
+<h2 id="7">7. 证据与实体迁移<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>证据记录地图资源、初始位姿、粒子与雷达对齐截图、TF、测试结果和失败首查。实体阶段必须用实体地图或受控迁移地图，重新标定雷达与里程计并测量重复定位精度。</p>
+<h2 id="8">8. 理解检查<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ol>
+<li>地图服务器和AMCL分别负责什么？</li>
+<li>初始位姿为什么包含协方差？</li>
+<li><code>/map</code>存在为什么仍可能没有定位？</li>
+<li>谁发布<code>map -&gt; odom</code>，为什么SLAM和AMCL不能同时负责？</li>
+<li>粒子收敛但雷达与墙不对齐说明什么？</li>
+</ol>
+<h2 id="9">9. 项目内依据<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>src/ai_robot_sim/launch/localization_bringup.launch.py</code></li>
+<li><code>src/ai_robot_sim/maps/s1_m5_navigation.yaml</code></li>
+<li><code>config/amcl_sim.yaml</code></li>
+<li><code>tests/integration/test_s1_m5_localization.launch.py</code></li>
+</ul>
+      <div class="footer">源文件：S1-1-M5-L2-01_已有地图定位_v1.0.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>
