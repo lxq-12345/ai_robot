@@ -40,7 +40,7 @@ def generate_launch_description():
             ),
         ]
     )
-    # Gazebo must first spawn the base and publish odom -> base_link for costmaps.
+    # Gazebo must first spawn the base and publish odom -> base_footprint for costmaps.
     return LaunchDescription(
         [gui_arg, localization, TimerAction(period=8.0, actions=[navigation])]
     )

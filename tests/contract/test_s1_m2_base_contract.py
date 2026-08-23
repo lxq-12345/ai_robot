@@ -64,7 +64,7 @@ def test_gazebo_diff_drive_plugin_matches_public_base_interface():
     assert child_text(diff_drive, "right_joint") == "right_wheel_joint"
     assert child_text(diff_drive, "odometry_topic") == "odom"
     assert child_text(diff_drive, "odometry_frame") == "odom"
-    assert child_text(diff_drive, "robot_base_frame") == "base_link"
+    assert child_text(diff_drive, "robot_base_frame") == "base_footprint"
     assert child_text(diff_drive, "publish_odom") == "true"
     assert child_text(diff_drive, "publish_odom_tf") == "true"
 

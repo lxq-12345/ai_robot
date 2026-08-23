@@ -40,6 +40,23 @@ def sensor_for_link(robot, link_name):
     return gazebo.find("sensor")
 
 
+def test_base_visual_material_is_green_in_rviz_and_gazebo():
+    robot = expanded_robot()
+    base_link = next(link for link in robot.findall("link") if link.attrib["name"] == "base_link")
+
+    material = base_link.find("visual/material")
+    assert material is not None
+    assert material.attrib["name"] == "green"
+    assert material.find("color").attrib["rgba"] == "0.1 0.65 0.2 1"
+
+    gazebo = next(
+        element
+        for element in robot.findall("gazebo")
+        if element.attrib.get("reference") == "base_link"
+    )
+    assert child_text(gazebo, "material") == "Gazebo/Green"
+
+
 def test_diff_drive_plugin_matches_base_interface():
     plugin = plugin_by_filename(expanded_robot(), "libgazebo_ros_diff_drive.so")
 
@@ -49,7 +66,7 @@ def test_diff_drive_plugin_matches_base_interface():
     assert child_text(plugin, "wheel_diameter") == "0.15"
     assert child_text(plugin, "odometry_topic") == "odom"
     assert child_text(plugin, "odometry_frame") == "odom"
-    assert child_text(plugin, "robot_base_frame") == "base_link"
+    assert child_text(plugin, "robot_base_frame") == "base_footprint"
     assert child_text(plugin, "publish_odom") == "true"
     assert child_text(plugin, "publish_odom_tf") == "true"
 

@@ -8,9 +8,13 @@ frames:
     parent: map
     publisher: slam_or_localization
     role: locally_continuous_frame
-  base_link:
+  base_footprint:
     parent: odom
     publisher: base_driver_or_state_estimator
+    role: ground_projection_frame
+  base_link:
+    parent: base_footprint
+    publisher: robot_state_publisher
     role: robot_body_frame
   laser_link:
     parent: base_link
@@ -26,13 +30,14 @@ frames:
     role: imu_sensor_frame
 rules:
   - map to odom is published only by localization or SLAM.
-  - odom to base_link is published only by base odometry or the state estimator.
+  - odom to base_footprint is published only by base odometry or the state estimator.
+  - base_footprint to base_link is a static model transform published by robot_state_publisher.
   - Sensor transforms are static model transforms published by robot_state_publisher.
   - Every sensor message frame_id must resolve to base_link through the TF tree.
   - Duplicate publishers for the same parent-child transform are prohibited.
 verification:
   required_paths:
-    - map->odom->base_link
+    - map->odom->base_footprint->base_link
     - base_link->laser_link
     - base_link->camera_link
     - base_link->imu_link

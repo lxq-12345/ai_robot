@@ -75,10 +75,10 @@ class TestS1M4MotionSafetyIntegration(unittest.TestCase):
                     return message.velocity[left_index], message.velocity[right_index]
         return None
 
-    def _has_odom_to_base_tf(self):
+    def _has_odom_to_base_footprint_tf(self):
         for message in self.tf_messages:
             for transform in message.transforms:
-                if transform.header.frame_id == "odom" and transform.child_frame_id == "base_link":
+                if transform.header.frame_id == "odom" and transform.child_frame_id == "base_footprint":
                     return True
         return False
 
@@ -88,7 +88,10 @@ class TestS1M4MotionSafetyIntegration(unittest.TestCase):
             self._spin_until(lambda: self._latest_wheel_velocities() is not None),
             "missing wheel encoder joint states",
         )
-        self.assertTrue(self._spin_until(self._has_odom_to_base_tf), "missing odom -> base_link TF")
+        self.assertTrue(
+            self._spin_until(self._has_odom_to_base_footprint_tf),
+            "missing odom -> base_footprint TF",
+        )
 
         start_x = self.odom_messages[-1].pose.pose.position.x
         command = Twist()

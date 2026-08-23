@@ -12,7 +12,7 @@ ekf_filter_node:
     odom_frame: odom
     base_link_frame: base_link
     world_frame: odom
-    # Gazebo owns odom -> base_link in this simulation; avoid duplicate TF publishers.
+    # Gazebo owns odom -> base_footprint in this simulation; avoid duplicate TF publishers.
     publish_tf: false
 
     odom0: /odom

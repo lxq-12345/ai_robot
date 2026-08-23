@@ -31,7 +31,7 @@
     <visual>
       <origin xyz="0 0 ${wheel_radius + body_height / 2}" rpy="0 0 0"/>
       <geometry><box size="${body_length} ${body_width} ${body_height}"/></geometry>
-      <material name="blue"><color rgba="0.1 0.3 0.8 1"/></material>
+      <material name="green"><color rgba="0.1 0.65 0.2 1"/></material>
     </visual>
     <collision>
       <origin xyz="0 0 ${wheel_radius + body_height / 2}" rpy="0 0 0"/>
@@ -88,7 +88,7 @@
     <origin xyz="0 0 ${wheel_radius + body_height}" rpy="0 0 0"/>
   </joint>
 
-  <gazebo reference="base_link"><material>Gazebo/Blue</material></gazebo>
+  <gazebo reference="base_link"><material>Gazebo/Green</material></gazebo>
   <gazebo reference="left_wheel"><material>Gazebo/Black</material></gazebo>
   <gazebo reference="right_wheel"><material>Gazebo/Black</material></gazebo>
 
@@ -106,7 +106,7 @@
       <publish_wheel_tf>true</publish_wheel_tf>
       <odometry_topic>odom</odometry_topic>
       <odometry_frame>odom</odometry_frame>
-      <robot_base_frame>base_link</robot_base_frame>
+      <robot_base_frame>base_footprint</robot_base_frame>
     </plugin>
   </gazebo>
 
