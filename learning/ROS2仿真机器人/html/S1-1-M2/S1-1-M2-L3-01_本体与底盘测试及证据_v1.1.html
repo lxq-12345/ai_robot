@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M2-L3-01 本体与底盘测试及证据</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 测试目标与风险映射</a></li>
+<li><a href="#2">2. 代码、依赖与注册</a></li>
+<li><a href="#3">3. 规定执行顺序</a></li>
+<li><a href="#4">4. 关键断言解释</a></li>
+<li><a href="#5">5. 人工测试与通过标准</a></li>
+<li><a href="#6">6. 失败定位与清理</a></li>
+<li><a href="#7-m2">7. 证据与M2学习结论</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 测试目标与风险映射</a></li>
+<li><a href="#2">2. 代码、依赖与注册</a></li>
+<li><a href="#3">3. 规定执行顺序</a></li>
+<li><a href="#4">4. 关键断言解释</a></li>
+<li><a href="#5">5. 人工测试与通过标准</a></li>
+<li><a href="#6">6. 失败定位与清理</a></li>
+<li><a href="#7-m2">7. 证据与M2学习结论</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m2-l3-01">S1-1-M2-L3-01 本体与底盘测试及证据<a class="headerlink" href="#s1-1-m2-l3-01" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M2 仿真本体与底盘单元<br>
+所属学习子单元：S1-1-M2-L3 本体与底盘测试及证据<br>
+章节序号：S1-1-M2-L3-01<br>
+教材版本：v1.1<br>
+测试层级：包级、契约、跨包集成、人工场景<br>
+安全边界：自动运动测试使用受控测试节点；人工运动只使用<code>manual_motion_demo</code>。</p>
+</blockquote>
+<h2 id="1">1. 测试目标与风险映射<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>能力</th>
+<th>风险</th>
+<th>证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型展开与拓扑</td>
+<td>模型无法解析、TF树断裂</td>
+<td>描述包测试</td>
+</tr>
+<tr>
+<td>物理属性</td>
+<td>质量/惯量/碰撞异常</td>
+<td>物理属性测试与GUI</td>
+</tr>
+<tr>
+<td>插件与接口</td>
+<td>轮关节、里程计Frame错误</td>
+<td>插件和M2契约</td>
+</tr>
+<tr>
+<td>速度守卫</td>
+<td>超速、命令失联不停</td>
+<td>单元与Launch测试</td>
+</tr>
+<tr>
+<td>底盘运动</td>
+<td>轮速、里程计、转向方向错误</td>
+<td>M2集成Launch</td>
+</tr>
+<tr>
+<td>人工现象</td>
+<td>抖动、翻倒、停止体验异常</td>
+<td>学员观察证据</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="2">2. 代码、依赖与注册<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>描述包测试由<code>CMakeLists.txt</code>中的<code>ament_add_pytest_test</code>注册；仿真包测试由ament_python/pytest发现；工作空间契约由pytest单独执行；底盘运动Launch测试位于<code>tests/integration/</code>。Gazebo及插件上游内部白盒测试不复制到项目中。</p>
+<h2 id="3">3. 规定执行顺序<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+./scripts/build.sh
+source install/setup.bash
+ctest --test-dir build/ai_robot_description -N
+colcon test --packages-select ai_robot_description ai_robot_sim --event-handlers console_direct+
+colcon test-result --test-result-base build --verbose
+/usr/bin/python3 -m pytest tests/contract/test_s1_m2_base_contract.py
+launch_test tests/integration/test_s1_m2_base_motion.launch.py
+</code></pre>
+<p>局部命令通过后，根据当前变更风险决定是否运行<code>./scripts/test.sh</code>。不得用后一次全量通过隐藏前一次局部失败；失败和修复过程都应记录。</p>
+<h2 id="4">4. 关键断言解释<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<ul>
+<li>模型测试：必需Link/Joint、唯一父关节、轮轴和安装位置；</li>
+<li>物理测试：正质量、有效惯量、Visual/Collision几何与基线尺寸；</li>
+<li>插件测试：左右两侧四轮、轮距轮径、<code>/odom</code>、Frame和轮状态；</li>
+<li>守卫单元测试：正负线速度和角速度均被限幅；</li>
+<li>守卫Launch测试：命令经<code>/cmd_vel_raw -&gt; /cmd_vel</code>，超时输出零速度；</li>
+<li>运动集成：前后退四轮轮速与里程计方向一致、转向时左右两侧轮组相反、最终停车。</li>
+</ul>
+<h2 id="5">5. 人工测试与通过标准<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>自动测试全部通过后，按M2-L2受控步骤观察Gazebo、TF、轮状态、里程计和停车。通过要求是模型无明显物理异常，前进、后退、原地转向和停车方向正确，命令链不绕过守卫，停止后速度归零。</p>
+<p>自动测试通过不能替代GUI结论；未打开GUI时人工项记录“未执行”。</p>
+<h2 id="6">6. 失败定位与清理<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>静态断言失败查Xacro和配置；运行时无Topic查Launch和插件加载；方向错误查Joint与坐标约定；超时停车失败查守卫时钟和订阅；Gazebo启动失败先区分环境权限、资源加载和功能缺陷。测试后确认Gazebo、测试节点和ROS进程退出。</p>
+<h2 id="7-m2">7. 证据与M2学习结论<a class="headerlink" href="#7-m2" title="Permanent link">&para;</a></h2>
+<p>证据至少包含提交号、环境、测试发现数量、每层命令和结果、关键断言解释、人工观察、停止方法、日志位置和残留风险。L1、L2和L3均有学习结论且L3通过后，才能记录M2学习完成；这不重新打开或覆盖既有M2工程验收。</p>
+<h2 id="8">8. 理解检查<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ol>
+<li>为什么模型静态测试不能证明底盘真的运动？</li>
+<li>为什么守卫单元测试和Launch测试都需要？</li>
+<li>轮速正确但里程计错误时先查哪些对象？</li>
+<li>Gazebo上游测试与本项目组合测试的责任边界是什么？</li>
+<li>M2学习通过与M2工程验收通过有什么区别？</li>
+</ol>
+<h2 id="9">9. 项目内依据<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>src/ai_robot_description/test/</code></li>
+<li><code>src/ai_robot_sim/test/</code></li>
+<li><code>tests/contract/test_s1_m2_base_contract.py</code></li>
+<li><code>tests/integration/test_s1_m2_base_motion.launch.py</code></li>
+<li><code>tests/evidence/test_evidence_template.md</code></li>
+<li><code>tests/README.md</code></li>
+</ul>
+      <div class="footer">源文件：S1-1-M2-L3-01_本体与底盘测试及证据_v1.1.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

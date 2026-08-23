@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M2-L2-01 差速底盘、里程计与安全控制</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 学习目标</a></li>
+<li><a href="#2">2. 控制与反馈链</a></li>
+<li><a href="#3">3. 参数与安全规则</a></li>
+<li><a href="#4">4. 代码与局部测试</a></li>
+<li><a href="#5">5. 人工练习</a></li>
+<li><a href="#6">6. 停止与异常处理</a></li>
+<li><a href="#7">7. 实体迁移与证据</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 学习目标</a></li>
+<li><a href="#2">2. 控制与反馈链</a></li>
+<li><a href="#3">3. 参数与安全规则</a></li>
+<li><a href="#4">4. 代码与局部测试</a></li>
+<li><a href="#5">5. 人工练习</a></li>
+<li><a href="#6">6. 停止与异常处理</a></li>
+<li><a href="#7">7. 实体迁移与证据</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m2-l2-01">S1-1-M2-L2-01 差速底盘、里程计与安全控制<a class="headerlink" href="#s1-1-m2-l2-01" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M2 仿真本体与底盘单元<br>
+所属学习子单元：S1-1-M2-L2 差速底盘、里程计与安全控制<br>
+章节序号：S1-1-M2-L2-01<br>
+教材版本：v1.1<br>
+涉及程序包：<code>ai_robot_description</code>、<code>ai_robot_sim</code><br>
+安全边界：仿真运动只使用<code>manual_motion_demo</code>；学员不得手工向<code>/cmd_vel_raw</code>或<code>/cmd_vel</code>发布消息。</p>
+</blockquote>
+<h2 id="1">1. 学习目标<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>理解差速运动学、轮速方向、速度命令链、里程计、TF、限速、命令超时和扫描超时安全。学员应能从输入命令沿节点和Topic追踪到底盘反馈。</p>
+<h2 id="2">2. 控制与反馈链<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<pre><code class="language-text">manual_motion_demo或Nav2
+→ /cmd_vel_raw
+→ cmd_vel_guard（限速、命令超时、可选扫描新鲜度）
+→ /cmd_vel
+→ Gazebo差速插件
+→ 左右两侧四轮运动
+→ /joint_states、/odom、odom -&gt; base_footprint -&gt; base_link
+</code></pre>
+<p>直行时四个轮关节同向，原地转向时左侧轮组与右侧轮组方向相反。里程计位置和姿态是底盘运动估计，TF为其他组件提供坐标转换；两者方向和时间必须一致。</p>
+<h2 id="3">3. 参数与安全规则<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p><code>config/sim_base.yaml</code>限定线速度<code>0.35 m/s</code>、角速度<code>1.20 rad/s</code>、命令超时<code>0.50 s</code>、扫描超时<code>0.75 s</code>。<code>cmd_vel_guard</code>只使用线速度x和角速度z，并在命令过期或要求扫描而扫描失效时发布零速度。</p>
+<p>软件停车是仿真安全机制，不是实体硬件急停。实体阶段还需要电机使能、硬件急停、看门狗和现场保护。</p>
+<h2 id="4">4. 代码与局部测试<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>cmd_vel_guard.py</code>：<code>clamp_twist</code>和超时逻辑；</li>
+<li><code>test_cmd_vel_guard_unit.py</code>：纯函数限速；</li>
+<li><code>test_cmd_vel_guard_launch.py</code>：正式节点、Topic与超时零速度；</li>
+<li><code>manual_motion_demo.py</code>：受控前进、停止、后退、停止、左右转和停止序列；</li>
+<li><code>test_s1_m2_base_contract.py</code>：插件、轮状态和安全参数契约。</li>
+</ul>
+<p>正式完整执行留到L3；本章可阅读断言并在自动前置测试通过后进行受控观察。</p>
+<h2 id="5">5. 人工练习<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>终端A：</p>
+<pre><code class="language-bash">source /home/ubuntu/ai_robot_ws/install/setup.bash
+ros2 launch ai_robot_sim sim_bringup.launch.py gui:=true
+</code></pre>
+<p>终端B先观察<code>/odom</code>和<code>/joint_states</code>，再由学员运行唯一允许的演示入口：</p>
+<pre><code class="language-bash">source /home/ubuntu/ai_robot_ws/install/setup.bash
+ros2 run ai_robot_sim manual_motion_demo
+</code></pre>
+<p>正常现象：前进和后退时四个轮关节同向，原地转向时左侧轮组与右侧轮组反向；每段后速度归零；<code>/odom</code>位置或偏航方向与画面一致；演示结束后机器人停止。</p>
+<h2 id="6">6. 停止与异常处理<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>先等待演示自带停车段；异常时在演示终端按<code>Ctrl+C</code>，观察守卫在超时后输出零速度，再在Launch终端按<code>Ctrl+C</code>。若机器人未停，测试结论立即记为未通过，保存<code>/cmd_vel_raw</code>、<code>/cmd_vel</code>、<code>/odom</code>和日志证据。</p>
+<p>常见首查：不动查Topic连接和扫描要求；方向错查轮轴、四个轮关节与插件轮组配置；里程计错查轮距轮径和Frame；不停查守卫定时器、命令时间戳和下游连接。</p>
+<h2 id="7">7. 实体迁移与证据<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>实体底盘保持上层速度和里程计接口，Gazebo插件替换为驱动与控制器。轮径、轮距、编码器比例、加速度和制动距离必须实测。证据记录自动前置结果、操作步骤、轮速/里程计观察、停止方法、截图或日志和结论。</p>
+<h2 id="8">8. 理解检查<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ol>
+<li>为什么Nav2和人工演示都应进入<code>/cmd_vel_raw</code>？</li>
+<li>原地左转时左右两侧轮组速度方向应怎样？</li>
+<li><code>/odom</code>消息与<code>odom -&gt; base_footprint -&gt; base_link</code>TF链分别服务什么？</li>
+<li>命令超时和扫描超时有什么区别？</li>
+<li>为什么软件零速度不能替代实体急停？</li>
+</ol>
+<h2 id="9">9. 项目内依据<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>src/ai_robot_sim/ai_robot_sim/cmd_vel_guard.py</code></li>
+<li><code>src/ai_robot_sim/ai_robot_sim/manual_motion_demo.py</code></li>
+<li><code>src/ai_robot_sim/test/</code></li>
+<li><code>config/sim_base.yaml</code></li>
+<li><code>tests/contract/test_s1_m2_base_contract.py</code></li>
+<li><code>tests/integration/test_s1_m2_base_motion.launch.py</code></li>
+</ul>
+      <div class="footer">源文件：S1-1-M2-L2-01_差速底盘里程计与安全控制_v1.1.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

@@ -40,18 +40,18 @@ ros2 run ai_robot_sim manual_motion_demo
 
 ## 观察点
 
-- Gazebo中可见机器人底盘、左右轮、雷达、相机和IMU安装位置。
+- Gazebo中可见机器人底盘、四个车轮、雷达、相机和IMU安装位置。
 - `/scan`持续发布，`header.frame_id`为`laser_link`。
 - `/camera/image_raw`持续发布，`header.frame_id`为`camera_link`，分辨率为640x480。
 - `/camera/camera_info`持续发布，frame与图像一致。
 - `/imu/data`持续发布，`header.frame_id`为`imu_link`。
-- `/joint_states`包含`left_wheel_joint`和`right_wheel_joint`。
+- `/joint_states`包含`left_front_wheel_joint`、`left_rear_wheel_joint`、`right_front_wheel_joint`和`right_rear_wheel_joint`。
 
 ## 通过标准
 
 - 所有传感器Topic可被ROS 2 CLI观察到。
 - 传感器frame与`config/sim_sensors.yaml`一致。
-- 执行`manual_motion_demo`时，`/joint_states`左右轮速度发生变化。
+- 执行`manual_motion_demo`时，`/joint_states`四个轮关节速度发生变化。
 - 不直接发布`/cmd_vel`，底盘演示仍通过`/cmd_vel_raw -> cmd_vel_guard -> /cmd_vel`链路。
 
 ## 停止与恢复

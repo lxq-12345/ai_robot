@@ -20,8 +20,14 @@ def test_sim_sensor_parameter_file_tracks_required_topics_and_frames():
     assert config["imu"]["topic"] == "/imu/data"
     assert config["imu"]["frame_id"] == "imu_link"
     assert config["encoder"]["topic"] == "/joint_states"
-    assert config["encoder"]["left_joint"] == "left_wheel_joint"
-    assert config["encoder"]["right_joint"] == "right_wheel_joint"
+    assert config["encoder"]["left_joints"] == [
+        "left_front_wheel_joint",
+        "left_rear_wheel_joint",
+    ]
+    assert config["encoder"]["right_joints"] == [
+        "right_front_wheel_joint",
+        "right_rear_wheel_joint",
+    ]
 
 
 def test_sensor_diagnostics_config_tracks_frequency_and_stale_message_rules():
@@ -36,5 +42,10 @@ def test_sensor_diagnostics_config_tracks_frequency_and_stale_message_rules():
     assert sensors["imu"]["topic"] == "/imu/data"
     assert sensors["imu"]["min_frequency_hz"] >= 25.0
     assert sensors["encoder"]["topic"] == "/joint_states"
-    assert sensors["encoder"]["joints"] == ["left_wheel_joint", "right_wheel_joint"]
+    assert sensors["encoder"]["joints"] == [
+        "left_front_wheel_joint",
+        "left_rear_wheel_joint",
+        "right_front_wheel_joint",
+        "right_rear_wheel_joint",
+    ]
     assert any("Missing topic" in rule for rule in config["rules"])

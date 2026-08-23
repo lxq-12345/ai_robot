@@ -11,6 +11,14 @@ from ament_index_python.packages import get_package_share_directory
 from sensor_msgs.msg import CameraInfo, Image, Imu, JointState, LaserScan
 
 
+WHEEL_JOINTS = {
+    "left_front_wheel_joint",
+    "left_rear_wheel_joint",
+    "right_front_wheel_joint",
+    "right_rear_wheel_joint",
+}
+
+
 def generate_test_description():
     sim_share = get_package_share_directory("ai_robot_sim")
     bringup = launch.actions.IncludeLaunchDescription(
@@ -95,7 +103,6 @@ class TestSimSensors(unittest.TestCase):
         self.assertTrue(math.isfinite(imu.linear_acceleration.z))
 
         joint_state = self.joint_state_messages[-1]
-        self.assertIn("left_wheel_joint", joint_state.name)
-        self.assertIn("right_wheel_joint", joint_state.name)
-        self.assertGreaterEqual(len(joint_state.position), 2)
-        self.assertGreaterEqual(len(joint_state.velocity), 2)
+        self.assertTrue(WHEEL_JOINTS <= set(joint_state.name))
+        self.assertGreaterEqual(len(joint_state.position), 4)
+        self.assertGreaterEqual(len(joint_state.velocity), 4)

@@ -19,6 +19,10 @@ sim_sensors:
     update_rate_hz: 50
   encoder:
     topic: /joint_states
-    left_joint: left_wheel_joint
-    right_joint: right_wheel_joint
+    left_joints:
+      - left_front_wheel_joint
+      - left_rear_wheel_joint
+    right_joints:
+      - right_front_wheel_joint
+      - right_rear_wheel_joint
     update_rate_hz: 50

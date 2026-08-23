@@ -13,6 +13,10 @@ from sensor_msgs.msg import JointState
 from tf2_msgs.msg import TFMessage
 
 
+LEFT_WHEEL_JOINTS = ("left_front_wheel_joint", "left_rear_wheel_joint")
+RIGHT_WHEEL_JOINTS = ("right_front_wheel_joint", "right_rear_wheel_joint")
+
+
 def generate_test_description():
     sim_share = get_package_share_directory("ai_robot_sim")
     bringup = launch.actions.IncludeLaunchDescription(
@@ -65,14 +69,16 @@ class TestS1M4MotionSafetyIntegration(unittest.TestCase):
                 return True
         return False
 
-    def _latest_wheel_velocities(self):
+    def _latest_side_wheel_velocities(self):
         for message in reversed(self.joint_state_messages):
             names = list(message.name)
-            if "left_wheel_joint" in names and "right_wheel_joint" in names:
-                left_index = names.index("left_wheel_joint")
-                right_index = names.index("right_wheel_joint")
-                if len(message.velocity) > max(left_index, right_index):
-                    return message.velocity[left_index], message.velocity[right_index]
+            required = LEFT_WHEEL_JOINTS + RIGHT_WHEEL_JOINTS
+            if all(joint in names for joint in required):
+                indexes = {joint: names.index(joint) for joint in required}
+                if len(message.velocity) > max(indexes.values()):
+                    left = [message.velocity[indexes[joint]] for joint in LEFT_WHEEL_JOINTS]
+                    right = [message.velocity[indexes[joint]] for joint in RIGHT_WHEEL_JOINTS]
+                    return left, right
         return None
 
     def _has_odom_to_base_footprint_tf(self):
@@ -85,7 +91,7 @@ class TestS1M4MotionSafetyIntegration(unittest.TestCase):
     def test_base_encoder_odom_tf_and_timeout_stop_chain(self):
         self.assertTrue(self._spin_until(lambda: self.odom_messages), "missing /odom")
         self.assertTrue(
-            self._spin_until(lambda: self._latest_wheel_velocities() is not None),
+            self._spin_until(lambda: self._latest_side_wheel_velocities() is not None),
             "missing wheel encoder joint states",
         )
         self.assertTrue(
@@ -104,9 +110,8 @@ class TestS1M4MotionSafetyIntegration(unittest.TestCase):
         )
         self.assertTrue(
             self._spin_until(
-                lambda: self._latest_wheel_velocities() is not None
-                and self._latest_wheel_velocities()[0] > 0.5
-                and self._latest_wheel_velocities()[1] > 0.5
+                lambda: self._latest_side_wheel_velocities() is not None
+                and all(value > 0.5 for side in self._latest_side_wheel_velocities() for value in side)
             ),
             "encoder joint speeds did not reflect forward motion",
         )

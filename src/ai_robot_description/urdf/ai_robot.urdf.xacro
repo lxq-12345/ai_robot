@@ -5,6 +5,7 @@
   <xacro:property name="body_height" value="0.16"/>
   <xacro:property name="wheel_radius" value="0.075"/>
   <xacro:property name="wheel_width" value="0.035"/>
+  <xacro:property name="wheel_x" value="0.16"/>
   <xacro:property name="wheel_y" value="0.18"/>
   <xacro:property name="laser_samples" value="360"/>
   <xacro:property name="laser_min_angle" value="-3.14159"/>
@@ -39,7 +40,7 @@
     </collision>
   </link>
 
-  <xacro:macro name="wheel" params="name y">
+  <xacro:macro name="wheel" params="name x y">
     <link name="${name}">
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -59,13 +60,15 @@
     <joint name="${name}_joint" type="continuous">
       <parent link="base_link"/>
       <child link="${name}"/>
-      <origin xyz="0 ${y} ${wheel_radius}" rpy="0 0 0"/>
+      <origin xyz="${x} ${y} ${wheel_radius}" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
     </joint>
   </xacro:macro>
 
-  <xacro:wheel name="left_wheel" y="${wheel_y}"/>
-  <xacro:wheel name="right_wheel" y="-${wheel_y}"/>
+  <xacro:wheel name="left_front_wheel" x="${wheel_x}" y="${wheel_y}"/>
+  <xacro:wheel name="left_rear_wheel" x="-${wheel_x}" y="${wheel_y}"/>
+  <xacro:wheel name="right_front_wheel" x="${wheel_x}" y="-${wheel_y}"/>
+  <xacro:wheel name="right_rear_wheel" x="-${wheel_x}" y="-${wheel_y}"/>
 
   <link name="laser_link"/>
   <joint name="laser_joint" type="fixed">
@@ -89,15 +92,22 @@
   </joint>
 
   <gazebo reference="base_link"><material>Gazebo/Green</material></gazebo>
-  <gazebo reference="left_wheel"><material>Gazebo/Black</material></gazebo>
-  <gazebo reference="right_wheel"><material>Gazebo/Black</material></gazebo>
+  <gazebo reference="left_front_wheel"><material>Gazebo/Black</material></gazebo>
+  <gazebo reference="left_rear_wheel"><material>Gazebo/Black</material></gazebo>
+  <gazebo reference="right_front_wheel"><material>Gazebo/Black</material></gazebo>
+  <gazebo reference="right_rear_wheel"><material>Gazebo/Black</material></gazebo>
 
   <gazebo>
     <plugin name="ai_robot_diff_drive" filename="libgazebo_ros_diff_drive.so">
       <update_rate>50</update_rate>
-      <left_joint>left_wheel_joint</left_joint>
-      <right_joint>right_wheel_joint</right_joint>
+      <num_wheel_pairs>2</num_wheel_pairs>
+      <left_joint>left_front_wheel_joint</left_joint>
+      <right_joint>right_front_wheel_joint</right_joint>
+      <left_joint>left_rear_wheel_joint</left_joint>
+      <right_joint>right_rear_wheel_joint</right_joint>
       <wheel_separation>0.36</wheel_separation>
+      <wheel_separation>0.36</wheel_separation>
+      <wheel_diameter>0.15</wheel_diameter>
       <wheel_diameter>0.15</wheel_diameter>
       <max_wheel_torque>5.0</max_wheel_torque>
       <max_wheel_acceleration>4.0</max_wheel_acceleration>
@@ -113,8 +123,10 @@
   <gazebo>
     <plugin name="ai_robot_joint_states" filename="libgazebo_ros_joint_state_publisher.so">
       <update_rate>50</update_rate>
-      <joint_name>left_wheel_joint</joint_name>
-      <joint_name>right_wheel_joint</joint_name>
+      <joint_name>left_front_wheel_joint</joint_name>
+      <joint_name>left_rear_wheel_joint</joint_name>
+      <joint_name>right_front_wheel_joint</joint_name>
+      <joint_name>right_rear_wheel_joint</joint_name>
     </plugin>
   </gazebo>
 

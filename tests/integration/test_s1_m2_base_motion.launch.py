@@ -13,6 +13,10 @@ from nav_msgs.msg import Odometry
 from sensor_msgs.msg import JointState
 
 
+LEFT_WHEEL_JOINTS = ("left_front_wheel_joint", "left_rear_wheel_joint")
+RIGHT_WHEEL_JOINTS = ("right_front_wheel_joint", "right_rear_wheel_joint")
+
+
 def generate_test_description():
     sim_share = get_package_share_directory("ai_robot_sim")
     bringup = launch.actions.IncludeLaunchDescription(
@@ -80,15 +84,30 @@ class TestSimBaseMotion(unittest.TestCase):
         cosy_cosp = 1.0 - 2.0 * (orientation.y * orientation.y + orientation.z * orientation.z)
         return math.atan2(siny_cosp, cosy_cosp)
 
-    def _latest_wheel_velocities(self):
+    def _latest_side_wheel_velocities(self):
         for message in reversed(self.joint_state_messages):
             names = list(message.name)
-            if "left_wheel_joint" in names and "right_wheel_joint" in names:
-                left_index = names.index("left_wheel_joint")
-                right_index = names.index("right_wheel_joint")
-                if len(message.velocity) > max(left_index, right_index):
-                    return message.velocity[left_index], message.velocity[right_index]
+            required = LEFT_WHEEL_JOINTS + RIGHT_WHEEL_JOINTS
+            if all(joint in names for joint in required):
+                indexes = {joint: names.index(joint) for joint in required}
+                if len(message.velocity) > max(indexes.values()):
+                    left = [message.velocity[indexes[joint]] for joint in LEFT_WHEEL_JOINTS]
+                    right = [message.velocity[indexes[joint]] for joint in RIGHT_WHEEL_JOINTS]
+                    return left, right
         return None
+
+    def _wheel_groups_are_turning_in_opposite_directions(self):
+        wheel_groups = self._latest_side_wheel_velocities()
+        if wheel_groups is None:
+            return False
+
+        left, right = wheel_groups
+        return (
+            all(abs(value) > 0.5 for value in left + right)
+            and all(value * left[0] > 0.0 for value in left)
+            and all(value * right[0] > 0.0 for value in right)
+            and left[0] * right[0] < 0.0
+        )
 
     def _publish_command_for(self, linear_x=0.0, angular_z=0.0, duration=1.0):
         command = Twist()
@@ -105,7 +124,7 @@ class TestSimBaseMotion(unittest.TestCase):
             "simulation did not publish initial /odom messages",
         )
         self.assertTrue(
-            self._spin_until(lambda: self._latest_wheel_velocities() is not None),
+            self._spin_until(lambda: self._latest_side_wheel_velocities() is not None),
             "simulation did not publish wheel joint states",
         )
 
@@ -113,9 +132,8 @@ class TestSimBaseMotion(unittest.TestCase):
         self._publish_command_for(linear_x=0.20, duration=1.0)
 
         wheels_forward = self._spin_until(
-            lambda: self._latest_wheel_velocities() is not None
-            and self._latest_wheel_velocities()[0] > 0.5
-            and self._latest_wheel_velocities()[1] > 0.5,
+            lambda: self._latest_side_wheel_velocities() is not None
+            and all(value > 0.5 for side in self._latest_side_wheel_velocities() for value in side),
             timeout=4.0,
         )
         self.assertTrue(wheels_forward, "forward command did not produce positive wheel speeds")
@@ -129,9 +147,8 @@ class TestSimBaseMotion(unittest.TestCase):
         forward_x = self._latest_x()
         self._publish_command_for(linear_x=-0.20, duration=1.0)
         wheels_backward = self._spin_until(
-            lambda: self._latest_wheel_velocities() is not None
-            and self._latest_wheel_velocities()[0] < -0.5
-            and self._latest_wheel_velocities()[1] < -0.5,
+            lambda: self._latest_side_wheel_velocities() is not None
+            and all(value < -0.5 for side in self._latest_side_wheel_velocities() for value in side),
             timeout=4.0,
         )
         self.assertTrue(wheels_backward, "backward command did not produce negative wheel speeds")
@@ -145,11 +162,13 @@ class TestSimBaseMotion(unittest.TestCase):
         start_yaw = self._latest_yaw()
         self._publish_command_for(angular_z=0.60, duration=1.0)
         wheels_turning = self._spin_until(
-            lambda: self._latest_wheel_velocities() is not None
-            and self._latest_wheel_velocities()[0] * self._latest_wheel_velocities()[1] < 0.0,
+            self._wheel_groups_are_turning_in_opposite_directions,
             timeout=4.0,
         )
-        self.assertTrue(wheels_turning, "turn command did not produce opposite wheel speeds")
+        self.assertTrue(
+            wheels_turning,
+            f"turn command did not produce opposite wheel speeds: {self._latest_side_wheel_velocities()}",
+        )
 
         turned = self._spin_until(
             lambda: abs(self._latest_yaw() - start_yaw) > 0.10,

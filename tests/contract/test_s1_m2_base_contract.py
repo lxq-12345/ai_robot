@@ -35,22 +35,36 @@ def test_robot_model_defines_required_base_and_sensor_frames():
     assert {
         "base_footprint",
         "base_link",
-        "left_wheel",
-        "right_wheel",
+        "left_front_wheel",
+        "left_rear_wheel",
+        "right_front_wheel",
+        "right_rear_wheel",
         "laser_link",
         "camera_link",
         "imu_link",
     } <= links
-    assert {"left_wheel_joint", "right_wheel_joint", "laser_joint", "camera_joint", "imu_joint"} <= joints.keys()
+    assert {
+        "left_front_wheel_joint",
+        "left_rear_wheel_joint",
+        "right_front_wheel_joint",
+        "right_rear_wheel_joint",
+        "laser_joint",
+        "camera_joint",
+        "imu_joint",
+    } <= joints.keys()
     assert joints["base_footprint_joint"].attrib["type"] == "fixed"
 
-    assert joints["left_wheel_joint"].attrib["type"] == "continuous"
-    assert joints["right_wheel_joint"].attrib["type"] == "continuous"
+    for joint_name in (
+        "left_front_wheel_joint",
+        "left_rear_wheel_joint",
+        "right_front_wheel_joint",
+        "right_rear_wheel_joint",
+    ):
+        assert joints[joint_name].attrib["type"] == "continuous"
+        assert joints[joint_name].find("axis").attrib["xyz"] == "0 1 0"
     assert joints["laser_joint"].attrib["type"] == "fixed"
     assert joints["camera_joint"].attrib["type"] == "fixed"
     assert joints["imu_joint"].attrib["type"] == "fixed"
-    assert joints["left_wheel_joint"].find("axis").attrib["xyz"] == "0 1 0"
-    assert joints["right_wheel_joint"].find("axis").attrib["xyz"] == "0 1 0"
 
 
 def test_gazebo_diff_drive_plugin_matches_public_base_interface():
@@ -60,8 +74,15 @@ def test_gazebo_diff_drive_plugin_matches_public_base_interface():
         plugin for plugin in plugins if plugin.attrib.get("filename") == "libgazebo_ros_diff_drive.so"
     )
 
-    assert child_text(diff_drive, "left_joint") == "left_wheel_joint"
-    assert child_text(diff_drive, "right_joint") == "right_wheel_joint"
+    assert child_text(diff_drive, "num_wheel_pairs") == "2"
+    assert [joint.text for joint in diff_drive.findall("left_joint")] == [
+        "left_front_wheel_joint",
+        "left_rear_wheel_joint",
+    ]
+    assert [joint.text for joint in diff_drive.findall("right_joint")] == [
+        "right_front_wheel_joint",
+        "right_rear_wheel_joint",
+    ]
     assert child_text(diff_drive, "odometry_topic") == "odom"
     assert child_text(diff_drive, "odometry_frame") == "odom"
     assert child_text(diff_drive, "robot_base_frame") == "base_footprint"
@@ -80,8 +101,10 @@ def test_gazebo_joint_state_plugin_publishes_wheel_states():
 
     assert child_text(joint_states, "update_rate") == "50"
     assert [joint.text for joint in joint_states.findall("joint_name")] == [
-        "left_wheel_joint",
-        "right_wheel_joint",
+        "left_front_wheel_joint",
+        "left_rear_wheel_joint",
+        "right_front_wheel_joint",
+        "right_rear_wheel_joint",
     ]
 
 

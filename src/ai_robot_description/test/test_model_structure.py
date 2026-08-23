@@ -30,8 +30,10 @@ def test_required_links_are_present():
     assert links == {
         "base_footprint",
         "base_link",
-        "left_wheel",
-        "right_wheel",
+        "left_front_wheel",
+        "left_rear_wheel",
+        "right_front_wheel",
+        "right_rear_wheel",
         "laser_link",
         "camera_link",
         "imu_link",
@@ -46,8 +48,10 @@ def test_joint_types_and_parent_child_relationships_match_baseline():
 
     assert joints == {
         "base_footprint_joint": ("fixed", "base_footprint", "base_link"),
-        "left_wheel_joint": ("continuous", "base_link", "left_wheel"),
-        "right_wheel_joint": ("continuous", "base_link", "right_wheel"),
+        "left_front_wheel_joint": ("continuous", "base_link", "left_front_wheel"),
+        "left_rear_wheel_joint": ("continuous", "base_link", "left_rear_wheel"),
+        "right_front_wheel_joint": ("continuous", "base_link", "right_front_wheel"),
+        "right_rear_wheel_joint": ("continuous", "base_link", "right_rear_wheel"),
         "laser_joint": ("fixed", "base_link", "laser_link"),
         "camera_joint": ("fixed", "base_link", "camera_link"),
         "imu_joint": ("fixed", "base_link", "imu_link"),
@@ -59,10 +63,15 @@ def test_wheel_axes_and_mounting_positions_match_baseline():
         joint.attrib["name"]: joint for joint in expanded_robot().findall("joint")
     }
 
-    assert joints["left_wheel_joint"].find("axis").attrib["xyz"] == "0 1 0"
-    assert joints["right_wheel_joint"].find("axis").attrib["xyz"] == "0 1 0"
-    assert joints["left_wheel_joint"].find("origin").attrib["xyz"] == "0 0.18 0.075"
-    assert joints["right_wheel_joint"].find("origin").attrib["xyz"] == "0 -0.18 0.075"
+    expected_positions = {
+        "left_front_wheel_joint": "0.16 0.18 0.075",
+        "left_rear_wheel_joint": "-0.16 0.18 0.075",
+        "right_front_wheel_joint": "0.16 -0.18 0.075",
+        "right_rear_wheel_joint": "-0.16 -0.18 0.075",
+    }
+    for joint_name, expected_xyz in expected_positions.items():
+        assert joints[joint_name].find("axis").attrib["xyz"] == "0 1 0"
+        assert joints[joint_name].find("origin").attrib["xyz"] == expected_xyz
 
 
 def test_every_non_root_link_has_exactly_one_parent_joint():

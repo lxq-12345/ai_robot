@@ -22,7 +22,14 @@ def dynamic_links():
     return {
         link.attrib["name"]: link
         for link in expanded_robot().findall("link")
-        if link.attrib["name"] in {"base_link", "left_wheel", "right_wheel"}
+        if link.attrib["name"]
+        in {
+            "base_link",
+            "left_front_wheel",
+            "left_rear_wheel",
+            "right_front_wheel",
+            "right_rear_wheel",
+        }
     }
 
 
@@ -31,7 +38,16 @@ def geometry_signature(geometry):
     return shape.tag, shape.attrib
 
 
-@pytest.mark.parametrize("link_name", ["base_link", "left_wheel", "right_wheel"])
+@pytest.mark.parametrize(
+    "link_name",
+    [
+        "base_link",
+        "left_front_wheel",
+        "left_rear_wheel",
+        "right_front_wheel",
+        "right_rear_wheel",
+    ],
+)
 def test_dynamic_links_have_positive_mass_and_inertia(link_name):
     inertial = dynamic_links()[link_name].find("inertial")
     mass = float(inertial.find("mass").attrib["value"])
@@ -45,7 +61,16 @@ def test_dynamic_links_have_positive_mass_and_inertia(link_name):
     assert diagonal[1] + diagonal[2] >= diagonal[0]
 
 
-@pytest.mark.parametrize("link_name", ["base_link", "left_wheel", "right_wheel"])
+@pytest.mark.parametrize(
+    "link_name",
+    [
+        "base_link",
+        "left_front_wheel",
+        "left_rear_wheel",
+        "right_front_wheel",
+        "right_rear_wheel",
+    ],
+)
 def test_dynamic_links_have_matching_visual_and_collision_geometry(link_name):
     link = dynamic_links()[link_name]
     visual_geometry = geometry_signature(link.find("visual/geometry"))
@@ -57,9 +82,10 @@ def test_dynamic_links_have_matching_visual_and_collision_geometry(link_name):
 def test_base_and_wheel_dimensions_match_baseline():
     links = dynamic_links()
     base_size = links["base_link"].find("visual/geometry/box").attrib["size"]
-    left_wheel = links["left_wheel"].find("visual/geometry/cylinder").attrib
-    right_wheel = links["right_wheel"].find("visual/geometry/cylinder").attrib
+    wheel_geometry = {"radius": "0.075", "length": "0.035"}
 
     assert base_size == "0.52 0.36 0.16"
-    assert left_wheel == {"radius": "0.075", "length": "0.035"}
-    assert right_wheel == left_wheel
+    assert links["left_front_wheel"].find("visual/geometry/cylinder").attrib == wheel_geometry
+    assert links["left_rear_wheel"].find("visual/geometry/cylinder").attrib == wheel_geometry
+    assert links["right_front_wheel"].find("visual/geometry/cylinder").attrib == wheel_geometry
+    assert links["right_rear_wheel"].find("visual/geometry/cylinder").attrib == wheel_geometry

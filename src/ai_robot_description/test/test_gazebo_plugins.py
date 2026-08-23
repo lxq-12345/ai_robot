@@ -60,10 +60,17 @@ def test_base_visual_material_is_green_in_rviz_and_gazebo():
 def test_diff_drive_plugin_matches_base_interface():
     plugin = plugin_by_filename(expanded_robot(), "libgazebo_ros_diff_drive.so")
 
-    assert child_text(plugin, "left_joint") == "left_wheel_joint"
-    assert child_text(plugin, "right_joint") == "right_wheel_joint"
-    assert child_text(plugin, "wheel_separation") == "0.36"
-    assert child_text(plugin, "wheel_diameter") == "0.15"
+    assert child_text(plugin, "num_wheel_pairs") == "2"
+    assert [joint.text for joint in plugin.findall("left_joint")] == [
+        "left_front_wheel_joint",
+        "left_rear_wheel_joint",
+    ]
+    assert [joint.text for joint in plugin.findall("right_joint")] == [
+        "right_front_wheel_joint",
+        "right_rear_wheel_joint",
+    ]
+    assert [value.text for value in plugin.findall("wheel_separation")] == ["0.36", "0.36"]
+    assert [value.text for value in plugin.findall("wheel_diameter")] == ["0.15", "0.15"]
     assert child_text(plugin, "odometry_topic") == "odom"
     assert child_text(plugin, "odometry_frame") == "odom"
     assert child_text(plugin, "robot_base_frame") == "base_footprint"
@@ -71,15 +78,17 @@ def test_diff_drive_plugin_matches_base_interface():
     assert child_text(plugin, "publish_odom_tf") == "true"
 
 
-def test_joint_state_plugin_tracks_both_wheels():
+def test_joint_state_plugin_tracks_all_four_wheels():
     plugin = plugin_by_filename(
         expanded_robot(), "libgazebo_ros_joint_state_publisher.so"
     )
 
     assert child_text(plugin, "update_rate") == "50"
     assert [joint.text for joint in plugin.findall("joint_name")] == [
-        "left_wheel_joint",
-        "right_wheel_joint",
+        "left_front_wheel_joint",
+        "left_rear_wheel_joint",
+        "right_front_wheel_joint",
+        "right_rear_wheel_joint",
     ]
 
 
