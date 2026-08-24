@@ -109,6 +109,12 @@ class TestSimBaseMotion(unittest.TestCase):
             and left[0] * right[0] < 0.0
         )
 
+    def _wheels_are_stopped(self):
+        wheel_groups = self._latest_side_wheel_velocities()
+        if wheel_groups is None:
+            return False
+        return all(abs(value) < 0.2 for side in wheel_groups for value in side)
+
     def _publish_command_for(self, linear_x=0.0, angular_z=0.0, duration=1.0):
         command = Twist()
         command.linear.x = linear_x
@@ -117,6 +123,18 @@ class TestSimBaseMotion(unittest.TestCase):
         while time.monotonic() < deadline:
             self.publisher.publish(command)
             rclpy.spin_once(self.node, timeout_sec=0.05)
+
+    def _publish_until(self, predicate, linear_x=0.0, angular_z=0.0, timeout=4.0):
+        command = Twist()
+        command.linear.x = linear_x
+        command.angular.z = angular_z
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            self.publisher.publish(command)
+            rclpy.spin_once(self.node, timeout_sec=0.05)
+            if predicate():
+                return True
+        return False
 
     def test_base_moves_forward_backward_turns_and_stops(self):
         self.assertTrue(
@@ -129,40 +147,49 @@ class TestSimBaseMotion(unittest.TestCase):
         )
 
         start_x = self._latest_x()
-        self._publish_command_for(linear_x=0.20, duration=1.0)
-
-        wheels_forward = self._spin_until(
+        wheels_forward = self._publish_until(
             lambda: self._latest_side_wheel_velocities() is not None
             and all(value > 0.5 for side in self._latest_side_wheel_velocities() for value in side),
+            linear_x=0.20,
             timeout=4.0,
         )
         self.assertTrue(wheels_forward, "forward command did not produce positive wheel speeds")
 
-        moved_forward = self._spin_until(
+        moved_forward = self._publish_until(
             lambda: self._latest_x() > start_x + 0.03,
+            linear_x=0.20,
             timeout=8.0,
         )
         self.assertTrue(moved_forward, "forward command did not increase odometry x")
+        self.assertTrue(
+            self._publish_until(self._wheels_are_stopped, timeout=4.0),
+            "base did not settle after forward motion",
+        )
 
         forward_x = self._latest_x()
-        self._publish_command_for(linear_x=-0.20, duration=1.0)
-        wheels_backward = self._spin_until(
+        wheels_backward = self._publish_until(
             lambda: self._latest_side_wheel_velocities() is not None
             and all(value < -0.5 for side in self._latest_side_wheel_velocities() for value in side),
+            linear_x=-0.20,
             timeout=4.0,
         )
         self.assertTrue(wheels_backward, "backward command did not produce negative wheel speeds")
 
-        moved_backward = self._spin_until(
+        moved_backward = self._publish_until(
             lambda: self._latest_x() < forward_x - 0.03,
+            linear_x=-0.20,
             timeout=8.0,
         )
         self.assertTrue(moved_backward, "backward command did not decrease odometry x")
+        self.assertTrue(
+            self._publish_until(self._wheels_are_stopped, timeout=4.0),
+            "base did not settle after backward motion",
+        )
 
         start_yaw = self._latest_yaw()
-        self._publish_command_for(angular_z=0.60, duration=1.0)
-        wheels_turning = self._spin_until(
+        wheels_turning = self._publish_until(
             self._wheel_groups_are_turning_in_opposite_directions,
+            angular_z=0.60,
             timeout=4.0,
         )
         self.assertTrue(
@@ -170,8 +197,9 @@ class TestSimBaseMotion(unittest.TestCase):
             f"turn command did not produce opposite wheel speeds: {self._latest_side_wheel_velocities()}",
         )
 
-        turned = self._spin_until(
+        turned = self._publish_until(
             lambda: abs(self._latest_yaw() - start_yaw) > 0.10,
+            angular_z=0.60,
             timeout=8.0,
         )
         self.assertTrue(turned, "turn command did not change odometry yaw")
