@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>S1-1-M5-L1-01 SLAM建图与地图管理</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1. 学习目标</a></li>
+<li><a href="#2">2. 建图链路</a></li>
+<li><a href="#3">3. 地图资源</a></li>
+<li><a href="#4">4. 自动测试阅读与复现</a></li>
+<li><a href="#5">5. 人工练习与正常现象</a></li>
+<li><a href="#6">6. 常见问题与停止</a></li>
+<li><a href="#7">7. 实体迁移与证据</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1. 学习目标</a></li>
+<li><a href="#2">2. 建图链路</a></li>
+<li><a href="#3">3. 地图资源</a></li>
+<li><a href="#4">4. 自动测试阅读与复现</a></li>
+<li><a href="#5">5. 人工练习与正常现象</a></li>
+<li><a href="#6">6. 常见问题与停止</a></li>
+<li><a href="#7">7. 实体迁移与证据</a></li>
+<li><a href="#8">8. 理解检查</a></li>
+<li><a href="#9">9. 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="s1-1-m5-l1-01-slam">S1-1-M5-L1-01 SLAM建图与地图管理<a class="headerlink" href="#s1-1-m5-l1-01-slam" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>所属开发单元：S1-1-M5 SLAM、定位与Nav2<br>
+所属学习子单元：S1-1-M5-L1 SLAM建图与地图管理<br>
+章节序号：S1-1-M5-L1-01<br>
+教材版本：v1.1<br>
+涉及组件：<code>ai_robot_sim</code>、SLAM Toolbox、Nav2 Map Saver<br>
+安全边界：仅在Gazebo中建图；运动使用项目受控入口，不直接发布速度Topic。</p>
+</blockquote>
+<h2 id="1">1. 学习目标<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>理解激光扫描、里程计和TF如何进入SLAM Toolbox，<code>/map</code>与<code>map -&gt; odom</code>如何形成，以及地图如何保存为YAML和图像并供后续定位重载。建图是数据与位姿的联合估计，不是简单截图。</p>
+<h2 id="2">2. 建图链路<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<pre><code class="language-text">/scan（laser_link）
++ odom -&gt; base_footprint
++ base_footprint -&gt; base_link
++ base_link -&gt; laser_link
+→ slam_toolbox
+→ /map
+→ map -&gt; odom
+→ map_saver_server
+→ YAML + PGM
+</code></pre>
+<p><code>config/slam_sim.yaml</code>设置<code>map/odom/base_link</code>、<code>/scan</code>、0.05 m分辨率、运动更新阈值和8 m最大雷达范围。这里的<code>base_link</code>是SLAM Toolbox用于估计机器人本体位姿的基准Frame；完整TF树仍由底盘里程计和<code>robot_state_publisher</code>共同形成<code>odom -&gt; base_footprint -&gt; base_link -&gt; laser_link</code>。<code>slam_bringup.launch.py</code>组合基础仿真、SLAM节点、地图保存服务和生命周期管理器。</p>
+<h2 id="3">3. 地图资源<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>地图YAML描述图像文件、分辨率、原点、占用与空闲阈值；PGM保存栅格。两者必须配套，路径和元数据必须可重载。临时测试地图写入测试目录或<code>/tmp</code>，正式基准地图才进入包资源。</p>
+<h2 id="4">4. 自动测试阅读与复现<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p><code>tests/integration/test_s1_m5_slam.launch.py</code>验证：</p>
+<ul>
+<li><code>/map</code>发布且Frame为<code>map</code>；</li>
+<li>栅格尺寸有效；</li>
+<li>SLAM发布<code>map -&gt; odom</code>；</li>
+<li>保存服务成功；</li>
+<li>YAML和PGM实际生成。</li>
+</ul>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+./scripts/build.sh
+source install/setup.bash
+launch_test tests/integration/test_s1_m5_slam.launch.py
+</code></pre>
+<h2 id="5">5. 人工练习与正常现象<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>启动<code>ros2 launch ai_robot_sim slam_bringup.launch.py</code>，在RViz2以<code>map</code>为Fixed Frame观察LaserScan、Map、RobotModel和TF。使用受控运动覆盖可见区域，观察地图逐步扩展；通过地图保存服务保存练习地图并检查YAML/PGM。</p>
+<p>正常现象是地图随探索增长，机器人轨迹与墙体一致，TF链<code>map -&gt; odom -&gt; base_footprint -&gt; base_link -&gt; laser_link</code>连续，保存文件可读。严重重影、跳变或地图不增长均不能记录通过。</p>
+<h2 id="6">6. 常见问题与停止<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<ul>
+<li>无<code>/map</code>：查生命周期、扫描和TF；</li>
+<li>地图不更新：查仿真是否移动、更新阈值和时间；</li>
+<li>重影：查里程计、TF、扫描时间和运动过快；</li>
+<li>保存失败：查服务状态、目录权限和地图是否有效；</li>
+<li>重载偏移：查YAML原点、分辨率和图像路径。</li>
+</ul>
+<p>停止前让受控运动归零，再按<code>Ctrl+C</code>退出SLAM和Gazebo。证据保留地图截图、文件摘要、TF观察和日志。</p>
+<h2 id="7">7. 实体迁移与证据<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>实体阶段保留<code>/scan</code>、TF、<code>/map</code>和保存接口，但必须重做雷达安装标定、里程计参数、时间同步、运动速度和现场地图。证据记录测试命令、地图文件、人工探索、异常和结论。</p>
+<h2 id="8">8. 理解检查<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ol>
+<li>SLAM为什么同时需要扫描和里程计/TF？</li>
+<li>谁发布<code>map -&gt; odom</code>？</li>
+<li>YAML与PGM分别保存什么？</li>
+<li>地图重影时为什么不能只调分辨率？</li>
+<li>仿真地图能否直接作为实体地图？</li>
+</ol>
+<h2 id="9">9. 项目内依据<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>src/ai_robot_sim/launch/slam_bringup.launch.py</code></li>
+<li><code>config/slam_sim.yaml</code></li>
+<li><code>tests/integration/test_s1_m5_slam.launch.py</code></li>
+<li><code>tests/README.md</code></li>
+</ul>
+      <div class="footer">源文件：S1-1-M5-L1-01_SLAM建图与地图管理_v1.1.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

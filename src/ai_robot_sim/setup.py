@@ -16,6 +16,7 @@ setup(
                 "../../config/sim_base.yaml",
                 "../../config/ekf_sim.yaml",
                 "../../config/amcl_sim.yaml",
+                "../../config/nav2_sim.yaml",
                 "../../config/s1_m4_dependency_status.yaml",
                 "../../config/slam_sim.yaml",
                 "../../config/sim_sensor_diagnostics.yaml",

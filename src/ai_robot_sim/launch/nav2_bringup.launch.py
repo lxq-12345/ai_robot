@@ -13,7 +13,6 @@ from launch_ros.actions import SetRemap
 
 def generate_launch_description():
     sim_share = get_package_share_directory("ai_robot_sim")
-    nav2_share = get_package_share_directory("nav2_bringup")
     gui = LaunchConfiguration("gui")
     gui_arg = DeclareLaunchArgument(
         "gui",
@@ -31,11 +30,13 @@ def generate_launch_description():
             # Nav2's final velocity output remains subject to the project safety guard.
             SetRemap(src="/cmd_vel", dst="/cmd_vel_raw"),
             IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(f"{nav2_share}/launch/navigation_launch.py"),
+                PythonLaunchDescriptionSource(
+                    f"{get_package_share_directory('nav2_bringup')}/launch/navigation_launch.py"
+                ),
                 launch_arguments={
                     "use_sim_time": "true",
                     "use_composition": "False",
-                    "params_file": f"{nav2_share}/params/nav2_params.yaml",
+                    "params_file": f"{sim_share}/config/nav2_sim.yaml",
                 }.items(),
             ),
         ]

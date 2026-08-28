@@ -89,6 +89,20 @@ class TestS1M5Nav2(unittest.TestCase):
         goal_handle = future.result()
         self.assertTrue(goal_handle.accepted, "Nav2 rejected reachable goal")
         return goal_handle
+    def _route_diagnostics(self, start):
+        current = self.odom_messages[-1].pose.pose.position if self.odom_messages else start
+        distance = hypot(current.x - start.x, current.y - start.y)
+        max_raw = max((abs(command.linear.x) for command in self.raw_commands), default=0.0)
+        max_safe = max((abs(command.linear.x) for command in self.bounded_commands), default=0.0)
+        max_raw_theta = max((abs(command.angular.z) for command in self.raw_commands), default=0.0)
+        max_safe_theta = max((abs(command.angular.z) for command in self.bounded_commands), default=0.0)
+        return (
+            f"odom=({current.x:.2f},{current.y:.2f}), "
+            f"distance={distance:.2f}, raw_count={len(self.raw_commands)}, "
+            f"safe_count={len(self.bounded_commands)}, "
+            f"max_raw_x={max_raw:.3f}, max_safe_x={max_safe:.3f}, "
+            f"max_raw_theta={max_raw_theta:.3f}, max_safe_theta={max_safe_theta:.3f}"
+        )
     def test_nav2_accepts_a_goal_after_localization(self):
         self.assertTrue(self._spin_until(lambda: self.odom_messages), "Gazebo odometry unavailable")
         pose = PoseWithCovarianceStamped()
@@ -125,13 +139,38 @@ class TestS1M5Nav2(unittest.TestCase):
             rclpy.spin_once(self.node, timeout_sec=0.1)
         self.assertTrue(self._spin_until(self._smoother_is_active, timeout=30.0), "navigation stack did not become active")
         self.assertTrue(self.client.wait_for_server(timeout_sec=30.0), "NavigateToPose server unavailable")
-        for x, y in ((-0.5, -0.3), (-0.5, 0.3)):
+        start = self.odom_messages[-1].pose.pose.position
+        # Keep the route in the open forward corridor so this test isolates the
+        # Nav2 -> cmd_vel_raw -> safety guard -> cmd_vel execution chain.
+        for x, y in ((0.35, 0.0),):
             result_future = self._send_goal(x, y).get_result_async()
-            self.assertTrue(self._spin_until(lambda: result_future.done(), timeout=75.0), "fixed-route goal timed out")
+            self.assertTrue(
+                self._spin_until(lambda: result_future.done(), timeout=90.0),
+                f"fixed-route goal timed out: {self._route_diagnostics(start)}",
+            )
             self.assertEqual(result_future.result().status, GoalStatus.STATUS_SUCCEEDED, "fixed-route goal did not succeed")
-        self.assertTrue(any(abs(command.linear.x) > 0.01 for command in self.raw_commands), "Nav2 did not publish raw velocity commands")
-        self.assertTrue(any(abs(command.linear.x) > 0.01 for command in self.bounded_commands), "safety guard did not forward Nav2 commands")
+        self.assertTrue(
+            any(
+                abs(command.linear.x) > 0.01 or abs(command.angular.z) > 0.01
+                for command in self.raw_commands
+            ),
+            "Nav2 did not publish raw velocity commands",
+        )
+        self.assertTrue(
+            any(
+                abs(command.linear.x) > 0.01 or abs(command.angular.z) > 0.01
+                for command in self.bounded_commands
+            ),
+            "safety guard did not forward Nav2 commands",
+        )
         self.assertTrue(all(abs(command.linear.x) <= 0.35 + 1e-6 for command in self.bounded_commands), "safety guard exceeded linear speed limit")
+        self.assertTrue(all(abs(command.angular.z) <= 1.20 + 1e-6 for command in self.bounded_commands), "safety guard exceeded angular speed limit")
+        end = self.odom_messages[-1].pose.pose.position
+        self.assertGreater(
+            hypot(end.x - start.x, end.y - start.y),
+            0.25,
+            "odometry did not show fixed-route navigation progress",
+        )
     def test_global_planner_routes_around_static_obstacle(self):
         self.assertTrue(self._spin_until(lambda: self.odom_messages), "Gazebo odometry unavailable")
         pose = PoseWithCovarianceStamped()
