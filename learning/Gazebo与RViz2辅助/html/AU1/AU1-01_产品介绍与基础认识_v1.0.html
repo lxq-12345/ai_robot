@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>AU1 产品介绍与基础认识</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1 本单元定位</a></li>
+<li><a href="#2">2 学习目标</a></li>
+<li><a href="#3">3 为什么需要机器人仿真与可视化</a></li>
+<li><a href="#4-gazebo">4 Gazebo产品介绍</a><ul>
+<li><a href="#41-gazebo">4.1 Gazebo是什么</a></li>
+<li><a href="#42-gazebo">4.2 Gazebo的起源</a></li>
+<li><a href="#43-ros">4.3 与ROS结合</a></li>
+<li><a href="#44-osrf">4.4 OSRF与大型机器人挑战</a></li>
+<li><a href="#45-gazebo-classicgazebo">4.5 从Gazebo Classic到新一代Gazebo</a></li>
+<li><a href="#46-gazebo-classic">4.6 Gazebo Classic生命周期</a></li>
+<li><a href="#47-gazebo-classic">4.7 本项目为什么使用Gazebo Classic</a></li>
+<li><a href="#48-gazebo-classic">4.8 Gazebo Classic的产品结构</a></li>
+</ul>
+</li>
+<li><a href="#5-rviz2">5 RViz2产品介绍</a><ul>
+<li><a href="#51-rviz2">5.1 RViz2是什么</a></li>
+<li><a href="#52-ros-1rviz">5.2 ROS 1时期的RViz</a></li>
+<li><a href="#53-rvizrviz2">5.3 从RViz迁移到RViz2</a></li>
+<li><a href="#54-rviz2">5.4 RViz2的软件包结构</a></li>
+<li><a href="#55-rviz2">5.5 RViz2的核心对象</a></li>
+</ul>
+</li>
+<li><a href="#6-gazeborviz2">6 Gazebo与RViz2对比</a></li>
+<li><a href="#7-ros-2nav2">7 ROS 2和Nav2的作用</a></li>
+<li><a href="#8">8 完整闭环</a></li>
+<li><a href="#9">9 典型任务归属</a></li>
+<li><a href="#10">10 本教材的后续学习路线</a></li>
+<li><a href="#11">11 教师引导操作</a></li>
+<li><a href="#12">12 学员独立练习</a></li>
+<li><a href="#13">13 正常现象</a></li>
+<li><a href="#14">14 常见误区</a></li>
+<li><a href="#15">15 理解检查</a></li>
+<li><a href="#16">16 操作技能检查</a></li>
+<li><a href="#17">17 证据与完成条件</a></li>
+<li><a href="#18">18 项目内依据</a></li>
+<li><a href="#19">19 外部官方资料</a><ul>
+<li><a href="#191-gazebo-classic">19.1 Gazebo Classic历史</a></li>
+<li><a href="#192-gazebo-classic">19.2 Gazebo Classic迁移说明</a></li>
+<li><a href="#193-ignitiongazebo">19.3 Ignition更名为Gazebo</a></li>
+<li><a href="#194-gazebo-classic">19.4 Gazebo Classic生命周期</a></li>
+<li><a href="#195-rviz-10">19.5 RViz 1.0历史节点</a></li>
+<li><a href="#196-rviz2">19.6 RViz2架构与功能</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1 本单元定位</a></li>
+<li><a href="#2">2 学习目标</a></li>
+<li><a href="#3">3 为什么需要机器人仿真与可视化</a></li>
+<li><a href="#4-gazebo">4 Gazebo产品介绍</a><ul>
+<li><a href="#41-gazebo">4.1 Gazebo是什么</a></li>
+<li><a href="#42-gazebo">4.2 Gazebo的起源</a></li>
+<li><a href="#43-ros">4.3 与ROS结合</a></li>
+<li><a href="#44-osrf">4.4 OSRF与大型机器人挑战</a></li>
+<li><a href="#45-gazebo-classicgazebo">4.5 从Gazebo Classic到新一代Gazebo</a></li>
+<li><a href="#46-gazebo-classic">4.6 Gazebo Classic生命周期</a></li>
+<li><a href="#47-gazebo-classic">4.7 本项目为什么使用Gazebo Classic</a></li>
+<li><a href="#48-gazebo-classic">4.8 Gazebo Classic的产品结构</a></li>
+</ul>
+</li>
+<li><a href="#5-rviz2">5 RViz2产品介绍</a><ul>
+<li><a href="#51-rviz2">5.1 RViz2是什么</a></li>
+<li><a href="#52-ros-1rviz">5.2 ROS 1时期的RViz</a></li>
+<li><a href="#53-rvizrviz2">5.3 从RViz迁移到RViz2</a></li>
+<li><a href="#54-rviz2">5.4 RViz2的软件包结构</a></li>
+<li><a href="#55-rviz2">5.5 RViz2的核心对象</a></li>
+</ul>
+</li>
+<li><a href="#6-gazeborviz2">6 Gazebo与RViz2对比</a></li>
+<li><a href="#7-ros-2nav2">7 ROS 2和Nav2的作用</a></li>
+<li><a href="#8">8 完整闭环</a></li>
+<li><a href="#9">9 典型任务归属</a></li>
+<li><a href="#10">10 本教材的后续学习路线</a></li>
+<li><a href="#11">11 教师引导操作</a></li>
+<li><a href="#12">12 学员独立练习</a></li>
+<li><a href="#13">13 正常现象</a></li>
+<li><a href="#14">14 常见误区</a></li>
+<li><a href="#15">15 理解检查</a></li>
+<li><a href="#16">16 操作技能检查</a></li>
+<li><a href="#17">17 证据与完成条件</a></li>
+<li><a href="#18">18 项目内依据</a></li>
+<li><a href="#19">19 外部官方资料</a><ul>
+<li><a href="#191-gazebo-classic">19.1 Gazebo Classic历史</a></li>
+<li><a href="#192-gazebo-classic">19.2 Gazebo Classic迁移说明</a></li>
+<li><a href="#193-ignitiongazebo">19.3 Ignition更名为Gazebo</a></li>
+<li><a href="#194-gazebo-classic">19.4 Gazebo Classic生命周期</a></li>
+<li><a href="#195-rviz-10">19.5 RViz 1.0历史节点</a></li>
+<li><a href="#196-rviz2">19.6 RViz2架构与功能</a></li>
+</ul>
+</li>
+</ul>
+</details>
+    <article>
+      <h1 id="au1">AU1 产品介绍与基础认识<a class="headerlink" href="#au1" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>适用环境：Ubuntu 22.04、ROS 2 Humble、Gazebo Classic、RViz2<br>
+对应计划：AU1</p>
+</blockquote>
+<h2 id="1">1 本单元定位<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>本单元从产品产生的背景、发展历史、核心架构和职责边界认识Gazebo与RViz2。它先解决“是什么、为什么产生、发展到哪里、两者怎样配合”，暂不展开复杂界面、建模和导航操作。</p>
+<h2 id="2">2 学习目标<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>完成后应能够：</p>
+<ul>
+<li>说明Gazebo与RViz2分别是什么、为什么产生；</li>
+<li>复述两款产品的主要发展阶段；</li>
+<li>区分Gazebo Classic与新一代Gazebo；</li>
+<li>区分ROS 1 RViz与ROS 2 RViz2；</li>
+<li>说明两个产品的核心功能、架构和明确边界；</li>
+<li>区分物理仿真、数据传输、导航算法和可视化；</li>
+<li>解释Gazebo—ROS 2—Nav2—RViz2闭环；</li>
+<li>判断一个任务应该在哪个工具中完成。</li>
+</ul>
+<h2 id="3">3 为什么需要机器人仿真与可视化<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>真实机器人开发存在设备成本高、试错风险大、环境不容易重复、故障不容易观察等问题。机器人仿真器允许开发者在虚拟世界中反复测试结构、控制、传感器和算法；可视化工具则把ROS 2内部的消息、坐标系和算法结果显示出来。</p>
+<p>两类工具解决不同问题：</p>
+<ul>
+<li>Gazebo回答“机器人和环境在物理上发生了什么”；</li>
+<li>RViz2回答“ROS 2系统正在接收、计算和发布什么”。</li>
+</ul>
+<h2 id="4-gazebo">4 Gazebo产品介绍<a class="headerlink" href="#4-gazebo" title="Permanent link">&para;</a></h2>
+<h3 id="41-gazebo">4.1 Gazebo是什么<a class="headerlink" href="#41-gazebo" title="Permanent link">&para;</a></h3>
+<p>Gazebo是面向机器人的三维物理仿真平台。它可以模拟：</p>
+<ul>
+<li>地面、房间、墙体、门、家具和障碍物；</li>
+<li>机器人刚体、关节、车轮和执行机构；</li>
+<li>重力、惯性、摩擦、碰撞和接触；</li>
+<li>激光雷达、RGB相机、深度相机和IMU等传感器；</li>
+<li>插件驱动、世界逻辑和仿真时间。</li>
+</ul>
+<p>Gazebo中的运动会产生新的位姿、里程计、关节状态和传感器数据。因此它不是单纯的三维模型查看器，而是机器人系统的虚拟实验场。</p>
+<h3 id="42-gazebo">4.2 Gazebo的起源<a class="headerlink" href="#42-gazebo" title="Permanent link">&para;</a></h3>
+<p>Gazebo开发始于2002年秋季的美国南加州大学，最初由Andrew Howard博士和学生Nate Koenig创建。项目希望提供能够模拟室外机器人和复杂条件的高保真三维仿真器，并作为二维多机器人仿真器Stage的补充。</p>
+<p>“Gazebo”这个名字来自户外舞台旁的凉亭：Stage像舞台，Gazebo则被设想为与户外舞台相配套的结构。虽然名称源于室外场景，后来大量用户也用它模拟室内机器人。</p>
+<h3 id="43-ros">4.3 与ROS结合<a class="headerlink" href="#43-ros" title="Permanent link">&para;</a></h3>
+<p>2009年，John Hsu将ROS和PR2机器人集成进Gazebo。Gazebo由此逐渐成为ROS生态中最常用的机器人仿真工具之一。2011年，Willow Garage开始为Gazebo开发提供支持。</p>
+<p>ROS与Gazebo的结合形成了典型模式：Gazebo负责物理和传感器，ROS负责通信与算法，插件把两边连接起来。</p>
+<h3 id="44-osrf">4.4 OSRF与大型机器人挑战<a class="headerlink" href="#44-osrf" title="Permanent link">&para;</a></h3>
+<p>2012年，Open Source Robotics Foundation（OSRF，后来以Open Robotics品牌活动）成为Gazebo项目的维护者。2013年，Gazebo用于DARPA机器人挑战赛中的Virtual Robotics Challenge，证明了其在复杂机器人和高风险场景仿真中的工程能力。</p>
+<h3 id="45-gazebo-classicgazebo">4.5 从Gazebo Classic到新一代Gazebo<a class="headerlink" href="#45-gazebo-classicgazebo" title="Permanent link">&para;</a></h3>
+<p>经过十多年发展，旧Gazebo形成了以单体应用和数字版本发布为特征的产品线，例如Gazebo 9和Gazebo 11。</p>
+<p>为了进行架构现代化，开发团队把仿真系统重构为多个松耦合库。新系统最初使用“Ignition”品牌，用来区别旧Gazebo。</p>
+<p>2022年，官方宣布停止使用Ignition品牌，重新统一使用Gazebo品牌：</p>
+<ul>
+<li>旧的数字版本称为<strong>Gazebo Classic</strong>；</li>
+<li>新一代字母代号版本称为<strong>Gazebo</strong>或<strong>Gazebo Sim</strong>；</li>
+<li>新一代命令通常使用<code>gz sim</code>；</li>
+<li>ROS 2桥接通常使用<code>ros_gz</code>；</li>
+<li>两代产品的插件、命令和部分API不能直接混用。</li>
+</ul>
+<h3 id="46-gazebo-classic">4.6 Gazebo Classic生命周期<a class="headerlink" href="#46-gazebo-classic" title="Permanent link">&para;</a></h3>
+<p>Gazebo Classic 11已于2025年1月结束官方生命周期。结束生命周期并不表示已有程序立即不能运行，而是表示官方维护、安全修复和新系统支持已经停止。</p>
+<p>新项目通常应评估迁移到受支持的新Gazebo版本；已有项目则需要综合考虑ROS版本、插件、模型、启动文件和测试成本，制定单独迁移计划。</p>
+<h3 id="47-gazebo-classic">4.7 本项目为什么使用Gazebo Classic<a class="headerlink" href="#47-gazebo-classic" title="Permanent link">&para;</a></h3>
+<p>当前项目基线是Ubuntu 22.04、ROS 2 Humble和Gazebo Classic，代码中使用：</p>
+<ul>
+<li><code>gazebo_ros</code>；</li>
+<li>Gazebo Classic的<code>gazebo.launch.py</code>；</li>
+<li><code>libgazebo_ros_diff_drive.so</code>；</li>
+<li><code>libgazebo_ros_ray_sensor.so</code>；</li>
+<li><code>libgazebo_ros_camera.so</code>。</li>
+</ul>
+<p>因此本教材的实际操作以Gazebo Classic为准。学习新Gazebo很有价值，但迁移涉及启动文件、插件、ROS桥接和资源路径，应作为独立升级任务，不能在当前课程中混写两套命令。</p>
+<h3 id="48-gazebo-classic">4.8 Gazebo Classic的产品结构<a class="headerlink" href="#48-gazebo-classic" title="Permanent link">&para;</a></h3>
+<p>从学习角度，可以把Gazebo Classic理解成五层：</p>
+<ol>
+<li><strong>World层</strong>：场景、光源、地面和物理引擎；</li>
+<li><strong>Model层</strong>：机器人、墙、家具和障碍物；</li>
+<li><strong>Physics层</strong>：重力、惯性、摩擦、碰撞和接触；</li>
+<li><strong>Sensor与Plugin层</strong>：雷达、相机、IMU、底盘驱动和ROS接口；</li>
+<li><strong>Server与Client层</strong>：服务器运行物理仿真，GUI客户端负责显示与交互。</li>
+</ol>
+<p>这解释了为什么后台测试没有Gazebo窗口仍然可以运行：物理服务器并未停止，只是没有启动或显示GUI客户端。</p>
+<h2 id="5-rviz2">5 RViz2产品介绍<a class="headerlink" href="#5-rviz2" title="Permanent link">&para;</a></h2>
+<h3 id="51-rviz2">5.1 RViz2是什么<a class="headerlink" href="#51-rviz2" title="Permanent link">&para;</a></h3>
+<p>RViz2是ROS 2的三维可视化和交互工具。它读取ROS 2 Topic、TF和参数，把抽象数据绘制成地图、坐标轴、机器人、路径、点云或图像。</p>
+<p>RViz2的主要功能包括：</p>
+<ul>
+<li>显示Grid、Map、LaserScan、PointCloud2和Marker；</li>
+<li>显示RobotModel和TF树；</li>
+<li>显示Path、Odometry和代价地图；</li>
+<li>显示Image和Camera；</li>
+<li>使用2D Pose Estimate设置初始位姿；</li>
+<li>使用2D Nav Goal或Nav2工具发送导航目标；</li>
+<li>保存和加载<code>.rviz</code>界面配置；</li>
+<li>通过插件增加Display、Tool、Panel和View Controller。</li>
+</ul>
+<p>RViz2不计算物理碰撞，也不生成相机画面。它可以发送交互消息，但定位、规划和控制仍由AMCL、Nav2等节点完成。</p>
+<h3 id="52-ros-1rviz">5.2 ROS 1时期的RViz<a class="headerlink" href="#52-ros-1rviz" title="Permanent link">&para;</a></h3>
+<p>RViz产生于ROS 1早期生态，用于统一显示机器人模型、激光、点云、地图、TF和规划结果。ROS官方网站在2010年1月宣布RViz所在的visualization栈达到1.0版本，表明它在当时已经成为ROS的重要开发工具。</p>
+<p>RViz的价值不是替代所有专业分析工具，而是提供一个可扩展的三维“ROS数据观察台”。开发者可以在同一坐标体系中同时比较地图、机器人、激光和规划路径。</p>
+<h3 id="53-rvizrviz2">5.3 从RViz迁移到RViz2<a class="headerlink" href="#53-rvizrviz2" title="Permanent link">&para;</a></h3>
+<p>ROS 2出现后，RViz被移植到ROS 2的通信、时间、QoS和构建体系，通常称为RViz2。这个过程不是简单改名，还涉及节点接口、tf2、消息订阅、插件和软件包结构的调整。</p>
+<p>RViz2保留了ROS 1 RViz的核心交互理念，同时适配ROS 2分布式通信和QoS机制。</p>
+<h3 id="54-rviz2">5.4 RViz2的软件包结构<a class="headerlink" href="#54-rviz2" title="Permanent link">&para;</a></h3>
+<p>RViz2被拆分为多个职责清晰的软件包：</p>
+<ul>
+<li><code>rviz2</code>：主程序入口；</li>
+<li><code>rviz_common</code>：Display、Tool和Panel等通用框架；</li>
+<li><code>rviz_default_plugins</code>：系统自带的常用显示与工具；</li>
+<li><code>rviz_rendering</code>：三维渲染支持；</li>
+<li><code>rviz_ogre_vendor</code>：OGRE渲染依赖封装。</li>
+</ul>
+<p>这种结构便于开发自定义插件，也使RViz2能够扩展新的显示对象、交互工具和控制面板。</p>
+<h3 id="55-rviz2">5.5 RViz2的核心对象<a class="headerlink" href="#55-rviz2" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Display</strong>：把一种ROS数据画出来，例如Map、LaserScan或Image；</li>
+<li><strong>Tool</strong>：处理鼠标交互，例如设置初始位姿或导航目标；</li>
+<li><strong>Panel</strong>：提供状态、按钮和参数操作区域；</li>
+<li><strong>View Controller</strong>：控制Orbit、俯视等观察方式；</li>
+<li><strong>Frame Transformer</strong>：把不同Frame的数据转换到Fixed Frame；</li>
+<li><strong>Configuration</strong>：保存Display、Tool、视角和窗口布局。</li>
+</ol>
+<p>理解这些对象后，就能看出“鼠标自由画路径”为什么不是RViz2默认功能：它需要专门的Tool或Panel插件，把鼠标输入转换成ROS路径消息或导航Action。</p>
+<h2 id="6-gazeborviz2">6 Gazebo与RViz2对比<a class="headerlink" href="#6-gazeborviz2" title="Permanent link">&para;</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>Gazebo Classic</th>
+<th>RViz2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>核心定位</td>
+<td>三维物理仿真器</td>
+<td>ROS 2三维可视化与交互工具</td>
+</tr>
+<tr>
+<td>是否建立物理世界</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>是否计算碰撞与动力学</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>是否生成仿真传感器数据</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>是否显示ROS Topic和TF</td>
+<td>通过插件和GUI观察部分内容</td>
+<td>是，属于核心能力</td>
+</tr>
+<tr>
+<td>是否发送初始位姿和目标</td>
+<td>通常不是主要入口</td>
+<td>可以作为交互入口</td>
+</tr>
+<tr>
+<td>是否负责路径规划</td>
+<td>否</td>
+<td>否，Nav2负责</td>
+</tr>
+<tr>
+<td>主要配置</td>
+<td>World、SDF、URDF/Xacro、插件</td>
+<td><code>.rviz</code>、Display、Tool、Panel、View</td>
+</tr>
+<tr>
+<td>当前项目使用</td>
+<td>Gazebo Classic</td>
+<td>ROS 2 Humble的RViz2</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-ros-2nav2">7 ROS 2和Nav2的作用<a class="headerlink" href="#7-ros-2nav2" title="Permanent link">&para;</a></h2>
+<p>ROS 2连接仿真器、算法节点和显示工具。Topic传输雷达、图像、里程计等消息，TF描述坐标系关系，Action承载导航目标与反馈。</p>
+<p>Nav2接收目标，根据地图、代价地图、TF、里程计和雷达规划路径并生成控制命令。Gazebo中的小车执行命令，RViz2显示过程。</p>
+<h2 id="8">8 完整闭环<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Gazebo模拟环境、机器人和传感器；</li>
+<li><code>gazebo_ros</code>插件把仿真结果发布到ROS 2；</li>
+<li>SLAM、AMCL或Nav2处理这些数据；</li>
+<li>RViz2显示地图、TF、路径和传感器结果；</li>
+<li>用户从RViz2发送初始位姿或导航目标；</li>
+<li>Nav2生成速度命令；</li>
+<li>速度经过项目安全链；</li>
+<li>Gazebo执行运动并产生下一轮反馈。</li>
+</ol>
+<h2 id="9">9 典型任务归属<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ul>
+<li>建房间、墙、门：Gazebo环境建模；</li>
+<li>模拟轮子、碰撞、相机：Gazebo机器人与传感器建模；</li>
+<li>查看TF、地图、路径：RViz2；</li>
+<li>设置初始位姿和导航目标：RViz2交互入口；</li>
+<li>计算路径与避障：Nav2；</li>
+<li>传输数据与调用接口：ROS 2。</li>
+</ul>
+<h2 id="10">10 本教材的后续学习路线<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<p>AU1建立产品认识；AU2检查安装和版本；AU3学习Gazebo界面；AU4至AU6完成通用模型、机器人和环境；AU7学习RViz2；AU8验证协同；AU9完成导航与多航点；AU10做综合人工测试；AU11进行总结考核。</p>
+<p>这条路线遵循“先知道工具是什么，再会操作，再会构建，最后会协同和验证”的顺序。</p>
+<h2 id="11">11 教师引导操作<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<p>在已经加载项目环境的终端启动带GUI的基础仿真：</p>
+<pre><code class="language-bash">ros2 launch ai_robot_sim sim_bringup.launch.py gui:=true
+</code></pre>
+<p>另开终端并加载同一环境：</p>
+<pre><code class="language-bash">source /home/ubuntu/ai_robot_ws/install/setup.bash
+rviz2
+</code></pre>
+<p>本单元只要求辨认两个产品：Gazebo中存在三维物理场景，RViz2显示由ROS 2提供的数据。</p>
+<h2 id="12">12 学员独立练习<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<ol>
+<li>分别指出Gazebo和RViz2窗口；</li>
+<li>在Gazebo中找到仿真小车；</li>
+<li>在RViz2中找到Displays和Fixed Frame；</li>
+<li>制作一条简要产品时间线；</li>
+<li>列出Gazebo Classic与新Gazebo的名称和命令差异；</li>
+<li>用自己的话说明两个产品的数据来源和职责。</li>
+</ol>
+<h2 id="13">13 正常现象<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Gazebo GUI中能看到世界和小车；</li>
+<li>RViz2能启动，但是否显示机器人取决于Fixed Frame、Display、Topic和TF；</li>
+<li>关闭RViz2不会停止Gazebo仿真；</li>
+<li>关闭Gazebo后，RViz2可能仍在运行，但仿真传感器数据会停止更新。</li>
+</ul>
+<h2 id="14">14 常见误区<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<ul>
+<li>把Gazebo说成只负责观察；</li>
+<li>把RViz2说成物理仿真器；</li>
+<li>把路径规划说成RViz2完成；</li>
+<li>把Gazebo Classic与新Gazebo命令混用；</li>
+<li>认为“RViz”到“RViz2”只是程序名称变化；</li>
+<li>认为在Gazebo中拖动模型等于正常驾驶；</li>
+<li>认为RViz2显示地图就一定已经完成定位。</li>
+</ul>
+<h2 id="15">15 理解检查<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Gazebo为什么产生，它与Stage有什么历史关系？</li>
+<li>Gazebo在哪一年开始开发？</li>
+<li>Gazebo与ROS集成的重要阶段发生在什么时候？</li>
+<li>Gazebo Classic与新一代Gazebo怎样区分？</li>
+<li>当前项目为什么不能直接混用<code>gz sim</code>和Classic插件？</li>
+<li>RViz在ROS生态中解决了什么共同问题？</li>
+<li>RViz在什么时候达到1.0版本？</li>
+<li>RViz2相对ROS 1 RViz发生了哪些架构变化？</li>
+<li>Display、Tool、Panel和View Controller分别是什么？</li>
+<li>谁负责生成仿真雷达和相机数据？</li>
+<li>谁负责规划路径？</li>
+<li>RViz2设置目标以后，目标如何影响Gazebo中的小车？</li>
+<li>为什么关闭RViz2不一定停止仿真？</li>
+</ol>
+<h2 id="16">16 操作技能检查<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
+<ul>
+<li>能独立启动Gazebo GUI；</li>
+<li>能独立启动RViz2；</li>
+<li>能正确指出两个窗口；</li>
+<li>能画出Gazebo和RViz的简要发展时间线；</li>
+<li>能识别Gazebo Classic、新Gazebo、RViz和RViz2四个名称；</li>
+<li>能按“模拟—传输—计算—显示—控制—反馈”复述闭环。</li>
+</ul>
+<h2 id="17">17 证据与完成条件<a class="headerlink" href="#17" title="Permanent link">&para;</a></h2>
+<p>保留两个窗口同时运行的截图、产品时间线、职责对照和一段闭环说明。理解题回答正确、启动操作成功并能解释版本边界，即可标记AU1完成。</p>
+<h2 id="18">18 项目内依据<a class="headerlink" href="#18" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>ai_robot_sim/launch/sim_bringup.launch.py</code></li>
+<li><code>ai_robot_description/urdf/ai_robot.urdf.xacro</code></li>
+<li><code>ai_robot_sim/package.xml</code></li>
+</ul>
+<h2 id="19">19 外部官方资料<a class="headerlink" href="#19" title="Permanent link">&para;</a></h2>
+<h3 id="191-gazebo-classic">19.1 Gazebo Classic历史<a class="headerlink" href="#191-gazebo-classic" title="Permanent link">&para;</a></h3>
+<p><strong>来源</strong>：Gazebo Classic官方网站<br>
+<strong>适用版本</strong>：Gazebo Classic<br>
+<strong>用途</strong>：核对2002年起源、创建者、ROS集成、OSRF维护和DARPA挑战历史<br>
+<strong>链接</strong>：https://classic.gazebosim.org/<br>
+<strong>查阅日期</strong>：2026-08-31</p>
+<h3 id="192-gazebo-classic">19.2 Gazebo Classic迁移说明<a class="headerlink" href="#192-gazebo-classic" title="Permanent link">&para;</a></h3>
+<p><strong>来源</strong>：Gazebo官方文档<br>
+<strong>适用版本</strong>：Gazebo Classic与新一代Gazebo<br>
+<strong>用途</strong>：核对Classic数字版本、新Gazebo字母版本和架构分化<br>
+<strong>链接</strong>：https://gazebosim.org/docs/garden/gazebo_classic_migration/<br>
+<strong>查阅日期</strong>：2026-08-31</p>
+<h3 id="193-ignitiongazebo">19.3 Ignition更名为Gazebo<a class="headerlink" href="#193-ignitiongazebo" title="Permanent link">&para;</a></h3>
+<p><strong>来源</strong>：Gazebo官方迁移指南<br>
+<strong>适用版本</strong>：新一代Gazebo<br>
+<strong>用途</strong>：核对2022年品牌更名以及<code>ign</code>到<code>gz</code>的命名迁移<br>
+<strong>链接</strong>：https://gazebosim.org/docs/latest/migration_from_ignition/<br>
+<strong>查阅日期</strong>：2026-08-31</p>
+<h3 id="194-gazebo-classic">19.4 Gazebo Classic生命周期<a class="headerlink" href="#194-gazebo-classic" title="Permanent link">&para;</a></h3>
+<p><strong>来源</strong>：Gazebo Classic API官方网站<br>
+<strong>适用版本</strong>：Gazebo Classic 11<br>
+<strong>用途</strong>：核对2025年1月结束生命周期<br>
+<strong>链接</strong>：https://classic.gazebosim.org/api<br>
+<strong>查阅日期</strong>：2026-08-31</p>
+<h3 id="195-rviz-10">19.5 RViz 1.0历史节点<a class="headerlink" href="#195-rviz-10" title="Permanent link">&para;</a></h3>
+<p><strong>来源</strong>：ROS官方网站<br>
+<strong>适用版本</strong>：ROS 1 RViz<br>
+<strong>用途</strong>：核对RViz在2010年1月达到1.0版本<br>
+<strong>链接</strong>：https://www.ros.org/news/2010/01/wednesday-10-releases.html<br>
+<strong>查阅日期</strong>：2026-08-31</p>
+<h3 id="196-rviz2">19.6 RViz2架构与功能<a class="headerlink" href="#196-rviz2" title="Permanent link">&para;</a></h3>
+<p><strong>来源</strong>：ROS 2 RViz官方代码库与用户指南<br>
+<strong>适用版本</strong>：ROS 2 RViz2<br>
+<strong>用途</strong>：核对软件包拆分、插件类型、Display、View和配置能力<br>
+<strong>链接</strong>：https://github.com/ros2/rviz<br>
+<strong>查阅日期</strong>：2026-08-31</p>
+      <div class="footer">源文件：AU1-01_产品介绍与基础认识_v1.0.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

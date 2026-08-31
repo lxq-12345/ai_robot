@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>AU9 导航操作与路径工具</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1 学习目标</a></li>
+<li><a href="#2">2 三类对象</a><ul>
+<li><a href="#21">2.1 初始位姿</a></li>
+<li><a href="#22">2.2 单个目标位姿</a></li>
+<li><a href="#23">2.3 多航点</a></li>
+</ul>
+</li>
+<li><a href="#3-rviz2">3 RViz2中的基本交互</a></li>
+<li><a href="#4-nav2">4 Nav2的职责</a></li>
+<li><a href="#5-waypoint-follower">5 Waypoint Follower</a></li>
+<li><a href="#6-followpath">6 FollowPath</a></li>
+<li><a href="#7-simple-commander">7 Simple Commander</a></li>
+<li><a href="#8">8 鼠标画线路径的边界</a></li>
+<li><a href="#9">9 单目标教师引导操作</a></li>
+<li><a href="#10">10 多航点教师引导操作</a></li>
+<li><a href="#11">11 学员独立练习</a></li>
+<li><a href="#12">12 正常现象</a></li>
+<li><a href="#13">13 常见问题与排查</a></li>
+<li><a href="#14">14 理解检查</a></li>
+<li><a href="#15">15 技能检查与证据</a></li>
+<li><a href="#16">16 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1 学习目标</a></li>
+<li><a href="#2">2 三类对象</a><ul>
+<li><a href="#21">2.1 初始位姿</a></li>
+<li><a href="#22">2.2 单个目标位姿</a></li>
+<li><a href="#23">2.3 多航点</a></li>
+</ul>
+</li>
+<li><a href="#3-rviz2">3 RViz2中的基本交互</a></li>
+<li><a href="#4-nav2">4 Nav2的职责</a></li>
+<li><a href="#5-waypoint-follower">5 Waypoint Follower</a></li>
+<li><a href="#6-followpath">6 FollowPath</a></li>
+<li><a href="#7-simple-commander">7 Simple Commander</a></li>
+<li><a href="#8">8 鼠标画线路径的边界</a></li>
+<li><a href="#9">9 单目标教师引导操作</a></li>
+<li><a href="#10">10 多航点教师引导操作</a></li>
+<li><a href="#11">11 学员独立练习</a></li>
+<li><a href="#12">12 正常现象</a></li>
+<li><a href="#13">13 常见问题与排查</a></li>
+<li><a href="#14">14 理解检查</a></li>
+<li><a href="#15">15 技能检查与证据</a></li>
+<li><a href="#16">16 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="au9">AU9 导航操作与路径工具<a class="headerlink" href="#au9" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>对应计划：AU9</p>
+</blockquote>
+<h2 id="1">1 学习目标<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>区分初始位姿、单目标、多航点和指定路径；</li>
+<li>能用RViz2与Nav2完成单目标导航；</li>
+<li>能建立有顺序的多航点任务；</li>
+<li>理解Waypoint Follower、FollowPath和Simple Commander的用途；</li>
+<li>能说明为什么Gazebo不负责路径规划。</li>
+</ul>
+<h2 id="2">2 三类对象<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 初始位姿<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>用于告诉AMCL机器人在已有地图中的大致位置和方向，并带有不确定性。它不是导航目标。</p>
+<h3 id="22">2.2 单个目标位姿<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<p>包含目标位置和最终朝向。RViz2发送目标，Nav2计算到达路径。</p>
+<h3 id="23">2.3 多航点<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>由一组有顺序的位姿组成，例如A起点后依次经过B、C并到达D。航点规定路线骨架，Nav2仍负责每两点之间的实际规划和避障。</p>
+<h2 id="3-rviz2">3 RViz2中的基本交互<a class="headerlink" href="#3-rviz2" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>2D Pose Estimate</code>：设置初始位姿；</li>
+<li><code>2D Goal Pose</code>或<code>Navigation2 Goal</code>：设置单个目标；</li>
+<li>Nav2面板或项目工具：查看状态、取消任务；</li>
+<li>多航点需要Waypoint工具、Action客户端或程序支持，标准空白RViz2不一定直接提供完整航点编辑界面。</li>
+</ul>
+<h2 id="4-nav2">4 Nav2的职责<a class="headerlink" href="#4-nav2" title="Permanent link">&para;</a></h2>
+<p>Nav2根据静态地图、全局/局部代价地图、TF、里程计和雷达完成：</p>
+<ul>
+<li>全局规划：决定从当前位置到目标的大体路线；</li>
+<li>局部控制：生成短期速度并处理附近障碍；</li>
+<li>行为树：协调规划、控制、恢复和取消；</li>
+<li>Action：管理目标接受、反馈、取消和最终结果。</li>
+</ul>
+<p>RViz2只是交互入口，Gazebo只是执行和反馈环境。</p>
+<h2 id="5-waypoint-follower">5 Waypoint Follower<a class="headerlink" href="#5-waypoint-follower" title="Permanent link">&para;</a></h2>
+<p>Waypoint Follower接收按顺序排列的航点，并依次调用导航能力。可配置某点失败后停止还是继续，也可以在航点执行等待、拍照等任务。</p>
+<p>多航点适合巡检、配送和房间顺序访问。</p>
+<h2 id="6-followpath">6 FollowPath<a class="headerlink" href="#6-followpath" title="Permanent link">&para;</a></h2>
+<p>FollowPath更接近“给定一条路径让控制器跟随”。它不同于只给终点后让规划器自由生成路径。使用前必须明确路径Frame、时间、可行性以及控制器接口。</p>
+<h2 id="7-simple-commander">7 Simple Commander<a class="headerlink" href="#7-simple-commander" title="Permanent link">&para;</a></h2>
+<p>Nav2 Simple Commander提供Python接口，可实现：</p>
+<ul>
+<li><code>goToPose()</code>：单目标；</li>
+<li><code>goThroughPoses()</code>：经过多个位姿；</li>
+<li><code>followWaypoints()</code>：执行航点任务；</li>
+<li>获取路径、反馈和结果；</li>
+<li>取消任务。</li>
+</ul>
+<p>它适合把人工点选升级为可保存、可重复的路线程序。</p>
+<h2 id="8">8 鼠标画线路径的边界<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>Gazebo Classic默认不能用鼠标画一条路线让机器人自动沿线行驶。RViz2默认也主要提供目标点交互。</p>
+<p>自由画线需要自定义RViz2 Tool或专门路径编辑器，把鼠标轨迹转换成<code>nav_msgs/Path</code>并交给合适的FollowPath接口。该功能属于提高开发，不作为本单元必修。</p>
+<h2 id="9">9 单目标教师引导操作<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ol>
+<li>启动已有地图定位和Nav2；</li>
+<li>在RViz2设置Fixed Frame为<code>map</code>；</li>
+<li>使用<code>2D Pose Estimate</code>设置合理初始位姿；</li>
+<li>等待AMCL粒子收敛并检查雷达与墙体对齐；</li>
+<li>选择一个可达目标并设置朝向；</li>
+<li>观察全局路径、局部代价地图、速度和Gazebo运动；</li>
+<li>记录Action最终状态；</li>
+<li>另一次任务中执行取消并确认停车。</li>
+</ol>
+<h2 id="10">10 多航点教师引导操作<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<p>设计路线：起点A、门口B、走廊拐角C、第二房间D。依次提交B、C、D，或使用Waypoint Follower一次提交有序航点。</p>
+<p>每个航点都要确认：</p>
+<ul>
+<li>位于可通行区域；</li>
+<li>朝向合理；</li>
+<li>顺序明确；</li>
+<li>到达或失败结果可记录；</li>
+<li>路径不绕过安全速度链。</li>
+</ul>
+<h2 id="11">11 学员独立练习<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<p>完成两项任务：</p>
+<ol>
+<li>单目标导航并中途取消，观察Action状态和小车停车；</li>
+<li>从第一房间经过门口与走廊，到第二房间完成多航点导航。</li>
+</ol>
+<h2 id="12">12 正常现象<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<ul>
+<li>初始位姿后粒子逐渐收敛；</li>
+<li>目标被接受后出现全局路径；</li>
+<li>Gazebo小车沿可行路线运动；</li>
+<li>RViz2中的RobotModel、激光和路径同步；</li>
+<li>临时障碍出现时局部路线或速度发生调整；</li>
+<li>取消后控制命令回到安全停车状态；</li>
+<li>多航点按顺序执行并有最终结果。</li>
+</ul>
+<h2 id="13">13 常见问题与排查<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<ul>
+<li>目标不接受：查Nav2生命周期和Action Server；</li>
+<li>规划失败：查目标是否在障碍内、地图和全局代价地图；</li>
+<li>有路径但不动：查控制器、速度重映射、安全守卫和底盘；</li>
+<li>运动但定位漂移：查AMCL、TF、雷达和里程计；</li>
+<li>航点顺序异常：查提交列表和客户端逻辑；</li>
+<li>取消状态成功但仍滑行：继续检查速度和里程计，不能只看Action状态。</li>
+</ul>
+<h2 id="14">14 理解检查<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<ol>
+<li>初始位姿和导航目标有什么区别？</li>
+<li>多航点为什么不等于精确画死整条路径？</li>
+<li>Waypoint Follower与FollowPath有什么区别？</li>
+<li>Gazebo、RViz2和Nav2在导航中的职责分别是什么？</li>
+<li>Action显示Canceled后为什么还要观察速度和运动？</li>
+</ol>
+<h2 id="15">15 技能检查与证据<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<p>提交初始位姿截图、单目标路径、取消结果、多航点列表、各航点状态、Gazebo运动截图和安全停车记录。能够独立完成并解释两类任务，即可标记AU9完成。</p>
+<h2 id="16">16 项目内依据<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>ai_robot_sim/launch/nav2_bringup.launch.py</code></li>
+<li><code>tests/integration/test_s1_m5_nav2.launch.py</code></li>
+<li>Nav2 NavigateToPose、Waypoint Follower与Simple Commander接口</li>
+</ul>
+      <div class="footer">源文件：AU9-01_导航操作与路径工具_v1.0.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

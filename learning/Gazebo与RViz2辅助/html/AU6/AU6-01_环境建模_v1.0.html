@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>AU6 Gazebo环境建模</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1 本单元定位</a></li>
+<li><a href="#2">2 学习目标</a></li>
+<li><a href="#3-world">3 World文件</a></li>
+<li><a href="#4">4 场地设计原则</a><ul>
+<li><a href="#41">4.1 尺寸可测量</a></li>
+<li><a href="#42-visualcollision">4.2 Visual与Collision一致</a></li>
+<li><a href="#43">4.3 适合传感器</a></li>
+<li><a href="#44">4.4 从简单到复杂</a></li>
+</ul>
+</li>
+<li><a href="#5">5 两房间测试场地</a></li>
+<li><a href="#6">6 静态与动态对象</a></li>
+<li><a href="#7">7 光照与相机目标</a></li>
+<li><a href="#8">8 环境构建方法</a></li>
+<li><a href="#9">9 启动自定义场地</a></li>
+<li><a href="#10">10 教师引导操作</a></li>
+<li><a href="#11">11 学员独立练习</a></li>
+<li><a href="#12">12 正常现象</a></li>
+<li><a href="#13">13 常见问题与排查</a></li>
+<li><a href="#14">14 理解检查</a></li>
+<li><a href="#15">15 技能检查与证据</a></li>
+<li><a href="#16">16 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1 本单元定位</a></li>
+<li><a href="#2">2 学习目标</a></li>
+<li><a href="#3-world">3 World文件</a></li>
+<li><a href="#4">4 场地设计原则</a><ul>
+<li><a href="#41">4.1 尺寸可测量</a></li>
+<li><a href="#42-visualcollision">4.2 Visual与Collision一致</a></li>
+<li><a href="#43">4.3 适合传感器</a></li>
+<li><a href="#44">4.4 从简单到复杂</a></li>
+</ul>
+</li>
+<li><a href="#5">5 两房间测试场地</a></li>
+<li><a href="#6">6 静态与动态对象</a></li>
+<li><a href="#7">7 光照与相机目标</a></li>
+<li><a href="#8">8 环境构建方法</a></li>
+<li><a href="#9">9 启动自定义场地</a></li>
+<li><a href="#10">10 教师引导操作</a></li>
+<li><a href="#11">11 学员独立练习</a></li>
+<li><a href="#12">12 正常现象</a></li>
+<li><a href="#13">13 常见问题与排查</a></li>
+<li><a href="#14">14 理解检查</a></li>
+<li><a href="#15">15 技能检查与证据</a></li>
+<li><a href="#16">16 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="au6-gazebo">AU6 Gazebo环境建模<a class="headerlink" href="#au6-gazebo" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>对应计划：AU6</p>
+</blockquote>
+<h2 id="1">1 本单元定位<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>本单元建立小车活动的物理测试场地。目标不是制作精美建筑，而是创建尺寸明确、碰撞可靠、传感器可观察、能够支持SLAM和导航练习的环境。</p>
+<h2 id="2">2 学习目标<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>理解World文件和环境模型关系；</li>
+<li>能建立地面、墙、门、走廊和家具；</li>
+<li>区分静态结构、临时障碍和动态模型；</li>
+<li>能设计两房间综合测试场地；</li>
+<li>能验证碰撞、雷达轮廓和机器人通行能力。</li>
+</ul>
+<h2 id="3-world">3 World文件<a class="headerlink" href="#3-world" title="Permanent link">&para;</a></h2>
+<p>World是Gazebo场景入口，包含物理引擎、光源、地面、模型实例和插件。可复用物体应尽量做成独立Model，由World引用。</p>
+<p>当前项目Launch接受<code>world</code>参数，因此自定义场地不必修改Launch源代码，只需传入绝对路径。</p>
+<h2 id="4">4 场地设计原则<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 尺寸可测量<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p>墙长、墙厚、门宽、走廊宽和家具尺寸要明确，便于验证地图比例与机器人能否通过。</p>
+<h3 id="42-visualcollision">4.2 Visual与Collision一致<a class="headerlink" href="#42-visualcollision" title="Permanent link">&para;</a></h3>
+<p>墙看得见但没有Collision会被机器人穿过；Collision存在但Visual缺失会形成“隐形墙”。两者都要检查。</p>
+<h3 id="43">4.3 适合传感器<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<p>墙体和障碍应在雷达高度与有效范围内。相机练习还需要合理光照、材质和可区分物体。</p>
+<h3 id="44">4.4 从简单到复杂<a class="headerlink" href="#44" title="Permanent link">&para;</a></h3>
+<p>先完成封闭房间和门，再加走廊、家具、临时障碍和动态对象。每增加一类对象都重新验证。</p>
+<h2 id="5">5 两房间测试场地<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>建议场地至少包含：</p>
+<ul>
+<li>两个相连房间；</li>
+<li>一段走廊；</li>
+<li>至少两个门口；</li>
+<li>一处较窄但机器人可以通过的通道；</li>
+<li>桌、柜或箱体等静态家具；</li>
+<li>一个可添加和移除的临时障碍；</li>
+<li>具有不同颜色或形状的相机观察目标；</li>
+<li>明确的机器人初始位置。</li>
+</ul>
+<p>门宽应大于机器人外接宽度，并留出定位与控制误差余量。不能只看视觉上“似乎能过”。</p>
+<h2 id="6">6 静态与动态对象<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>墙、地面和固定家具适合作为静态对象。临时箱体可以是可移动动态模型。动态模型必须有合理质量、惯性和碰撞，不应与地面或墙初始重叠。</p>
+<p>“临时障碍”练习应能明确记录添加前、添加后和移除后的雷达或代价地图变化。</p>
+<h2 id="7">7 光照与相机目标<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>RGB相机需要光源才能形成可用图像。场景应包含基础光照，并放置颜色或形状明显的对象，用于检查视场角、距离和图像变化。</p>
+<p>光照过暗、相机背向目标或裁剪范围不合适，都会造成黑屏或看不到物体，这不一定是ROS Topic故障。</p>
+<h2 id="8">8 环境构建方法<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>可以通过Gazebo GUI插入和布置模型，也可以直接编写World/SDF。教学建议：</p>
+<ol>
+<li>GUI用于快速理解空间关系；</li>
+<li>SDF用于精确尺寸、版本控制和可重复启动；</li>
+<li>最终基准场景应保存为文本文件并纳入项目资源管理。</li>
+</ol>
+<h2 id="9">9 启动自定义场地<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">ros2 launch ai_robot_sim sim_bringup.launch.py \
+  gui:=true \
+  world:=/absolute/path/to/two_rooms.world
+</code></pre>
+<p>启动后先暂停仿真，从俯视角检查墙、门、障碍和机器人初始位置，再恢复物理运行。</p>
+<h2 id="10">10 教师引导操作<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<ol>
+<li>新建空World；</li>
+<li>加入地面和光源；</li>
+<li>用规则方箱建立第一间房的墙；</li>
+<li>留出门口并连接走廊；</li>
+<li>建立第二间房；</li>
+<li>加入一个固定家具和一个临时箱体；</li>
+<li>保存World；</li>
+<li>用项目Launch加载；</li>
+<li>检查机器人碰撞、雷达轮廓和相机画面。</li>
+</ol>
+<h2 id="11">11 学员独立练习<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<p>独立建立两房间场地，要求：</p>
+<ul>
+<li>机器人能从初始点进入走廊并到达另一个房间；</li>
+<li>雷达能扫描主要墙体；</li>
+<li>相机能看到至少两类明显目标；</li>
+<li>临时障碍可以添加和移除；</li>
+<li>World能通过同一条Launch命令重复加载。</li>
+</ul>
+<h2 id="12">12 正常现象<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<ul>
+<li>墙体视觉和碰撞一致；</li>
+<li>机器人不能穿墙；</li>
+<li>门和走廊有足够通行空间；</li>
+<li>雷达点与墙体轮廓基本一致；</li>
+<li>相机图像能够区分环境物体；</li>
+<li>重启场景后模型位置保持一致。</li>
+</ul>
+<h2 id="13">13 常见问题与排查<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<ul>
+<li>隐形墙：Collision存在但Visual缺失或偏移；</li>
+<li>穿墙：Collision缺失、过薄或物理步长不合适；</li>
+<li>门过窄：只按车体宽度设计，未考虑轮子、膨胀半径和控制误差；</li>
+<li>雷达看不到墙：墙不在雷达高度或距离范围；</li>
+<li>图像太暗：检查光源、材质和相机朝向；</li>
+<li>模型找不到：检查模型资源路径和URI；</li>
+<li>重启位置变化：检查World中模型Pose和保存方式。</li>
+</ul>
+<h2 id="14">14 理解检查<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<ol>
+<li>World和Model分别适合描述什么？</li>
+<li>为什么门宽不能只等于机器人宽度？</li>
+<li>隐形墙和穿墙分别优先检查什么？</li>
+<li>为什么最终场景应保存为文本World/SDF？</li>
+<li>相机练习为什么需要专门设计光照和目标物？</li>
+</ol>
+<h2 id="15">15 技能检查与证据<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<p>提交World文件、场地尺寸说明、俯视截图、雷达截图、相机截图和通行结果。场地可重复加载且满足碰撞、感知和通行要求，即可标记AU6完成。</p>
+<h2 id="16">16 项目内依据<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>ai_robot_sim/launch/sim_bringup.launch.py</code>中的<code>world</code>参数</li>
+<li><code>ai_robot_description/urdf/ai_robot.urdf.xacro</code>中的雷达与相机范围</li>
+</ul>
+      <div class="footer">源文件：AU6-01_环境建模_v1.0.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>AU10 综合测试练习</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1 本单元定位</a></li>
+<li><a href="#2">2 学习目标</a></li>
+<li><a href="#3">3 实验环境准备</a></li>
+<li><a href="#4">4 综合练习一：手动控制与同步观察</a><ul>
+<li><a href="#_1">目标</a></li>
+<li><a href="#_2">操作</a></li>
+<li><a href="#_3">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#5-slam">5 综合练习二：SLAM建图</a><ul>
+<li><a href="#_4">目标</a></li>
+<li><a href="#_5">操作与观察</a></li>
+<li><a href="#_6">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#6">6 综合练习三：已有地图定位</a><ul>
+<li><a href="#_7">目标</a></li>
+<li><a href="#_8">操作与观察</a></li>
+<li><a href="#_9">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#7">7 综合练习四：单目标与取消</a><ul>
+<li><a href="#_10">目标</a></li>
+<li><a href="#_11">操作与观察</a></li>
+<li><a href="#_12">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#8">8 综合练习五：多航点导航</a><ul>
+<li><a href="#_13">目标</a></li>
+<li><a href="#_14">操作与观察</a></li>
+<li><a href="#_15">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#9">9 综合练习六：临时障碍</a><ul>
+<li><a href="#_16">目标</a></li>
+<li><a href="#_17">操作与观察</a></li>
+<li><a href="#_18">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#10-rgb">10 综合练习七：RGB相机</a><ul>
+<li><a href="#_19">目标</a></li>
+<li><a href="#_20">操作与观察</a></li>
+<li><a href="#_21">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#11">11 综合练习八：雷达超时与安全停车</a><ul>
+<li><a href="#_22">目标</a></li>
+<li><a href="#_23">操作与观察</a></li>
+<li><a href="#_24">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#12-m6gui">12 M6能力任务GUI体验</a></li>
+<li><a href="#13">13 统一证据模板</a></li>
+<li><a href="#14">14 常见失败定位顺序</a></li>
+<li><a href="#15">15 理解检查</a></li>
+<li><a href="#16">16 技能检查与完成条件</a></li>
+<li><a href="#17">17 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1 本单元定位</a></li>
+<li><a href="#2">2 学习目标</a></li>
+<li><a href="#3">3 实验环境准备</a></li>
+<li><a href="#4">4 综合练习一：手动控制与同步观察</a><ul>
+<li><a href="#_1">目标</a></li>
+<li><a href="#_2">操作</a></li>
+<li><a href="#_3">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#5-slam">5 综合练习二：SLAM建图</a><ul>
+<li><a href="#_4">目标</a></li>
+<li><a href="#_5">操作与观察</a></li>
+<li><a href="#_6">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#6">6 综合练习三：已有地图定位</a><ul>
+<li><a href="#_7">目标</a></li>
+<li><a href="#_8">操作与观察</a></li>
+<li><a href="#_9">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#7">7 综合练习四：单目标与取消</a><ul>
+<li><a href="#_10">目标</a></li>
+<li><a href="#_11">操作与观察</a></li>
+<li><a href="#_12">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#8">8 综合练习五：多航点导航</a><ul>
+<li><a href="#_13">目标</a></li>
+<li><a href="#_14">操作与观察</a></li>
+<li><a href="#_15">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#9">9 综合练习六：临时障碍</a><ul>
+<li><a href="#_16">目标</a></li>
+<li><a href="#_17">操作与观察</a></li>
+<li><a href="#_18">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#10-rgb">10 综合练习七：RGB相机</a><ul>
+<li><a href="#_19">目标</a></li>
+<li><a href="#_20">操作与观察</a></li>
+<li><a href="#_21">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#11">11 综合练习八：雷达超时与安全停车</a><ul>
+<li><a href="#_22">目标</a></li>
+<li><a href="#_23">操作与观察</a></li>
+<li><a href="#_24">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#12-m6gui">12 M6能力任务GUI体验</a></li>
+<li><a href="#13">13 统一证据模板</a></li>
+<li><a href="#14">14 常见失败定位顺序</a></li>
+<li><a href="#15">15 理解检查</a></li>
+<li><a href="#16">16 技能检查与完成条件</a></li>
+<li><a href="#17">17 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="au10">AU10 综合测试练习<a class="headerlink" href="#au10" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>对应计划：AU10</p>
+</blockquote>
+<h2 id="1">1 本单元定位<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>AU10不再第一次教授单项操作，而是把前面已经掌握的界面、建模、传感器、协同和导航能力串成完整人工体验。自动测试通过不能替代本单元的GUI观察。</p>
+<h2 id="2">2 学习目标<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>在自建两房间场地中完成建图、定位和导航；</li>
+<li>同时观察Gazebo物理现象和RViz2数据；</li>
+<li>验证雷达、RGB相机、TF、地图、路径和安全停车；</li>
+<li>补做M5、M6遗留GUI人工体验；</li>
+<li>形成可追溯证据和明确结论。</li>
+</ul>
+<h2 id="3">3 实验环境准备<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>每次练习前记录：</p>
+<ul>
+<li>Git提交或项目版本；</li>
+<li>Ubuntu、ROS 2和Gazebo版本；</li>
+<li>使用的World、机器人Xacro和RViz2配置；</li>
+<li>构建命令与结果；</li>
+<li>启动命令；</li>
+<li>操作者和日期。</li>
+</ul>
+<p>开始前先结束上一轮Gazebo、Nav2、SLAM和RViz2进程，避免旧节点、旧TF或重复发布者干扰。</p>
+<h2 id="4">4 综合练习一：手动控制与同步观察<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="_1">目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>确认机器人、底盘、雷达、相机、里程计和TF基础链路。</p>
+<h3 id="_2">操作<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ol>
+<li>加载两房间World并启动Gazebo GUI；</li>
+<li>加载项目RViz2配置；</li>
+<li>通过项目允许的受控运动入口让小车直行、停止和转向；</li>
+<li>对照Gazebo、RobotModel、LaserScan、TF和Odometry；</li>
+<li>让相机朝向不同颜色目标，观察图像变化。</li>
+</ol>
+<h3 id="_3">通过条件<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>运动方向正确；Gazebo与RViz2状态同步；雷达、图像、CameraInfo和TF有效；速度经过项目安全链。</p>
+<h2 id="5-slam">5 综合练习二：SLAM建图<a class="headerlink" href="#5-slam" title="Permanent link">&para;</a></h2>
+<h3 id="_4">目标<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>观察地图随探索扩展，并保存地图资源。</p>
+<h3 id="_5">操作与观察<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ol>
+<li>启动SLAM人工入口和RViz2；</li>
+<li>Fixed Frame设为<code>map</code>；</li>
+<li>显示Map、LaserScan、RobotModel和TF；</li>
+<li>控制小车探索两个房间、门和走廊；</li>
+<li>观察地图增长、雷达与墙体对齐和TF连续性；</li>
+<li>保存YAML和PGM；</li>
+<li>记录保存位置和文件配对关系。</li>
+</ol>
+<h3 id="_6">通过条件<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>地图覆盖主要场地，墙体没有严重重影，<code>map→odom</code>存在，YAML和PGM均可读取。</p>
+<h2 id="6">6 综合练习三：已有地图定位<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<h3 id="_7">目标<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>加载保存地图，使用AMCL建立机器人位置。</p>
+<h3 id="_8">操作与观察<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ol>
+<li>启动地图服务器、AMCL和仿真；</li>
+<li>在RViz2设置初始位姿；</li>
+<li>观察粒子收敛；</li>
+<li>轻微移动机器人；</li>
+<li>检查雷达与地图墙体对齐；</li>
+<li>检查<code>map→odom</code>由AMCL发布。</li>
+</ol>
+<h3 id="_9">通过条件<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>地图正确加载，粒子收敛，运动后定位保持稳定，雷达与墙体基本对齐。</p>
+<h2 id="7">7 综合练习四：单目标与取消<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<h3 id="_10">目标<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>验证目标接受、规划、控制、取消和停车全过程。</p>
+<h3 id="_11">操作与观察<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<ol>
+<li>设置可达目标；</li>
+<li>观察全局路径和局部控制；</li>
+<li>在到达前取消目标；</li>
+<li>观察Action最终状态；</li>
+<li>同时观察安全速度与小车实际运动；</li>
+<li>再发一个可达目标并完成到点。</li>
+</ol>
+<h3 id="_12">通过条件<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p>取消后速度回零且小车停止；第二个目标最终成功；路径和速度表现合理。</p>
+<h2 id="8">8 综合练习五：多航点导航<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<h3 id="_13">目标<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<p>完成第一房间—门口—走廊—第二房间的有序路线。</p>
+<h3 id="_14">操作与观察<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<ol>
+<li>记录A起点、B门口、C走廊、D最终点；</li>
+<li>使用Waypoint Follower或Simple Commander提交B、C、D；</li>
+<li>观察每段规划和最终状态；</li>
+<li>在一个航点设置不同朝向，观察到点姿态；</li>
+<li>记录是否按顺序执行。</li>
+</ol>
+<h3 id="_15">通过条件<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<p>航点顺序正确，各点结果明确，最终到达D，运动未绕过安全链。</p>
+<h2 id="9">9 综合练习六：临时障碍<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<h3 id="_16">目标<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<p>观察障碍出现、进入雷达和局部代价地图、绕行或停车以及移除后的清除。</p>
+<h3 id="_17">操作与观察<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
+<ol>
+<li>在原本可通行路线放置临时箱体；</li>
+<li>观察Gazebo真实位置；</li>
+<li>观察LaserScan和局部代价地图；</li>
+<li>记录Nav2减速、停车或绕行；</li>
+<li>移除障碍；</li>
+<li>观察代价地图清除和路线恢复。</li>
+</ol>
+<h3 id="_18">通过条件<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h3>
+<p>障碍被感知和记录，机器人不发生碰撞；移除后占用能够按配置清除。</p>
+<h2 id="10-rgb">10 综合练习七：RGB相机<a class="headerlink" href="#10-rgb" title="Permanent link">&para;</a></h2>
+<h3 id="_19">目标<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h3>
+<p>验证Gazebo相机—ROS 2—RViz2完整链路。</p>
+<h3 id="_20">操作与观察<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h3>
+<ol>
+<li>在两个房间放置不同颜色或形状目标；</li>
+<li>让小车在不同距离和角度观察；</li>
+<li>在RViz2 Image/Camera显示图像；</li>
+<li>检查图像频率和CameraInfo；</li>
+<li>遮挡或移开目标，观察画面变化；</li>
+<li>暂停和恢复Gazebo，观察图像时间行为。</li>
+</ol>
+<h3 id="_21">通过条件<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h3>
+<p>图像与Gazebo场景一致，CameraInfo有效，Frame可转换，频率符合配置量级。</p>
+<h2 id="11">11 综合练习八：雷达超时与安全停车<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<h3 id="_22">目标<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h3>
+<p>确认感知失效后由安全守卫形成零速度。</p>
+<h3 id="_23">操作与观察<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h3>
+<p>按照项目允许的测试方式使扫描数据停止更新或变陈旧，观察原始速度、安全速度和Gazebo小车。</p>
+<h3 id="_24">通过条件<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h3>
+<p>扫描超过新鲜度阈值后，安全守卫输出零速度，小车停止；恢复扫描后是否允许恢复应严格按项目设计判断，不自行假设。</p>
+<h2 id="12-m6gui">12 M6能力任务GUI体验<a class="headerlink" href="#12-m6gui" title="Permanent link">&para;</a></h2>
+<p>在M6任务管理器执行导航与到点能力任务时，人工观察：</p>
+<ul>
+<li>任务接受和阶段反馈；</li>
+<li>Gazebo中的实际运动；</li>
+<li>RViz2路径、雷达和相机；</li>
+<li>取消、超时和安全触发；</li>
+<li>同一task_id重放时不产生新的运动。</li>
+</ul>
+<h2 id="13">13 统一证据模板<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<p>每项练习至少记录：</p>
+<pre><code class="language-text">练习名称：
+项目版本：
+环境：
+使用文件：
+启动命令：
+人工操作：
+预期现象：
+实际现象：
+最终状态：
+截图/日志：
+进程清理：
+结论：通过 / 失败 / 未执行
+问题与备注：
+</code></pre>
+<p>“人工执行自动测试命令”不等于“GUI人工体验”。没有打开界面并观察现象时必须写未执行，不能写通过。</p>
+<h2 id="14">14 常见失败定位顺序<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<ol>
+<li>环境和构建；</li>
+<li>Gazebo模型、物理和传感器；</li>
+<li><code>/clock</code>和消息时间；</li>
+<li>Topic内容与频率；</li>
+<li>TF链和Frame；</li>
+<li>SLAM/AMCL/Nav2生命周期；</li>
+<li>Action、规划和控制；</li>
+<li>速度安全守卫；</li>
+<li>RViz2配置与显示；</li>
+<li>进程清理和复跑。</li>
+</ol>
+<h2 id="15">15 理解检查<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<ol>
+<li>为什么自动测试不能完全替代本单元？</li>
+<li>取消成功后还必须观察什么？</li>
+<li>相机图像存在为什么还要检查CameraInfo和TF？</li>
+<li>临时障碍移除后为什么要观察代价地图清除？</li>
+<li>扫描超时的安全断言是什么？</li>
+</ol>
+<h2 id="16">16 技能检查与完成条件<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
+<p>八项综合练习均有明确结论；关键截图、日志、配置和文件可追溯；失败能定位首个异常层；结束后无未解释残留进程，即可标记AU10完成。</p>
+<h2 id="17">17 项目内依据<a class="headerlink" href="#17" title="Permanent link">&para;</a></h2>
+<ul>
+<li>M5 SLAM、定位、Nav2、临时障碍和扫描超时测试</li>
+<li>M6任务管理器和端到端测试</li>
+<li><code>ai_robot_description/urdf/ai_robot.urdf.xacro</code></li>
+<li><code>ai_robot_sim/launch/*.launch.py</code></li>
+</ul>
+      <div class="footer">源文件：AU10-01_综合测试练习_v1.0.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

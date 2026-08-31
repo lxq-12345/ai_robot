@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>AU11 总结与考核</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1 本单元定位</a></li>
+<li><a href="#2">2 考核原则</a></li>
+<li><a href="#3">3 知识理解考核</a></li>
+<li><a href="#4-gazebo">4 Gazebo操作考核</a></li>
+<li><a href="#5-rviz2">5 RViz2操作考核</a></li>
+<li><a href="#6">6 建模基础考核</a></li>
+<li><a href="#7">7 机器人与传感器考核</a></li>
+<li><a href="#8">8 环境建模考核</a></li>
+<li><a href="#9">9 协同考核</a></li>
+<li><a href="#10">10 导航考核</a></li>
+<li><a href="#11">11 综合任务：两房间多航点巡检</a><ul>
+<li><a href="#_1">任务</a></li>
+<li><a href="#_2">必须展示</a></li>
+<li><a href="#_3">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#12">12 评分建议</a></li>
+<li><a href="#13">13 最终成果清单</a></li>
+<li><a href="#14">14 完成边界</a></li>
+<li><a href="#15">15 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1 本单元定位</a></li>
+<li><a href="#2">2 考核原则</a></li>
+<li><a href="#3">3 知识理解考核</a></li>
+<li><a href="#4-gazebo">4 Gazebo操作考核</a></li>
+<li><a href="#5-rviz2">5 RViz2操作考核</a></li>
+<li><a href="#6">6 建模基础考核</a></li>
+<li><a href="#7">7 机器人与传感器考核</a></li>
+<li><a href="#8">8 环境建模考核</a></li>
+<li><a href="#9">9 协同考核</a></li>
+<li><a href="#10">10 导航考核</a></li>
+<li><a href="#11">11 综合任务：两房间多航点巡检</a><ul>
+<li><a href="#_1">任务</a></li>
+<li><a href="#_2">必须展示</a></li>
+<li><a href="#_3">通过条件</a></li>
+</ul>
+</li>
+<li><a href="#12">12 评分建议</a></li>
+<li><a href="#13">13 最终成果清单</a></li>
+<li><a href="#14">14 完成边界</a></li>
+<li><a href="#15">15 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="au11">AU11 总结与考核<a class="headerlink" href="#au11" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>对应计划：AU11</p>
+</blockquote>
+<h2 id="1">1 本单元定位<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>本单元不以“看过教材”为完成标准，而以独立解释、独立操作、独立建模、独立排错和证据完整性进行考核。</p>
+<h2 id="2">2 考核原则<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>知识和操作分别评价；</li>
+<li>不用一次成功掩盖未测试能力；</li>
+<li>允许查阅项目文件，但应能解释所用配置；</li>
+<li>结果必须有证据；</li>
+<li>自动断言与人工观察不能互相冒充；</li>
+<li>失败记录也是有效学习证据，前提是定位过程真实完整。</li>
+</ul>
+<h2 id="3">3 知识理解考核<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>应能解释：</p>
+<ol>
+<li>Gazebo、RViz2、ROS 2、Nav2职责；</li>
+<li>World、SDF、URDF、Xacro关系；</li>
+<li>Model、Link、Joint及三类物理/视觉属性；</li>
+<li><code>/clock</code>、Topic、TF和Frame；</li>
+<li>雷达、相机、CameraInfo和IMU链路；</li>
+<li>SLAM、AMCL和Nav2的分工；</li>
+<li>单目标、多航点和FollowPath区别；</li>
+<li>安全守卫和扫描超时停车；</li>
+<li>GUI人工体验与自动测试的边界。</li>
+</ol>
+<h2 id="4-gazebo">4 Gazebo操作考核<a class="headerlink" href="#4-gazebo" title="Permanent link">&para;</a></h2>
+<p>在限定时间内独立完成：</p>
+<ul>
+<li>GUI启动和正常关闭；</li>
+<li>俯视、侧视、聚焦和缩放；</li>
+<li>暂停、单步、恢复和重置；</li>
+<li>加载指定World；</li>
+<li>判断模型瞬移与正常控制的区别；</li>
+<li>识别一个物理或模型异常。</li>
+</ul>
+<h2 id="5-rviz2">5 RViz2操作考核<a class="headerlink" href="#5-rviz2" title="Permanent link">&para;</a></h2>
+<p>从空白配置开始：</p>
+<ul>
+<li>设置正确Fixed Frame；</li>
+<li>通过By Display Type添加Map、LaserScan、RobotModel、TF和Image；</li>
+<li>手动绑定正确Topic；</li>
+<li>处理一个Topic或QoS错误；</li>
+<li>切换俯视；</li>
+<li>保存并重新加载<code>.rviz</code>配置。</li>
+</ul>
+<h2 id="6">6 建模基础考核<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>独立建立一个简单障碍模型，要求Visual、Collision和Inertial完整，能够稳定加载，并解释每部分作用。</p>
+<h2 id="7">7 机器人与传感器考核<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>在现有机器人模型中完成一次受控修改，例如相机更新率、视场角或安装位姿；重新构建并验证Topic、TF和RViz2显示。</p>
+<p>不得为了通过考核破坏速度安全链或删除关键碰撞属性。</p>
+<h2 id="8">8 环境建模考核<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>建立或修改两房间测试场地，要求：</p>
+<ul>
+<li>房间、门和走廊尺寸明确；</li>
+<li>机器人可以通行；</li>
+<li>墙和家具碰撞有效；</li>
+<li>雷达可见主要边界；</li>
+<li>相机可见指定目标；</li>
+<li>临时障碍可以独立添加和移除。</li>
+</ul>
+<h2 id="9">9 协同考核<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<p>任选一次运动，完整说明并验证：</p>
+<pre><code class="language-text">Gazebo物理变化
+→ ROS 2 Topic/TF
+→ 算法节点处理
+→ RViz2显示
+→ 用户目标或控制
+→ 安全链
+→ Gazebo执行
+</code></pre>
+<p>考官可人为制造一个错误，例如Fixed Frame错误、相机Topic错误或Gazebo暂停，学习者应按层定位。</p>
+<h2 id="10">10 导航考核<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<p>完成：</p>
+<ol>
+<li>已有地图定位和初始位姿；</li>
+<li>单目标到点；</li>
+<li>中途取消并确认停车；</li>
+<li>多航点按序执行；</li>
+<li>临时障碍观察；</li>
+<li>最终状态与证据记录。</li>
+</ol>
+<h2 id="11">11 综合任务：两房间多航点巡检<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<h3 id="_1">任务<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>机器人从第一房间出发，经门口和走廊到第二房间，在指定航点停留并用RGB相机观察目标，然后返回或安全结束。</p>
+<h3 id="_2">必须展示<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Gazebo测试场地；</li>
+<li>RViz2地图、机器人、雷达、TF和路径；</li>
+<li>相机图像与CameraInfo；</li>
+<li>有顺序的航点；</li>
+<li>Nav2反馈与最终结果；</li>
+<li>速度安全链；</li>
+<li>取消或安全停车中的至少一种；</li>
+<li>完整证据记录。</li>
+</ul>
+<h3 id="_3">通过条件<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>任务按设计完成；没有碰撞或绕过安全链；图像与场景一致；航点顺序和结果清楚；异常可解释；进程清理完整。</p>
+<h2 id="12">12 评分建议<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>不强制采用百分制，但应分别记录：</p>
+<ul>
+<li>知识理解：通过/需补习；</li>
+<li>Gazebo操作：通过/需补习；</li>
+<li>RViz2操作：通过/需补习；</li>
+<li>建模：通过/需补习；</li>
+<li>传感器：通过/需补习；</li>
+<li>协同和导航：通过/需补习；</li>
+<li>排错与证据：通过/需补习。</li>
+</ul>
+<p>任何必修项未执行时，总结必须写未完成，不能用其他项通过替代。</p>
+<h2 id="13">13 最终成果清单<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<ul>
+<li>完整学习计划；</li>
+<li>AU1—AU11教材学习记录；</li>
+<li>Gazebo World和模型；</li>
+<li>URDF/Xacro与传感器配置；</li>
+<li>RViz2配置；</li>
+<li>相机、雷达、TF和地图证据；</li>
+<li>单目标与多航点证据；</li>
+<li>安全停车证据；</li>
+<li>问题与修复记录；</li>
+<li>M5、M6 GUI人工体验结论。</li>
+</ul>
+<h2 id="14">14 完成边界<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<p>AU11通过表示已掌握当前仿真项目中的Gazebo与RViz2实践能力，不等于实机迁移、视觉AI、复杂动态环境或新版Gazebo Sim迁移已经完成。</p>
+<h2 id="15">15 项目内依据<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<ul>
+<li>AU1—AU10全部教材与产物</li>
+<li>M5、M6自动测试和人工体验要求</li>
+<li>现有<code>ai_robot_ws</code>工程文件</li>
+</ul>
+      <div class="footer">源文件：AU11-01_总结与考核_v1.0.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>

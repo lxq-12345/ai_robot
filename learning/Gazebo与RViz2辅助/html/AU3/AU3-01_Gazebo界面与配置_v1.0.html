@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>AU3 Gazebo界面与配置</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1 学习目标</a></li>
+<li><a href="#2">2 启动方式</a></li>
+<li><a href="#3">3 界面组成</a></li>
+<li><a href="#4">4 视角操作</a></li>
+<li><a href="#5">5 模型操作的边界</a></li>
+<li><a href="#6">6 仿真控制</a></li>
+<li><a href="#7">7 物理与时间观察</a></li>
+<li><a href="#8-gui">8 GUI模式与后台模式</a></li>
+<li><a href="#9-world">9 World文件与场景保存</a></li>
+<li><a href="#10">10 教师引导操作</a></li>
+<li><a href="#11">11 学员独立人工练习</a></li>
+<li><a href="#12">12 正常现象</a></li>
+<li><a href="#13">13 常见问题</a></li>
+<li><a href="#14">14 理解检查</a></li>
+<li><a href="#15">15 操作技能检查与证据</a></li>
+<li><a href="#16">16 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1 学习目标</a></li>
+<li><a href="#2">2 启动方式</a></li>
+<li><a href="#3">3 界面组成</a></li>
+<li><a href="#4">4 视角操作</a></li>
+<li><a href="#5">5 模型操作的边界</a></li>
+<li><a href="#6">6 仿真控制</a></li>
+<li><a href="#7">7 物理与时间观察</a></li>
+<li><a href="#8-gui">8 GUI模式与后台模式</a></li>
+<li><a href="#9-world">9 World文件与场景保存</a></li>
+<li><a href="#10">10 教师引导操作</a></li>
+<li><a href="#11">11 学员独立人工练习</a></li>
+<li><a href="#12">12 正常现象</a></li>
+<li><a href="#13">13 常见问题</a></li>
+<li><a href="#14">14 理解检查</a></li>
+<li><a href="#15">15 操作技能检查与证据</a></li>
+<li><a href="#16">16 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="au3-gazebo">AU3 Gazebo界面与配置<a class="headerlink" href="#au3-gazebo" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>适用环境：Gazebo Classic<br>
+对应计划：AU3</p>
+</blockquote>
+<h2 id="1">1 学习目标<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>认识Gazebo主窗口、场景树、属性面板和三维视图区；</li>
+<li>掌握观察、选择、移动、仿真控制和重置；</li>
+<li>区分物理操作、模型瞬移和正常底盘控制；</li>
+<li>理解GUI模式、后台模式以及World文件的作用。</li>
+</ul>
+<h2 id="2">2 启动方式<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+source install/setup.bash
+ros2 launch ai_robot_sim sim_bringup.launch.py gui:=true
+</code></pre>
+<p>当前Launch的<code>gui</code>默认值为<code>false</code>。自动测试使用后台模式更快、更稳定；人工学习使用<code>gui:=true</code>。</p>
+<h2 id="3">3 界面组成<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>Gazebo Classic通常包含：</p>
+<ul>
+<li>三维场景视图区：观察世界和模型；</li>
+<li>World/模型树：列出场景、模型、Link和光源；</li>
+<li>属性面板：查看或修改选中对象属性；</li>
+<li>工具栏：选择、移动、旋转、缩放和插入模型；</li>
+<li>仿真控制区：播放、暂停、单步和重置；</li>
+<li>时间与实时因子：反映仿真时间和计算速度。</li>
+</ul>
+<p>具体布局可能随窗口大小和配置变化，识别功能比记忆固定位置更重要。</p>
+<h2 id="4">4 视角操作<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>练习以下能力：</p>
+<ol>
+<li>围绕目标旋转视角；</li>
+<li>平移观察区域；</li>
+<li>缩放远近；</li>
+<li>聚焦到机器人；</li>
+<li>从俯视和侧视观察场景。</li>
+</ol>
+<p>视角变化只改变观察位置，不改变机器人在世界中的真实位姿。</p>
+<h2 id="5">5 模型操作的边界<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>Gazebo允许使用选择、平移和旋转工具直接改变模型位姿。这种操作相当于重新放置或瞬移模型，适合布置场景和故障实验，但不是正常驾驶。</p>
+<p>正常移动应通过键盘遥控、项目运动入口或Nav2产生速度命令。只有正常控制链才能保留合理的运动、里程计、雷达和安全测试意义。</p>
+<h2 id="6">6 仿真控制<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<ul>
+<li>播放：物理世界和传感器继续更新；</li>
+<li>暂停：仿真时间停止，传感器通常不再产生新数据；</li>
+<li>单步：暂停状态下推进一个物理步长；</li>
+<li>重置时间：时间回到起点，模型状态不一定全部复原；</li>
+<li>重置世界：恢复模型初始状态；</li>
+<li>重置仿真：同时处理时间和世界状态，具体行为以当前版本为准。</li>
+</ul>
+<p>重置会改变实验状态，执行前应确认是否需要保留地图或日志。</p>
+<h2 id="7">7 物理与时间观察<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>重力、步长、更新率和实时因子会影响仿真结果。实时因子小于1表示仿真运行速度慢于真实时间，不一定说明算法错误；首先判断主机负载、传感器数量和物理参数。</p>
+<p>ROS节点使用仿真时间时会订阅<code>/clock</code>。暂停Gazebo后，依赖仿真时间的超时和定时器行为也可能暂停。</p>
+<h2 id="8-gui">8 GUI模式与后台模式<a class="headerlink" href="#8-gui" title="Permanent link">&para;</a></h2>
+<p>Gazebo服务器负责物理仿真，图形客户端负责显示和交互。后台测试可以只运行服务器；关闭GUI客户端不必然等于停止服务器。</p>
+<p>当前项目使用：</p>
+<pre><code class="language-bash">ros2 launch ai_robot_sim sim_bringup.launch.py gui:=false
+</code></pre>
+<p>作为后台入口，使用<code>gui:=true</code>作为人工观察入口。</p>
+<h2 id="9-world">9 World文件与场景保存<a class="headerlink" href="#9-world" title="Permanent link">&para;</a></h2>
+<p>World文件描述场景中的模型、光源和物理配置。项目Launch的<code>world</code>参数允许传入自定义文件：</p>
+<pre><code class="language-bash">ros2 launch ai_robot_sim sim_bringup.launch.py \
+  gui:=true \
+  world:=/absolute/path/to/training.world
+</code></pre>
+<p>保存场景前，应明确保存目标目录，并避免覆盖原始基准World。建议使用新文件名和版本号。</p>
+<h2 id="10">10 教师引导操作<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<ol>
+<li>启动Gazebo GUI；</li>
+<li>在模型树中选择<code>ai_robot</code>；</li>
+<li>分别使用旋转、平移、缩放观察机器人；</li>
+<li>暂停仿真，确认仿真时间停止；</li>
+<li>单步推进并恢复播放；</li>
+<li>使用移动工具轻微移动一个非关键测试物体；</li>
+<li>重置世界并观察状态恢复；</li>
+<li>关闭进程并确认退出。</li>
+</ol>
+<h2 id="11">11 学员独立人工练习<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<p>在不查看操作步骤的情况下，完成GUI启动、俯视观察、聚焦机器人、暂停、单步、恢复和重置，并说明每项操作是否改变物理世界。</p>
+<h2 id="12">12 正常现象<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<ul>
+<li>视角变化不影响机器人坐标；</li>
+<li>暂停后仿真时间不增长；</li>
+<li>恢复后传感器和物理继续更新；</li>
+<li>直接拖动模型会造成位姿跳变；</li>
+<li>正常关闭后Gazebo进程干净退出。</li>
+</ul>
+<h2 id="13">13 常见问题<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<ul>
+<li>GUI不出现：检查<code>gui:=true</code>；</li>
+<li>GUI卡顿：检查实时因子、传感器和图形资源；</li>
+<li>模型落地或飞出：检查碰撞、惯性、初始高度和关节；</li>
+<li>重置后算法状态异常：Gazebo世界重置不一定同时重置所有ROS算法节点；</li>
+<li>关闭窗口仍有进程：返回启动终端用Ctrl+C结束整个Launch。</li>
+</ul>
+<h2 id="14">14 理解检查<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Gazebo服务器和GUI客户端分别负责什么？</li>
+<li>鼠标拖动机器人为什么不等于正常驾驶？</li>
+<li>暂停仿真后<code>/clock</code>会怎样？</li>
+<li>重置世界为什么不一定重置SLAM或Nav2？</li>
+<li>自定义World怎样传给当前项目Launch？</li>
+</ol>
+<h2 id="15">15 操作技能检查与证据<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<p>保存GUI全景截图、俯视截图、暂停前后时间变化记录和正常退出记录。能独立完成全部基本操作并解释操作边界，即可标记AU3完成。</p>
+<h2 id="16">16 项目内依据<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>ai_robot_sim/launch/sim_bringup.launch.py</code></li>
+<li>Gazebo Classic默认World与GUI</li>
+</ul>
+      <div class="footer">源文件：AU3-01_Gazebo界面与配置_v1.0.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>
