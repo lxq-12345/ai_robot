@@ -1,6 +1,6 @@
 # AI机器人项目学习教材管理说明
 
-版本：v1.7
+版本：v1.8
 
 ## 1. 目录定位
 
@@ -17,7 +17,7 @@ learning/
 │   └── bks/
 ├── Gazebo与RViz2辅助/
 │   ├── README.md
-│   ├── Gazebo与RViz2辅助学习计划_v1.2.md
+│   ├── Gazebo与RViz2辅助学习计划_v1.3.md
 │   ├── source/AU*/
 │   ├── assets/
 │   ├── html/AU*/

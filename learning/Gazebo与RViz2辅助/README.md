@@ -1,6 +1,6 @@
 # Gazebo与RViz2辅助课程
 
-版本：v1.0
+版本：v1.1
 
 ## 1. 课程定位
 
@@ -13,7 +13,7 @@
 ```text
 learning/Gazebo与RViz2辅助/
 ├── README.md
-├── Gazebo与RViz2辅助学习计划_v1.2.md
+├── Gazebo与RViz2辅助学习计划_v1.3.md
 ├── source/AU*/     # AU1至AU11 Markdown教材
 ├── html/AU*/       # 同版本HTML阅读版
 ├── assets/         # 后续图片和模型资源
@@ -26,7 +26,7 @@ learning/Gazebo与RViz2辅助/
 
 | 辅助单元 | 当前教材 | 主要能力 | 与主线关系 |
 |---|---|---|---|
-| AU1 | `source/AU1/AU1-01_产品介绍与基础认识_v1.0.md` | Gazebo/RViz2产品、历史、职责边界 | 建立GUI工具总认识 |
+| AU1 | `source/AU1/AU1-01_产品介绍与基础认识_v1.3.md` | Gazebo/RViz2产品、历史、职责边界、Classic/Sim命名与命令边界 | 建立GUI工具总认识 |
 | AU2 | `source/AU2/AU2-01_软件安装与环境检查_v1.0.md` | 版本、安装、工作区环境检查 | 支撑所有GUI练习 |
 | AU3 | `source/AU3/AU3-01_Gazebo界面与配置_v1.0.md` | Gazebo GUI、仿真控制、World入口 | 支撑M2至M6人工观察 |
 | AU4 | `source/AU4/AU4-01_Gazebo建模基础_v1.0.md` | SDF、Model、Link、Visual/Collision/Inertial | 支撑环境和障碍物理解 |
