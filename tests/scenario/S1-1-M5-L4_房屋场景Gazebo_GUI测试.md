@@ -1,0 +1,63 @@
+# S1-1-M5-L4 房屋场景Gazebo GUI测试
+
+## 1. 目的与边界
+
+本场景验证`apartment_house_merged_v1.3.world`能够通过项目安装空间启动Gazebo Classic图形界面、生成现有机器人并发布基础传感器和里程计数据。
+
+测试仅限仿真，不发布运动命令，不构成实体机器人操作授权。脚本自动结果不能替代操作者对房屋外观、碰撞重叠和机器人稳定性的人工观察。
+
+## 2. 前置条件
+
+- `colcon build --packages-select ai_robot_sim`通过；
+- `colcon test --packages-select ai_robot_sim`通过；
+- 从Ubuntu图形桌面终端执行，`DISPLAY`有效；
+- 执行前没有`gzserver`或`gzclient`残留进程。
+
+## 3. 执行命令
+
+默认保留GUI 30秒：
+
+```bash
+cd /home/ubuntu/ai_robot_ws
+./scripts/test_apartment_house_gui.sh
+```
+
+指定保留60秒：
+
+```bash
+./scripts/test_apartment_house_gui.sh 60
+```
+
+运行日志保存在`log/manual/apartment_house_gui_YYYYMMDD_HHMMSS.log`，属于本地构建/运行产物，不提交Git。
+
+## 4. 自动检查
+
+- `gzclient`图形进程已启动；
+- Gazebo模型包含`apartment_house`、`ground`和`ai_robot`；
+- 机器人位于推荐出生点`(1.80, 4.00)`允许误差范围内；
+- `/scan`发布且Frame为`laser_link`；
+- `/odom`发布且Frame为`odom`；
+- 结束后脚本启动的Gazebo进程已退出。
+
+## 5. 人工观察
+
+1. 房屋墙体、五处门洞、阳台开口和东侧窗户能够显示；
+2. 绿色四轮机器人位于房屋内部，没有与墙体初始重叠；
+3. 机器人静止稳定，没有抖动、翻飞、下沉或穿透地面；
+4. GUI视角能够查看主体与北侧阳台区域；
+5. 截图中应同时保留房屋整体和机器人位置。
+
+## 6. 停止与异常处理
+
+- 正常情况下等待指定秒数，脚本会发送SIGINT并等待Launch清理；
+- 提前停止使用`Ctrl-C`，不得使用广域`killall`清理其他用户进程；
+- 若提示Gazebo已在运行，先确认并停止旧测试，再重新执行；
+- 若失败，检查终端输出及脚本显示的日志文件，结论记录为“未通过”。
+
+## 7. 通过标准与证据
+
+自动检查全部显示`PASS`，人工观察五项均符合预期，退出后无相关残留进程，才能将本GUI场景记录为“通过”。建议证据写入：
+
+```text
+tests/evidence/S1-1-M5-L4_房屋场景Gazebo_GUI测试记录_YYYYMMDD.md
+```
