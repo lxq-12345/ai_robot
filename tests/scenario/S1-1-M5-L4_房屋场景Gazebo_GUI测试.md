@@ -15,20 +15,16 @@
 
 ## 3. 执行命令
 
-默认保留GUI 30秒：
+启动GUI并持续显示：
 
 ```bash
 cd /home/ubuntu/ai_robot_ws
 ./scripts/test_apartment_house_gui.sh
 ```
 
-指定保留60秒：
-
-```bash
-./scripts/test_apartment_house_gui.sh 60
-```
-
 运行日志保存在`log/manual/apartment_house_gui_YYYYMMDD_HHMMSS.log`，属于本地构建/运行产物，不提交Git。
+
+脚本不会按时间自动退出。完成观察后，在启动脚本的终端按`Ctrl+C`，或者关闭Gazebo窗口。
 
 ## 4. 自动检查
 
@@ -57,7 +53,7 @@ cd /home/ubuntu/ai_robot_ws
 
 ## 6. 停止与异常处理
 
-- 正常情况下等待指定秒数，脚本会发送SIGINT并等待Launch清理；
+- 正常情况下脚本持续运行，不会限时退出；完成观察后按`Ctrl+C`或关闭Gazebo窗口，脚本随后清理Launch及其子进程；
 - 提前停止使用`Ctrl-C`，不得使用广域`killall`清理其他用户进程；
 - 若提示Gazebo已在运行，先确认并停止旧测试，再重新执行；
 - 若失败，检查终端输出及脚本显示的日志文件，结论记录为“未通过”。

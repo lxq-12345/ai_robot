@@ -2,10 +2,9 @@
 set -euo pipefail
 
 workspace_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-hold_seconds="${1:-30}"
 
-if [[ ! "${hold_seconds}" =~ ^[0-9]+$ ]]; then
-  echo "Usage: $0 [hold-seconds]" >&2
+if (( $# != 0 )); then
+  echo "Usage: $0" >&2
   exit 2
 fi
 
@@ -130,6 +129,10 @@ echo "  2. The green four-wheel robot is inside the house near (1.80, 4.00)."
 echo "  3. The robot is stable and does not overlap a wall or fall through the floor."
 echo "  4. Press Esc, then use middle-button drag or Shift+left-button drag to orbit."
 echo "     Use left-button drag to pan and the wheel or right-button drag to zoom."
-echo "The window will remain open for ${hold_seconds} seconds."
-sleep "${hold_seconds}"
+echo "The window will remain open until you press Ctrl+C or close Gazebo."
 echo "Automated GUI/runtime checks passed; visual acceptance still requires operator evidence."
+
+while kill -0 "${bringup_pid}" 2>/dev/null && pgrep -x gzclient >/dev/null; do
+  sleep 1
+done
+echo "Gazebo GUI closed; cleaning up this test run."
