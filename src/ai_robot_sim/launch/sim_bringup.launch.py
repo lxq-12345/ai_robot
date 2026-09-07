@@ -16,6 +16,9 @@ def generate_launch_description():
     gui = LaunchConfiguration("gui")
     world = LaunchConfiguration("world")
     require_scan = LaunchConfiguration("require_scan")
+    spawn_x = LaunchConfiguration("spawn_x")
+    spawn_y = LaunchConfiguration("spawn_y")
+    spawn_z = LaunchConfiguration("spawn_z")
     gui_arg = DeclareLaunchArgument(
         "gui",
         default_value="false",
@@ -31,6 +34,21 @@ def generate_launch_description():
         default_value="false",
         description="Require fresh laser scans before forwarding base velocity commands.",
     )
+    spawn_x_arg = DeclareLaunchArgument(
+        "spawn_x",
+        default_value="0.0",
+        description="Robot spawn position on the Gazebo world X axis in metres.",
+    )
+    spawn_y_arg = DeclareLaunchArgument(
+        "spawn_y",
+        default_value="0.0",
+        description="Robot spawn position on the Gazebo world Y axis in metres.",
+    )
+    spawn_z_arg = DeclareLaunchArgument(
+        "spawn_z",
+        default_value="0.10",
+        description="Robot spawn position on the Gazebo world Z axis in metres.",
+    )
     robot_description = Command([FindExecutable(name="xacro"), " ", xacro_file])
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(f"{gazebo_share}/launch/gazebo.launch.py"),
@@ -45,7 +63,18 @@ def generate_launch_description():
     spawn = Node(
         package="gazebo_ros",
         executable="spawn_entity.py",
-        arguments=["-entity", "ai_robot", "-topic", "robot_description", "-x", "0", "-y", "0", "-z", "0.10"],
+        arguments=[
+            "-entity",
+            "ai_robot",
+            "-topic",
+            "robot_description",
+            "-x",
+            spawn_x,
+            "-y",
+            spawn_y,
+            "-z",
+            spawn_z,
+        ],
         output="screen",
     )
     command_guard = Node(
@@ -62,6 +91,9 @@ def generate_launch_description():
             gui_arg,
             world_arg,
             require_scan_arg,
+            spawn_x_arg,
+            spawn_y_arg,
+            spawn_z_arg,
             gazebo,
             state_publisher,
             command_guard,
