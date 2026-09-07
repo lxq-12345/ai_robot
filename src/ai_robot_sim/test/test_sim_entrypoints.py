@@ -35,6 +35,8 @@ def test_apartment_world_is_valid_self_contained_sdf():
     assert world.attrib["name"] == "apartment_house_merged_v1_3"
     assert world.find("model[@name='apartment_house']") is not None
     assert world.findall(".//include") == []
+    assert world.findtext("gui/camera/view_controller") == "orbit"
+    assert world.findtext("gui/camera/projection_type") == "perspective"
 
 
 def test_apartment_bringup_uses_project_world_and_safe_spawn_point():
