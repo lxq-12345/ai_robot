@@ -19,6 +19,7 @@ def generate_launch_description():
     spawn_x = LaunchConfiguration("spawn_x")
     spawn_y = LaunchConfiguration("spawn_y")
     spawn_z = LaunchConfiguration("spawn_z")
+    robot_model = LaunchConfiguration("robot_model")
     gui_arg = DeclareLaunchArgument(
         "gui",
         default_value="false",
@@ -49,7 +50,12 @@ def generate_launch_description():
         default_value="0.10",
         description="Robot spawn position on the Gazebo world Z axis in metres.",
     )
-    robot_description = Command([FindExecutable(name="xacro"), " ", xacro_file])
+    robot_model_arg = DeclareLaunchArgument(
+        "robot_model",
+        default_value=xacro_file,
+        description="Absolute path to the robot URDF/Xacro model.",
+    )
+    robot_description = Command([FindExecutable(name="xacro"), " ", robot_model])
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(f"{gazebo_share}/launch/gazebo.launch.py"),
         launch_arguments={"gui": gui, "verbose": "true", "world": world}.items(),
@@ -94,6 +100,7 @@ def generate_launch_description():
             spawn_x_arg,
             spawn_y_arg,
             spawn_z_arg,
+            robot_model_arg,
             gazebo,
             state_publisher,
             command_guard,

@@ -6,6 +6,7 @@ from launch.substitutions import LaunchConfiguration
 
 
 def generate_launch_description():
+    description_share = get_package_share_directory("ai_robot_description")
     sim_share = get_package_share_directory("ai_robot_sim")
     gui = LaunchConfiguration("gui")
     gui_arg = DeclareLaunchArgument(
@@ -21,6 +22,7 @@ def generate_launch_description():
             "spawn_x": "1.80",
             "spawn_y": "4.00",
             "spawn_z": "0.10",
+            "robot_model": f"{description_share}/urdf/small_yellow_car_v1.2.urdf.xacro",
         }.items(),
     )
     return LaunchDescription([gui_arg, bringup])

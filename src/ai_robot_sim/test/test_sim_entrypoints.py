@@ -25,6 +25,13 @@ def test_sim_bringup_exposes_robot_spawn_position_arguments():
         assert f'LaunchConfiguration("{argument}")' in launch_source
 
 
+def test_sim_bringup_exposes_robot_model_argument():
+    launch_source = SIM_LAUNCH.read_text(encoding="utf-8")
+
+    assert 'DeclareLaunchArgument(\n        "robot_model"' in launch_source
+    assert 'LaunchConfiguration("robot_model")' in launch_source
+
+
 def test_apartment_world_is_valid_self_contained_sdf():
     root = ET.parse(APARTMENT_WORLD).getroot()
     world = root.find("world")
@@ -46,6 +53,7 @@ def test_apartment_bringup_uses_project_world_and_safe_spawn_point():
     assert '"spawn_x": "1.80"' in launch_source
     assert '"spawn_y": "4.00"' in launch_source
     assert '"spawn_z": "0.10"' in launch_source
+    assert '"robot_model": f"{description_share}/urdf/small_yellow_car_v1.2.urdf.xacro"' in launch_source
 
 
 def test_manual_motion_demo_uses_raw_command_topic_only():
