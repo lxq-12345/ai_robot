@@ -6,6 +6,12 @@ PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 SIM_LAUNCH = PACKAGE_ROOT / "launch" / "sim_bringup.launch.py"
 APARTMENT_LAUNCH = PACKAGE_ROOT / "launch" / "apartment_house_bringup.launch.py"
 APARTMENT_WORLD = PACKAGE_ROOT / "worlds" / "apartment_house_merged_v1.3.world"
+APARTMENT_ROBOT_SDF = (
+    Path(__file__).resolve().parents[2]
+    / "ai_robot_description"
+    / "models"
+    / "small_yellow_car_v1.2.sdf"
+)
 MANUAL_DEMO = PACKAGE_ROOT / "ai_robot_sim" / "manual_motion_demo.py"
 
 
@@ -54,6 +60,22 @@ def test_apartment_bringup_uses_project_world_and_safe_spawn_point():
     assert '"spawn_y": "4.00"' in launch_source
     assert '"spawn_z": "0.10"' in launch_source
     assert '"robot_model": f"{description_share}/urdf/small_yellow_car_v1.2.urdf.xacro"' in launch_source
+    assert '"robot_sdf": f"{description_share}/models/small_yellow_car_v1.2.sdf"' in launch_source
+    assert '"spawn_from_sdf": "true"' in launch_source
+
+
+def test_apartment_robot_sdf_has_explicit_yellow_body_material():
+    root = ET.parse(APARTMENT_ROBOT_SDF).getroot()
+    body_visual = next(
+        visual
+        for visual in root.findall(".//visual")
+        if "body_visual" in visual.attrib.get("name", "")
+    )
+    material = body_visual.find("material")
+
+    assert material is not None
+    assert material.findtext("ambient") == "0.95 0.65 0.05 1"
+    assert material.findtext("diffuse") == "0.95 0.65 0.05 1"
 
 
 def test_manual_motion_demo_uses_raw_command_topic_only():

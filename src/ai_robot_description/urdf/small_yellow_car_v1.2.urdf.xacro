@@ -118,7 +118,7 @@ Gazebo加载、动力学、ROS话题及双目同步需要在实际ROS环境中�
     <visual name="body_visual">
       <origin xyz="0 0 ${wheel_radius + body_height/2}"/>
       <geometry><box size="${body_length} ${body_width} ${body_height}"/></geometry>
-      <material name="Gazebo/Yellow"/>
+      <material name="yellow"/>
     </visual>
     <collision name="body_collision">
       <origin xyz="0 0 ${wheel_radius + body_height/2}"/>

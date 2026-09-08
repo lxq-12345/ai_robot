@@ -1,6 +1,7 @@
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.conditions import IfCondition, UnlessCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, FindExecutable, LaunchConfiguration
 from launch_ros.actions import Node
@@ -20,6 +21,8 @@ def generate_launch_description():
     spawn_y = LaunchConfiguration("spawn_y")
     spawn_z = LaunchConfiguration("spawn_z")
     robot_model = LaunchConfiguration("robot_model")
+    robot_sdf = LaunchConfiguration("robot_sdf")
+    spawn_from_sdf = LaunchConfiguration("spawn_from_sdf")
     gui_arg = DeclareLaunchArgument(
         "gui",
         default_value="false",
@@ -55,6 +58,16 @@ def generate_launch_description():
         default_value=xacro_file,
         description="Absolute path to the robot URDF/Xacro model.",
     )
+    robot_sdf_arg = DeclareLaunchArgument(
+        "robot_sdf",
+        default_value="",
+        description="SDF file used to spawn the Gazebo model when enabled.",
+    )
+    spawn_from_sdf_arg = DeclareLaunchArgument(
+        "spawn_from_sdf",
+        default_value="false",
+        description="Spawn the Gazebo model from robot_sdf instead of robot_description.",
+    )
     robot_description = Command([FindExecutable(name="xacro"), " ", robot_model])
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(f"{gazebo_share}/launch/gazebo.launch.py"),
@@ -66,7 +79,7 @@ def generate_launch_description():
         parameters=[{"robot_description": robot_description}],
         output="screen",
     )
-    spawn = Node(
+    spawn_from_topic = Node(
         package="gazebo_ros",
         executable="spawn_entity.py",
         arguments=[
@@ -81,6 +94,25 @@ def generate_launch_description():
             "-z",
             spawn_z,
         ],
+        condition=UnlessCondition(spawn_from_sdf),
+        output="screen",
+    )
+    spawn_from_file = Node(
+        package="gazebo_ros",
+        executable="spawn_entity.py",
+        arguments=[
+            "-entity",
+            "ai_robot",
+            "-file",
+            robot_sdf,
+            "-x",
+            spawn_x,
+            "-y",
+            spawn_y,
+            "-z",
+            spawn_z,
+        ],
+        condition=IfCondition(spawn_from_sdf),
         output="screen",
     )
     command_guard = Node(
@@ -101,9 +133,12 @@ def generate_launch_description():
             spawn_y_arg,
             spawn_z_arg,
             robot_model_arg,
+            robot_sdf_arg,
+            spawn_from_sdf_arg,
             gazebo,
             state_publisher,
             command_guard,
-            spawn,
+            spawn_from_topic,
+            spawn_from_file,
         ]
     )

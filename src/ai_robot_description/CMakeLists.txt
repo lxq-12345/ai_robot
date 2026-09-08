@@ -3,7 +3,7 @@ project(ai_robot_description)
 
 find_package(ament_cmake REQUIRED)
 
-install(DIRECTORY urdf launch DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY urdf launch models DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_cmake_pytest REQUIRED)

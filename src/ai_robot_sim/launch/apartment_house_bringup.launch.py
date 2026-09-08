@@ -23,6 +23,8 @@ def generate_launch_description():
             "spawn_y": "4.00",
             "spawn_z": "0.10",
             "robot_model": f"{description_share}/urdf/small_yellow_car_v1.2.urdf.xacro",
+            "robot_sdf": f"{description_share}/models/small_yellow_car_v1.2.sdf",
+            "spawn_from_sdf": "true",
         }.items(),
     )
     return LaunchDescription([gui_arg, bringup])
