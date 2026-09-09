@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-文件名：apartment_house_merged_v1.3.world
+文件名：apartment_v1.3.world
 生成日期：2026-09-07
 用途：供 Gazebo Classic 加载的两室一厅静态房屋环境。
 可作为机器人运动、定位、建图和导航测试的场景基础；
@@ -19,7 +19,7 @@
 
 加载方法：
 将此文件复制到 Ubuntu，安装 Gazebo Classic 后，
-在文件所在目录运行：gazebo apartment_house_merged_v1.3.world
+在文件所在目录运行：gazebo apartment_v1.3.world
 无需附带 Python 程序、YAML 配置或自定义 ROS 包。
 若需要 ROS 接口，使用现有 gazebo_ros 启动流程加载此 world。
 阅读提示：pose 为 X Y Z 滚转 俯仰 偏航，角度单位为弧度；

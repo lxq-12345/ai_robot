@@ -18,7 +18,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(f"{sim_share}/launch/sim_bringup.launch.py"),
         launch_arguments={
             "gui": gui,
-            "world": f"{sim_share}/worlds/apartment_house_merged_v1.3.world",
+            "world": f"{sim_share}/worlds/apartment_v1.3.world",
             "spawn_x": "1.80",
             "spawn_y": "4.00",
             "spawn_z": "0.10",
