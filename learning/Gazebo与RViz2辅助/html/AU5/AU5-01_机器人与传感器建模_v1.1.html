@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>AU5 Gazebo机器人与传感器建模</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1 本单元定位</a></li>
+<li><a href="#2">2 学习目标</a></li>
+<li><a href="#3-urdfxacrogazebo">3 URDF、Xacro与Gazebo标签</a></li>
+<li><a href="#4">4 移动底盘结构</a></li>
+<li><a href="#5">5 差速驱动插件</a></li>
+<li><a href="#6">6 激光雷达</a></li>
+<li><a href="#7-rgb">7 RGB相机</a><ul>
+<li><a href="#71">7.1 相机光学坐标系</a></li>
+<li><a href="#72">7.2 参数影响</a></li>
+</ul>
+</li>
+<li><a href="#8-imu">8 IMU与联合状态</a></li>
+<li><a href="#9">9 教师引导操作</a></li>
+<li><a href="#10">10 学员独立练习</a></li>
+<li><a href="#11">11 正常现象</a></li>
+<li><a href="#12">12 常见问题与排查</a></li>
+<li><a href="#13">13 理解检查</a></li>
+<li><a href="#14">14 技能检查与证据</a></li>
+<li><a href="#15">15 选学提高</a></li>
+<li><a href="#16">16 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1 本单元定位</a></li>
+<li><a href="#2">2 学习目标</a></li>
+<li><a href="#3-urdfxacrogazebo">3 URDF、Xacro与Gazebo标签</a></li>
+<li><a href="#4">4 移动底盘结构</a></li>
+<li><a href="#5">5 差速驱动插件</a></li>
+<li><a href="#6">6 激光雷达</a></li>
+<li><a href="#7-rgb">7 RGB相机</a><ul>
+<li><a href="#71">7.1 相机光学坐标系</a></li>
+<li><a href="#72">7.2 参数影响</a></li>
+</ul>
+</li>
+<li><a href="#8-imu">8 IMU与联合状态</a></li>
+<li><a href="#9">9 教师引导操作</a></li>
+<li><a href="#10">10 学员独立练习</a></li>
+<li><a href="#11">11 正常现象</a></li>
+<li><a href="#12">12 常见问题与排查</a></li>
+<li><a href="#13">13 理解检查</a></li>
+<li><a href="#14">14 技能检查与证据</a></li>
+<li><a href="#15">15 选学提高</a></li>
+<li><a href="#16">16 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="au5-gazebo">AU5 Gazebo机器人与传感器建模<a class="headerlink" href="#au5-gazebo" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>教材版本：v1.1</p>
+<p>对应计划：AU5</p>
+</blockquote>
+<h2 id="1">1 本单元定位<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>本单元使用当前小黄车<code>small_yellow_car_v1.2.urdf.xacro</code>及其派生的<code>small_yellow_car_v1.2.sdf</code>作为主例，学习如何定义机器人结构、物理属性、驱动和传感器。AU5只完成模型与接口理解，不进行底盘运动、碰撞或导航实操。</p>
+<h2 id="2">2 学习目标<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>理解URDF、Xacro与Gazebo扩展标签的分工；</li>
+<li>能识别车体、车轮、雷达、相机和IMU的Link/Joint；</li>
+<li>能解释差速驱动和传感器插件；</li>
+<li>能检查模型结构、传感器插件、Topic、Frame和TF关系；</li>
+<li>能安全修改低风险传感器参数并观察非运动数据变化。</li>
+</ul>
+<h2 id="3-urdfxacrogazebo">3 URDF、Xacro与Gazebo标签<a class="headerlink" href="#3-urdfxacrogazebo" title="Permanent link">&para;</a></h2>
+<p>URDF描述机器人Link、Joint和基础几何；Xacro提供变量、宏和复用能力；<code>&lt;gazebo&gt;</code>标签补充材质、传感器和Gazebo Classic插件。</p>
+<p>现有项目有两条模型进入Gazebo的路径。普通仿真在Launch中执行Xacro，将结果放入<code>robot_description</code>，再由<code>robot_state_publisher</code>发布模型和TF，最后由<code>spawn_entity.py</code>从Topic生成到Gazebo。房屋入口仍用Xacro供<code>robot_state_publisher</code>和TF使用，同时用预先生成的SDF通过<code>spawn_entity.py -file</code>生成Gazebo实体；SDF不是构建或首次启动时自动生成的。</p>
+<h2 id="4">4 移动底盘结构<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>检查模型中的：</p>
+<ul>
+<li><code>base_link</code>：机器人主体；</li>
+<li>车轮Link与Joint：决定轮子位置和旋转轴；</li>
+<li><code>laser_link</code>：激光雷达安装坐标；</li>
+<li><code>camera_link</code>：相机安装坐标；</li>
+<li><code>imu_link</code>：IMU安装坐标。</li>
+</ul>
+<p>本节只检查结构关系和参数位置。车轮半径、轮距、关节轴、摩擦、质量和惯性会影响后续运动，但运动结果属于底盘学习，不在AU5实操范围内。</p>
+<h2 id="5">5 差速驱动插件<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>当前模型使用<code>libgazebo_ros_diff_drive.so</code>。插件定义速度控制、轮组和里程计接口；AU5只阅读其配置，不发送运动命令。需要关注：</p>
+<ul>
+<li>左右车轮关节；</li>
+<li>轮距与轮径；</li>
+<li>命令和里程计Topic；</li>
+<li><code>odom -&gt; base_footprint -&gt; base_link</code>坐标链；</li>
+<li>更新率和限速。</li>
+</ul>
+<p>项目中的速度命令还要经过安全守卫，不能为了演示绕过既有安全链。</p>
+<h2 id="6">6 激光雷达<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>现有<code>laser_link</code>下配置ray sensor，并由<code>libgazebo_ros_ray_sensor.so</code>发布<code>sensor_msgs/LaserScan</code>到<code>/scan</code>。关键参数包括扫描角度、射线数量、最小/最大距离、更新率和噪声。</p>
+<p>修改最大距离时，要记录它对后续SLAM、代价地图和安全守卫的潜在影响；本单元不执行导航或安全验证。</p>
+<h2 id="7-rgb">7 RGB相机<a class="headerlink" href="#7-rgb" title="Permanent link">&para;</a></h2>
+<p>现有小黄车模型已经包含相机，不需要从零虚构：</p>
+<ul>
+<li>分辨率：640×480；</li>
+<li>水平视场角：约1.047弧度；</li>
+<li>更新率：10Hz；</li>
+<li>裁剪范围：0.05至8米；</li>
+<li>高斯噪声标准差：0.005；</li>
+<li>图像Topic：<code>/camera/image_raw</code>；</li>
+<li>CameraInfo Topic：<code>/camera/camera_info</code>；</li>
+<li>坐标系：<code>camera_link</code>。</li>
+</ul>
+<p>Gazebo中的<code>libgazebo_ros_camera.so</code>生成图像和CameraInfo。RViz2只显示数据，不模拟相机。</p>
+<h3 id="71">7.1 相机光学坐标系<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<p>标准相机图像通常使用光学坐标约定。当前项目插件配置的是<code>camera_link</code>，教学检查应确认下游是否需要单独的<code>camera_optical_frame</code>。若增加光学Frame，必须明确轴方向并补齐TF，不能只改Topic名称。</p>
+<h3 id="72">7.2 参数影响<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<ul>
+<li>分辨率越高，图像更细但计算和传输负担更大；</li>
+<li>视场角越大，看到范围更宽但物体显得更小；</li>
+<li>更新率越高，动态过程更连续但负载更高；</li>
+<li>near/far裁剪决定可见深度范围；</li>
+<li>噪声用于模拟非理想传感器。</li>
+</ul>
+<h2 id="8-imu">8 IMU与联合状态<a class="headerlink" href="#8-imu" title="Permanent link">&para;</a></h2>
+<p>IMU插件发布角速度和线加速度；Joint State插件发布关节状态。两者与机器人模型、TF和后续融合有关。AU5只检查声明、Topic、消息头和Frame，不以机器人运动结果作为结论。</p>
+<h2 id="9">9 教师引导操作<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+./scripts/build.sh
+source install/setup.bash
+ros2 launch ai_robot_sim sim_bringup.launch.py gui:=true
+</code></pre>
+<p>另开终端检查：</p>
+<pre><code class="language-bash">ros2 topic list
+ros2 topic info /scan
+ros2 topic info /camera/image_raw
+ros2 topic info /camera/camera_info
+ros2 topic hz /camera/image_raw
+ros2 topic echo /camera/camera_info --once
+</code></pre>
+<p>然后在Xacro和SDF中找到相机、雷达和差速插件，建立“模型元素—插件—Topic—Frame”的对应关系。可保持机器人静止完成观察，不执行速度命令。</p>
+<h2 id="10">10 学员独立练习<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<p>选择一个低风险参数，例如相机更新率或水平视场角：</p>
+<ol>
+<li>记录修改前值；</li>
+<li>修改Xacro；</li>
+<li>重新构建并加载环境；</li>
+<li>启动仿真但保持机器人静止；</li>
+<li>检查Topic频率或画面变化；</li>
+<li>保留差异证据；</li>
+<li>若结果不合理，恢复原值。</li>
+</ol>
+<h2 id="11">11 正常现象<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<ul>
+<li>机器人模型能够生成并保持静止；</li>
+<li><code>/scan</code>、图像、CameraInfo和IMU持续发布；</li>
+<li>消息Frame与TF链可解释；</li>
+<li>相机画面随机器人或场景变化而变化。</li>
+</ul>
+<h2 id="12">12 常见问题与排查<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<ul>
+<li>模型静态异常：记录现象，并将质量、惯性、碰撞和初始重叠问题转入底盘实操；</li>
+<li>轮子或运动异常：记录现象，但不在AU5中执行运动修复；</li>
+<li>Topic不存在：查插件加载日志、重映射和传感器<code>always_on</code>；</li>
+<li>图像全黑：查相机方向、裁剪范围、光照和场景；</li>
+<li>CameraInfo存在但图像不更新：分别检查发布者、频率和仿真是否暂停；</li>
+<li>RViz显示错误：查Topic、QoS、Fixed Frame和相机TF。</li>
+</ul>
+<h2 id="13">13 理解检查<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<ol>
+<li>URDF/Xacro与Gazebo插件分别解决什么问题？</li>
+<li>相机图像由Gazebo还是RViz2生成？</li>
+<li>分辨率、视场角和更新率分别影响什么？</li>
+<li>有图像Topic为什么还需要CameraInfo和TF？</li>
+<li>为什么修改雷达最大距离可能影响其他模块？</li>
+</ol>
+<h2 id="14">14 技能检查与证据<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<p>提交机器人结构图或说明、插件与Topic/Frame对照、相机或雷达非运动观察截图、CameraInfo一次输出和一次低风险传感器参数记录。能够解释模型和传感器接口关系，且未把运动、碰撞或导航结果冒充AU5结论，才可形成AU5学习结论。</p>
+<h2 id="15">15 选学提高<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<p>深度相机、RGB-D、点云和视觉识别不属于本单元必修。选学时应另行增加深度图、PointCloud2、光学Frame和性能评估。</p>
+<h2 id="16">16 项目内依据<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>ai_robot_description/urdf/small_yellow_car_v1.2.urdf.xacro</code></li>
+<li><code>ai_robot_description/models/small_yellow_car_v1.2.sdf</code></li>
+<li><code>ai_robot_sim/launch/sim_bringup.launch.py</code></li>
+<li><code>ai_robot_sim/config/sim_base.yaml</code></li>
+</ul>
+      <div class="footer">源文件：AU5-01_机器人与传感器建模_v1.1.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>
