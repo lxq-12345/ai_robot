@@ -1,6 +1,6 @@
 # Gazebo与RViz2辅助课程
 
-版本：v1.1
+版本：v1.2
 
 ## 1. 课程定位
 
@@ -30,8 +30,8 @@ learning/Gazebo与RViz2辅助/
 | AU2 | `source/AU2/AU2-01_软件安装与环境检查_v1.0.md` | 版本、安装、工作区环境检查 | 支撑所有GUI练习 |
 | AU3 | `source/AU3/AU3-01_Gazebo界面与配置_v1.0.md` | Gazebo GUI、仿真控制、World入口 | 支撑M2至M6人工观察 |
 | AU4 | `source/AU4/AU4-01_Gazebo建模基础_v1.0.md` | SDF、Model、Link、Visual/Collision/Inertial | 支撑环境和障碍物理解 |
-| AU5 | `source/AU5/AU5-01_机器人与传感器建模_v1.0.md` | URDF/Xacro、插件、雷达、相机、IMU | 对齐M2/M3模型和传感器 |
-| AU6 | `source/AU6/AU6-01_环境建模_v1.0.md` | 两房间World、墙体、障碍、相机目标 | 支撑M5导航场景 |
+| AU5 | `source/AU5/AU5-01_机器人与传感器建模_v1.1.md` | URDF/Xacro、SDF、插件、雷达、相机、IMU及非运动接口观察 | 对齐M2/M3模型和传感器 |
+| AU6 | `source/AU6/AU6-01_环境建模_v1.1.md` | 两房间World、墙体、障碍、视角与静态Visual/Collision检查 | 为后续导航场景准备环境，不在本单元测试通行 |
 | AU7 | `source/AU7/AU7-01_RViz2界面与配置_v1.0.md` | Fixed Frame、Display、Topic、QoS、配置保存 | 支撑M3至M6 RViz2观察 |
 | AU8 | `source/AU8/AU8-01_Gazebo与RViz2协同_v1.0.md` | `/clock`、TF、Topic、双界面同步 | 直接支撑M5-L4 GUI证据 |
 | AU9 | `source/AU9/AU9-01_导航操作与路径工具_v1.0.md` | 初始位姿、单目标、多航点、取消 | 直接支撑M5/M6 GUI体验 |
