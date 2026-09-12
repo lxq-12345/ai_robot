@@ -4,6 +4,18 @@ Panels:
 Visualization Manager:
   Class: ""
   Displays:
+    - Class: rviz_default_plugins/Grid
+      Enabled: true
+      Name: Grid
+      Cell Size: 1
+      Color: 160; 160; 164
+      Plane: XY
+      Plane Cell Count: 20
+      Reference Frame: <Fixed Frame>
+      Line Style:
+        Line Width: 0.03
+        Value: Lines
+      Alpha: 0.5
     - Class: rviz_default_plugins/RobotModel
       Enabled: true
       Name: RobotModel
