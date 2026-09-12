@@ -25,6 +25,19 @@ Visualization Manager:
     - Class: rviz_default_plugins/TF
       Enabled: true
       Name: TF
+    - Class: rviz_default_plugins/LaserScan
+      Enabled: true
+      Name: LaserScan
+      Topic: /scan
+      Reliability Policy: Best Effort
+      History Policy: Keep Last
+      History Depth: 5
+      Style: Points
+      Size (Pixels): 3
+      Color Transformer: FlatColor
+      Color: 255; 25; 25
+      Size (m): 0.03
+      Decay Time: 0
   Global Options:
     Background Color: 48; 48; 48
     Fixed Frame: base_footprint
