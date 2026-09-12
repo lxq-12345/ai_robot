@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>AU7 RViz2界面与配置</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1 学习目标</a></li>
+<li><a href="#2">2 启动与职责边界</a></li>
+<li><a href="#3">3 窗口组成</a></li>
+<li><a href="#4-fixed-frame">4 Fixed Frame</a></li>
+<li><a href="#5">5 两种添加入口</a><ul>
+<li><a href="#51-by-display-type">5.1 By Display Type</a></li>
+<li><a href="#52-by-topic">5.2 By Topic</a></li>
+</ul>
+</li>
+<li><a href="#6">6 基本显示项</a><ul>
+<li><a href="#61-grid">6.1 Grid</a></li>
+<li><a href="#62-map">6.2 Map</a></li>
+<li><a href="#63-laserscan">6.3 LaserScan</a></li>
+<li><a href="#64-robotmodel">6.4 RobotModel</a></li>
+<li><a href="#65-tf">6.5 TF</a></li>
+<li><a href="#66-pathodometry">6.6 Path与Odometry</a></li>
+</ul>
+</li>
+<li><a href="#7">7 相机显示</a><ul>
+<li><a href="#71-image">7.1 Image</a></li>
+<li><a href="#72-camera">7.2 Camera</a></li>
+</ul>
+</li>
+<li><a href="#8-topicqos">8 Topic与QoS</a></li>
+<li><a href="#9">9 视角操作</a></li>
+<li><a href="#10">10 标准项目配置</a></li>
+<li><a href="#11">11 保存与加载配置</a></li>
+<li><a href="#12">12 教师引导操作</a></li>
+<li><a href="#13">13 学员独立练习</a></li>
+<li><a href="#14">14 正常现象与排错</a></li>
+<li><a href="#15">15 理解检查</a></li>
+<li><a href="#16">16 技能检查与证据</a></li>
+<li><a href="#17">17 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1 学习目标</a></li>
+<li><a href="#2">2 启动与职责边界</a></li>
+<li><a href="#3">3 窗口组成</a></li>
+<li><a href="#4-fixed-frame">4 Fixed Frame</a></li>
+<li><a href="#5">5 两种添加入口</a><ul>
+<li><a href="#51-by-display-type">5.1 By Display Type</a></li>
+<li><a href="#52-by-topic">5.2 By Topic</a></li>
+</ul>
+</li>
+<li><a href="#6">6 基本显示项</a><ul>
+<li><a href="#61-grid">6.1 Grid</a></li>
+<li><a href="#62-map">6.2 Map</a></li>
+<li><a href="#63-laserscan">6.3 LaserScan</a></li>
+<li><a href="#64-robotmodel">6.4 RobotModel</a></li>
+<li><a href="#65-tf">6.5 TF</a></li>
+<li><a href="#66-pathodometry">6.6 Path与Odometry</a></li>
+</ul>
+</li>
+<li><a href="#7">7 相机显示</a><ul>
+<li><a href="#71-image">7.1 Image</a></li>
+<li><a href="#72-camera">7.2 Camera</a></li>
+</ul>
+</li>
+<li><a href="#8-topicqos">8 Topic与QoS</a></li>
+<li><a href="#9">9 视角操作</a></li>
+<li><a href="#10">10 标准项目配置</a></li>
+<li><a href="#11">11 保存与加载配置</a></li>
+<li><a href="#12">12 教师引导操作</a></li>
+<li><a href="#13">13 学员独立练习</a></li>
+<li><a href="#14">14 正常现象与排错</a></li>
+<li><a href="#15">15 理解检查</a></li>
+<li><a href="#16">16 技能检查与证据</a></li>
+<li><a href="#17">17 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="au7-rviz2">AU7 RViz2界面与配置<a class="headerlink" href="#au7-rviz2" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>对应计划：AU7
+教材版本：v1.1</p>
+</blockquote>
+<h2 id="1">1 学习目标<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>认识RViz2窗口和主要面板；</li>
+<li>掌握Fixed Frame、Display、Topic和QoS；</li>
+<li>显示Grid、Map、LaserScan、RobotModel、TF、Path和Camera；</li>
+<li>保存并重新加载项目专用RViz2配置；</li>
+<li>能根据Status定位常见显示问题。</li>
+</ul>
+<p>本单元只建立RViz2观察与配置能力；不要求已经具备定位、路径规划或碰撞能力。</p>
+<h2 id="2">2 启动与职责边界<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash">source /home/ubuntu/ai_robot_ws/install/setup.bash
+rviz2
+</code></pre>
+<p>RViz2读取ROS 2消息和TF，不模拟碰撞、传感器或机器人动力学。它可以提供“初始位姿”和“导航目标”交互工具，但AU7只说明工具与显示结果，不执行导航目标，不以定位成功、路径生成或机器人运动作为本单元结论。</p>
+<h2 id="3">3 窗口组成<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>常见区域包括：</p>
+<ul>
+<li>Displays：管理显示对象及属性；</li>
+<li>中央三维视图：显示ROS数据；</li>
+<li>Views：设置Orbit、TopDownOrtho等视角；</li>
+<li>Time：显示ROS时间和墙钟时间；</li>
+<li>工具栏：交互、测量、初始位姿、导航目标和点击点；</li>
+<li>Selection等可选面板。</li>
+</ul>
+<h2 id="4-fixed-frame">4 Fixed Frame<a class="headerlink" href="#4-fixed-frame" title="Permanent link">&para;</a></h2>
+<p>Fixed Frame是所有显示数据变换到的参考坐标。建图、定位和导航通常使用<code>map</code>；只有里程计或机器人局部数据时也可能使用<code>odom</code>或<code>base_link</code>。</p>
+<p>Fixed Frame错误会导致多个Display同时报错。遇到大面积红色Status，应先检查全局Fixed Frame和TF，而不是逐个调显示颜色。</p>
+<h2 id="5">5 两种添加入口<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="51-by-display-type">5.1 By Display Type<a class="headerlink" href="#51-by-display-type" title="Permanent link">&para;</a></h3>
+<p>先选择想显示的对象类型，再手动配置Topic。适合学习和排错，层次是“显示什么—数据来自哪里”。</p>
+<h3 id="52-by-topic">5.2 By Topic<a class="headerlink" href="#52-by-topic" title="Permanent link">&para;</a></h3>
+<p>先选择已有Topic，RViz2根据消息类型创建适合的Display。适合熟悉系统后的快速配置。</p>
+<p>本课程统一以By Display Type为主，以便建立清晰的对象与Topic关系。</p>
+<h2 id="6">6 基本显示项<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<h3 id="61-grid">6.1 Grid<a class="headerlink" href="#61-grid" title="Permanent link">&para;</a></h3>
+<p>提供地面参考网格，无需Topic。</p>
+<h3 id="62-map">6.2 Map<a class="headerlink" href="#62-map" title="Permanent link">&para;</a></h3>
+<p>Topic选择<code>/map</code>。正常时应显示分辨率、宽度、高度和地图原点。</p>
+<h3 id="63-laserscan">6.3 LaserScan<a class="headerlink" href="#63-laserscan" title="Permanent link">&para;</a></h3>
+<p>Topic选择<code>/scan</code>。可调整点样式、大小、颜色转换和Decay Time。</p>
+<h3 id="64-robotmodel">6.4 RobotModel<a class="headerlink" href="#64-robotmodel" title="Permanent link">&para;</a></h3>
+<p>从<code>robot_description</code>读取模型，并依赖TF确定各Link位置。</p>
+<h3 id="65-tf">6.5 TF<a class="headerlink" href="#65-tf" title="Permanent link">&para;</a></h3>
+<p>显示坐标轴、箭头、名称和树。调试时打开名称，正常观察时可减少显示以避免拥挤。</p>
+<h3 id="66-pathodometry">6.6 Path与Odometry<a class="headerlink" href="#66-pathodometry" title="Permanent link">&para;</a></h3>
+<p>Path显示规划轨迹，Odometry显示里程计位姿或轨迹。具体Topic取决于Nav2和项目配置，不能凭名称猜测，应从Topic列表确认。</p>
+<h2 id="7">7 相机显示<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<h3 id="71-image">7.1 Image<a class="headerlink" href="#71-image" title="Permanent link">&para;</a></h3>
+<p>选择<code>/camera/image_raw</code>，用于直接查看图像。</p>
+<h3 id="72-camera">7.2 Camera<a class="headerlink" href="#72-camera" title="Permanent link">&para;</a></h3>
+<p>Camera Display结合图像、CameraInfo和TF显示相机视角及三维叠加关系。缺少CameraInfo或TF时可能报错，即使Image能够显示。</p>
+<p>当前项目CameraInfo为<code>/camera/camera_info</code>，相机Frame为<code>camera_link</code>。</p>
+<h2 id="8-topicqos">8 Topic与QoS<a class="headerlink" href="#8-topicqos" title="Permanent link">&para;</a></h2>
+<p>Display的Topic属性右侧通常可以选择或输入Topic。只点击左侧文字或Display名称不会进入编辑状态。</p>
+<p>消息存在但RViz2收不到时，应检查QoS兼容性。传感器数据常使用Best Effort，地图等数据可能使用不同可靠性或持久性策略。不要在不理解的情况下只靠反复切换QoS碰运气，应先查看发布者信息。</p>
+<pre><code class="language-bash">ros2 topic info /scan -v
+ros2 topic info /camera/image_raw -v
+</code></pre>
+<h2 id="9">9 视角操作<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Orbit：三维环绕观察；</li>
+<li>TopDownOrtho：适合地图、路径和二维导航；</li>
+<li>Zero：重置当前视角参数；</li>
+<li>鼠标滚轮：缩放；</li>
+<li>平移与旋转：根据当前View控制方式操作。</li>
+</ul>
+<p>俯视只是显示方式，不改变机器人和地图坐标。</p>
+<h2 id="10">10 标准项目配置<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<p>建议至少包含：</p>
+<ol>
+<li>Grid；</li>
+<li>Map，Topic <code>/map</code>；</li>
+<li>LaserScan，Topic <code>/scan</code>；</li>
+<li>RobotModel；</li>
+<li>TF；</li>
+<li>Path；</li>
+<li>Image或Camera，Topic <code>/camera/image_raw</code>；</li>
+<li>可选的局部/全局代价地图Map显示，用于认识显示入口，不要求本单元已经启动Nav2。</li>
+</ol>
+<p>不是所有任务都必须同时打开全部Display。相机与大量TF同时显示可能占用资源，应按任务启用。</p>
+<h2 id="11">11 保存与加载配置<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<p>通过File菜单使用Save Config As保存为项目专用<code>.rviz</code>文件。以后使用：</p>
+<pre><code class="language-bash">rviz2 -d /absolute/path/to/ai_robot_training.rviz
+</code></pre>
+<p><code>.rviz</code>保存界面、显示项和Topic选择，不保存SLAM地图。地图仍由YAML和PGM等资源单独管理。</p>
+<h2 id="12">12 教师引导操作<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<ol>
+<li>设置Fixed Frame为<code>map</code>（若当前没有<code>map</code>，先记录TF前置条件，不用错误地改成任意Frame）；</li>
+<li>从By Display Type添加Map并设置<code>/map</code>；</li>
+<li>添加LaserScan并设置<code>/scan</code>；</li>
+<li>添加RobotModel和TF；</li>
+<li>添加Image并设置<code>/camera/image_raw</code>；</li>
+<li>切换TopDownOrtho；</li>
+<li>保存<code>.rviz</code>配置；</li>
+<li>关闭并用<code>-d</code>重新加载；不发送导航目标。</li>
+</ol>
+<h2 id="13">13 学员独立练习<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<p>从空白RViz2开始，建立标准项目观察配置，不使用By Topic。所有Display命名清晰，状态可解释，保存并重新加载成功；若地图、TF或传感器尚未发布，应把它记录为前置条件或观察结果，不通过启动导航来“修复”。</p>
+<h2 id="14">14 正常现象与排错<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Fixed Frame正确且TF完整时Global Status为OK；</li>
+<li>Map有有效分辨率和尺寸；</li>
+<li>LaserScan点与地图墙体大致重合；</li>
+<li>RobotModel显示在正确位置；</li>
+<li>Image持续变化；</li>
+<li>Camera报错而Image正常时，优先检查CameraInfo和TF；</li>
+<li>Map分辨率为0时说明尚未收到有效地图；</li>
+<li>显示重复通常是同一Display被添加两次，保留一份即可。</li>
+</ul>
+<h2 id="15">15 理解检查<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Fixed Frame解决什么问题？</li>
+<li>By Display Type和By Topic有什么区别？</li>
+<li>Image和Camera Display的依赖有什么不同？</li>
+<li><code>.rviz</code>文件为什么不能代替地图YAML和PGM？</li>
+<li>Topic存在但显示错误时应检查哪些层？</li>
+</ol>
+<h2 id="16">16 技能检查与证据<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
+<p>提交<code>.rviz</code>文件、Displays面板截图、地图与雷达俯视截图、相机截图和一次重新加载记录。能够解释Display、Topic、QoS、TF和缺失数据之间的关系，即可形成AU7学习结论；定位、导航、路径和碰撞结果不作为AU7完成条件。</p>
+<h2 id="17">17 项目内依据<a class="headerlink" href="#17" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>/map</code>、<code>/scan</code>、<code>/camera/image_raw</code>、<code>/camera/camera_info</code></li>
+<li><code>ai_robot_description/urdf/ai_robot.urdf.xacro</code></li>
+<li>M5 SLAM、定位和Nav2启动文件</li>
+</ul>
+      <div class="footer">源文件：AU7-01_RViz2界面与配置_v1.1.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>
