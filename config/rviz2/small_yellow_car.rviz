@@ -1,56 +1,406 @@
 Panels:
   - Class: rviz_common/Displays
+    Help Height: 70
     Name: Displays
+    Property Tree Widget:
+      Expanded: ~
+      Splitter Ratio: 0.5
+    Tree Height: 225
+  - Class: rviz_common/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: slam_toolbox::SlamToolboxPlugin
+    Name: SlamToolboxPlugin
+  - Class: rviz_common/Time
+    Experimental: false
+    Name: Time
+    SyncMode: 0
+    SyncSource: LaserScan
 Visualization Manager:
   Class: ""
   Displays:
-    - Class: rviz_default_plugins/Grid
-      Enabled: true
-      Name: Grid
+    - Alpha: 0.5
       Cell Size: 1
+      Class: rviz_default_plugins/Grid
       Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
       Plane: XY
       Plane Cell Count: 20
       Reference Frame: <Fixed Frame>
-      Line Style:
-        Line Width: 0.03
-        Value: Lines
-      Alpha: 0.5
-    - Class: rviz_default_plugins/RobotModel
-      Enabled: true
-      Name: RobotModel
-      Robot Description: robot_description
-      Visual Enabled: true
+      Value: true
+    - Alpha: 1
+      Class: rviz_default_plugins/RobotModel
       Collision Enabled: false
+      Description File: ""
+      Description Source: Topic
+      Description Topic:
+        Depth: 5
+        Durability Policy: Transient Local
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot_description
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        base_footprint:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        camera_left_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        camera_left_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_right_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        camera_right_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        equipment_box:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_bumper_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_bumper_left_bracket:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_bumper_right_bracket:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        laser_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_front_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_front_wheel_hub:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_rear_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_rear_wheel_hub:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lidar_housing:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rear_bumper_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rear_bumper_left_bracket:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rear_bumper_right_bracket:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_front_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_front_wheel_hub:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_rear_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_rear_wheel_hub:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        stereo_housing:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        stereo_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        top_deck:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Mass Properties:
+        Inertia: false
+        Mass: false
+      Name: RobotModel
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
     - Class: rviz_default_plugins/TF
       Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+        base_footprint:
+          Value: true
+        base_link:
+          Value: true
+        camera_left_link:
+          Value: true
+        camera_left_optical_frame:
+          Value: true
+        camera_link:
+          Value: true
+        camera_right_link:
+          Value: true
+        camera_right_optical_frame:
+          Value: true
+        equipment_box:
+          Value: true
+        front_bumper_bar:
+          Value: true
+        front_bumper_left_bracket:
+          Value: true
+        front_bumper_right_bracket:
+          Value: true
+        imu_link:
+          Value: true
+        laser_link:
+          Value: true
+        left_front_wheel:
+          Value: true
+        left_front_wheel_hub:
+          Value: true
+        left_rear_wheel:
+          Value: true
+        left_rear_wheel_hub:
+          Value: true
+        lidar_housing:
+          Value: true
+        odom:
+          Value: true
+        rear_bumper_bar:
+          Value: true
+        rear_bumper_left_bracket:
+          Value: true
+        rear_bumper_right_bracket:
+          Value: true
+        right_front_wheel:
+          Value: true
+        right_front_wheel_hub:
+          Value: true
+        right_rear_wheel:
+          Value: true
+        right_rear_wheel_hub:
+          Value: true
+        stereo_housing:
+          Value: true
+        stereo_mount:
+          Value: true
+        top_deck:
+          Value: true
+      Marker Scale: 1
       Name: TF
-    - Class: rviz_default_plugins/LaserScan
-      Enabled: true
-      Name: LaserScan
-      Topic: /scan
-      Reliability Policy: Best Effort
-      History Policy: Keep Last
-      History Depth: 5
-      Style: Points
-      Size (Pixels): 3
-      Color Transformer: FlatColor
+      Show Arrows: true
+      Show Axes: true
+      Show Names: false
+      Tree:
+        odom:
+          base_footprint:
+            base_link:
+              camera_link:
+                camera_left_link:
+                  camera_left_optical_frame:
+                    {}
+                camera_right_link:
+                  camera_right_optical_frame:
+                    {}
+                stereo_housing:
+                  {}
+              equipment_box:
+                {}
+              front_bumper_bar:
+                {}
+              front_bumper_left_bracket:
+                {}
+              front_bumper_right_bracket:
+                {}
+              imu_link:
+                {}
+              laser_link:
+                {}
+              left_front_wheel:
+                left_front_wheel_hub:
+                  {}
+              left_rear_wheel:
+                left_rear_wheel_hub:
+                  {}
+              lidar_housing:
+                {}
+              rear_bumper_bar:
+                {}
+              rear_bumper_left_bracket:
+                {}
+              rear_bumper_right_bracket:
+                {}
+              right_front_wheel:
+                right_front_wheel_hub:
+                  {}
+              right_rear_wheel:
+                right_rear_wheel_hub:
+                  {}
+              stereo_mount:
+                {}
+              top_deck:
+                {}
+      Update Interval: 0
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/LaserScan
       Color: 255; 25; 25
-      Size (m): 0.03
+      Color Transformer: FlatColor
       Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: LaserScan
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.029999999329447746
+      Style: Points
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /scan
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+  Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Fixed Frame: base_footprint
+    Frame Rate: 30
   Name: root
   Tools:
     - Class: rviz_default_plugins/Interact
+      Hide Inactive Objects: true
+  Transformation:
+    Current:
+      Class: rviz_default_plugins/TF
+  Value: true
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 3
-      Focal Point: 0; 0; 0
-      Pitch: 0.5
-      Yaw: 0.8
+      Distance: 2.513929843902588
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.05999999865889549
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.009999999776482582
+      Pitch: 0.6497970819473267
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz_default_plugins)
+      Yaw: 0.9099999666213989
+    Saved: ~
 Window Geometry:
-  Height: 900
-  Width: 1400
+  Displays:
+    collapsed: false
+  Height: 1016
+  Hide Left Dock: false
+  Hide Right Dock: false
+  QMainWindow State: 000000ff00000000fd0000000100000000000002fb0000039efc0200000004fb000000100044006900730070006c006100790073010000003d00000164000000c900fffffffb0000000a0056006900650077007301000001a7000001ca000000a400fffffffb000000220053006c0061006d0054006f006f006c0062006f00780050006c007500670069006e0000000217000001850000018500fffffffb0000000800540069006d00650100000377000000640000003900ffffff000004390000039e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  SlamToolboxPlugin:
+    collapsed: false
+  Time:
+    collapsed: false
+  Views:
+    collapsed: false
+  Width: 1850
+  X: 70
+  Y: 27
