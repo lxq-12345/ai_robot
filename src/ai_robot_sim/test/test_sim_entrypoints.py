@@ -4,8 +4,10 @@ from pathlib import Path
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 SIM_LAUNCH = PACKAGE_ROOT / "launch" / "sim_bringup.launch.py"
+NAV2_LAUNCH = PACKAGE_ROOT / "launch" / "nav2_bringup.launch.py"
 APARTMENT_LAUNCH = PACKAGE_ROOT / "launch" / "apartment_house_bringup.launch.py"
 APARTMENT_WORLD = PACKAGE_ROOT / "worlds" / "apartment_v1.3.world"
+AMCL_CONFIG = PACKAGE_ROOT.parents[1] / "config" / "amcl_sim.yaml"
 APARTMENT_ROBOT_SDF = (
     Path(__file__).resolve().parents[2]
     / "ai_robot_description"
@@ -21,6 +23,26 @@ def test_sim_bringup_exposes_gui_launch_argument():
     assert 'DeclareLaunchArgument(\n        "gui"' in launch_source
     assert 'default_value="false"' in launch_source
     assert '"gui": gui' in launch_source
+
+
+def test_nav2_bringup_starts_rviz_with_sim_time_after_localization():
+    launch_source = NAV2_LAUNCH.read_text(encoding="utf-8")
+
+    assert 'DeclareLaunchArgument(\n        "rviz"' in launch_source
+    assert 'package="rviz2"' in launch_source
+    assert 'parameters=[{"use_sim_time": True}]' in launch_source
+    assert "condition=IfCondition(rviz)" in launch_source
+    assert "TimerAction(period=10.0, actions=[rviz_node])" in launch_source
+
+
+def test_amcl_uses_known_sim_spawn_as_initial_pose():
+    config_source = AMCL_CONFIG.read_text(encoding="utf-8")
+
+    assert "set_initial_pose: true" in config_source
+    assert "initial_pose:" in config_source
+    assert "x: 0.0" in config_source
+    assert "y: 0.0" in config_source
+    assert "yaw: 0.0" in config_source
 
 
 def test_sim_bringup_exposes_robot_spawn_position_arguments():

@@ -6,18 +6,25 @@ from launch.actions import (
     IncludeLaunchDescription,
     TimerAction,
 )
+from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
-from launch_ros.actions import SetRemap
+from launch_ros.actions import Node, SetRemap
 
 
 def generate_launch_description():
     sim_share = get_package_share_directory("ai_robot_sim")
     gui = LaunchConfiguration("gui")
+    rviz = LaunchConfiguration("rviz")
     gui_arg = DeclareLaunchArgument(
         "gui",
         default_value="false",
         description="Start the Gazebo graphical client.",
+    )
+    rviz_arg = DeclareLaunchArgument(
+        "rviz",
+        default_value="false",
+        description="Start RViz2 after the localization frame is available.",
     )
     localization = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -41,7 +48,25 @@ def generate_launch_description():
             ),
         ]
     )
+    rviz_node = Node(
+        package="rviz2",
+        executable="rviz2",
+        name="rviz",
+        arguments=[
+            "-d",
+            f"{get_package_share_directory('nav2_bringup')}/rviz/nav2_default_view.rviz",
+        ],
+        parameters=[{"use_sim_time": True}],
+        condition=IfCondition(rviz),
+        output="screen",
+    )
     # Gazebo must first spawn the base and publish odom -> base_footprint for costmaps.
     return LaunchDescription(
-        [gui_arg, localization, TimerAction(period=8.0, actions=[navigation])]
+        [
+            gui_arg,
+            rviz_arg,
+            localization,
+            TimerAction(period=8.0, actions=[navigation]),
+            TimerAction(period=10.0, actions=[rviz_node]),
+        ]
     )
