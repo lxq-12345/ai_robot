@@ -15,6 +15,14 @@ APARTMENT_ROBOT_SDF = (
     / "small_yellow_car_v1.2.sdf"
 )
 MANUAL_DEMO = PACKAGE_ROOT / "ai_robot_sim" / "manual_motion_demo.py"
+AU8_GAZEBO_SCRIPT = PACKAGE_ROOT.parents[1] / "scripts" / "start_au8_gazebo.sh"
+AU8_RVIZ_SCRIPT = PACKAGE_ROOT.parents[1] / "scripts" / "start_au8_rviz2.sh"
+AU8_SYNC_CHECK = (
+    PACKAGE_ROOT.parents[1] / "scripts" / "check_au8_gazebo_rviz2_sync.sh"
+)
+AU8_RVIZ_CONFIG = (
+    PACKAGE_ROOT.parents[1] / "config" / "rviz2" / "small_yellow_car.rviz"
+)
 
 
 def test_sim_bringup_exposes_gui_launch_argument():
@@ -98,6 +106,34 @@ def test_apartment_robot_sdf_has_explicit_yellow_body_material():
     assert material is not None
     assert material.findtext("ambient") == "0.95 0.65 0.05 1"
     assert material.findtext("diffuse") == "0.95 0.65 0.05 1"
+
+
+def test_au8_separate_entries_use_yellow_car_cameras_and_project_rviz():
+    gazebo_source = AU8_GAZEBO_SCRIPT.read_text(encoding="utf-8")
+    rviz_entry_source = AU8_RVIZ_SCRIPT.read_text(encoding="utf-8")
+    check_source = AU8_SYNC_CHECK.read_text(encoding="utf-8")
+    rviz_source = AU8_RVIZ_CONFIG.read_text(encoding="utf-8")
+
+    assert "apartment_house_bringup.launch.py gui:=true" in gazebo_source
+    assert "rviz2" not in gazebo_source
+    assert 'rviz_config="${workspace_dir}/config/rviz2/small_yellow_car.rviz"' in rviz_entry_source
+    assert "apartment_house_bringup" not in rviz_entry_source
+    assert "use_sim_time:=true" in rviz_entry_source
+    for topic in (
+        "/camera/image_raw",
+        "/camera/camera_info",
+        "/camera/right/image_raw",
+        "/camera/right/camera_info",
+    ):
+        assert topic in check_source
+    assert "camera_left_optical_frame" in check_source
+    assert "camera_right_optical_frame" in check_source
+    assert "Class: rviz_default_plugins/Camera" in rviz_source
+    assert "Name: Camera Left" in rviz_source
+    assert "Class: rviz_default_plugins/Image" in rviz_source
+    assert "Name: Image Right" in rviz_source
+    assert rviz_source.count("Topic: /camera/image_raw") == 1
+    assert rviz_source.count("Topic: /camera/right/image_raw") == 1
 
 
 def test_manual_motion_demo_uses_raw_command_topic_only():

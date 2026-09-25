@@ -366,32 +366,15 @@ Visualization Manager:
         TF: true
         Value: true
       Zoom Factor: 1
-    - Class: rviz_default_plugins/Camera
-      Enabled: true
-      Image Rendering: background and overlay
-      Name: Camera Right
-      Overlay Alpha: 0.5
-      Queue Size: 10
-      Topic: /camera/right/image_raw
-      Unreliable: false
-      Value: true
-      Visibility:
-        Camera Left: true
-        Grid: true
-        LaserScan: true
-        RobotModel: true
-        TF: true
-        Value: true
-      Zoom Factor: 1
     - Class: rviz_default_plugins/Image
       Enabled: true
       Max Value: 1
       Median window: 5
       Min Value: 0
-      Name: Image Left
+      Name: Image Right
       Normalize Range: true
       Queue Size: 10
-      Topic: /camera/image_raw
+      Topic: /camera/right/image_raw
       Unreliable: false
       Value: true
   Enabled: true

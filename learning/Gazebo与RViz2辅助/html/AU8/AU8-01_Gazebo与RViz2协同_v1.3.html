@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>AU8 Gazebo与RViz2协同</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #586875;
+      --line: #d9e0e5;
+      --surface: #ffffff;
+      --page: #f3f5f7;
+      --accent: #176b87;
+      --accent-soft: #e8f3f7;
+      --code: #f6f8fa;
+      --note: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC",
+        system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      padding: 8px 24px;
+      color: #ffffff;
+      background: #243540;
+      border-bottom: 3px solid #2f92a8;
+    }
+    .topbar strong { font-size: 15px; }
+    .topbar button {
+      min-height: 36px;
+      padding: 6px 12px;
+      color: #ffffff;
+      background: transparent;
+      border: 1px solid #9eb0ba;
+      border-radius: 5px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 860px);
+      gap: 32px;
+      justify-content: center;
+      align-items: start;
+      width: min(100% - 32px, 1180px);
+      margin: 28px auto 56px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      max-height: calc(100vh - 105px);
+      overflow: auto;
+      padding: 18px 18px 18px 6px;
+      border-right: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .toc::before {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      content: "本章目录";
+    }
+    .toc ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .toc li { margin: 6px 0; }
+    .toc a {
+      color: #365260;
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--accent); text-decoration: underline; }
+    .toc-mobile { display: none; }
+    article {
+      min-width: 0;
+      padding: 38px 52px 56px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgb(38 55 66 / 8%);
+    }
+    h1, h2, h3 {
+      scroll-margin-top: 76px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h1 {
+      margin: 0 0 24px;
+      padding-bottom: 18px;
+      font-size: 34px;
+      border-bottom: 2px solid #2f92a8;
+    }
+    h2 {
+      margin: 42px 0 18px;
+      padding-bottom: 8px;
+      font-size: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    h3 { margin: 30px 0 12px; font-size: 21px; }
+    p { margin: 12px 0; }
+    a { color: #086b8a; overflow-wrap: anywhere; }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 18px;
+      color: #394b55;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+    blockquote p { margin: 3px 0; }
+    code {
+      padding: 2px 5px;
+      background: var(--code);
+      border: 1px solid #e4e9ed;
+      border-radius: 4px;
+      font-family: "Cascadia Code", "Noto Sans Mono CJK SC", monospace;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      overflow: auto;
+      margin: 18px 0;
+      padding: 18px;
+      background: #202b33;
+      border-radius: 6px;
+      line-height: 1.55;
+    }
+    pre code {
+      padding: 0;
+      color: #eef3f5;
+      background: transparent;
+      border: 0;
+      overflow-wrap: normal;
+    }
+    .table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; }
+    table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid var(--line);
+    }
+    th { background: #edf2f4; }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 26px auto 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f6f8fa;
+    }
+    hr { border: 0; border-top: 1px solid var(--line); }
+    .headerlink {
+      margin-left: 8px;
+      color: #8aa0aa;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .topbar { padding: 8px 14px; }
+      .layout {
+        display: block;
+        width: min(100% - 20px, 760px);
+        margin-top: 14px;
+      }
+      .toc-desktop { display: none; }
+      .toc-mobile {
+        display: block;
+        margin-bottom: 14px;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .toc-mobile summary {
+        color: #365260;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toc-mobile ul { padding-left: 20px; }
+      .toc-mobile li { margin: 6px 0; }
+      .toc-mobile a { color: #365260; text-decoration: none; }
+      article { padding: 28px 22px 40px; }
+      h1 { font-size: 29px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 19px; }
+      .headerlink { display: none; }
+    }
+    @media print {
+      body { background: #ffffff; font-size: 11pt; }
+      .topbar, .toc, .toc-mobile { display: none; }
+      .layout { display: block; width: 100%; margin: 0; }
+      article { padding: 0; border: 0; box-shadow: none; }
+      a { color: #000000; text-decoration: none; }
+      pre { white-space: pre-wrap; }
+      h2, h3 { break-after: avoid; }
+      table, img, pre { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <strong>ROS 2仿真机器人教材</strong>
+    <button type="button" onclick="window.print()">打印 / 保存为PDF</button>
+  </header>
+  <div class="layout">
+    <nav class="toc toc-desktop">
+<ul>
+<li><a href="#1">1 学习目标</a></li>
+<li><a href="#2">2 协同架构</a></li>
+<li><a href="#3">3 仿真时间</a></li>
+<li><a href="#4-tf">4 机器人模型与TF</a></li>
+<li><a href="#5">5 里程计与运动数据（概念观察）</a></li>
+<li><a href="#6">6 雷达链路</a></li>
+<li><a href="#7">7 相机链路</a></li>
+<li><a href="#8-gazebo">8 地图与Gazebo世界</a></li>
+<li><a href="#9">9 控制闭环（后续导航预览）</a></li>
+<li><a href="#10-au8">10 AU8专用启动与测试入口</a></li>
+<li><a href="#11">11 教师引导操作</a></li>
+<li><a href="#12">12 学员独立练习</a></li>
+<li><a href="#13">13 正常现象</a></li>
+<li><a href="#14">14 常见问题定位顺序</a></li>
+<li><a href="#15">15 理解检查</a></li>
+<li><a href="#16">16 技能检查与证据</a></li>
+<li><a href="#17">17 项目内依据</a></li>
+</ul>
+</nav>
+    <details class="toc-mobile"><summary>展开本章目录</summary>
+<ul>
+<li><a href="#1">1 学习目标</a></li>
+<li><a href="#2">2 协同架构</a></li>
+<li><a href="#3">3 仿真时间</a></li>
+<li><a href="#4-tf">4 机器人模型与TF</a></li>
+<li><a href="#5">5 里程计与运动数据（概念观察）</a></li>
+<li><a href="#6">6 雷达链路</a></li>
+<li><a href="#7">7 相机链路</a></li>
+<li><a href="#8-gazebo">8 地图与Gazebo世界</a></li>
+<li><a href="#9">9 控制闭环（后续导航预览）</a></li>
+<li><a href="#10-au8">10 AU8专用启动与测试入口</a></li>
+<li><a href="#11">11 教师引导操作</a></li>
+<li><a href="#12">12 学员独立练习</a></li>
+<li><a href="#13">13 正常现象</a></li>
+<li><a href="#14">14 常见问题定位顺序</a></li>
+<li><a href="#15">15 理解检查</a></li>
+<li><a href="#16">16 技能检查与证据</a></li>
+<li><a href="#17">17 项目内依据</a></li>
+</ul>
+</details>
+    <article>
+      <h1 id="au8-gazeborviz2">AU8 Gazebo与RViz2协同<a class="headerlink" href="#au8-gazeborviz2" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>对应计划：AU8
+教材版本：v1.3</p>
+</blockquote>
+<h2 id="1">1 学习目标<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>解释Gazebo、ROS 2节点和RViz2的完整数据闭环；</li>
+<li>理解<code>/clock</code>、TF、Odometry、LaserScan、Image和CameraInfo；</li>
+<li>能追踪一条数据如何从Gazebo/ROS 2到RViz2显示；</li>
+<li>能定位Gazebo正常而RViz2异常、或反之的常见问题。</li>
+</ul>
+<p>AU8先学习数据同步与观察链路，不要求本单元具备机器人运动、定位、导航或碰撞测试条件。</p>
+<h2 id="2">2 协同架构<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>核心链路为：</p>
+<pre><code class="language-text">Gazebo物理世界（`apartment_v1.3.world`）
+  ├─ 底盘插件 → odom/TF
+  ├─ 雷达插件 → /scan
+  ├─ 小黄车左目 → /camera/image_raw + /camera/camera_info
+  ├─ 小黄车右目 → /camera/right/image_raw + /camera/right/camera_info
+  └─ IMU插件 → IMU消息
+            ↓ ROS 2
+SLAM / AMCL / Nav2 / robot_state_publisher
+            ↓ Topic + TF
+           RViz2
+</code></pre>
+<p>控制方向相反：在后续导航单元中，RViz2可发送目标，Nav2规划和控制，速度命令经过项目安全链后驱动Gazebo底盘；AU8只解释该链路，不执行导航目标。</p>
+<h2 id="3">3 仿真时间<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>Gazebo发布<code>/clock</code>。使用仿真时间的节点必须配置<code>use_sim_time:=true</code>或由启动文件统一设置。时间配置不一致会造成消息过期、TF外推和超时判断异常。</p>
+<p>暂停Gazebo后，仿真时间停止。此时基于仿真时间的节点可能看起来“卡住”，这是预期行为之一。</p>
+<h2 id="4-tf">4 机器人模型与TF<a class="headerlink" href="#4-tf" title="Permanent link">&para;</a></h2>
+<p><code>robot_state_publisher</code>读取<code>robot_description</code>和关节状态，发布机器人Link之间的TF。底盘或定位组件负责<code>odom</code>、<code>map</code>等全局链路。</p>
+<p>典型链路：</p>
+<pre><code class="language-text">odom → base_footprint → base_link → laser_link
+                                ├→ camera_link → camera_left_link → camera_left_optical_frame
+                                │               └→ camera_right_link → camera_right_optical_frame
+                                └→ imu_link
+</code></pre>
+<p>SLAM建图时<code>map→odom</code>通常由SLAM Toolbox发布；已有地图定位时由AMCL发布。二者不能同时争抢同一变换。</p>
+<h2 id="5">5 里程计与运动数据（概念观察）<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>小车在Gazebo中通过控制链运动时，底盘插件产生<code>odom→base_footprint</code>关系和里程计，<code>robot_state_publisher</code>继续发布<code>base_footprint→base_link</code>及传感器固定关系。AU8只分析已有消息或静态配置中的链路，不发送运动命令；RViz2根据TF更新机器人显示。</p>
+<p>直接用鼠标瞬移Gazebo模型可能造成物理位姿、里程计和定位估计不一致，因此不能把瞬移当作正常协同测试。</p>
+<h2 id="6">6 雷达链路<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>Gazebo ray sensor生成LaserScan，ROS 2发布<code>/scan</code>，SLAM、AMCL和代价地图消费，RViz2显示。</p>
+<p>雷达点与墙体不对齐可能来自：TF错误、时间戳问题、里程计漂移、定位错误、传感器安装位姿错误或地图不一致，不能只调地图分辨率。</p>
+<h2 id="7">7 相机链路<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>AU8使用小黄车v1.2的双目相机，不使用Nav2启动链默认加载的基础<code>ai_robot.urdf.xacro</code>。Gazebo左右相机模拟场景成像，插件发布图像和CameraInfo；RViz2的Image/Camera Display订阅数据并结合TF显示。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>观察项</th>
+<th>左目</th>
+<th>右目</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Image</td>
+<td><code>/camera/image_raw</code></td>
+<td><code>/camera/right/image_raw</code></td>
+</tr>
+<tr>
+<td>CameraInfo</td>
+<td><code>/camera/camera_info</code></td>
+<td><code>/camera/right/camera_info</code></td>
+</tr>
+<tr>
+<td>Frame</td>
+<td><code>camera_left_optical_frame</code></td>
+<td><code>camera_right_optical_frame</code></td>
+</tr>
+<tr>
+<td>配置频率</td>
+<td>10 Hz</td>
+<td>10 Hz</td>
+</tr>
+</tbody>
+</table></div>
+<p>验证时分别检查：</p>
+<ol>
+<li>图像Topic是否存在；</li>
+<li>发布频率是否接近配置值；</li>
+<li>CameraInfo是否为640×480且内参字段有效；</li>
+<li>消息Frame是否为对应的<code>camera_*_optical_frame</code>，且能从<code>base_link</code>通过TF到达；</li>
+<li>Gazebo光照、目标和相机朝向是否合理；</li>
+<li>RViz2 Topic与QoS是否兼容。</li>
+</ol>
+<h2 id="8-gazebo">8 地图与Gazebo世界<a class="headerlink" href="#8-gazebo" title="Permanent link">&para;</a></h2>
+<p>Gazebo World是三维物理真值环境；ROS地图是雷达和算法生成或加载的二维占用栅格。它们不是同一个文件，也不会自动保持绝对一致。</p>
+<p>World中的墙通过雷达形成地图轮廓。仿真场景修改后，旧地图可能不再适用，需要重新建图或明确处理变化。</p>
+<h2 id="9">9 控制闭环（后续导航预览）<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<p>单目标导航示例（仅作后续课程预览，AU8不执行）：</p>
+<ol>
+<li>用户在RViz2点选目标；</li>
+<li>RViz2发送NavigateToPose目标；</li>
+<li>Nav2使用地图、代价地图、TF、里程计和雷达规划；</li>
+<li>Nav2输出原始速度；</li>
+<li>项目安全守卫检查后发送安全速度；</li>
+<li>Gazebo底盘执行；</li>
+<li>新的里程计和传感器数据反馈；</li>
+<li>RViz2更新机器人、路径和代价地图。</li>
+</ol>
+<h2 id="10-au8">10 AU8专用启动与测试入口<a class="headerlink" href="#10-au8" title="Permanent link">&para;</a></h2>
+<p>AU8使用三个相互独立的入口，以支持Gazebo单独关闭和重启时保持RViz2运行。</p>
+<p>终端A只启动Gazebo、房屋World和小黄车传感器：</p>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+./scripts/start_au8_gazebo.sh
+</code></pre>
+<p>终端B只启动RViz2：</p>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+./scripts/start_au8_rviz2.sh
+</code></pre>
+<p>终端C在两个GUI启动后检查数据链，执行完即退出：</p>
+<pre><code class="language-bash">cd /home/ubuntu/ai_robot_ws
+./scripts/check_au8_gazebo_rviz2_sync.sh
+</code></pre>
+<p>三个入口固定组合：</p>
+<ul>
+<li><code>apartment_v1.3.world</code>；</li>
+<li><code>small_yellow_car_v1.2.sdf</code>及其左右相机插件；</li>
+<li><code>small_yellow_car.rviz</code>；</li>
+<li><code>use_sim_time:=true</code>；</li>
+<li>左右Image、CameraInfo、发布频率、光学Frame、TF和QoS证据检查。</li>
+</ul>
+<p>检查脚本的自动<code>PASS</code>只证明数据链前置存在。画面内容、方向、光照、暂停/恢复、Gazebo单独关闭/重启和RViz2 Display状态必须由学员观察并留证。详细步骤见<code>tests/scenario/AU8_Gazebo_RViz2协同测试.md</code>。</p>
+<p><code>ros2 launch ai_robot_sim nav2_bringup.launch.py gui:=true</code>不是AU8测试入口：它默认加载基础<code>ai_robot.urdf.xacro</code>，而非小黄车v1.2；且<code>rviz</code> 默认为<code>false</code>，不会建立本章要求的双界面双目观察基线。</p>
+<h2 id="11">11 教师引导操作<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<ol>
+<li>在干净图形桌面中分别启动Gazebo和RViz2脚本；</li>
+<li>运行检查脚本，确认相机Topic、CameraInfo、TF、频率、RViz2仿真时间与订阅全部显示<code>PASS</code>；</li>
+<li>在Gazebo和RViz2中找到同一机器人；</li>
+<li>对照Gazebo视角、RViz2 RobotModel、TF和LaserScan（不发送运动命令）；</li>
+<li>把彩色目标放到相机前方，观察图像变化；</li>
+<li>暂停Gazebo，观察<code>/clock</code>、图像和雷达更新；</li>
+<li>恢复并记录同步恢复情况；</li>
+<li>单独关闭Gazebo但保持RViz2运行，记录各Display失联状态；</li>
+<li>单独重启Gazebo，观察RViz2自动恢复，再次运行检查脚本。</li>
+</ol>
+<h2 id="12">12 学员独立练习<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>完成一次“加载—观察墙体—观察相机目标—暂停—恢复”协同实验，并为每一步指出数据来源、ROS接口和RViz2显示项；运动、导航和碰撞留待AU9/AU10。</p>
+<h2 id="13">13 正常现象<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<ul>
+<li>若已有合法运动数据，Gazebo小车运动时RViz2模型同步变化；无运动前置时不以此判定AU8失败；</li>
+<li>雷达点随姿态和环境变化；</li>
+<li>相机画面随目标和朝向变化；</li>
+<li>暂停仿真后基于仿真时间的数据停止更新；</li>
+<li>恢复后链路继续工作；</li>
+<li>地图中的墙与雷达点大致对齐。</li>
+</ul>
+<h2 id="14">14 常见问题定位顺序<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Gazebo模型和传感器是否运行；</li>
+<li><code>/clock</code>是否更新；</li>
+<li>Topic是否存在且有新消息；</li>
+<li>消息Frame和时间戳是否正确；</li>
+<li>TF链是否连通；</li>
+<li>算法节点是否Active；</li>
+<li>RViz2 Fixed Frame、Topic和QoS是否正确；</li>
+<li>显示属性是否把数据隐藏。</li>
+</ol>
+<h2 id="15">15 理解检查<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Gazebo World和ROS Map为什么不是同一个对象？</li>
+<li>鼠标瞬移为什么会破坏协同判断？</li>
+<li><code>/clock</code>停止会影响哪些现象？</li>
+<li>相机黑屏时为什么不能只查RViz2？</li>
+<li>SLAM和AMCL为什么不能同时发布<code>map→odom</code>？</li>
+</ol>
+<h2 id="16">16 技能检查与证据<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
+<p>提交协同链路图、Gazebo与RViz2同步截图、雷达和相机验证、暂停/恢复记录以及一次故障定位过程。能从现象追踪到Topic、TF和组件即可形成AU8学习结论；运动、导航和碰撞结果不作为AU8完成条件。</p>
+<h2 id="17">17 项目内依据<a class="headerlink" href="#17" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>scripts/start_au8_gazebo.sh</code></li>
+<li><code>scripts/start_au8_rviz2.sh</code></li>
+<li><code>scripts/check_au8_gazebo_rviz2_sync.sh</code></li>
+<li><code>tests/scenario/AU8_Gazebo_RViz2协同测试.md</code></li>
+<li><code>ai_robot_sim/launch/apartment_house_bringup.launch.py</code></li>
+<li><code>ai_robot_description/models/small_yellow_car_v1.2.sdf</code></li>
+<li><code>config/rviz2/small_yellow_car.rviz</code></li>
+</ul>
+      <div class="footer">源文件：AU8-01_Gazebo与RViz2协同_v1.3.md · 生成器：scripts/render_learning_html.py</div>
+    </article>
+  </div>
+</body>
+</html>
