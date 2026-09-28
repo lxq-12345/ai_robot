@@ -9,15 +9,22 @@ def generate_launch_description():
     description_share = get_package_share_directory("ai_robot_description")
     sim_share = get_package_share_directory("ai_robot_sim")
     gui = LaunchConfiguration("gui")
+    require_scan = LaunchConfiguration("require_scan")
     gui_arg = DeclareLaunchArgument(
         "gui",
         default_value="true",
         description="Start Gazebo Classic with the apartment graphical view.",
     )
+    require_scan_arg = DeclareLaunchArgument(
+        "require_scan",
+        default_value="false",
+        description="Require fresh laser scans in the velocity safety guard.",
+    )
     bringup = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(f"{sim_share}/launch/sim_bringup.launch.py"),
         launch_arguments={
             "gui": gui,
+            "require_scan": require_scan,
             "world": f"{sim_share}/worlds/apartment_v1.3.world",
             "spawn_x": "1.80",
             "spawn_y": "4.00",
@@ -27,4 +34,4 @@ def generate_launch_description():
             "spawn_from_sdf": "true",
         }.items(),
     )
-    return LaunchDescription([gui_arg, bringup])
+    return LaunchDescription([gui_arg, require_scan_arg, bringup])

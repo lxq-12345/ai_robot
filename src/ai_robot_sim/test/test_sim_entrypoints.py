@@ -6,7 +6,10 @@ PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 SIM_LAUNCH = PACKAGE_ROOT / "launch" / "sim_bringup.launch.py"
 NAV2_LAUNCH = PACKAGE_ROOT / "launch" / "nav2_bringup.launch.py"
 APARTMENT_LAUNCH = PACKAGE_ROOT / "launch" / "apartment_house_bringup.launch.py"
+APARTMENT_NAV2_LAUNCH = PACKAGE_ROOT / "launch" / "apartment_nav2_bringup.launch.py"
 APARTMENT_WORLD = PACKAGE_ROOT / "worlds" / "apartment_v1.3.world"
+APARTMENT_MAP_YAML = PACKAGE_ROOT / "maps" / "apartment_v1.3_nav.yaml"
+APARTMENT_MAP_PGM = PACKAGE_ROOT / "maps" / "apartment_v1.3_nav.pgm"
 AMCL_CONFIG = PACKAGE_ROOT.parents[1] / "config" / "amcl_sim.yaml"
 APARTMENT_ROBOT_SDF = (
     Path(__file__).resolve().parents[2]
@@ -92,6 +95,46 @@ def test_apartment_bringup_uses_project_world_and_safe_spawn_point():
     assert '"robot_model": f"{description_share}/urdf/small_yellow_car_v1.2.urdf.xacro"' in launch_source
     assert '"robot_sdf": f"{description_share}/models/small_yellow_car_v1.2.sdf"' in launch_source
     assert '"spawn_from_sdf": "true"' in launch_source
+    assert '"require_scan": require_scan' in launch_source
+
+
+def test_apartment_nav2_bringup_reuses_au8_world_robot_and_map():
+    launch_source = APARTMENT_NAV2_LAUNCH.read_text(encoding="utf-8")
+
+    assert "apartment_house_bringup.launch.py" in launch_source
+    assert '"require_scan": "true"' in launch_source
+    assert "apartment_v1.3_nav.yaml" in launch_source
+    assert '"initial_pose.x": 1.80' in launch_source
+    assert '"initial_pose.y": 4.00' in launch_source
+    assert 'SetRemap(src="/cmd_vel", dst="/cmd_vel_raw")' in launch_source
+    assert APARTMENT_MAP_YAML.is_file()
+    assert APARTMENT_MAP_PGM.is_file()
+
+
+def test_apartment_navigation_map_has_expected_frame_and_free_test_points():
+    yaml_source = APARTMENT_MAP_YAML.read_text(encoding="utf-8")
+    assert "image: apartment_v1.3_nav.pgm" in yaml_source
+    assert "resolution: 0.05" in yaml_source
+    assert "origin: [-0.50, -0.50, 0.0]" in yaml_source
+
+    with APARTMENT_MAP_PGM.open("rb") as stream:
+        assert stream.readline().strip() == b"P5"
+        width, height = [int(value) for value in stream.readline().split()]
+        assert stream.readline().strip() == b"255"
+        pixels = stream.read()
+    assert (width, height) == (144, 170)
+    assert len(pixels) == width * height
+
+    def occupancy_at(x, y):
+        column = int((x + 0.50) / 0.05)
+        map_row = int((y + 0.50) / 0.05)
+        image_row = height - 1 - map_row
+        return pixels[image_row * width + column]
+
+    for point in ((1.80, 4.00), (1.50, 4.00), (1.20, 4.00), (1.80, 5.80)):
+        assert occupancy_at(*point) == 254
+    assert occupancy_at(0.10, 4.00) == 0
+    assert occupancy_at(3.08, 5.80) == 0
 
 
 def test_apartment_robot_sdf_has_explicit_yellow_body_material():
