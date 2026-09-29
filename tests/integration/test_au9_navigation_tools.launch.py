@@ -1,3 +1,4 @@
+import os
 import time
 import unittest
 from math import cos, hypot, pi, sin
@@ -21,10 +22,20 @@ from tf2_msgs.msg import TFMessage
 
 def generate_test_description():
     sim_share = get_package_share_directory("ai_robot_sim")
+    show_gui = os.environ.get("AU9_TEST_GUI", "true").lower() not in {
+        "0",
+        "false",
+        "no",
+        "off",
+    }
     nav2 = launch.actions.IncludeLaunchDescription(
         launch.launch_description_sources.PythonLaunchDescriptionSource(
             f"{sim_share}/launch/apartment_nav2_bringup.launch.py"
-        )
+        ),
+        launch_arguments={
+            "gui": "true" if show_gui else "false",
+            "rviz": "true" if show_gui else "false",
+        }.items(),
     )
     return launch.LaunchDescription(
         [nav2, launch_testing.actions.ReadyToTest()]

@@ -32,6 +32,14 @@ launch_test tests/integration/test_au9_navigation_tools.launch.py
 
 该入口执行AU9-01至AU9-06，使用真实Gazebo、房屋地图、小黄车、AMCL、Nav2、Waypoint Follower和项目安全守卫，不使用假Action Server。
 
+该命令默认同时显示Gazebo和RViz2，用于直接观察路径、小车运动、取消停车和返回过程。需在无图形界面的自动化环境运行时，显式关闭GUI：
+
+```bash
+AU9_TEST_GUI=false launch_test tests/integration/test_au9_navigation_tools.launch.py
+```
+
+无论是默认GUI模式还是显式无界面模式，均不改变航点、断言、安全速度链或超时。
+
 ## 4. GUI观察
 
 终端A：
