@@ -10,6 +10,9 @@ APARTMENT_NAV2_LAUNCH = PACKAGE_ROOT / "launch" / "apartment_nav2_bringup.launch
 APARTMENT_WORLD = PACKAGE_ROOT / "worlds" / "apartment_v1.3.world"
 APARTMENT_MAP_YAML = PACKAGE_ROOT / "maps" / "apartment_v1.3_nav.yaml"
 APARTMENT_MAP_PGM = PACKAGE_ROOT / "maps" / "apartment_v1.3_nav.pgm"
+AU9_RVIZ_CONFIG = (
+    PACKAGE_ROOT.parents[1] / "config" / "rviz2" / "au9_nav2.rviz"
+)
 AMCL_CONFIG = PACKAGE_ROOT.parents[1] / "config" / "amcl_sim.yaml"
 APARTMENT_ROBOT_SDF = (
     Path(__file__).resolve().parents[2]
@@ -100,6 +103,7 @@ def test_apartment_bringup_uses_project_world_and_safe_spawn_point():
 
 def test_apartment_nav2_bringup_reuses_au8_world_robot_and_map():
     launch_source = APARTMENT_NAV2_LAUNCH.read_text(encoding="utf-8")
+    rviz_source = AU9_RVIZ_CONFIG.read_text(encoding="utf-8")
 
     assert "apartment_house_bringup.launch.py" in launch_source
     assert '"require_scan": "true"' in launch_source
@@ -107,6 +111,14 @@ def test_apartment_nav2_bringup_reuses_au8_world_robot_and_map():
     assert '"initial_pose.x": 1.80' in launch_source
     assert '"initial_pose.y": 4.00' in launch_source
     assert 'SetRemap(src="/cmd_vel", dst="/cmd_vel_raw")' in launch_source
+    assert 'f"{sim_share}/config/au9_nav2.rviz"' in launch_source
+    assert "Fixed Frame: map" in rviz_source
+    assert "Reference Frame: map" in rviz_source
+    assert "Plane Cell Count: 20" in rviz_source
+    assert "X: 3.1" in rviz_source
+    assert "Y: 3.75" in rviz_source
+    assert "Class: nav2_rviz_plugins/GoalTool" in rviz_source
+    assert "Class: nav2_rviz_plugins/Navigation 2" in rviz_source
     assert APARTMENT_MAP_YAML.is_file()
     assert APARTMENT_MAP_PGM.is_file()
 

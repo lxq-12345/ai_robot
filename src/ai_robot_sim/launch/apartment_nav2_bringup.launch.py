@@ -79,7 +79,7 @@ def generate_launch_description():
         name="rviz",
         arguments=[
             "-d",
-            f"{get_package_share_directory('nav2_bringup')}/rviz/nav2_default_view.rviz",
+            f"{sim_share}/config/au9_nav2.rviz",
         ],
         parameters=[{"use_sim_time": True}],
         condition=IfCondition(rviz),
