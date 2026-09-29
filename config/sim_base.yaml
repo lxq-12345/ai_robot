@@ -5,3 +5,5 @@ cmd_vel_guard:
     command_timeout: 0.50
     require_scan: false
     scan_timeout: 0.75
+    input_topic: /cmd_vel_raw
+    output_topic: /cmd_vel

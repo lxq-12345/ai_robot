@@ -28,6 +28,8 @@ class CmdVelGuard(Node):
         self.declare_parameter("command_timeout", 0.50)
         self.declare_parameter("require_scan", False)
         self.declare_parameter("scan_timeout", 0.75)
+        self.declare_parameter("input_topic", "/cmd_vel_raw")
+        self.declare_parameter("output_topic", "/cmd_vel")
         self._limit = VelocityLimit(
             linear=float(self.get_parameter("max_linear_speed").value),
             angular=float(self.get_parameter("max_angular_speed").value),
@@ -35,10 +37,12 @@ class CmdVelGuard(Node):
         self._timeout = float(self.get_parameter("command_timeout").value)
         self._require_scan = bool(self.get_parameter("require_scan").value)
         self._scan_timeout = float(self.get_parameter("scan_timeout").value)
+        input_topic = str(self.get_parameter("input_topic").value)
+        output_topic = str(self.get_parameter("output_topic").value)
         self._last_command_time = time.monotonic()
         self._last_scan_time = time.monotonic()
-        self._publisher = self.create_publisher(Twist, "/cmd_vel", 10)
-        self.create_subscription(Twist, "/cmd_vel_raw", self._on_command, 10)
+        self._publisher = self.create_publisher(Twist, output_topic, 10)
+        self.create_subscription(Twist, input_topic, self._on_command, 10)
         self.create_subscription(LaserScan, "/scan", self._on_scan, 10)
         self.create_timer(0.05, self._enforce_timeout)
 

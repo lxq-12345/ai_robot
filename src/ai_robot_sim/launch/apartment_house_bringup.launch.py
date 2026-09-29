@@ -10,6 +10,7 @@ def generate_launch_description():
     sim_share = get_package_share_directory("ai_robot_sim")
     gui = LaunchConfiguration("gui")
     require_scan = LaunchConfiguration("require_scan")
+    command_input_topic = LaunchConfiguration("command_input_topic")
     gui_arg = DeclareLaunchArgument(
         "gui",
         default_value="true",
@@ -20,11 +21,18 @@ def generate_launch_description():
         default_value="false",
         description="Require fresh laser scans in the velocity safety guard.",
     )
+    command_input_topic_arg = DeclareLaunchArgument(
+        "command_input_topic",
+        default_value="/cmd_vel_raw",
+        description="Velocity topic consumed by the safety guard.",
+    )
     bringup = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(f"{sim_share}/launch/sim_bringup.launch.py"),
         launch_arguments={
             "gui": gui,
             "require_scan": require_scan,
+            "command_input_topic": command_input_topic,
+            "command_output_topic": "/cmd_vel_safe",
             "world": f"{sim_share}/worlds/apartment_v1.3.world",
             "spawn_x": "1.80",
             "spawn_y": "4.00",
@@ -34,4 +42,6 @@ def generate_launch_description():
             "spawn_from_sdf": "true",
         }.items(),
     )
-    return LaunchDescription([gui_arg, require_scan_arg, bringup])
+    return LaunchDescription(
+        [gui_arg, require_scan_arg, command_input_topic_arg, bringup]
+    )

@@ -10,6 +10,7 @@ from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node, SetRemap
+from nav2_common.launch import RewrittenYaml
 
 
 def generate_launch_description():
@@ -22,7 +23,13 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             f"{sim_share}/launch/apartment_house_bringup.launch.py"
         ),
-        launch_arguments={"gui": gui, "require_scan": "true"}.items(),
+        launch_arguments={
+            "gui": gui,
+            "require_scan": "true",
+            # Nav2's velocity smoother owns /cmd_vel.  The guard is the only
+            # publisher allowed to command the Gazebo base on /cmd_vel_safe.
+            "command_input_topic": "/cmd_vel",
+        }.items(),
     )
     map_server = Node(
         package="nav2_map_server",
@@ -58,6 +65,21 @@ def generate_launch_description():
         ],
         output="screen",
     )
+    nav2_params = RewrittenYaml(
+        source_file=f"{sim_share}/config/nav2_sim.yaml",
+        root_key="",
+        param_rewrites={
+            "default_nav_to_pose_bt_xml": (
+                f"{sim_share}/behavior_trees/"
+                "navigate_to_pose_back_up_recovery.xml"
+            ),
+            "default_nav_through_poses_bt_xml": (
+                f"{sim_share}/behavior_trees/"
+                "navigate_through_poses_back_up_recovery.xml"
+            ),
+        },
+        convert_types=True,
+    )
     navigation = GroupAction(
         [
             SetRemap(src="/cmd_vel", dst="/cmd_vel_raw"),
@@ -68,7 +90,7 @@ def generate_launch_description():
                 launch_arguments={
                     "use_sim_time": "true",
                     "use_composition": "False",
-                    "params_file": f"{sim_share}/config/nav2_sim.yaml",
+                    "params_file": nav2_params,
                 }.items(),
             ),
         ]

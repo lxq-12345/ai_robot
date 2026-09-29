@@ -7,6 +7,12 @@ SIM_LAUNCH = PACKAGE_ROOT / "launch" / "sim_bringup.launch.py"
 NAV2_LAUNCH = PACKAGE_ROOT / "launch" / "nav2_bringup.launch.py"
 APARTMENT_LAUNCH = PACKAGE_ROOT / "launch" / "apartment_house_bringup.launch.py"
 APARTMENT_NAV2_LAUNCH = PACKAGE_ROOT / "launch" / "apartment_nav2_bringup.launch.py"
+APARTMENT_NAV2_BT = (
+    PACKAGE_ROOT / "behavior_trees" / "navigate_to_pose_back_up_recovery.xml"
+)
+APARTMENT_NAV2_THROUGH_POSES_BT = (
+    PACKAGE_ROOT / "behavior_trees" / "navigate_through_poses_back_up_recovery.xml"
+)
 APARTMENT_WORLD = PACKAGE_ROOT / "worlds" / "apartment_v1.3.world"
 APARTMENT_MAP_YAML = PACKAGE_ROOT / "maps" / "apartment_v1.3_nav.yaml"
 APARTMENT_MAP_PGM = PACKAGE_ROOT / "maps" / "apartment_v1.3_nav.pgm"
@@ -99,6 +105,7 @@ def test_apartment_bringup_uses_project_world_and_safe_spawn_point():
     assert '"robot_sdf": f"{description_share}/models/small_yellow_car_v1.2.sdf"' in launch_source
     assert '"spawn_from_sdf": "true"' in launch_source
     assert '"require_scan": require_scan' in launch_source
+    assert '"command_output_topic": "/cmd_vel_safe"' in launch_source
 
 
 def test_apartment_nav2_bringup_reuses_au8_world_robot_and_map():
@@ -111,6 +118,7 @@ def test_apartment_nav2_bringup_reuses_au8_world_robot_and_map():
     assert '"initial_pose.x": 1.80' in launch_source
     assert '"initial_pose.y": 4.00' in launch_source
     assert 'SetRemap(src="/cmd_vel", dst="/cmd_vel_raw")' in launch_source
+    assert '"command_input_topic": "/cmd_vel"' in launch_source
     assert 'f"{sim_share}/config/au9_nav2.rviz"' in launch_source
     assert "Fixed Frame: map" in rviz_source
     assert "Reference Frame: map" in rviz_source
@@ -122,6 +130,74 @@ def test_apartment_nav2_bringup_reuses_au8_world_robot_and_map():
     assert "Class: nav2_rviz_plugins/Navigation 2" in rviz_source
     assert APARTMENT_MAP_YAML.is_file()
     assert APARTMENT_MAP_PGM.is_file()
+
+
+def test_apartment_nav2_has_one_guarded_velocity_chain_and_door_tuning():
+    nav2_source = (PACKAGE_ROOT.parents[1] / "config" / "nav2_sim.yaml").read_text(
+        encoding="utf-8"
+    )
+    robot_source = APARTMENT_ROBOT_SDF.read_text(encoding="utf-8")
+
+    assert "cmd_vel:=/cmd_vel_safe" in robot_source
+    assert nav2_source.count(
+        'footprint: "[[0.30, 0.23], [0.30, -0.23], [-0.30, -0.23], [-0.30, 0.23]]"'
+    ) == 2
+    assert "desired_linear_vel: 0.20" in nav2_source
+    assert "lookahead_dist: 0.25" in nav2_source
+    assert "use_velocity_scaled_lookahead_dist: false" in nav2_source
+    assert "use_interpolation: true" in nav2_source
+    assert "use_collision_detection: true" in nav2_source
+    assert "max_allowed_time_to_collision_up_to_carrot: 1.0" in nav2_source
+    assert "default_nav_to_pose_bt_xml:" in nav2_source
+    assert "default_nav_through_poses_bt_xml:" in nav2_source
+    assert "nav2_spin_action_bt_node" not in nav2_source
+    assert "nav2_spin_cancel_bt_node" not in nav2_source
+    assert "nav2_wait_action_bt_node" not in nav2_source
+    assert "nav2_wait_cancel_bt_node" not in nav2_source
+    assert 'behavior_plugins: ["backup", "drive_on_heading", "assisted_teleop"]' in nav2_source
+
+
+def test_apartment_nav2_recovers_by_backing_up_before_adjusting():
+    launch_source = APARTMENT_NAV2_LAUNCH.read_text(encoding="utf-8")
+
+    assert "navigate_to_pose_back_up_recovery.xml" in launch_source
+    assert "navigate_through_poses_back_up_recovery.xml" in launch_source
+    assert "default_nav_to_pose_bt_xml" in launch_source
+    assert "default_nav_through_poses_bt_xml" in launch_source
+
+    for tree_path in (APARTMENT_NAV2_BT, APARTMENT_NAV2_THROUGH_POSES_BT):
+        tree = ET.parse(tree_path).getroot()
+        assert tree.findall(".//Spin") == []
+
+        follow_recovery = tree.find(".//RecoveryNode[@name='FollowPath']/Sequence")
+        assert follow_recovery is not None
+        assert [child.tag for child in follow_recovery] == [
+            "Fallback",
+            "ClearEntireCostmap",
+            "ClearEntireCostmap",
+        ]
+        assert [child.tag for child in follow_recovery[0]] == [
+            "BackUp",
+            "AlwaysSuccess",
+        ]
+        assert follow_recovery[0][0].attrib == {
+            "backup_dist": "0.20",
+            "backup_speed": "0.05",
+        }
+
+        back_up_and_replan = tree.find(
+            ".//ReactiveFallback[@name='RecoveryFallback']/Sequence"
+        )
+        assert back_up_and_replan is not None
+        assert [child.tag for child in back_up_and_replan] == [
+            "Fallback",
+            "ClearEntireCostmap",
+            "ClearEntireCostmap",
+        ]
+        assert [child.tag for child in back_up_and_replan[0]] == [
+            "BackUp",
+            "AlwaysSuccess",
+        ]
 
 
 def test_apartment_navigation_map_has_expected_frame_and_free_test_points():
@@ -148,6 +224,38 @@ def test_apartment_navigation_map_has_expected_frame_and_free_test_points():
         assert occupancy_at(*point) == 254
     assert occupancy_at(0.10, 4.00) == 0
     assert occupancy_at(3.08, 5.80) == 0
+    assert occupancy_at(4.20, 3.725) == 254
+
+
+def test_apartment_bathroom_door_has_safe_bidirectional_clearance():
+    root = ET.parse(APARTMENT_WORLD).getroot()
+    model = root.find(".//model[@name='apartment_house']")
+    lower = model.find(".//collision[@name='bath_left_partition_0_collision']")
+    lintel = model.find(
+        ".//collision[@name='bath_left_partition_bath_door_lintel_collision']"
+    )
+    upper = model.find(".//collision[@name='bath_upper_jamb_collision']")
+
+    lower_pose = [float(value) for value in lower.findtext("pose").split()]
+    lower_size = [
+        float(value) for value in lower.findtext("./geometry/box/size").split()
+    ]
+    lintel_pose = [float(value) for value in lintel.findtext("pose").split()]
+    lintel_size = [
+        float(value) for value in lintel.findtext("./geometry/box/size").split()
+    ]
+    upper_pose = [float(value) for value in upper.findtext("pose").split()]
+    upper_size = [
+        float(value) for value in upper.findtext("./geometry/box/size").split()
+    ]
+
+    lower_edge = lower_pose[1] + lower_size[1] / 2.0
+    upper_edge = upper_pose[1] - upper_size[1] / 2.0
+    assert abs(lower_edge - 3.30) < 1e-9
+    assert abs(upper_edge - 4.15) < 1e-9
+    assert abs(upper_edge - lower_edge - 0.85) < 1e-9
+    assert abs(lintel_pose[1] - 3.725) < 1e-9
+    assert abs(lintel_size[1] - 0.85) < 1e-9
 
 
 def test_apartment_ground_visual_matches_navigation_map_extent():

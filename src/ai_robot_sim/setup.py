@@ -24,6 +24,7 @@ setup(
                 "../../config/sim_sensors.yaml",
             ],
         ),
+        ("share/ai_robot_sim/behavior_trees", glob("behavior_trees/*.xml")),
         ("share/ai_robot_sim/worlds", glob("worlds/*.world")),
         ("share/ai_robot_sim/maps", glob("maps/*")),
         ("share/ai_robot_sim/launch", glob("launch/*.py")),

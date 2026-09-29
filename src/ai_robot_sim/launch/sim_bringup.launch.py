@@ -17,6 +17,8 @@ def generate_launch_description():
     gui = LaunchConfiguration("gui")
     world = LaunchConfiguration("world")
     require_scan = LaunchConfiguration("require_scan")
+    command_input_topic = LaunchConfiguration("command_input_topic")
+    command_output_topic = LaunchConfiguration("command_output_topic")
     spawn_x = LaunchConfiguration("spawn_x")
     spawn_y = LaunchConfiguration("spawn_y")
     spawn_z = LaunchConfiguration("spawn_z")
@@ -37,6 +39,16 @@ def generate_launch_description():
         "require_scan",
         default_value="false",
         description="Require fresh laser scans before forwarding base velocity commands.",
+    )
+    command_input_topic_arg = DeclareLaunchArgument(
+        "command_input_topic",
+        default_value="/cmd_vel_raw",
+        description="Velocity topic consumed by the project safety guard.",
+    )
+    command_output_topic_arg = DeclareLaunchArgument(
+        "command_output_topic",
+        default_value="/cmd_vel",
+        description="Guarded velocity topic consumed by the simulated base.",
     )
     spawn_x_arg = DeclareLaunchArgument(
         "spawn_x",
@@ -120,7 +132,11 @@ def generate_launch_description():
         executable="cmd_vel_guard",
         parameters=[
             f"{sim_share}/config/sim_base.yaml",
-            {"require_scan": ParameterValue(require_scan, value_type=bool)},
+            {
+                "require_scan": ParameterValue(require_scan, value_type=bool),
+                "input_topic": command_input_topic,
+                "output_topic": command_output_topic,
+            },
         ],
         output="screen",
     )
@@ -129,6 +145,8 @@ def generate_launch_description():
             gui_arg,
             world_arg,
             require_scan_arg,
+            command_input_topic_arg,
+            command_output_topic_arg,
             spawn_x_arg,
             spawn_y_arg,
             spawn_z_arg,

@@ -78,7 +78,7 @@ class TestAu9NavigationTools(unittest.TestCase):
             Twist, "/cmd_vel_raw", self.raw_commands.append, 10
         )
         self.node.create_subscription(
-            Twist, "/cmd_vel", self._on_safe_command, 10
+            Twist, "/cmd_vel_safe", self._on_safe_command, 10
         )
         self.node.create_subscription(
             JointState, "/joint_states", self.joint_states.append, 10
@@ -240,6 +240,66 @@ class TestAu9NavigationTools(unittest.TestCase):
             self.waypoint_client.wait_for_server(timeout_sec=30.0),
             "FollowWaypoints server unavailable",
         )
+        self.assertEqual(
+            self.node.count_publishers("/cmd_vel"),
+            1,
+            "velocity smoother must be the only /cmd_vel publisher",
+        )
+        self.assertEqual(
+            self.node.count_publishers("/cmd_vel_safe"),
+            1,
+            "safety guard must be the only Gazebo velocity publisher",
+        )
+
+        if os.environ.get("AU9_TEST_SCENARIO", "full").lower() == "bathroom":
+            # Focused regression for the widened 0.85 m bathroom doorway.
+            # This branch intentionally excludes all child-room navigation.
+            bathroom_entry_handle = self._send_navigation_goal(5.52, 3.43, 0.0)
+            bathroom_entry_result = bathroom_entry_handle.get_result_async()
+            self.assertTrue(
+                self._spin_until(
+                    lambda: bathroom_entry_result.done(), timeout=180.0
+                ),
+                "bathroom entry timed out",
+            )
+            self.assertEqual(
+                bathroom_entry_result.result().status,
+                GoalStatus.STATUS_SUCCEEDED,
+                "robot did not enter through the widened bathroom doorway",
+            )
+
+            bathroom_return_handle = self._send_navigation_goal(2.80, 3.40, pi)
+            bathroom_return_result = bathroom_return_handle.get_result_async()
+            self.assertTrue(
+                self._spin_until(
+                    lambda: bathroom_return_result.done(), timeout=180.0
+                ),
+                "bathroom doorway return timed out",
+            )
+            self.assertEqual(
+                bathroom_return_result.result().status,
+                GoalStatus.STATUS_SUCCEEDED,
+                "robot did not return through the widened bathroom doorway",
+            )
+
+            safe_messages = [command for _, command in self.safe_commands]
+            self.assertTrue(
+                any(self._moving(command) for command in self.raw_commands),
+                "Nav2 did not publish raw velocity commands",
+            )
+            self.assertTrue(
+                any(self._moving(command) for command in safe_messages),
+                "safety guard did not forward motion commands",
+            )
+            self.assertTrue(
+                all(abs(command.linear.x) <= 0.35 + 1e-6 for command in safe_messages),
+                "safety guard exceeded the linear speed limit",
+            )
+            self.assertTrue(
+                all(abs(command.angular.z) <= 1.20 + 1e-6 for command in safe_messages),
+                "safety guard exceeded the angular speed limit",
+            )
+            return
 
         start = self.odom_messages[-1].pose.pose.position
         self.assertTrue(
@@ -342,6 +402,88 @@ class TestAu9NavigationTools(unittest.TestCase):
             return_result.result().status,
             GoalStatus.STATUS_SUCCEEDED,
             "single-goal navigation did not succeed",
+        )
+
+        # Exercise the asymmetric case reported during manual use: enter the
+        # child room through its 0.85 m doorway, then leave through the same
+        # doorway using a new global plan in the opposite direction.
+        door_entry_handle = self._send_navigation_goal(4.80, 1.80, -pi / 2.0)
+        door_entry_result = door_entry_handle.get_result_async()
+        self.assertTrue(
+            self._spin_until(lambda: door_entry_result.done(), timeout=150.0),
+            "child-room entry timed out",
+        )
+        self.assertEqual(
+            door_entry_result.result().status,
+            GoalStatus.STATUS_SUCCEEDED,
+            "robot did not enter the child room",
+        )
+
+        # Align with the doorway centreline before crossing. A single diagonal
+        # goal can make RPP cut either jamb depending on the final AMCL pose.
+        child_align_handle = self._send_navigation_goal(3.675, 2.10, pi / 2.0)
+        child_align_result = child_align_handle.get_result_async()
+        self.assertTrue(
+            self._spin_until(lambda: child_align_result.done(), timeout=90.0),
+            "child-room inside alignment timed out",
+        )
+        self.assertEqual(
+            child_align_result.result().status,
+            GoalStatus.STATUS_SUCCEEDED,
+            "robot did not align inside the child-room doorway",
+        )
+
+        # Account for the 0.25 m goal tolerance: at Y=3.60 the full 0.60 m
+        # footprint has cleared the wall before the following westward turn.
+        child_cross_handle = self._send_navigation_goal(3.675, 3.60, pi / 2.0)
+        child_cross_result = child_cross_handle.get_result_async()
+        self.assertTrue(
+            self._spin_until(lambda: child_cross_result.done(), timeout=90.0),
+            "child-room doorway crossing timed out",
+        )
+        self.assertEqual(
+            child_cross_result.result().status,
+            GoalStatus.STATUS_SUCCEEDED,
+            "robot did not cross the child-room doorway",
+        )
+
+        door_return_handle = self._send_navigation_goal(2.80, 3.40, pi)
+        door_return_result = door_return_handle.get_result_async()
+        self.assertTrue(
+            self._spin_until(lambda: door_return_result.done(), timeout=90.0),
+            "child-room return destination timed out",
+        )
+        self.assertEqual(
+            door_return_result.result().status,
+            GoalStatus.STATUS_SUCCEEDED,
+            "robot did not finish the child-room return route",
+        )
+
+        # The bathroom west doorway is widened to 0.85 m so the real 0.46 m
+        # robot footprint has enough localization and turning clearance in
+        # both directions. Use the same target observed in the manual failure.
+        bathroom_entry_handle = self._send_navigation_goal(5.52, 3.43, 0.0)
+        bathroom_entry_result = bathroom_entry_handle.get_result_async()
+        self.assertTrue(
+            self._spin_until(lambda: bathroom_entry_result.done(), timeout=180.0),
+            "bathroom entry timed out",
+        )
+        self.assertEqual(
+            bathroom_entry_result.result().status,
+            GoalStatus.STATUS_SUCCEEDED,
+            "robot did not enter through the widened bathroom doorway",
+        )
+
+        bathroom_return_handle = self._send_navigation_goal(2.80, 3.40, pi)
+        bathroom_return_result = bathroom_return_handle.get_result_async()
+        self.assertTrue(
+            self._spin_until(lambda: bathroom_return_result.done(), timeout=180.0),
+            "bathroom doorway return timed out",
+        )
+        self.assertEqual(
+            bathroom_return_result.result().status,
+            GoalStatus.STATUS_SUCCEEDED,
+            "robot did not return through the widened bathroom doorway",
         )
 
         self.assertTrue(
