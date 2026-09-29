@@ -1,6 +1,6 @@
 import time
 import unittest
-from math import hypot
+from math import cos, hypot, pi, sin
 
 import launch
 import launch.actions
@@ -101,13 +101,14 @@ class TestAu9NavigationTools(unittest.TestCase):
             return False
         return future.result().current_state.id == State.PRIMARY_STATE_ACTIVE
 
-    def _pose(self, x, y):
+    def _pose(self, x, y, yaw=0.0):
         pose = PoseStamped()
         pose.header.frame_id = "map"
         pose.header.stamp = self.node.get_clock().now().to_msg()
         pose.pose.position.x = x
         pose.pose.position.y = y
-        pose.pose.orientation.w = 1.0
+        pose.pose.orientation.z = sin(yaw / 2.0)
+        pose.pose.orientation.w = cos(yaw / 2.0)
         return pose
 
     def _publish_initial_pose(self):
@@ -123,9 +124,9 @@ class TestAu9NavigationTools(unittest.TestCase):
             self.initial_pose.publish(pose)
             rclpy.spin_once(self.node, timeout_sec=0.1)
 
-    def _send_navigation_goal(self, x, y):
+    def _send_navigation_goal(self, x, y, yaw=0.0):
         goal = NavigateToPose.Goal()
-        goal.pose = self._pose(x, y)
+        goal.pose = self._pose(x, y, yaw)
         future = self.navigate_client.send_goal_async(goal)
         self.assertTrue(
             self._spin_until(lambda: future.done()),
@@ -236,7 +237,7 @@ class TestAu9NavigationTools(unittest.TestCase):
         )
         start_wheels = self._joint_positions(self.joint_states[-1])
         waypoints = FollowWaypoints.Goal()
-        waypoints.poses = [self._pose(1.50, 4.00), self._pose(1.20, 4.00)]
+        waypoints.poses = [self._pose(2.20, 4.00), self._pose(2.60, 4.00)]
         request = self.waypoint_client.send_goal_async(waypoints)
         self.assertTrue(
             self._spin_until(lambda: request.done()),
@@ -248,6 +249,10 @@ class TestAu9NavigationTools(unittest.TestCase):
         waypoint_finished = self._spin_until(
             lambda: waypoint_result.done(), timeout=120.0
         )
+        if not waypoint_finished:
+            cancel_future = waypoint_handle.cancel_goal_async()
+            self._spin_until(lambda: cancel_future.done(), timeout=10.0)
+            self._spin_until(lambda: waypoint_result.done(), timeout=20.0)
         self.assertTrue(
             waypoint_finished,
             "waypoint route timed out: "
@@ -271,7 +276,7 @@ class TestAu9NavigationTools(unittest.TestCase):
         )
 
         motion_count = len(self.safe_commands)
-        cancel_handle = self._send_navigation_goal(1.80, 5.80)
+        cancel_handle = self._send_navigation_goal(1.80, 5.80, pi / 2.0)
         self.assertTrue(
             self._spin_until(
                 lambda: any(
@@ -316,7 +321,7 @@ class TestAu9NavigationTools(unittest.TestCase):
             "safe velocity remained non-zero after cancellation",
         )
 
-        return_handle = self._send_navigation_goal(1.80, 4.00)
+        return_handle = self._send_navigation_goal(1.80, 4.00, pi)
         return_result = return_handle.get_result_async()
         self.assertTrue(
             self._spin_until(lambda: return_result.done(), timeout=120.0),
