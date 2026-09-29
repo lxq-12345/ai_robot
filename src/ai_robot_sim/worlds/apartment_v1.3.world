@@ -765,7 +765,11 @@ v1.3记录此确认，几何构件沿用v1.2，不因版本升级改变坐标。
         </visual>
       </link>
     </model>
-    <!-- 地面顶面Z=0，覆盖房屋及入口外区域 -->
+    <!--
+      物理地面保留房屋外扩展范围；可见地面与Nav2地图边界对齐。
+      Nav2范围：X=-0.50..6.70，Y=-0.50..8.00，中心=(3.10,3.75)。
+      可见地面顶面略低于Z=0，使Gazebo参考Grid不被遮挡。
+    -->
     <model name="ground">
       <static>true</static>
       <pose>3.095 3.74 -0.05 0 0 0</pose>
@@ -786,9 +790,10 @@ v1.3记录此确认，几何构件沿用v1.2，不因版本升级改变坐标。
           </surface>
         </collision>
         <visual name="floor_visual">
+          <pose>0.005 0.010 -0.001 0 0 0</pose>
           <geometry>
             <box>
-              <size>12.19 13.48 0.10</size>
+              <size>7.20 8.50 0.10</size>
             </box>
           </geometry>
           <material>

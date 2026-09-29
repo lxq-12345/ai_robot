@@ -115,6 +115,7 @@ def test_apartment_nav2_bringup_reuses_au8_world_robot_and_map():
     assert "Fixed Frame: map" in rviz_source
     assert "Reference Frame: map" in rviz_source
     assert "Plane Cell Count: 20" in rviz_source
+    assert "Offset:\n        X: 0\n        Y: 0\n        Z: -0.01" in rviz_source
     assert "X: 3.1" in rviz_source
     assert "Y: 3.75" in rviz_source
     assert "Class: nav2_rviz_plugins/GoalTool" in rviz_source
@@ -147,6 +148,28 @@ def test_apartment_navigation_map_has_expected_frame_and_free_test_points():
         assert occupancy_at(*point) == 254
     assert occupancy_at(0.10, 4.00) == 0
     assert occupancy_at(3.08, 5.80) == 0
+
+
+def test_apartment_ground_visual_matches_navigation_map_extent():
+    root = ET.parse(APARTMENT_WORLD).getroot()
+    ground = root.find("world/model[@name='ground']")
+    visual = ground.find("./link/visual[@name='floor_visual']")
+    collision = ground.find("./link/collision[@name='floor_collision']")
+
+    model_pose = [float(value) for value in ground.findtext("pose").split()]
+    visual_pose = [float(value) for value in visual.findtext("pose").split()]
+    visual_size = [
+        float(value) for value in visual.findtext("geometry/box/size").split()
+    ]
+    collision_size = [
+        float(value) for value in collision.findtext("geometry/box/size").split()
+    ]
+
+    assert abs(model_pose[0] + visual_pose[0] - 3.10) < 1e-9
+    assert abs(model_pose[1] + visual_pose[1] - 3.75) < 1e-9
+    assert visual_size[:2] == [7.20, 8.50]
+    assert visual_pose[2] < 0.0
+    assert collision_size[:2] == [12.19, 13.48]
 
 
 def test_apartment_robot_sdf_has_explicit_yellow_body_material():
