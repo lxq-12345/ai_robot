@@ -1,0 +1,23 @@
+{
+  "samples": 60,
+  "duration": 59.340932445000135,
+  "displacement_m": 3.0722566127264064e-08,
+  "yaw_change_rad": -2.1047438185937919e-13,
+  "body_forward_m": 3.072145560168231e-08,
+  "body_lateral_m": 2.612186018952037e-10,
+  "max_wheel_rad_s": 7.155574405423325e-09,
+  "max_safe_command": 0.0,
+  "max_displacement_m": 3.0722566127264064e-08,
+  "max_yaw_change_rad": 2.1053456382435304e-13,
+  "map_odom_excursion_m": 0.0,
+  "map_odom_yaw_excursion_rad": 0.0,
+  "final_covariance": [
+    -8.304468224196171e-14,
+    0.0,
+    -1.3322676295501875e-15
+  ],
+  "sim_duration": 58.800000000000004,
+  "scan_endpoint_count": 355,
+  "scan_wall_median_m": 0.029995401524410163,
+  "scan_wall_fraction_within_0_1m": 1.0
+}

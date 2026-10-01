@@ -89,3 +89,36 @@ def test_base_and_wheel_dimensions_match_baseline():
     assert links["left_rear_wheel"].find("visual/geometry/cylinder").attrib == wheel_geometry
     assert links["right_front_wheel"].find("visual/geometry/cylinder").attrib == wheel_geometry
     assert links["right_rear_wheel"].find("visual/geometry/cylinder").attrib == wheel_geometry
+
+
+@pytest.mark.parametrize('model_format', ['xacro', 'sdf'])
+def test_yellow_car_drive_parameters_match_both_physical_wheel_pairs(model_format):
+    package = XACRO_FILE.parents[1]
+    if model_format == 'xacro':
+        expanded = subprocess.run(
+            ['xacro', str(package / 'urdf/small_yellow_car_v1.2.urdf.xacro')],
+            check=True, capture_output=True, text=True,
+        )
+        robot = ET.fromstring(expanded.stdout)
+    else:
+        robot = ET.parse(package / 'models/small_yellow_car_v1.2.sdf').getroot().find('model')
+    plugin = next(p for p in robot.findall('.//plugin')
+                  if p.get('filename') == 'libgazebo_ros_diff_drive.so')
+    pairs = int(plugin.findtext('num_wheel_pairs'))
+    left = plugin.findall('left_joint')
+    right = plugin.findall('right_joint')
+    separations = plugin.findall('wheel_separation')
+    diameters = plugin.findall('wheel_diameter')
+    assert len(left) == len(right) == len(separations) == len(diameters) == pairs
+    for i in range(pairs):
+        joints = [robot.find(f"joint[@name='{side[i].text}']") for side in (left, right)]
+        if model_format == 'xacro':
+            poses = [list(map(float, j.find('origin').get('xyz').split())) for j in joints]
+            child = joints[0].find('child').get('link')
+            radius = float(robot.find(f"link[@name='{child}']/collision/geometry/cylinder").get('radius'))
+        else:
+            poses = [list(map(float, j.findtext('pose').split()[:3])) for j in joints]
+            child = joints[0].findtext('child')
+            radius = float(robot.findtext(f"link[@name='{child}']/collision/geometry/cylinder/radius"))
+        assert float(separations[i].text) == pytest.approx(abs(poses[0][1]-poses[1][1]))
+        assert float(diameters[i].text) == pytest.approx(2*radius)

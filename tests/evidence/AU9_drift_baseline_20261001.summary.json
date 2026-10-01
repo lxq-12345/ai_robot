@@ -1,0 +1,9 @@
+{
+  "samples": 60,
+  "duration": 59.33793871700004,
+  "displacement_m": 0.039263096879156856,
+  "yaw_change_rad": 0.06734787217299501,
+  "max_safe_command": 0.0,
+  "max_wheel_rad_s": 0.0340866735253882,
+  "result": "baseline / diagnostic comparison; not accepted fix"
+}

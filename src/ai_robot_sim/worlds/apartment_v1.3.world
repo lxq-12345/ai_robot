@@ -58,6 +58,13 @@ v1.3记录此确认，几何构件沿用v1.2，不因版本升级改变坐标。
   <world name="apartment_house_merged_v1_3">
     <gravity>0 0 -9.81</gravity>
     <physics name="default_physics" type="ode">
+      <!-- Accurate iterative solve for the four simultaneous wheel contacts. -->
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>200</iters>
+        </solver>
+      </ode>
       <max_step_size>0.001</max_step_size>
       <real_time_update_rate>1000</real_time_update_rate>
       <real_time_factor>1.0</real_time_factor>

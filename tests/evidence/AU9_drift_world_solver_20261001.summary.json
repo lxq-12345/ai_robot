@@ -1,0 +1,9 @@
+{
+  "samples": 37,
+  "duration": 36.16130426200016,
+  "displacement_m": 298.12789877942953,
+  "yaw_change_rad": -2.872926967271166,
+  "max_safe_command": 0.0,
+  "max_wheel_rad_s": 1.0658141036401503e-14,
+  "result": "rejected; unstable and stopped early"
+}

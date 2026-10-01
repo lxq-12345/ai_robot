@@ -154,6 +154,9 @@ Gazebo加载、动力学、ROS话题及双目同步需要在实际ROS环境中�
     <gazebo reference="${name}">
       <material>Gazebo/Black</material>
       <mu1>1.0</mu1><mu2>1.0</mu2>
+      <!-- Finite contact compliance prevents persistent four-wheel creep. -->
+      <kp>1000000.0</kp><kd>100.0</kd>
+      <minDepth>0.001</minDepth><maxVel>0.1</maxVel>
     </gazebo>
     <xacro:fixed_cylinder name="${name}_hub" parent="${name}"
       xyz="0 ${side*wheel_width/2} 0" rpy="${pi/2} 0 0"
@@ -275,6 +278,8 @@ Gazebo加载、动力学、ROS话题及双目同步需要在实际ROS环境中�
       <left_joint>left_rear_wheel_joint</left_joint>
       <right_joint>right_rear_wheel_joint</right_joint>
       <wheel_separation>${2*wheel_y}</wheel_separation>
+      <wheel_separation>${2*wheel_y}</wheel_separation>
+      <wheel_diameter>${2*wheel_radius}</wheel_diameter>
       <wheel_diameter>${2*wheel_radius}</wheel_diameter>
       <max_wheel_torque>5.0</max_wheel_torque>
       <max_wheel_acceleration>4.0</max_wheel_acceleration>
