@@ -1,6 +1,6 @@
 # Gazebo与RViz2辅助课程
 
-版本：v1.7
+版本：v1.8
 
 ## 1. 课程定位
 
@@ -13,7 +13,7 @@
 ```text
 learning/Gazebo与RViz2辅助/
 ├── README.md
-├── Gazebo与RViz2辅助学习计划_v1.9.md
+├── Gazebo与RViz2辅助学习计划_v1.10.md
 ├── source/AU*/     # AU1至AU11 Markdown教材
 ├── html/AU*/       # 同版本HTML阅读版
 ├── assets/         # 后续图片和模型资源
@@ -34,7 +34,8 @@ learning/Gazebo与RViz2辅助/
 | AU6 | `source/AU6/AU6-01_环境建模_v1.1.md` | 两房间World、墙体、障碍、视角与静态Visual/Collision检查 | 为后续导航场景准备环境，不在本单元测试通行 |
 | AU7 | `source/AU7/AU7-01_RViz2界面与配置_v1.1.md` | Fixed Frame、Display、Topic、QoS、配置保存与非导航观察 | 支撑M3至M6 RViz2观察 |
 | AU8 | `source/AU8/AU8-01_Gazebo与RViz2协同_v1.4.md` | 独立启停Gazebo/RViz2、`/clock`、TF、Topic、小黄车双目相机与重启恢复，不执行运动或导航 | 直接支撑M5-L4 GUI数据观察 |
-| AU9 | `source/AU9/AU9-01_导航操作与路径工具_v1.1.md` | 初始位姿、单目标完整控制闭环、小车运动、多航点与取消 | 直接支撑M5/M6 GUI体验 |
+| AU9-01 | `source/AU9/AU9-01_导航操作与路径工具_v1.1.md` | 初始位姿、单目标完整控制闭环、现有FollowWaypoints多航点与取消 | 直接支撑M5/M6 GUI体验 |
+| AU9-02 | 教材待R00-C选型后编写；当前依据`plan/waypoint_navigation_开发与测试项目计划_v1.2.md` | WaypointTool发布航点、手动规划与执行、按序实际经过航点、取消与证据 | AU9新增单元；开发与验收尚未完成 |
 | AU10 | `source/AU10/AU10-01_综合测试练习_v1.0.md` | 建图、定位、导航、障碍、相机、安全停车 | 当前M5-L4 GUI补证据主入口 |
 | AU11 | `source/AU11/AU11-01_总结与考核_v1.0.md` | 知识、操作、建模、协同和证据考核 | S1-1-G1前工具能力检查 |
 
