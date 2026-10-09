@@ -1,0 +1,239 @@
+{
+  "observed_at": "2026-10-08 23:49 PDT",
+  "git_head": "37ff964bd3cb01c3d09ca6ca1e998f2ad00fcadb",
+  "runtime_tests_executed": false,
+  "packages": [
+    {
+      "name": "nav2_bringup",
+      "version": "1.1.20",
+      "license": "Apache-2.0",
+      "sha256": "1c38002fde1e7eb8969036aefeb2e9f1e9a0cda234dacb02407d5962988df3ff"
+    },
+    {
+      "name": "nav2_msgs",
+      "version": "1.1.20",
+      "license": "Apache-2.0",
+      "sha256": "787a1b9d595d8dde19dce005230d70c77137b51fc97de51abd7b83fafb6e2238"
+    },
+    {
+      "name": "nav2_planner",
+      "version": "1.1.20",
+      "license": "Apache-2.0",
+      "sha256": "de252b52b2197ee0cc9c57745cf852660303ec8739d725f1d056a9fbec982076"
+    },
+    {
+      "name": "nav2_controller",
+      "version": "1.1.20",
+      "license": "Apache-2.0",
+      "sha256": "79a576e2b2faf6a368ed7b4e8c5e209f72bd2233f53afc5c2feb27c1e3634e8e"
+    },
+    {
+      "name": "nav2_amcl",
+      "version": "1.1.20",
+      "license": "LGPL-2.1-or-later",
+      "sha256": "f8caaeb2a64e272f68b1f2e87da60598ab761a2a07ef4910fe025229af53039c"
+    },
+    {
+      "name": "nav2_velocity_smoother",
+      "version": "1.1.20",
+      "license": "Apache-2.0",
+      "sha256": "91c33d28154f13ae22e0e7c4e4f4eaf44a01402377922903daed9afbdbc13439"
+    },
+    {
+      "name": "nav2_simple_commander",
+      "version": "1.1.20",
+      "license": "Apache-2.0",
+      "sha256": "41c7e20d105159396897dc491723c4158f342021f923ca13a31e425ec1dfe63d"
+    },
+    {
+      "name": "gazebo_ros",
+      "version": "3.9.0",
+      "license": "Apache 2.0",
+      "sha256": "1be111d65677a97d0ecc43acc76b96486ecf408fb0851783f96b920c7eadb9b4"
+    },
+    {
+      "name": "rviz2",
+      "version": "11.2.28",
+      "license": "BSD",
+      "sha256": "71f4d968f9af5d5645c283dea5c67dc6867b421646c28880bbd346d70760cd4e"
+    }
+  ],
+  "actions": [
+    {
+      "name": "NavigateToPose",
+      "path": "/opt/ros/humble/share/nav2_msgs/action/NavigateToPose.action",
+      "definition": "#goal definition\ngeometry_msgs/PoseStamped pose\nstring behavior_tree\n---\n#result definition\nstd_msgs/Empty result\n---\n#feedback definition\ngeometry_msgs/PoseStamped current_pose\nbuiltin_interfaces/Duration navigation_time\nbuiltin_interfaces/Duration estimated_time_remaining\nint16 number_of_recoveries\nfloat32 distance_remaining\n",
+      "sha256": "230afba4c69ab8ae9f680c257aad7b55353ab40dbc027614c51b763f153b18a0"
+    },
+    {
+      "name": "NavigateThroughPoses",
+      "path": "/opt/ros/humble/share/nav2_msgs/action/NavigateThroughPoses.action",
+      "definition": "#goal definition\ngeometry_msgs/PoseStamped[] poses\nstring behavior_tree\n---\n#result definition\nstd_msgs/Empty result\n---\n#feedback definition\ngeometry_msgs/PoseStamped current_pose\nbuiltin_interfaces/Duration navigation_time\nbuiltin_interfaces/Duration estimated_time_remaining\nint16 number_of_recoveries\nfloat32 distance_remaining\nint16 number_of_poses_remaining\n",
+      "sha256": "b5bb375c4dfbfca86e41b18c55d1bfadcb91e3f7156cb77d8793be9d27eb1576"
+    },
+    {
+      "name": "FollowWaypoints",
+      "path": "/opt/ros/humble/share/nav2_msgs/action/FollowWaypoints.action",
+      "definition": "#goal definition\ngeometry_msgs/PoseStamped[] poses\n---\n#result definition\nint32[] missed_waypoints\n---\n#feedback definition\nuint32 current_waypoint\n",
+      "sha256": "cdd2c915caf07c5d1948beff5a3b38a9d556ce3aa1f4c99102287932b8053f89"
+    },
+    {
+      "name": "ComputePathThroughPoses",
+      "path": "/opt/ros/humble/share/nav2_msgs/action/ComputePathThroughPoses.action",
+      "definition": "#goal definition\ngeometry_msgs/PoseStamped[] goals\ngeometry_msgs/PoseStamped start\nstring planner_id\nbool use_start # If false, use current robot pose as path start, if true, use start above instead\n---\n#result definition\nnav_msgs/Path path\nbuiltin_interfaces/Duration planning_time\n---\n#feedback definition\n",
+      "sha256": "de13660dbdb5f117e33ff844e0a5089c95df388b6644b608d796b808cf1a4f05"
+    },
+    {
+      "name": "FollowPath",
+      "path": "/opt/ros/humble/share/nav2_msgs/action/FollowPath.action",
+      "definition": "#goal definition\nnav_msgs/Path path\nstring controller_id\nstring goal_checker_id\n---\n#result definition\nstd_msgs/Empty result\n---\n#feedback definition\nfloat32 distance_to_goal\nfloat32 speed\n",
+      "sha256": "111ca563388f30fd5176121e47a5d272e5e1e81bbeaf7b4f86c5d6cb7a243e53"
+    }
+  ],
+  "files": [
+    {
+      "path": "config/nav2_sim.yaml",
+      "exists": true,
+      "sha256": "54f715efacef446c412754f400737f7f3579d179eb0492ffeccc412fa8d405ac"
+    },
+    {
+      "path": "config/amcl_sim.yaml",
+      "exists": true,
+      "sha256": "0c3e53bc0912d25ffd78f01bf1f3da636e8160e9c1f94f108fbec40f917518d4"
+    },
+    {
+      "path": "config/sim_base.yaml",
+      "exists": true,
+      "sha256": "b1d72c3de42054a1afc679d927467a689302ec852f0301ba01d590ec106dce19"
+    },
+    {
+      "path": "config/rviz2/au9_nav2.rviz",
+      "exists": true,
+      "sha256": "5752dabe76f6fce04d4b768a4cb35c55ab0a40c482791f07f0a274bbc2835f3a"
+    },
+    {
+      "path": "src/ai_robot_sim/launch/apartment_nav2_bringup.launch.py",
+      "exists": true,
+      "sha256": "592c0e2595f96ad0c6122e5243c313a4e126f2cbd9c05d57d4ca6b59f5b32a3c"
+    },
+    {
+      "path": "src/ai_robot_sim/launch/apartment_house_bringup.launch.py",
+      "exists": true,
+      "sha256": "9589f362df715efb07e442a8eec134ba3462afc42e8c0190cbfbd5b201acb0db"
+    },
+    {
+      "path": "src/ai_robot_sim/launch/sim_bringup.launch.py",
+      "exists": true,
+      "sha256": "ef5003b0a979f7aa2990a0605b63da424ac5a9ac23d1cc7051ba4e2d0e69210a"
+    },
+    {
+      "path": "src/ai_robot_sim/ai_robot_sim/cmd_vel_guard.py",
+      "exists": true,
+      "sha256": "634829cb7b015d486e40384f19e7472db89bf160d8263606aa368cbcb5bcce9a"
+    },
+    {
+      "path": "src/ai_robot_sim/maps/apartment_v1.3_nav.yaml",
+      "exists": true,
+      "sha256": "6c1132721beb7873001785d6d271e4425fe37a9d09968f549ceacd0ae2538944"
+    },
+    {
+      "path": "src/ai_robot_sim/maps/apartment_v1.3_nav.pgm",
+      "exists": true,
+      "sha256": "6107a1c821a37ca0aa8978066a9d1c90071c4b836ac56825169374653ec01c08"
+    },
+    {
+      "path": "src/ai_robot_description/models/small_yellow_car_v1.2.sdf",
+      "exists": true,
+      "sha256": "fdc30de599fe43f04b252f75a5316ddb1e5cb996ed82f18f7a3546dcc209de43"
+    },
+    {
+      "path": "src/ai_robot_description/urdf/small_yellow_car_v1.2.urdf.xacro",
+      "exists": true,
+      "sha256": "b41ad0cf13eda38ebccabd2fdc92141d4d0ed93c29f5d6d7701d5402bda74eb7"
+    },
+    {
+      "path": "src/ai_robot_sim/behavior_trees/navigate_to_pose_back_up_recovery.xml",
+      "exists": true,
+      "sha256": "40d3af0c44a56c8e85bb9e65106b39e98ac3b18ff666b34ed8b0ba482cd0fb11"
+    },
+    {
+      "path": "src/ai_robot_sim/behavior_trees/navigate_through_poses_back_up_recovery.xml",
+      "exists": true,
+      "sha256": "6fe164101e5674e66da0818fbb7ee7a6884f7e89817c9696cc873089a3db9142"
+    },
+    {
+      "path": "scripts/start_au9_manual_nav2.sh",
+      "exists": true,
+      "sha256": "74cad9f19bc126810a386034e301170a733f50cac1c49a8c67ab750278da9b6b"
+    },
+    {
+      "path": "scripts/stop_au9_manual_nav2.sh",
+      "exists": true,
+      "sha256": "b42273177ffeb49ce02c1639887ae270d391bb57872e6b1a1ddb6fd63e13f42a"
+    },
+    {
+      "path": "install/ai_robot_au9_bt_plugins/lib/libai_robot_au9_bt_nodes.so",
+      "exists": true,
+      "sha256": "5c75aba6ebf8ed24aa24cb22a8f9c2acba01a1cb8c3862ef5abe62a090010fd7"
+    }
+  ],
+  "source_install_comparisons": [
+    {
+      "source": "config/nav2_sim.yaml",
+      "installed": "install/ai_robot_sim/share/ai_robot_sim/config/nav2_sim.yaml",
+      "identical": true
+    },
+    {
+      "source": "config/rviz2/au9_nav2.rviz",
+      "installed": "install/ai_robot_sim/share/ai_robot_sim/config/au9_nav2.rviz",
+      "identical": true
+    },
+    {
+      "source": "src/ai_robot_sim/launch/apartment_nav2_bringup.launch.py",
+      "installed": "install/ai_robot_sim/share/ai_robot_sim/launch/apartment_nav2_bringup.launch.py",
+      "identical": true
+    },
+    {
+      "source": "src/ai_robot_sim/maps/apartment_v1.3_nav.yaml",
+      "installed": "install/ai_robot_sim/share/ai_robot_sim/maps/apartment_v1.3_nav.yaml",
+      "identical": true
+    }
+  ],
+  "process_snapshot": {
+    "gzserver": [],
+    "gzclient": [],
+    "rviz2": []
+  },
+  "display_present": true,
+  "source_worktree_changes": [
+    "config/nav2_sim.yaml",
+    "config/rviz2/au9_nav2.rviz",
+    "src/ai_robot_sim/behavior_trees/navigate_through_poses_back_up_recovery.xml",
+    "src/ai_robot_sim/behavior_trees/navigate_to_pose_back_up_recovery.xml",
+    "src/ai_robot_sim/launch/apartment_nav2_bringup.launch.py",
+    "src/ai_robot_sim/package.xml",
+    "src/ai_robot_sim/test/test_sim_entrypoints.py"
+  ],
+  "map_candidate_points": {
+    "positions": [
+      [
+        1.8,
+        4.0
+      ],
+      [
+        2.2,
+        4.0
+      ],
+      [
+        2.6,
+        4.0
+      ],
+      [
+        1.8,
+        5.8
+      ]
+    ],
+    "center_and_0_30m_disk_min_gray": 254,
+    "interpretation": "静态地图free，非运行碰撞检查"
+  }
+}
