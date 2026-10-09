@@ -1,0 +1,100 @@
+{
+  "observed_at": "2026-10-08 19:05 PDT",
+  "git_baseline": "56cfd99476f5444b6048307b750afdbdb255820f",
+  "runtime_checked": false,
+  "files": [
+    {
+      "path": "/opt/ros/humble/share/nav2_simple_commander/package.xml",
+      "sha256": "41c7e20d105159396897dc491723c4158f342021f923ca13a31e425ec1dfe63d",
+      "version": "1.1.20",
+      "license": "Apache-2.0",
+      "dependencies": [
+        "rclpy",
+        "geometry_msgs",
+        "nav2_msgs",
+        "action_msgs",
+        "lifecycle_msgs",
+        "ament_copyright",
+        "ament_flake8",
+        "ament_pep257",
+        "python3-pytest"
+      ]
+    },
+    {
+      "path": "/opt/ros/humble/share/nav2_rviz_plugins/package.xml",
+      "sha256": "a11b51d795cb6035c5491e4231c98615ff5c68d79c304651632d12b4658fa2b0",
+      "version": "1.1.20",
+      "license": "Apache-2.0",
+      "dependencies": [
+        "ament_cmake",
+        "qtbase5-dev",
+        "geometry_msgs",
+        "nav2_util",
+        "nav2_lifecycle_manager",
+        "nav2_msgs",
+        "nav_msgs",
+        "pluginlib",
+        "rclcpp",
+        "rclcpp_lifecycle",
+        "resource_retriever",
+        "rviz_common",
+        "rviz_default_plugins",
+        "rviz_ogre_vendor",
+        "rviz_rendering",
+        "std_msgs",
+        "tf2_geometry_msgs",
+        "visualization_msgs",
+        "libqt5-core",
+        "libqt5-gui",
+        "libqt5-opengl",
+        "libqt5-widgets",
+        "ament_lint_common",
+        "ament_lint_auto"
+      ]
+    },
+    {
+      "path": "/opt/ros/humble/share/nav2_msgs/action/FollowPath.action",
+      "sha256": "111ca563388f30fd5176121e47a5d272e5e1e81bbeaf7b4f86c5d6cb7a243e53",
+      "definition": "#goal definition\nnav_msgs/Path path\nstring controller_id\nstring goal_checker_id\n---\n#result definition\nstd_msgs/Empty result\n---\n#feedback definition\nfloat32 distance_to_goal\nfloat32 speed\n"
+    },
+    {
+      "path": "/opt/ros/humble/share/nav2_msgs/action/ComputePathThroughPoses.action",
+      "sha256": "de13660dbdb5f117e33ff844e0a5089c95df388b6644b608d796b808cf1a4f05",
+      "definition": "#goal definition\ngeometry_msgs/PoseStamped[] goals\ngeometry_msgs/PoseStamped start\nstring planner_id\nbool use_start # If false, use current robot pose as path start, if true, use start above instead\n---\n#result definition\nnav_msgs/Path path\nbuiltin_interfaces/Duration planning_time\n---\n#feedback definition\n"
+    },
+    {
+      "path": "/opt/ros/humble/lib/python3.10/site-packages/nav2_simple_commander/robot_navigator.py",
+      "sha256": "c887e9bd994bad57b1903781a1f29659656854053b8fee5797951dc35234bfed"
+    },
+    {
+      "path": "src/waypoint_rviz2_plugin/package.xml",
+      "sha256": "dd7b37cabad9026b2930ddf4ce19099918e37803c5cbdcca389568eb31098502",
+      "version": "1.0.0",
+      "license": "Apache-2.0",
+      "dependencies": [
+        "ament_cmake",
+        "rclcpp",
+        "rviz_common",
+        "rviz_default_plugins",
+        "rviz_rendering",
+        "rviz_ogre_vendor",
+        "geometry_msgs",
+        "visualization_msgs",
+        "interactive_markers",
+        "nav_msgs",
+        "tf2",
+        "tf2_geometry_msgs",
+        "rosbag2_cpp",
+        "pluginlib",
+        "qtbase5-dev",
+        "qt5-qmake",
+        "ament_lint_auto",
+        "ament_lint_common"
+      ]
+    },
+    {
+      "path": "src/waypoint_rviz2_plugin/src/waypoint_widget.cpp",
+      "sha256": "810a0c8efc8358662ce12140a02812157bc235c0fd7563cc0f2388c2b45d8793"
+    }
+  ]
+}

@@ -1,0 +1,4315 @@
+[
+  {
+    "repo": "ros-navigation/navigation2",
+    "path": "nav2_rviz_plugins/src/nav2_panel.cpp",
+    "commit": "3c3db59d6969d8ecee8e68468693d006397f4a0c",
+    "url": "https://github.com/ros-navigation/navigation2/blob/3c3db59d6969d8ecee8e68468693d006397f4a0c/nav2_rviz_plugins/src/nav2_panel.cpp",
+    "sha256": "22b7ba8e0b50c8beb31344a2a7efb52a1c0fd0b7c4a1d8cb5242cc194ce10c35",
+    "lines": 990,
+    "matches": [
+      {
+        "line": 3,
+        "text": "// Licensed under the Apache License, Version 2.0 (the \"License\");"
+      },
+      {
+        "line": 4,
+        "text": "// you may not use this file except in compliance with the License."
+      },
+      {
+        "line": 5,
+        "text": "// You may obtain a copy of the License at"
+      },
+      {
+        "line": 7,
+        "text": "//     http://www.apache.org/licenses/LICENSE-2.0"
+      },
+      {
+        "line": 10,
+        "text": "// distributed under the License is distributed on an \"AS IS\" BASIS,"
+      },
+      {
+        "line": 12,
+        "text": "// See the License for the specific language governing permissions and"
+      },
+      {
+        "line": 13,
+        "text": "// limitations under the License."
+      },
+      {
+        "line": 57,
+        "text": "  const char * cancel_msg = \"Cancel navigation\";"
+      },
+      {
+        "line": 63,
+        "text": "  const char * cancel_waypoint_msg = \"Cancel waypoint / viapoint accumulation mode\";"
+      },
+      {
+        "line": 130,
+        "text": "  accumulating_->assignProperty(start_reset_button_, \"text\", \"Cancel Accumulation\");"
+      },
+      {
+        "line": 131,
+        "text": "  accumulating_->assignProperty(start_reset_button_, \"toolTip\", cancel_waypoint_msg);"
+      },
+      {
+        "line": 144,
+        "text": "  accumulated_wp_->assignProperty(start_reset_button_, \"text\", \"Cancel\");"
+      },
+      {
+        "line": 145,
+        "text": "  accumulated_wp_->assignProperty(start_reset_button_, \"toolTip\", cancel_msg);"
+      },
+      {
+        "line": 158,
+        "text": "  accumulated_nav_through_poses_->assignProperty(start_reset_button_, \"text\", \"Cancel\");"
+      },
+      {
+        "line": 159,
+        "text": "  accumulated_nav_through_poses_->assignProperty(start_reset_button_, \"toolTip\", cancel_msg);"
+      },
+      {
+        "line": 176,
+        "text": "  // State entered to cancel the navigate_to_pose action"
+      },
+      {
+        "line": 177,
+        "text": "  canceled_ = new QState();"
+      },
+      {
+        "line": 178,
+        "text": "  canceled_->setObjectName(\"canceled\");"
+      },
+      {
+        "line": 187,
+        "text": "  running_->assignProperty(start_reset_button_, \"text\", \"Cancel\");"
+      },
+      {
+        "line": 188,
+        "text": "  running_->assignProperty(start_reset_button_, \"toolTip\", cancel_msg);"
+      },
+      {
+        "line": 215,
+        "text": "  QObject::connect(canceled_, SIGNAL(exited()), this, SLOT(onCancel()));"
+      },
+      {
+        "line": 228,
+        "text": "  running_->addTransition(start_reset_button_, SIGNAL(clicked()), canceled_);"
+      },
+      {
+        "line": 236,
+        "text": "  accumulated_wp_->addTransition(start_reset_button_, SIGNAL(clicked()), canceled_);"
+      },
+      {
+        "line": 237,
+        "text": "  accumulated_nav_through_poses_->addTransition(start_reset_button_, SIGNAL(clicked()), canceled_);"
+      },
+      {
+        "line": 240,
+        "text": "  canceled_->addTransition(canceled_, SIGNAL(entered()), idle_);"
+      },
+      {
+        "line": 327,
+        "text": "  state_machine_.addState(canceled_);"
+      },
+      {
+        "line": 355,
+        "text": "    rclcpp_action::create_client<nav2_msgs::action::NavigateToPose>("
+      },
+      {
+        "line": 359,
+        "text": "    rclcpp_action::create_client<nav2_msgs::action::FollowWaypoints>("
+      },
+      {
+        "line": 363,
+        "text": "    rclcpp_action::create_client<nav2_msgs::action::NavigateThroughPoses>("
+      },
+      {
+        "line": 366,
+        "text": "  navigation_goal_ = nav2_msgs::action::NavigateToPose::Goal();"
+      },
+      {
+        "line": 367,
+        "text": "  waypoint_follower_goal_ = nav2_msgs::action::FollowWaypoints::Goal();"
+      },
+      {
+        "line": 368,
+        "text": "  nav_through_poses_goal_ = nav2_msgs::action::NavigateThroughPoses::Goal();"
+      },
+      {
+        "line": 371,
+        "text": "    client_node_->create_publisher<visualization_msgs::msg::MarkerArray>("
+      },
+      {
+        "line": 391,
+        "text": "    node->create_subscription<nav2_msgs::action::NavigateToPose::Impl::FeedbackMessage>("
+      },
+      {
+        "line": 394,
+        "text": "    [this](const nav2_msgs::action::NavigateToPose::Impl::FeedbackMessage::SharedPtr msg) {"
+      },
+      {
+        "line": 398,
+        "text": "    node->create_subscription<nav2_msgs::action::NavigateThroughPoses::Impl::FeedbackMessage>("
+      },
+      {
+        "line": 401,
+        "text": "    [this](const nav2_msgs::action::NavigateThroughPoses::Impl::FeedbackMessage::SharedPtr msg) {"
+      },
+      {
+        "line": 406,
+        "text": "  navigation_goal_status_sub_ = node->create_subscription<action_msgs::msg::GoalStatusArray>("
+      },
+      {
+        "line": 416,
+        "text": "  nav_through_poses_goal_status_sub_ = node->create_subscription<action_msgs::msg::GoalStatusArray>("
+      },
+      {
+        "line": 493,
+        "text": "  timer_.stop();"
+      },
+      {
+        "line": 497,
+        "text": "Nav2Panel::onCancel()"
+      },
+      {
+        "line": 502,
+        "text": "      &Nav2Panel::onCancelButtonPressed,"
+      },
+      {
+        "line": 529,
+        "text": "Nav2Panel::onCancelButtonPressed()"
+      },
+      {
+        "line": 532,
+        "text": "    auto future_cancel = navigation_action_client_->async_cancel_goal(navigation_goal_handle_);"
+      },
+      {
+        "line": 534,
+        "text": "    if (rclcpp::spin_until_future_complete(client_node_, future_cancel, server_timeout_) !="
+      },
+      {
+        "line": 537,
+        "text": "      RCLCPP_ERROR(client_node_->get_logger(), \"Failed to cancel goal\");"
+      },
+      {
+        "line": 544,
+        "text": "    auto future_cancel ="
+      },
+      {
+        "line": 545,
+        "text": "      waypoint_follower_action_client_->async_cancel_goal(waypoint_follower_goal_handle_);"
+      },
+      {
+        "line": 547,
+        "text": "    if (rclcpp::spin_until_future_complete(client_node_, future_cancel, server_timeout_) !="
+      },
+      {
+        "line": 550,
+        "text": "      RCLCPP_ERROR(client_node_->get_logger(), \"Failed to cancel waypoint follower\");"
+      },
+      {
+        "line": 557,
+        "text": "    auto future_cancel ="
+      },
+      {
+        "line": 558,
+        "text": "      nav_through_poses_action_client_->async_cancel_goal(nav_through_poses_goal_handle_);"
+      },
+      {
+        "line": 560,
+        "text": "    if (rclcpp::spin_until_future_complete(client_node_, future_cancel, server_timeout_) !="
+      },
+      {
+        "line": 563,
+        "text": "      RCLCPP_ERROR(client_node_->get_logger(), \"Failed to cancel nav through pose action\");"
+      },
+      {
+        "line": 570,
+        "text": "  timer_.stop();"
+      },
+      {
+        "line": 596,
+        "text": "Nav2Panel::timerEvent(QTimerEvent * event)"
+      },
+      {
+        "line": 599,
+        "text": "    if (event->timerId() == timer_.timerId()) {"
+      },
+      {
+        "line": 616,
+        "text": "        timer_.stop();"
+      },
+      {
+        "line": 620,
+        "text": "    if (event->timerId() == timer_.timerId()) {"
+      },
+      {
+        "line": 637,
+        "text": "        timer_.stop();"
+      },
+      {
+        "line": 641,
+        "text": "    if (event->timerId() == timer_.timerId()) {"
+      },
+      {
+        "line": 658,
+        "text": "        timer_.stop();"
+      },
+      {
+        "line": 690,
+        "text": "    rclcpp_action::Client<nav2_msgs::action::FollowWaypoints>::SendGoalOptions();"
+      },
+      {
+        "line": 697,
+        "text": "  if (rclcpp::spin_until_future_complete(client_node_, future_goal_handle, server_timeout_) !="
+      },
+      {
+        "line": 704,
+        "text": "  // Get the goal handle and save so that we can check on completion in the timer callback"
+      },
+      {
+        "line": 711,
+        "text": "  timer_.start(200, this);"
+      },
+      {
+        "line": 729,
+        "text": "    \"NavigateThroughPoses will be called using the BT Navigator's default behavior tree.\");"
+      },
+      {
+        "line": 742,
+        "text": "    rclcpp_action::Client<nav2_msgs::action::NavigateThroughPoses>::SendGoalOptions();"
+      },
+      {
+        "line": 749,
+        "text": "  if (rclcpp::spin_until_future_complete(client_node_, future_goal_handle, server_timeout_) !="
+      },
+      {
+        "line": 756,
+        "text": "  // Get the goal handle and save so that we can check on completion in the timer callback"
+      },
+      {
+        "line": 763,
+        "text": "  timer_.start(200, this);"
+      },
+      {
+        "line": 784,
+        "text": "    \"NavigateToPose will be called using the BT Navigator's default behavior tree.\");"
+      },
+      {
+        "line": 788,
+        "text": "    rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SendGoalOptions();"
+      },
+      {
+        "line": 795,
+        "text": "  if (rclcpp::spin_until_future_complete(client_node_, future_goal_handle, server_timeout_) !="
+      },
+      {
+        "line": 802,
+        "text": "  // Get the goal handle and save so that we can check on completion in the timer callback"
+      },
+      {
+        "line": 809,
+        "text": "  timer_.start(200, this);"
+      },
+      {
+        "line": 813,
+        "text": "Nav2Panel::save(rviz_common::Config config) const"
+      },
+      {
+        "line": 815,
+        "text": "  Panel::save(config);"
+      },
+      {
+        "line": 819,
+        "text": "Nav2Panel::load(const rviz_common::Config & config)"
+      },
+      {
+        "line": 821,
+        "text": "  Panel::load(config);"
+      },
+      {
+        "line": 925,
+        "text": "    case action_msgs::msg::GoalStatus::STATUS_CANCELED:"
+      },
+      {
+        "line": 926,
+        "text": "      status_str = \"<font color=orange>canceled</color>\";"
+      },
+      {
+        "line": 948,
+        "text": "Nav2Panel::getNavToPoseFeedbackLabel(nav2_msgs::action::NavigateToPose::Feedback msg)"
+      },
+      {
+        "line": 954,
+        "text": "Nav2Panel::getNavThroughPosesFeedbackLabel(nav2_msgs::action::NavigateThroughPoses::Feedback msg)"
+      }
+    ]
+  },
+  {
+    "repo": "ros-navigation/navigation2",
+    "path": "nav2_simple_commander/package.xml",
+    "commit": "3c3db59d6969d8ecee8e68468693d006397f4a0c",
+    "url": "https://github.com/ros-navigation/navigation2/blob/3c3db59d6969d8ecee8e68468693d006397f4a0c/nav2_simple_commander/package.xml",
+    "sha256": "41c7e20d105159396897dc491723c4158f342021f923ca13a31e425ec1dfe63d",
+    "lines": 24,
+    "matches": [
+      {
+        "line": 2,
+        "text": "<?xml-model href=\"http://download.ros.org/schema/package_format3.xsd\" schematypens=\"http://www.w3.org/2001/XMLSchema\"?>"
+      },
+      {
+        "line": 5,
+        "text": "  <version>1.1.20</version>"
+      },
+      {
+        "line": 8,
+        "text": "  <license>Apache-2.0</license>"
+      },
+      {
+        "line": 10,
+        "text": "  <exec_depend>rclpy</exec_depend>"
+      },
+      {
+        "line": 11,
+        "text": "  <exec_depend>geometry_msgs</exec_depend>"
+      },
+      {
+        "line": 12,
+        "text": "  <exec_depend>nav2_msgs</exec_depend>"
+      },
+      {
+        "line": 13,
+        "text": "  <exec_depend>action_msgs</exec_depend>"
+      },
+      {
+        "line": 14,
+        "text": "  <exec_depend>lifecycle_msgs</exec_depend>"
+      },
+      {
+        "line": 16,
+        "text": "  <test_depend>ament_copyright</test_depend>"
+      },
+      {
+        "line": 17,
+        "text": "  <test_depend>ament_flake8</test_depend>"
+      },
+      {
+        "line": 18,
+        "text": "  <test_depend>ament_pep257</test_depend>"
+      },
+      {
+        "line": 19,
+        "text": "  <test_depend>python3-pytest</test_depend>"
+      }
+    ]
+  },
+  {
+    "repo": "ros-navigation/navigation2",
+    "path": "nav2_waypoint_follower/src/waypoint_follower.cpp",
+    "commit": "3c3db59d6969d8ecee8e68468693d006397f4a0c",
+    "url": "https://github.com/ros-navigation/navigation2/blob/3c3db59d6969d8ecee8e68468693d006397f4a0c/nav2_waypoint_follower/src/waypoint_follower.cpp",
+    "sha256": "20c15f7158f8eb5f950b722f8eae9574146d7d53dff11dbe4c8c4a277753533e",
+    "lines": 357,
+    "matches": [
+      {
+        "line": 3,
+        "text": "// Licensed under the Apache License, Version 2.0 (the \"License\");"
+      },
+      {
+        "line": 4,
+        "text": "// you may not use this file except in compliance with the License."
+      },
+      {
+        "line": 5,
+        "text": "// You may obtain a copy of the License at"
+      },
+      {
+        "line": 7,
+        "text": "//     http://www.apache.org/licenses/LICENSE-2.0"
+      },
+      {
+        "line": 10,
+        "text": "// distributed under the License is distributed on an \"AS IS\" BASIS,"
+      },
+      {
+        "line": 12,
+        "text": "// See the License for the specific language governing permissions and"
+      },
+      {
+        "line": 13,
+        "text": "// limitations under the License."
+      },
+      {
+        "line": 32,
+        "text": "  waypoint_task_executor_loader_(\"nav2_waypoint_follower\","
+      },
+      {
+        "line": 37,
+        "text": "  declare_parameter(\"stop_on_failure\", true);"
+      },
+      {
+        "line": 41,
+        "text": "    rclcpp::ParameterValue(std::string(\"wait_at_waypoint\")));"
+      },
+      {
+        "line": 43,
+        "text": "    this, std::string(\"wait_at_waypoint.plugin\"),"
+      },
+      {
+        "line": 58,
+        "text": "  stop_on_failure_ = get_parameter(\"stop_on_failure\").as_bool();"
+      },
+      {
+        "line": 79,
+        "text": "    \"follow_waypoints\", std::bind(&WaypointFollower::followWaypoints, this));"
+      },
+      {
+        "line": 85,
+        "text": "    waypoint_task_executor_ = waypoint_task_executor_loader_.createUniqueInstance("
+      },
+      {
+        "line": 151,
+        "text": "WaypointFollower::followWaypoints()"
+      },
+      {
+        "line": 178,
+        "text": "    if (action_server_->is_cancel_requested()) {"
+      },
+      {
+        "line": 179,
+        "text": "      auto cancel_future = nav_to_pose_client_->async_cancel_all_goals();"
+      },
+      {
+        "line": 180,
+        "text": "      callback_group_executor_.spin_until_future_complete(cancel_future);"
+      },
+      {
+        "line": 217,
+        "text": "      if (stop_on_failure_) {"
+      },
+      {
+        "line": 240,
+        "text": "      // if task execution was failed and stop_on_failure_ is on , terminate action"
+      },
+      {
+        "line": 241,
+        "text": "      if (!is_task_executed && stop_on_failure_) {"
+      },
+      {
+        "line": 304,
+        "text": "    case rclcpp_action::ResultCode::CANCELED:"
+      },
+      {
+        "line": 340,
+        "text": "      if (name == \"stop_on_failure\") {"
+      },
+      {
+        "line": 341,
+        "text": "        stop_on_failure_ = parameter.as_bool();"
+      },
+      {
+        "line": 354,
+        "text": "// Register the component with class_loader."
+      },
+      {
+        "line": 356,
+        "text": "// is being loaded into a running process."
+      }
+    ]
+  },
+  {
+    "repo": "ros-navigation/navigation2",
+    "path": "nav2_bt_navigator/behavior_trees/navigate_through_poses_w_replanning_and_recovery.xml",
+    "commit": "3c3db59d6969d8ecee8e68468693d006397f4a0c",
+    "url": "https://github.com/ros-navigation/navigation2/blob/3c3db59d6969d8ecee8e68468693d006397f4a0c/nav2_bt_navigator/behavior_trees/navigate_through_poses_w_replanning_and_recovery.xml",
+    "sha256": "6dfc0499f11bde196113ceaf942789333a33d6c8f637fb8d63862e172cb674cc",
+    "lines": 38,
+    "matches": [
+      {
+        "line": 3,
+        "text": "  This Behavior Tree replans the global path periodically at 1 Hz through an array of poses continuously"
+      },
+      {
+        "line": 9,
+        "text": "      <PipelineSequence name=\"NavigateWithReplanning\">"
+      },
+      {
+        "line": 11,
+        "text": "          <RecoveryNode number_of_retries=\"1\" name=\"ComputePathThroughPoses\">"
+      },
+      {
+        "line": 13,
+        "text": "              <RemovePassedGoals input_goals=\"{goals}\" output_goals=\"{goals}\" radius=\"0.7\"/>"
+      },
+      {
+        "line": 14,
+        "text": "              <ComputePathThroughPoses goals=\"{goals}\" path=\"{path}\" planner_id=\"GridBased\"/>"
+      },
+      {
+        "line": 19,
+        "text": "        <RecoveryNode number_of_retries=\"1\" name=\"FollowPath\">"
+      },
+      {
+        "line": 20,
+        "text": "          <FollowPath path=\"{path}\" controller_id=\"FollowPath\"/>"
+      }
+    ]
+  },
+  {
+    "repo": "ros-navigation/navigation2",
+    "path": "LICENSE",
+    "commit": "3c3db59d6969d8ecee8e68468693d006397f4a0c",
+    "url": "https://github.com/ros-navigation/navigation2/blob/3c3db59d6969d8ecee8e68468693d006397f4a0c/LICENSE",
+    "sha256": "e71fcb65bd31cdbdcf50cf43ab87a0c600ea3ec407495c2e15d1e68bc9c3bfc1",
+    "lines": 17,
+    "matched_line_numbers": [
+      1,
+      4,
+      5,
+      6,
+      7,
+      9,
+      12,
+      13,
+      16,
+      17
+    ]
+  },
+  {
+    "repo": "shimz-robotics/mapoi",
+    "path": "README.md",
+    "commit": "0f4eaded8633cae3dabf1ad3bb2d491a153ffc1d",
+    "url": "https://github.com/shimz-robotics/mapoi/blob/0f4eaded8633cae3dabf1ad3bb2d491a153ffc1d/README.md",
+    "sha256": "502f5d96b2e7f96f9aa20c862afeae7c2ad86c4e86aa16e502c4c141cd8ad6e9",
+    "lines": 154,
+    "matched_line_numbers": [
+      7,
+      8,
+      11,
+      23,
+      25,
+      29,
+      39,
+      40,
+      48,
+      52,
+      57,
+      60,
+      66,
+      72,
+      94,
+      97,
+      99,
+      107,
+      111,
+      146,
+      152,
+      154
+    ]
+  },
+  {
+    "repo": "shimz-robotics/mapoi",
+    "path": "LICENSE",
+    "commit": "0f4eaded8633cae3dabf1ad3bb2d491a153ffc1d",
+    "url": "https://github.com/shimz-robotics/mapoi/blob/0f4eaded8633cae3dabf1ad3bb2d491a153ffc1d/LICENSE",
+    "sha256": "99f19af5f971afd7a5c379d62e727562a2ed2abf697540fb83543b724c79628d",
+    "lines": 21,
+    "matched_line_numbers": [
+      1,
+      7,
+      8,
+      9,
+      16
+    ]
+  },
+  {
+    "repo": "shimz-robotics/mapoi",
+    "path": "mapoi_server/package.xml",
+    "commit": "0f4eaded8633cae3dabf1ad3bb2d491a153ffc1d",
+    "url": "https://github.com/shimz-robotics/mapoi/blob/0f4eaded8633cae3dabf1ad3bb2d491a153ffc1d/mapoi_server/package.xml",
+    "sha256": "b9212090d34228b1097d1cb5397061c931c3d1884e79c99e3be6f3e5a7f63247",
+    "lines": 53,
+    "matches": [
+      {
+        "line": 2,
+        "text": "<?xml-model href=\"http://download.ros.org/schema/package_format3.xsd\" schematypens=\"http://www.w3.org/2001/XMLSchema\"?>"
+      },
+      {
+        "line": 5,
+        "text": "  <version>0.6.0</version>"
+      },
+      {
+        "line": 8,
+        "text": "  <license>MIT</license>"
+      },
+      {
+        "line": 13,
+        "text": "  <buildtool_depend>ament_cmake</buildtool_depend>"
+      },
+      {
+        "line": 14,
+        "text": "  <depend>ament_cmake_auto</depend>"
+      },
+      {
+        "line": 16,
+        "text": "  <depend>rclcpp</depend>"
+      },
+      {
+        "line": 17,
+        "text": "  <depend>std_msgs</depend>"
+      },
+      {
+        "line": 18,
+        "text": "  <depend>std_srvs</depend>"
+      },
+      {
+        "line": 19,
+        "text": "  <depend>rclcpp_action</depend>"
+      },
+      {
+        "line": 20,
+        "text": "  <depend>yaml_cpp_vendor</depend>"
+      },
+      {
+        "line": 21,
+        "text": "  <depend>ament_index_cpp</depend>"
+      },
+      {
+        "line": 22,
+        "text": "  <depend>geometry_msgs</depend>"
+      },
+      {
+        "line": 23,
+        "text": "  <depend>nav2_msgs</depend>"
+      },
+      {
+        "line": 24,
+        "text": "  <depend>visualization_msgs</depend>"
+      },
+      {
+        "line": 25,
+        "text": "  <depend>mapoi_interfaces</depend>"
+      },
+      {
+        "line": 26,
+        "text": "  <depend>tf2</depend>"
+      },
+      {
+        "line": 27,
+        "text": "  <depend>tf2_ros</depend>"
+      },
+      {
+        "line": 28,
+        "text": "  <depend>tf2_geometry_msgs</depend>"
+      },
+      {
+        "line": 30,
+        "text": "  <!-- Humble (Gazebo Classic) で mapoi_gazebo_bridge を build/run するための依存。"
+      },
+      {
+        "line": 31,
+        "text": "       Jazzy 以降では gazebo_msgs が存在しないため、CMakeLists 側で"
+      },
+      {
+        "line": 33,
+        "text": "  <depend condition=\"$ROS_DISTRO == 'humble'\">gazebo_msgs</depend>"
+      },
+      {
+        "line": 35,
+        "text": "  <!-- Jazzy 以降 (gz-sim) で mapoi_gz_bridge を build/run するための依存。"
+      },
+      {
+        "line": 36,
+        "text": "       Humble では ros_gz_interfaces が存在しないため、CMakeLists 側で"
+      },
+      {
+        "line": 39,
+        "text": "  <depend condition=\"$ROS_DISTRO != 'humble'\">ros_gz_interfaces</depend>"
+      },
+      {
+        "line": 40,
+        "text": "  <exec_depend condition=\"$ROS_DISTRO != 'humble'\">ros_gz_bridge</exec_depend>"
+      },
+      {
+        "line": 42,
+        "text": "  <test_depend>ament_lint_auto</test_depend>"
+      },
+      {
+        "line": 43,
+        "text": "  <test_depend>ament_lint_common</test_depend>"
+      },
+      {
+        "line": 44,
+        "text": "  <test_depend>ament_cmake_gtest</test_depend>"
+      },
+      {
+        "line": 45,
+        "text": "  <test_depend>ament_cmake_pytest</test_depend>"
+      },
+      {
+        "line": 46,
+        "text": "  <test_depend>launch_testing</test_depend>"
+      },
+      {
+        "line": 47,
+        "text": "  <test_depend>launch_testing_ament_cmake</test_depend>"
+      },
+      {
+        "line": 48,
+        "text": "  <test_depend>launch_testing_ros</test_depend>"
+      }
+    ]
+  },
+  {
+    "repo": "shimz-robotics/mapoi",
+    "path": "mapoi_server/src/mapoi_nav2_bridge_route.cpp",
+    "commit": "0f4eaded8633cae3dabf1ad3bb2d491a153ffc1d",
+    "url": "https://github.com/shimz-robotics/mapoi/blob/0f4eaded8633cae3dabf1ad3bb2d491a153ffc1d/mapoi_server/src/mapoi_nav2_bridge_route.cpp",
+    "sha256": "6492818e565d8a7579d157708c4e44c2f2fd7d4ad979bb968de6d35e9535a634",
+    "lines": 357,
+    "matches": [
+      {
+        "line": 1,
+        "text": "// mapoi_nav2_bridge の責務分割 第 1 弾 (#345): route 走行 (FollowWaypoints +"
+      },
+      {
+        "line": 11,
+        "text": "// NavigateToPose を共用) や tolerance_check_callback (goal/route 両モードの"
+      },
+      {
+        "line": 19,
+        "text": "// group 内で subscription / action / timer callback が直列化される既存契約による"
+      },
+      {
+        "line": 21,
+        "text": "// backend_status timer のみ)。data_mutex_ が守るのは pois_list_ / event_pois_ /"
+      },
+      {
+        "line": 52,
+        "text": "  // route_name を lambda capture で渡す。std::bind は rclcpp Jazzy の"
+      },
+      {
+        "line": 100,
+        "text": "  // Nav2 FollowWaypoints へ送るのは waypoints のみ。landmark は radius 監視専用 (#143)。"
+      },
+      {
+        "line": 130,
+        "text": "  // 判定で 1 waypoint ずつ NavigateToPose を送って進める。route POI 列を保持し、先頭へ送る。"
+      },
+      {
+        "line": 152,
+        "text": "      \"FollowWaypoints action server not available; aborting route '%s'.\", route_name.c_str());"
+      },
+      {
+        "line": 159,
+        "text": "  auto goal_msg = FollowWaypoints::Goal();"
+      },
+      {
+        "line": 162,
+        "text": "  auto send_goal_options = rclcpp_action::Client<FollowWaypoints>::SendGoalOptions();"
+      },
+      {
+        "line": 167,
+        "text": "    [this, target = route_name, my_generation](const GoalHandleFollowWaypoints::SharedPtr & h) {"
+      },
+      {
+        "line": 172,
+        "text": "    [this, my_generation](GoalHandleFollowWaypoints::SharedPtr h,"
+      },
+      {
+        "line": 173,
+        "text": "                          const std::shared_ptr<const FollowWaypoints::Feedback> f) {"
+      },
+      {
+        "line": 178,
+        "text": "    [this, target = route_name, my_generation](const GoalHandleFollowWaypoints::WrappedResult & r) {"
+      },
+      {
+        "line": 196,
+        "text": "  // NavigateToPose 不在なら route を放棄 (FollowWaypoints 経路と同じ #198 方針)。"
+      },
+      {
+        "line": 199,
+        "text": "      \"NavigateToPose action server not available; aborting mapoi-driven route '%s'.\","
+      },
+      {
+        "line": 215,
+        "text": "  // (cancel result 等) を stale 化する。target は route 名で統一 (status は route 単位)。"
+      },
+      {
+        "line": 219,
+        "text": "  auto goal_msg = NavigateToPose::Goal();"
+      },
+      {
+        "line": 222,
+        "text": "  auto send_goal_options = rclcpp_action::Client<NavigateToPose>::SendGoalOptions();"
+      },
+      {
+        "line": 224,
+        "text": "    [this, target = route_name, my_generation](const GoalHandleNavigateToPose::SharedPtr & h) {"
+      },
+      {
+        "line": 228,
+        "text": "    [this, target = route_name, my_generation](const GoalHandleNavigateToPose::WrappedResult & r) {"
+      },
+      {
+        "line": 261,
+        "text": "  // 非 pause waypoint: 進行中の NavigateToPose goal を cancel (tolerance.xy ∧ yaw 到達トリガ時。"
+      },
+      {
+        "line": 263,
+        "text": "  // cancel に伴う CANCELED result が遅れて届く前に generation を進めて stale 化する (#265)。"
+      },
+      {
+        "line": 266,
+        "text": "  // 進めないため、ここで進めないと CANCELED result が ntp_result_callback で \"canceled\" を"
+      },
+      {
+        "line": 270,
+        "text": "    nav_to_pose_client_->async_cancel_goal(current_ntp_goal_handle_);"
+      },
+      {
+        "line": 278,
+        "text": "                                              const GoalHandleFollowWaypoints::SharedPtr & goal_handle)"
+      },
+      {
+        "line": 286,
+        "text": "      \"Stale FollowWaypoints goal response for '%s' (gen=%zu, current=%zu); ignoring.\","
+      },
+      {
+        "line": 304,
+        "text": "  GoalHandleFollowWaypoints::SharedPtr,"
+      },
+      {
+        "line": 305,
+        "text": "  const std::shared_ptr<const FollowWaypoints::Feedback> feedback)"
+      },
+      {
+        "line": 317,
+        "text": "                                       const GoalHandleFollowWaypoints::WrappedResult & result)"
+      },
+      {
+        "line": 324,
+        "text": "      \"Stale FollowWaypoints result for route '%s' (gen=%zu, current=%zu); ignoring.\","
+      },
+      {
+        "line": 337,
+        "text": "      // (PAUSED は cmd_vel dwell only で trigger、STOPPED event 自体撤去)。"
+      },
+      {
+        "line": 344,
+        "text": "    case rclcpp_action::ResultCode::CANCELED:"
+      },
+      {
+        "line": 346,
+        "text": "        RCLCPP_INFO(this->get_logger(), \"Cancel confirmed (pause triggered). Waiting for resume.\");"
+      },
+      {
+        "line": 349,
+        "text": "        publish_nav_status(\"canceled\", target);"
+      },
+      {
+        "line": 350,
+        "text": "        RCLCPP_WARN(this->get_logger(), \"Navigation CANCELED\");"
+      }
+    ]
+  },
+  {
+    "repo": "shimz-robotics/mapoi",
+    "path": "mapoi_server/src/mapoi_server.cpp",
+    "commit": "0f4eaded8633cae3dabf1ad3bb2d491a153ffc1d",
+    "url": "https://github.com/shimz-robotics/mapoi/blob/0f4eaded8633cae3dabf1ad3bb2d491a153ffc1d/mapoi_server/src/mapoi_server.cpp",
+    "sha256": "1bb0abf93c1a58f0400487d9841c418a18975868a214b1e61ae7b847e7d3d85f",
+    "lines": 705,
+    "matches": [
+      {
+        "line": 14,
+        "text": "  this->declare_parameter<std::string>(\"config_file\", \"mapoi_config.yaml\");"
+      },
+      {
+        "line": 40,
+        "text": "  // maps_path の存在 + ディレクトリ性を起動時に検査。後段 (load_mapoi_config_file 等)"
+      },
+      {
+        "line": 41,
+        "text": "  // で不明瞭な YAML::BadFile になる前に明示的に fail させる (#163 / Cursor review medium)。"
+      },
+      {
+        "line": 76,
+        "text": "    // separator や \"..\" を含む値を連結すると maps_path 外の config を load できてしまう、"
+      },
+      {
+        "line": 102,
+        "text": "  load_tag_definitions();"
+      },
+      {
+        "line": 103,
+        "text": "  load_mapoi_config_file();"
+      },
+      {
+        "line": 122,
+        "text": "  // たので定期 publish は廃止、起動時 / select_map / reload_map_info で明示 publish する仕様に"
+      },
+      {
+        "line": 124,
+        "text": "  config_path_publisher_ = this->create_publisher<std_msgs::msg::String>("
+      },
+      {
+        "line": 129,
+        "text": "  // 起動時は初期 map の候補を publish し、select_map / reload では stale 防止の clear message を流す。"
+      },
+      {
+        "line": 132,
+        "text": "  initialpose_poi_publisher_ = this->create_publisher<mapoi_interfaces::msg::InitialPoseRequest>("
+      },
+      {
+        "line": 136,
+        "text": "  // 順序保証: load_mapoi_config_file() (line 21) → publish_initial_poi_name() の順に実行。"
+      },
+      {
+        "line": 137,
+        "text": "  // pois_list_ は load 後に最新化されているので、compute_initial_poi_name の lookup は安全。"
+      },
+      {
+        "line": 178,
+        "text": "  reload_map_info_service_ = this->create_service<std_srvs::srv::Trigger>(\"mapoi/reload_map_info\","
+      },
+      {
+        "line": 179,
+        "text": "    std::bind(&MapoiServer::reload_map_info_service, this, std::placeholders::_1, std::placeholders::_2));"
+      },
+      {
+        "line": 187,
+        "text": "mapoi_interfaces::msg::PointOfInterest MapoiServer::yaml_to_poi_msg(const YAML::Node & poi)"
+      },
+      {
+        "line": 196,
+        "text": "  // tolerance struct (Nav2 align、xy / yaw 同時に指定可能)。v0.3.0 で旧 `radius` フィールドから"
+      },
+      {
+        "line": 197,
+        "text": "  // 破壊変更で移行 (#87)。tolerance.xy は POI radius (進入判定距離) としても使われる。"
+      },
+      {
+        "line": 201,
+        "text": "  //   - default は sample yaml と整合 (45° = π/4)"
+      },
+      {
+        "line": 204,
+        "text": "  const double DEFAULT_TOL_YAW = M_PI / 4.0;  // = 45°、sample yaml 統一値と整合"
+      },
+      {
+        "line": 210,
+        "text": "      \"Old 'radius' field is no longer supported (#87).\","
+      },
+      {
+        "line": 218,
+        "text": "    // NaN / +-Inf も clamp 対象 (Codex review #139 medium 対応)。yaml-cpp は \".nan\" / \".inf\""
+      },
+      {
+        "line": 263,
+        "text": "void MapoiServer::load_mapoi_config_file()"
+      },
+      {
+        "line": 266,
+        "text": "  RCLCPP_INFO(this->get_logger(), \"Loading mapoi config file: %s\", config_path_.c_str());"
+      },
+      {
+        "line": 268,
+        "text": "    YAML::Node mapoi_config = YAML::LoadFile(config_path_);"
+      },
+      {
+        "line": 269,
+        "text": "    pois_list_ = mapoi_config[\"poi\"] ? mapoi_config[\"poi\"] : YAML::Node(YAML::NodeType::Sequence);"
+      },
+      {
+        "line": 270,
+        "text": "    routes_list_ = mapoi_config[\"route\"] ? mapoi_config[\"route\"] : YAML::Node(YAML::NodeType::Sequence);"
+      },
+      {
+        "line": 271,
+        "text": "    nav2_map_list_ = mapoi_config[\"map\"] ? mapoi_config[\"map\"] : YAML::Node(YAML::NodeType::Sequence);"
+      },
+      {
+        "line": 289,
+        "text": "  } catch (const YAML::BadFile & e) {"
+      },
+      {
+        "line": 290,
+        "text": "    RCLCPP_ERROR(this->get_logger(), \"Failed to load mapoi config file: %s\", e.what());"
+      },
+      {
+        "line": 303,
+        "text": "    response->pois_list.push_back(yaml_to_poi_msg(poi));"
+      },
+      {
+        "line": 321,
+        "text": "        target.push_back(yaml_to_poi_msg(poi));"
+      },
+      {
+        "line": 335,
+        "text": "      // Ordered waypoints (sent to Nav2 FollowWaypoints)."
+      },
+      {
+        "line": 342,
+        "text": "      // route.landmarks (#143): NOT navigated, but radius-monitored while this"
+      },
+      {
+        "line": 374,
+        "text": "  // error_message を分ける (Cursor review PR #361 medium)。route キー欠如は load 時に"
+      },
+      {
+        "line": 375,
+        "text": "  // 空 sequence へ正規化される (load_mapoi_config) ため size()==0 も同扱い。"
+      },
+      {
+        "line": 461,
+        "text": "  // そのまま連結すると、maps_path 外の任意 config YAML の load (下の config_path_new) と、"
+      },
+      {
+        "line": 462,
+        "text": "  // response->nav2_map_urls 経由で Nav2 map_server の LoadMap 先も maps_path 外を"
+      },
+      {
+        "line": 485,
+        "text": "  load_mapoi_config_file();"
+      },
+      {
+        "line": 516,
+        "text": "  // Nav2 LoadMap 成功後に response->resolved_initial_poi_name を mapoi/initialpose_poi へ publish する。"
+      },
+      {
+        "line": 562,
+        "text": "void MapoiServer::reload_map_info_service("
+      },
+      {
+        "line": 567,
+        "text": "  load_mapoi_config_file();"
+      },
+      {
+        "line": 569,
+        "text": "  // table / ComboBox を再 fetch することで save 後の内容更新が反映される (#135)。"
+      },
+      {
+        "line": 571,
+        "text": "  // reload は POI 編集後の再読込 trigger。ここで `mapoi/initialpose_poi` を「採用候補あり」で"
+      },
+      {
+        "line": 574,
+        "text": "  // 一方で latched message は古い POI 名のまま残り、reload 後に mapoi_nav2_bridge が再起動 / 再 connection"
+      },
+      {
+        "line": 584,
+        "text": "  RCLCPP_INFO(this->get_logger(), \"Reloaded mapoi config: %s\", config_path_.c_str());"
+      },
+      {
+        "line": 629,
+        "text": "  // invariant)。service callback は spin 開始後にしか呼ばれないため、reload_map_info_service"
+      },
+      {
+        "line": 633,
+        "text": "  // reload 直前の古い POI 名が後起動の subscriber に latched 配信される stale 問題を排除する。"
+      },
+      {
+        "line": 639,
+        "text": "    \"Cleared latched mapoi/initialpose_poi for map '%s' (#154 stale guard on reload).\","
+      },
+      {
+        "line": 659,
+        "text": "void MapoiServer::load_tag_definitions()"
+      },
+      {
+        "line": 662,
+        "text": "  // user tag は load_mapoi_config_file() 内で custom_tags から merge される。"
+      },
+      {
+        "line": 671,
+        "text": "  RCLCPP_INFO(this->get_logger(), \"Loaded %zu system tag definitions (compiled-in)\","
+      }
+    ]
+  },
+  {
+    "repo": "shimz-robotics/mapoi",
+    "path": "mapoi_server/src/mapoi_nav2_bridge.cpp",
+    "commit": "0f4eaded8633cae3dabf1ad3bb2d491a153ffc1d",
+    "url": "https://github.com/shimz-robotics/mapoi/blob/0f4eaded8633cae3dabf1ad3bb2d491a153ffc1d/mapoi_server/src/mapoi_nav2_bridge.cpp",
+    "sha256": "42e31b1a49ce267187ce56f587392ed62e77f1205ed688bf2d64afdedbc70050",
+    "lines": 966,
+    "matches": [
+      {
+        "line": 19,
+        "text": "  // request_initial_pose service 経由で依頼する。LoadMap 成功後 (on_select_map_received) という"
+      },
+      {
+        "line": 26,
+        "text": "  mapoi_goal_pose_poi_sub_ = this->create_subscription<std_msgs::msg::String>("
+      },
+      {
+        "line": 28,
+        "text": "  nav2_goal_pose_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>(\"goal_pose\", 1);"
+      },
+      {
+        "line": 31,
+        "text": "  mapoi_route_sub_ = this->create_subscription<std_msgs::msg::String>("
+      },
+      {
+        "line": 35,
+        "text": "  mapoi_switch_map_sub_ = this->create_subscription<std_msgs::msg::String>("
+      },
+      {
+        "line": 38,
+        "text": "  // cancel subscriber"
+      },
+      {
+        "line": 39,
+        "text": "  mapoi_cancel_sub_ = this->create_subscription<std_msgs::msg::String>("
+      },
+      {
+        "line": 40,
+        "text": "    \"mapoi/nav/cancel\", 1, std::bind(&MapoiNav2Bridge::mapoi_cancel_cb, this, std::placeholders::_1));"
+      },
+      {
+        "line": 43,
+        "text": "  mapoi_pause_sub_ = this->create_subscription<std_msgs::msg::String>("
+      },
+      {
+        "line": 45,
+        "text": "  mapoi_resume_sub_ = this->create_subscription<std_msgs::msg::String>("
+      },
+      {
+        "line": 48,
+        "text": "  this->action_client_ = rclcpp_action::create_client<FollowWaypoints>(this, \"follow_waypoints\");"
+      },
+      {
+        "line": 49,
+        "text": "  this->nav_to_pose_client_ = rclcpp_action::create_client<NavigateToPose>(this, \"navigate_to_pose\");"
+      },
+      {
+        "line": 53,
+        "text": "  nav_status_pub_ = this->create_publisher<std_msgs::msg::String>("
+      },
+      {
+        "line": 60,
+        "text": "  command_rejected_pub_ = this->create_publisher<std_msgs::msg::String>("
+      },
+      {
+        "line": 63,
+        "text": "  // Navigation backend readiness publisher + 1Hz polling timer (#198)。"
+      },
+      {
+        "line": 68,
+        "text": "  // ので 1Hz timer が止まれば 5s 後に subscriber 側 Liveliness Changed event が発火する。"
+      },
+      {
+        "line": 69,
+        "text": "  backend_status_pub_ = this->create_publisher<mapoi_interfaces::msg::NavigationBackendStatus>("
+      },
+      {
+        "line": 76,
+        "text": "  // timer を他 callback と独立 thread で動かす (#213)。`select_map_callback` 内の"
+      },
+      {
+        "line": 77,
+        "text": "  // `wait_for_service(10s)` / `spin_until_future_complete` で default group の thread が最大"
+      },
+      {
+        "line": 80,
+        "text": "  // review medium): backend_status timer は callback が単一 (`publish_backend_status` のみ)"
+      },
+      {
+        "line": 88,
+        "text": "  backend_status_timer_ = this->create_wall_timer("
+      },
+      {
+        "line": 96,
+        "text": "  // --- POI radius event detection ---"
+      },
+      {
+        "line": 107,
+        "text": "  this->declare_parameter<std::string>(\"cmd_vel_topic\", \"cmd_vel\");"
+      },
+      {
+        "line": 112,
+        "text": "  // パラメータを cmd_vel_callback / tolerance_check_callback の hot path で毎回取得すると"
+      },
+      {
+        "line": 119,
+        "text": "  // 通常運用では override ミス以外で混入しないが、混入時に timer 周期が異常になる"
+      },
+      {
+        "line": 132,
+        "text": "  // waypoint 到達モード (#243)。\"nav2\" (既定) は従来の FollowWaypoints 任せ、\"mapoi\" は"
+      },
+      {
+        "line": 133,
+        "text": "  // mapoi が tolerance.xy 到達判定で 1 waypoint ずつ NavigateToPose を送って進める。"
+      },
+      {
+        "line": 153,
+        "text": "  poi_event_pub_ = this->create_publisher<mapoi_interfaces::msg::PoiEvent>(\"mapoi/events\", 10);"
+      },
+      {
+        "line": 155,
+        "text": "  config_path_sub_ = this->create_subscription<std_msgs::msg::String>("
+      },
+      {
+        "line": 159,
+        "text": "  // cmd_vel subscribe (#140 / #249): STOPPED 判定 source。QoS は Nav2 publisher と同じ"
+      },
+      {
+        "line": 163,
+        "text": "  this->declare_parameter<std::string>(\"cmd_vel_msg_type\", \"auto\");"
+      },
+      {
+        "line": 164,
+        "text": "  const std::string cmd_vel_topic = this->get_parameter(\"cmd_vel_topic\").as_string();"
+      },
+      {
+        "line": 165,
+        "text": "  const std::string cmd_vel_msg_type_param ="
+      },
+      {
+        "line": 166,
+        "text": "    this->get_parameter(\"cmd_vel_msg_type\").as_string();"
+      },
+      {
+        "line": 167,
+        "text": "  const std::string cmd_vel_msg_type = resolve_cmd_vel_msg_type(cmd_vel_msg_type_param);"
+      },
+      {
+        "line": 170,
+        "text": "  if (cmd_vel_msg_type_param != \"twist\""
+      },
+      {
+        "line": 171,
+        "text": "      && cmd_vel_msg_type_param != \"twist_stamped\""
+      },
+      {
+        "line": 172,
+        "text": "      && cmd_vel_msg_type_param != \"auto\") {"
+      },
+      {
+        "line": 174,
+        "text": "      \"cmd_vel_msg_type='%s' は未知の値です。ROS_DISTRO ベースで '%s' にフォールバックしました。\""
+      },
+      {
+        "line": 176,
+        "text": "      cmd_vel_msg_type_param.c_str(), cmd_vel_msg_type.c_str());"
+      },
+      {
+        "line": 178,
+        "text": "  if (cmd_vel_msg_type == \"twist_stamped\") {"
+      },
+      {
+        "line": 179,
+        "text": "    cmd_vel_stamped_sub_ = this->create_subscription<geometry_msgs::msg::TwistStamped>("
+      },
+      {
+        "line": 180,
+        "text": "      cmd_vel_topic, 10,"
+      },
+      {
+        "line": 181,
+        "text": "      std::bind(&MapoiNav2Bridge::cmd_vel_stamped_callback, this, _1));"
+      },
+      {
+        "line": 183,
+        "text": "      \"cmd_vel subscribed as TwistStamped (msg_type=%s)\", cmd_vel_msg_type.c_str());"
+      },
+      {
+        "line": 185,
+        "text": "    // \"twist\" / 未知の値は安全側で Twist にフォールバック (humble 互換)。"
+      },
+      {
+        "line": 186,
+        "text": "    cmd_vel_sub_ = this->create_subscription<geometry_msgs::msg::Twist>("
+      },
+      {
+        "line": 187,
+        "text": "      cmd_vel_topic, 10,"
+      },
+      {
+        "line": 188,
+        "text": "      std::bind(&MapoiNav2Bridge::cmd_vel_callback, this, _1));"
+      },
+      {
+        "line": 190,
+        "text": "      \"cmd_vel subscribed as Twist (msg_type=%s)\", cmd_vel_msg_type.c_str());"
+      },
+      {
+        "line": 198,
+        "text": "  tolerance_check_timer_ = this->create_wall_timer("
+      },
+      {
+        "line": 281,
+        "text": "  // 後方互換: 旧 \"status\" 単独 payload しか読まない subscriber は target 部を"
+      },
+      {
+        "line": 293,
+        "text": "  // payload は reject 対象の target のみ、reason は従来通り ERROR/WARN ログに残す。"
+      },
+      {
+        "line": 313,
+        "text": "void MapoiNav2Bridge::mapoi_cancel_cb(const std_msgs::msg::String::SharedPtr msg)"
+      },
+      {
+        "line": 316,
+        "text": "  bool canceled = false;"
+      },
+      {
+        "line": 318,
+        "text": "    RCLCPP_INFO(this->get_logger(), \"Canceling FollowWaypoints goal...\");"
+      },
+      {
+        "line": 319,
+        "text": "    action_client_->async_cancel_goal(current_goal_handle_);"
+      },
+      {
+        "line": 320,
+        "text": "    canceled = true;"
+      },
+      {
+        "line": 323,
+        "text": "    RCLCPP_INFO(this->get_logger(), \"Canceling NavigateToPose goal...\");"
+      },
+      {
+        "line": 324,
+        "text": "    nav_to_pose_client_->async_cancel_goal(current_ntp_goal_handle_);"
+      },
+      {
+        "line": 325,
+        "text": "    canceled = true;"
+      },
+      {
+        "line": 327,
+        "text": "  if (!canceled) {"
+      },
+      {
+        "line": 328,
+        "text": "    RCLCPP_WARN(this->get_logger(), \"No active navigation goal to cancel.\");"
+      },
+      {
+        "line": 345,
+        "text": "  // route 終端 / cancel / failure 等で route が終わったあと、次回 route mode 開始時に"
+      },
+      {
+        "line": 354,
+        "text": "  // route が終わる経路 (cancel / SUCCEEDED / ABORTED / GOAL 切替 / 新 route 投入) では"
+      },
+      {
+        "line": 355,
+        "text": "  // pending auto-resume timer も必ず破棄する (#231)。残すと別 nav 進行中に古い timer が"
+      },
+      {
+        "line": 357,
+        "text": "  cancel_auto_resume_timer_();"
+      },
+      {
+        "line": 360,
+        "text": "void MapoiNav2Bridge::cancel_auto_resume_timer_()"
+      },
+      {
+        "line": 362,
+        "text": "  if (auto_resume_timer_) {"
+      },
+      {
+        "line": 363,
+        "text": "    auto_resume_timer_->cancel();"
+      },
+      {
+        "line": 364,
+        "text": "    auto_resume_timer_.reset();"
+      },
+      {
+        "line": 375,
+        "text": "  // 連続して pause タグ POI が並ぶ route で前の timer が生きている場合は"
+      },
+      {
+        "line": 376,
+        "text": "  // 上書きする (新しい PAUSED に従う)。idempotent な cancel を経由するので二重 cancel"
+      },
+      {
+        "line": 378,
+        "text": "  cancel_auto_resume_timer_();"
+      },
+      {
+        "line": 382,
+        "text": "  // create_wall_timer は default callback group (mapoi_pause_cb / mapoi_resume_cb /"
+      },
+      {
+        "line": 385,
+        "text": "  auto_resume_timer_ = this->create_wall_timer(period, [this, poi_name]() {"
+      },
+      {
+        "line": 386,
+        "text": "    // 自己 cancel: one-shot として扱う。先に timer を cancel/reset しないと callback 内で"
+      },
+      {
+        "line": 387,
+        "text": "    // 再度 schedule_auto_resume_ → cancel_auto_resume_timer_ を呼んだ際に「自身を cancel"
+      },
+      {
+        "line": 389,
+        "text": "    if (auto_resume_timer_) {"
+      },
+      {
+        "line": 390,
+        "text": "      auto_resume_timer_->cancel();"
+      },
+      {
+        "line": 391,
+        "text": "      auto_resume_timer_.reset();"
+      },
+      {
+        "line": 397,
+        "text": "        \"Auto-resume timer fired for POI '%s' but already resumed; ignoring.\","
+      },
+      {
+        "line": 420,
+        "text": "    RCLCPP_INFO(this->get_logger(), \"Pausing NavigateToPose goal.\");"
+      },
+      {
+        "line": 421,
+        "text": "    nav_to_pose_client_->async_cancel_goal(current_ntp_goal_handle_);"
+      },
+      {
+        "line": 426,
+        "text": "    // mapoi 主導モード (#243): 進行中の NavigateToPose waypoint goal を cancel して停止。"
+      },
+      {
+        "line": 427,
+        "text": "    // FollowWaypoints の paused_waypoints_ slice は使わず、resume は index++ で次 waypoint を"
+      },
+      {
+        "line": 432,
+        "text": "      nav_to_pose_client_->async_cancel_goal(current_ntp_goal_handle_);"
+      },
+      {
+        "line": 447,
+        "text": "      \"Pausing FollowWaypoints: saving %zu remaining waypoints (from index %u).\","
+      },
+      {
+        "line": 449,
+        "text": "    action_client_->async_cancel_goal(current_goal_handle_);"
+      },
+      {
+        "line": 464,
+        "text": "    // Not paused でも timer が残るパスは無いはずだが、念のため idempotent に cancel する"
+      },
+      {
+        "line": 466,
+        "text": "    cancel_auto_resume_timer_();"
+      },
+      {
+        "line": 469,
+        "text": "  // 外部 resume publish が auto-resume timer 満了より先に来た場合は pending timer を捨てる"
+      },
+      {
+        "line": 470,
+        "text": "  // (#231)。同 callback group で直列化されるので、timer callback と本 callback の race は"
+      },
+      {
+        "line": 472,
+        "text": "  cancel_auto_resume_timer_();"
+      },
+      {
+        "line": 476,
+        "text": "  // single-thread executor で他 callback を止めるため避ける。1Hz backend_status timer で"
+      },
+      {
+        "line": 480,
+        "text": "      RCLCPP_ERROR(this->get_logger(), \"NavigateToPose action server not available for resume.\");"
+      },
+      {
+        "line": 485,
+        "text": "    RCLCPP_INFO(this->get_logger(), \"Resuming NavigateToPose goal.\");"
+      },
+      {
+        "line": 487,
+        "text": "    auto goal_msg = NavigateToPose::Goal();"
+      },
+      {
+        "line": 490,
+        "text": "    auto send_goal_options = rclcpp_action::Client<NavigateToPose>::SendGoalOptions();"
+      },
+      {
+        "line": 492,
+        "text": "    // generation を進めて pre-pause cancel result を stale 化する (Codex review #147 round 3 high)。"
+      },
+      {
+        "line": 496,
+        "text": "      [this, target = current_target_name_, resumed_generation](const GoalHandleNavigateToPose::SharedPtr & h) {"
+      },
+      {
+        "line": 500,
+        "text": "      [this, target = current_target_name_, resumed_generation](const GoalHandleNavigateToPose::WrappedResult & r) {"
+      },
+      {
+        "line": 511,
+        "text": "      RCLCPP_ERROR(this->get_logger(), \"NavigateToPose action server not available for resume.\");"
+      },
+      {
+        "line": 523,
+        "text": "      RCLCPP_ERROR(this->get_logger(), \"Cannot resume: no saved waypoints.\");"
+      },
+      {
+        "line": 527,
+        "text": "      RCLCPP_ERROR(this->get_logger(), \"FollowWaypoints action server not available for resume.\");"
+      },
+      {
+        "line": 537,
+        "text": "      \"Resuming FollowWaypoints with %zu remaining waypoints.\", current_route_waypoints_.size());"
+      },
+      {
+        "line": 539,
+        "text": "    auto goal_msg = FollowWaypoints::Goal();"
+      },
+      {
+        "line": 542,
+        "text": "    auto send_goal_options = rclcpp_action::Client<FollowWaypoints>::SendGoalOptions();"
+      },
+      {
+        "line": 544,
+        "text": "    // generation を進めて pre-pause cancel result を stale 化する (Codex review #147 round 3 high)。"
+      },
+      {
+        "line": 547,
+        "text": "      [this, target = current_target_name_, resumed_generation](const GoalHandleFollowWaypoints::SharedPtr & h) {"
+      },
+      {
+        "line": 551,
+        "text": "      [this, resumed_generation](GoalHandleFollowWaypoints::SharedPtr h,"
+      },
+      {
+        "line": 552,
+        "text": "                                  const std::shared_ptr<const FollowWaypoints::Feedback> f) {"
+      },
+      {
+        "line": 557,
+        "text": "        const GoalHandleFollowWaypoints::WrappedResult & r) {"
+      },
+      {
+        "line": 568,
+        "text": "// --- POI radius event detection methods ---"
+      },
+      {
+        "line": 595,
+        "text": "  system_tags_loaded_ = true;"
+      },
+      {
+        "line": 596,
+        "text": "  RCLCPP_INFO(this->get_logger(), \"Loaded %zu system tags for POI event filtering.\", system_tags_.size());"
+      },
+      {
+        "line": 605,
+        "text": "  // map switch (path 変更) は拾えるが、WebUI/Panel Save (path 不変、内容のみ変更) を取りこぼし、"
+      },
+      {
+        "line": 606,
+        "text": "  // event_pois_ が古いまま radius event 監視が外れる。YAML mtime も併せて比較する (PR #78 と同 pattern)。"
+      },
+      {
+        "line": 638,
+        "text": "  RCLCPP_INFO(this->get_logger(), \"Monitoring %zu POIs for radius events.\", event_pois_.size());"
+      },
+      {
+        "line": 643,
+        "text": "  if (!system_tags_loaded_) {"
+      },
+      {
+        "line": 665,
+        "text": "  // 全 POI 共通の判定なので timer tick 内で 1 回計算して使い回す。"
+      },
+      {
+        "line": 675,
+        "text": "  // PAUSED 発火 POI 名 (今 tick で publish したもの)。lock 外で auto-resume timer を"
+      },
+      {
+        "line": 677,
+        "text": "  // 重なり等で理論上ありうるが、最後に publish した POI に従う (cancel 上書き含め"
+      },
+      {
+        "line": 682,
+        "text": "  // レベル判定 (毎 tick) で見る。lock 外で on_waypoint_reached_ / on_goal_radius_arrival_ を"
+      },
+      {
+        "line": 687,
+        "text": "  // active な NavigateToPose goal がある時のみ対象 (current_ntp_goal_handle_ 非 null = acceptance"
+      },
+      {
+        "line": 695,
+        "text": "  // lock 外で on_goal_radius_arrival_ (cancel + succeeded) を呼ぶための flag。"
+      },
+      {
+        "line": 696,
+        "text": "  bool goal_radius_yaw_arrival = false;"
+      },
+      {
+        "line": 706,
+        "text": "    // 旧来の「末尾だけ radius 除外」特別扱いは廃止した。"
+      },
+      {
+        "line": 730,
+        "text": "      // Nav2 の姿勢合わせ (SUCCEEDED, OR トリガ b) を待つ。radius 進入後に旋回して yaw が"
+      },
+      {
+        "line": 734,
+        "text": "      if (goal_mode && !goal_radius_yaw_arrival && poi.name == goal_target_name) {"
+      },
+      {
+        "line": 738,
+        "text": "          goal_radius_yaw_arrival = true;"
+      },
+      {
+        "line": 764,
+        "text": "      const RadiusTransition transition ="
+      },
+      {
+        "line": 765,
+        "text": "        classify_radius_transition(was_inside, dist, poi.tolerance.xy, hysteresis);"
+      },
+      {
+        "line": 767,
+        "text": "      if (transition == RadiusTransition::ENTER) {"
+      },
+      {
+        "line": 777,
+        "text": "        // pause タグがあれば自動 pause 対象。ただし nav2 モードのみ ENTER (radius 進入) で"
+      },
+      {
+        "line": 785,
+        "text": "      } else if (transition == RadiusTransition::EXIT) {"
+      },
+      {
+        "line": 800,
+        "text": "      // PAUSED 判定 (#220): inside かつ pause タグ持ち かつ cmd_vel dwell かつ未発火"
+      },
+      {
+        "line": 825,
+        "text": "  // EVENT_PAUSED 発火 POI に対する auto-resume timer 起動 (#231)。"
+      },
+      {
+        "line": 826,
+        "text": "  // schedule_auto_resume_ は disabled (timeout=0.0) なら no-op、前 timer が生きてれば"
+      },
+      {
+        "line": 827,
+        "text": "  // cancel して上書きする。is_paused_ チェックは callback 側 (発火時) に任せ、"
+      },
+      {
+        "line": 843,
+        "text": "  // GOAL モード (#261): radius + yaw 到達で単発 Go を完了する。route mode とは nav_mode_ で"
+      },
+      {
+        "line": 845,
+        "text": "  if (goal_radius_yaw_arrival) {"
+      },
+      {
+        "line": 846,
+        "text": "    on_goal_radius_arrival_();"
+      },
+      {
+        "line": 882,
+        "text": "MapoiNav2Bridge::RadiusTransition MapoiNav2Bridge::classify_radius_transition("
+      },
+      {
+        "line": 885,
+        "text": "  // ENTER: 外→radius 進入。EXIT: 内→radius を hysteresis 倍超で離脱 (ばたつき防止)。"
+      },
+      {
+        "line": 888,
+        "text": "    return RadiusTransition::ENTER;"
+      },
+      {
+        "line": 891,
+        "text": "    return RadiusTransition::EXIT;"
+      },
+      {
+        "line": 893,
+        "text": "  return RadiusTransition::NONE;"
+      },
+      {
+        "line": 898,
+        "text": "void MapoiNav2Bridge::cmd_vel_callback(const geometry_msgs::msg::Twist::SharedPtr msg)"
+      },
+      {
+        "line": 904,
+        "text": "void MapoiNav2Bridge::cmd_vel_stamped_callback("
+      },
+      {
+        "line": 911,
+        "text": "std::string MapoiNav2Bridge::resolve_cmd_vel_msg_type(const std::string & param_value)"
+      },
+      {
+        "line": 917,
+        "text": "  // 未知値を無条件 \"twist\" にフォールバックすると jazzy 以降の本番で再び silent に"
+      },
+      {
+        "line": 921,
+        "text": "  if (distro && std::string(distro) == \"humble\") {"
+      },
+      {
+        "line": 924,
+        "text": "  // jazzy / kilted / それ以降は TwistStamped。env が unset の場合も今後の主流に倣う。"
+      },
+      {
+        "line": 954,
+        "text": "  // MultiThreadedExecutor で spin (#213): backend_status timer の Reentrant callback_group が"
+      },
+      {
+        "line": 957,
+        "text": "  // 1 thread に縮退すると本 PR の修正 (blocking 中も timer を回す) が成立しない (#214 codex"
+      },
+      {
+        "line": 958,
+        "text": "  // review medium)。backend_status timer (Reentrant) + 他 callback (default MutuallyExclusive)"
+      }
+    ]
+  },
+  {
+    "repo": "neobotix/neo_waypoint_follower",
+    "path": "README.md",
+    "commit": "0a9599837fa7ce28bdde21ff588fc8f1ded5f143",
+    "url": "https://github.com/neobotix/neo_waypoint_follower/blob/0a9599837fa7ce28bdde21ff588fc8f1ded5f143/README.md",
+    "sha256": "7742756356109d07562107ac70d99a32607f37c77c678bc36f9cb25e1fe158fe",
+    "lines": 403,
+    "matched_line_numbers": [
+      11,
+      12,
+      17,
+      19,
+      22,
+      25,
+      30,
+      31,
+      38,
+      40,
+      41,
+      42,
+      44,
+      47,
+      48,
+      52,
+      57,
+      58,
+      61,
+      62,
+      69,
+      94,
+      95,
+      96,
+      109,
+      118,
+      119,
+      124,
+      125,
+      126,
+      128,
+      129,
+      138,
+      140,
+      158,
+      159,
+      160,
+      162,
+      163,
+      164,
+      168,
+      197,
+      200,
+      202,
+      204,
+      213,
+      215,
+      229,
+      231,
+      233,
+      235,
+      238,
+      239,
+      247,
+      248,
+      274,
+      275,
+      276,
+      283,
+      288,
+      289,
+      291,
+      297,
+      300,
+      301,
+      304,
+      312,
+      321,
+      325,
+      331,
+      348,
+      350,
+      354,
+      356,
+      390,
+      392,
+      393,
+      395
+    ]
+  },
+  {
+    "repo": "neobotix/neo_waypoint_follower",
+    "path": "LICENSE",
+    "commit": "0a9599837fa7ce28bdde21ff588fc8f1ded5f143",
+    "url": "https://github.com/neobotix/neo_waypoint_follower/blob/0a9599837fa7ce28bdde21ff588fc8f1ded5f143/LICENSE",
+    "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "lines": 674,
+    "matched_line_numbers": [
+      1,
+      5,
+      6,
+      10,
+      13,
+      15,
+      18,
+      23,
+      40,
+      41,
+      44,
+      46,
+      56,
+      59,
+      65,
+      75,
+      80,
+      81,
+      107,
+      108,
+      156,
+      158,
+      160,
+      161,
+      165,
+      169,
+      175,
+      189,
+      190,
+      200,
+      203,
+      218,
+      222,
+      223,
+      224,
+      226,
+      227,
+      240,
+      241,
+      242,
+      249,
+      263,
+      346,
+      348,
+      352,
+      361,
+      363,
+      365,
+      366,
+      376,
+      391,
+      392,
+      393,
+      394,
+      395,
+      404,
+      410,
+      412,
+      415,
+      416,
+      418,
+      422,
+      425,
+      430,
+      431,
+      432,
+      437,
+      441,
+      443,
+      444,
+      449,
+      450,
+      451,
+      458,
+      464,
+      465,
+      466,
+      474,
+      475,
+      479,
+      480,
+      484,
+      485,
+      488,
+      492,
+      493,
+      495,
+      496,
+      499,
+      501,
+      505,
+      506,
+      507,
+      508,
+      515,
+      517,
+      521,
+      524,
+      530,
+      534,
+      536,
+      537,
+      543,
+      544,
+      546,
+      550,
+      552,
+      554,
+      555,
+      556,
+      558,
+      559,
+      563,
+      566,
+      572,
+      576,
+      580,
+      584,
+      591,
+      594,
+      600,
+      604,
+      606,
+      614,
+      638,
+      639,
+      645,
+      647,
+      648,
+      661,
+      666,
+      667,
+      669,
+      671,
+      673,
+      674
+    ]
+  },
+  {
+    "repo": "neobotix/neo_waypoint_follower",
+    "path": "package.xml",
+    "commit": "0a9599837fa7ce28bdde21ff588fc8f1ded5f143",
+    "url": "https://github.com/neobotix/neo_waypoint_follower/blob/0a9599837fa7ce28bdde21ff588fc8f1ded5f143/package.xml",
+    "sha256": "2f2e3ffd9108a86618bbd1ab82c6f72b7083f56b798e813724291952449d1433",
+    "lines": 38,
+    "matches": [
+      {
+        "line": 2,
+        "text": "<?xml-model href=\"http://download.ros.org/schema/package_format3.xsd\" schematypens=\"http://www.w3.org/2001/XMLSchema\"?>"
+      },
+      {
+        "line": 5,
+        "text": "  <version>0.0.2</version>"
+      },
+      {
+        "line": 10,
+        "text": "  <license>TODO: License declaration</license>"
+      },
+      {
+        "line": 12,
+        "text": "  <buildtool_depend>ament_cmake</buildtool_depend>"
+      },
+      {
+        "line": 14,
+        "text": "  <depend>rclcpp</depend>"
+      },
+      {
+        "line": 15,
+        "text": "  <depend>rclcpp_action</depend>"
+      },
+      {
+        "line": 16,
+        "text": "  <depend>rclcpp_components</depend>"
+      },
+      {
+        "line": 17,
+        "text": "  <depend>yaml-cpp</depend>"
+      },
+      {
+        "line": 18,
+        "text": "  <depend>std_srvs</depend>"
+      },
+      {
+        "line": 19,
+        "text": "  <depend>nav2_msgs</depend>"
+      },
+      {
+        "line": 20,
+        "text": "  <depend>geometry_msgs</depend>"
+      },
+      {
+        "line": 21,
+        "text": "  <depend>visualization_msgs</depend>"
+      },
+      {
+        "line": 23,
+        "text": "  <depend>std_msgs</depend>"
+      },
+      {
+        "line": 24,
+        "text": "  <depend>builtin_interfaces</depend>"
+      },
+      {
+        "line": 25,
+        "text": "  <depend>nav_msgs</depend>"
+      },
+      {
+        "line": 26,
+        "text": "  <depend>rcl_interfaces</depend>"
+      },
+      {
+        "line": 27,
+        "text": "  <depend>rmw</depend>"
+      },
+      {
+        "line": 29,
+        "text": "  <build_depend>rosidl_default_generators</build_depend>"
+      },
+      {
+        "line": 30,
+        "text": "  <exec_depend>rosidl_default_runtime</exec_depend>"
+      },
+      {
+        "line": 32,
+        "text": "  <test_depend>ament_lint_auto</test_depend>"
+      },
+      {
+        "line": 33,
+        "text": "  <test_depend>ament_lint_common</test_depend>"
+      }
+    ]
+  },
+  {
+    "repo": "neobotix/neo_waypoint_follower",
+    "path": "src/waypoint_looper.cpp",
+    "commit": "0a9599837fa7ce28bdde21ff588fc8f1ded5f143",
+    "url": "https://github.com/neobotix/neo_waypoint_follower/blob/0a9599837fa7ce28bdde21ff588fc8f1ded5f143/src/waypoint_looper.cpp",
+    "sha256": "cdbb13613e21b6d8b1ccd62baa9d92404eb9b22221d92b5058eb520b38536967",
+    "lines": 1543,
+    "matches": [
+      {
+        "line": 8,
+        "text": " * - Cancel: Aborts the loop and resets all progress; does not auto-restart."
+      },
+      {
+        "line": 15,
+        "text": " * 1. Lowering repeat_count below current loop_idx_ will cause the run to finish"
+      },
+      {
+        "line": 17,
+        "text": " * 2. Changing wait_at_waypoint_ms does not change an already running timer;"
+      },
+      {
+        "line": 46,
+        "text": "#include <yaml-cpp/yaml.h>"
+      },
+      {
+        "line": 75,
+        "text": "    const std::string default_yaml_file = home != nullptr"
+      },
+      {
+        "line": 76,
+        "text": "      ? std::string(home) + \"/waypoints.yaml\""
+      },
+      {
+        "line": 77,
+        "text": "      : \"/tmp/waypoints.yaml\";"
+      },
+      {
+        "line": 78,
+        "text": "    yaml_file_    = declare_parameter<std::string>(\"yaml_file\", default_yaml_file);"
+      },
+      {
+        "line": 82,
+        "text": "    // repeat_count descriptor"
+      },
+      {
+        "line": 83,
+        "text": "    rcl_interfaces::msg::ParameterDescriptor repeat_count_descriptor;"
+      },
+      {
+        "line": 84,
+        "text": "    repeat_count_descriptor.description = \"Total number of loops for this run\";"
+      },
+      {
+        "line": 85,
+        "text": "    rcl_interfaces::msg::IntegerRange repeat_count_limits;"
+      },
+      {
+        "line": 86,
+        "text": "    repeat_count_limits.from_value = 1; // lower limit of repeat count"
+      },
+      {
+        "line": 87,
+        "text": "    repeat_count_limits.to_value   = kMaxRepeatCount; // upper limit of repeat count"
+      },
+      {
+        "line": 88,
+        "text": "    repeat_count_limits.step       = 1;"
+      },
+      {
+        "line": 89,
+        "text": "    repeat_count_descriptor.integer_range = {repeat_count_limits};"
+      },
+      {
+        "line": 90,
+        "text": "    repeat_count_ = static_cast<size_t>(declare_parameter<int>(\"repeat_count\", 100, repeat_count_descriptor));"
+      },
+      {
+        "line": 92,
+        "text": "    // wait_at_waypoint_ms descriptor"
+      },
+      {
+        "line": 95,
+        "text": "    rcl_interfaces::msg::IntegerRange wait_ms_limits;"
+      },
+      {
+        "line": 96,
+        "text": "    wait_ms_limits.from_value = 0; // lower limit of wait time"
+      },
+      {
+        "line": 97,
+        "text": "    wait_ms_limits.to_value   = kMaxWaitAtWaypointMs; // upper limit of wait time"
+      },
+      {
+        "line": 98,
+        "text": "    wait_ms_limits.step       = 1;"
+      },
+      {
+        "line": 99,
+        "text": "    wait_desc.integer_range = {wait_ms_limits};"
+      },
+      {
+        "line": 100,
+        "text": "    wait_ms_descriptor_ = declare_parameter<int>(\"wait_at_waypoint_ms\", 200, wait_desc);"
+      },
+      {
+        "line": 104,
+        "text": "    rcl_interfaces::msg::IntegerRange history_cap_limits;"
+      },
+      {
+        "line": 105,
+        "text": "    history_cap_limits.from_value = 1;"
+      },
+      {
+        "line": 106,
+        "text": "    history_cap_limits.to_value = 200;"
+      },
+      {
+        "line": 107,
+        "text": "    history_cap_limits.step = 1;"
+      },
+      {
+        "line": 108,
+        "text": "    history_cap_desc.integer_range = {history_cap_limits};"
+      },
+      {
+        "line": 116,
+        "text": "    stop_on_fail_ = declare_parameter<bool>(\"stop_on_failure\", true);"
+      },
+      {
+        "line": 120,
+        "text": "    nav_to_pose_client_ = rclcpp_action::create_client<nav2_msgs::action::NavigateToPose>(this, action_name_);"
+      },
+      {
+        "line": 139,
+        "text": "    cancel_srv_ = create_service<std_srvs::srv::Trigger>("
+      },
+      {
+        "line": 140,
+        "text": "      \"cancel_waypoint_loop\","
+      },
+      {
+        "line": 141,
+        "text": "      std::bind(&WaypointLooper::cancelCallback, this, std::placeholders::_1, std::placeholders::_2));"
+      },
+      {
+        "line": 156,
+        "text": "    odom_sub_ = create_subscription<nav_msgs::msg::Odometry>("
+      },
+      {
+        "line": 169,
+        "text": "    metrics_pub_ = create_publisher<LooperMetrics>(\"/waypoint_loop/metrics\", metrics_qos);"
+      },
+      {
+        "line": 171,
+        "text": "    metrics_timer_ = this->create_wall_timer("
+      },
+      {
+        "line": 175,
+        "text": "    // Publish the currently loaded waypoints"
+      },
+      {
+        "line": 176,
+        "text": "    loaded_waypoints_pub_ = create_publisher<neo_waypoint_follower::msg::Waypoints>("
+      },
+      {
+        "line": 177,
+        "text": "      \"/waypoint_loop/loaded_waypoints\","
+      },
+      {
+        "line": 180,
+        "text": "    executing_waypoints_pub_ = create_publisher<neo_waypoint_follower::msg::Waypoints>("
+      },
+      {
+        "line": 184,
+        "text": "    execution_context_pub_ = create_publisher<ExecutionContext>("
+      },
+      {
+        "line": 188,
+        "text": "    // Service to publish the loaded waypoints once"
+      },
+      {
+        "line": 189,
+        "text": "    publish_loaded_waypoints_srv_ = create_service<std_srvs::srv::Trigger>("
+      },
+      {
+        "line": 190,
+        "text": "      \"publish_loaded_waypoints\","
+      },
+      {
+        "line": 191,
+        "text": "      std::bind(&WaypointLooper::publishLoadedWaypointsCallback, this,"
+      },
+      {
+        "line": 196,
+        "text": "    if (!loadRunHistoryFromDisk_()) {"
+      },
+      {
+        "line": 199,
+        "text": "        \"Run history load failed (path: %s). Starting with empty history.\","
+      },
+      {
+        "line": 211,
+        "text": "        size_t updated_repeat_count = repeat_count_;"
+      },
+      {
+        "line": 217,
+        "text": "          if (p.get_name() == \"wait_at_waypoint_ms\") {"
+      },
+      {
+        "line": 221,
+        "text": "              out.reason = \"wait_at_waypoint_ms must be in [0, \" + std::to_string(kMaxWaitAtWaypointMs) + \"]\";"
+      },
+      {
+        "line": 227,
+        "text": "          else if (p.get_name() == \"repeat_count\") {"
+      },
+      {
+        "line": 229,
+        "text": "            if (v < 1 || v > kMaxRepeatCount) {"
+      },
+      {
+        "line": 231,
+        "text": "              out.reason = \"repeat_count must be in [1, \" + std::to_string(kMaxRepeatCount) + \"]\";"
+      },
+      {
+        "line": 234,
+        "text": "            updated_repeat_count = static_cast<size_t>(v);"
+      },
+      {
+        "line": 250,
+        "text": "        repeat_count_ = updated_repeat_count;"
+      },
+      {
+        "line": 255,
+        "text": "        RCLCPP_INFO(get_logger(), \"Parameters updated: wait_at_waypoint_ms=%d, repeat_count=%zu, has_loop=%s, history_cap=%d\","
+      },
+      {
+        "line": 257,
+        "text": "                    repeat_count_,"
+      },
+      {
+        "line": 357,
+        "text": "  static T nodeScalarOr_(const YAML::Node &node, const T &fallback)"
+      },
+      {
+        "line": 369,
+        "text": "  static bool parseBoolNode_(const YAML::Node &node, bool fallback)"
+      },
+      {
+        "line": 427,
+        "text": "    const std::string from_meta = trimCopy_(loaded_route_name_);"
+      },
+      {
+        "line": 431,
+        "text": "    if (!active_yaml_file_.empty()) {"
+      },
+      {
+        "line": 432,
+        "text": "      const fs::path p(active_yaml_file_);"
+      },
+      {
+        "line": 492,
+        "text": "    run_loop_count_ = static_cast<uint32_t>(effective_repeat_count());"
+      },
+      {
+        "line": 494,
+        "text": "    run_yaml_file_ = execution_yaml_file_;"
+      },
+      {
+        "line": 503,
+        "text": "    run_route_description_ = trimCopy_(loaded_route_description_);"
+      },
+      {
+        "line": 506,
+        "text": "    if (loaded_has_loop_set_) {"
+      },
+      {
+        "line": 507,
+        "text": "      inferred_has_loop = loaded_has_loop_;"
+      },
+      {
+        "line": 512,
+        "text": "    if (effective_repeat_count() > 1) {"
+      },
+      {
+        "line": 534,
+        "text": "      out << \"      \\\"yaml_file\\\": \\\"\" << jsonEscape_(e.yaml_file) << \"\\\",\\n\";"
+      },
+      {
+        "line": 538,
+        "text": "      out << \"      \\\"wait_at_waypoint_ms\\\": \" << e.wait_at_waypoint_ms << \",\\n\";"
+      },
+      {
+        "line": 619,
+        "text": "  bool loadRunHistoryFromDisk_()"
+      },
+      {
+        "line": 628,
+        "text": "      YAML::Node root = YAML::LoadFile(p.string());"
+      },
+      {
+        "line": 634,
+        "text": "      const YAML::Node entries = root[\"entries\"];"
+      },
+      {
+        "line": 649,
+        "text": "        e.yaml_file = nodeScalarOr_(item[\"yaml_file\"], std::string());"
+      },
+      {
+        "line": 653,
+        "text": "        e.wait_at_waypoint_ms = nodeScalarOr_(item[\"wait_at_waypoint_ms\"], static_cast<int32_t>(0));"
+      },
+      {
+        "line": 670,
+        "text": "      RCLCPP_WARN(get_logger(), \"Failed to load run history: %s\", e.what());"
+      },
+      {
+        "line": 696,
+        "text": "    entry.yaml_file = run_yaml_file_;"
+      },
+      {
+        "line": 700,
+        "text": "    entry.wait_at_waypoint_ms = run_wait_ms_;"
+      },
+      {
+        "line": 735,
+        "text": "    run_yaml_file_.clear();"
+      },
+      {
+        "line": 826,
+        "text": "   * Resets indices, loads waypoints, and begins looping from the first waypoint."
+      },
+      {
+        "line": 836,
+        "text": "    if (running_ || goal_in_flight_) { starting_ = false; res->success = false; res->message = \"Already running; pause or cancel first\"; return; }"
+      },
+      {
+        "line": 837,
+        "text": "    if (!loadYaml() || loaded_waypoints_.empty()) { starting_ = false; res->success = false; res->message = \"No poses in YAML\"; return; }"
+      },
+      {
+        "line": 839,
+        "text": "      starting_ = false; res->success = false; res->message = \"NavigateToPose server not up\"; return;"
+      },
+      {
+        "line": 842,
+        "text": "    prepareExecutionFromLoadedRoute_();"
+      },
+      {
+        "line": 845,
+        "text": "    cancel_requested_ = false;"
+      },
+      {
+        "line": 846,
+        "text": "    if (delay_timer_) delay_timer_->cancel();"
+      },
+      {
+        "line": 881,
+        "text": "    if (running_ || goal_in_flight_) { starting_ = false; res->success = false; res->message = \"Already running; pause or cancel first\"; return; }"
+      },
+      {
+        "line": 883,
+        "text": "      starting_ = false; res->success = false; res->message = \"NavigateToPose server not up\"; return;"
+      },
+      {
+        "line": 889,
+        "text": "    cancel_requested_ = false;"
+      },
+      {
+        "line": 890,
+        "text": "    if (delay_timer_) delay_timer_->cancel();"
+      },
+      {
+        "line": 921,
+        "text": "   * Cancels any active goal and preserves progress for resuming."
+      },
+      {
+        "line": 933,
+        "text": "    // Cancel timer and active goal if present"
+      },
+      {
+        "line": 934,
+        "text": "    if (delay_timer_) delay_timer_->cancel();"
+      },
+      {
+        "line": 935,
+        "text": "    if (current_goal_) { auto future = nav_to_pose_client_->async_cancel_goal(current_goal_); (void)future; }"
+      },
+      {
+        "line": 969,
+        "text": "   * @brief Service callback to cancel waypoint loop execution."
+      },
+      {
+        "line": 971,
+        "text": "   * Aborts the loop, cancels any active goal, and resets all progress."
+      },
+      {
+        "line": 976,
+        "text": "  void cancelCallback(const std::shared_ptr<std_srvs::srv::Trigger::Request>,"
+      },
+      {
+        "line": 979,
+        "text": "    status_message_ = \"Canceled and reset\";"
+      },
+      {
+        "line": 980,
+        "text": "    finalizeRunHistory_(\"CANCELLED\", \"USER_CANCELLED\");"
+      },
+      {
+        "line": 982,
+        "text": "    if (delay_timer_) delay_timer_->cancel();"
+      },
+      {
+        "line": 984,
+        "text": "    cancel_requested_ = static_cast<bool>(current_goal_);"
+      },
+      {
+        "line": 986,
+        "text": "      auto future = nav_to_pose_client_->async_cancel_goal(current_goal_);"
+      },
+      {
+        "line": 995,
+        "text": "    res->success = true; res->message = \"Canceled and reset.\";"
+      },
+      {
+        "line": 996,
+        "text": "    RCLCPP_INFO(get_logger(), \"Waypoint loop canceled and reset.\");"
+      },
+      {
+        "line": 1003,
+        "text": "   * @brief Load waypoints from YAML file."
+      },
+      {
+        "line": 1005,
+        "text": "   * Parses the configured YAML file and loads waypoints into memory."
+      },
+      {
+        "line": 1008,
+        "text": "   * @return True if waypoints loaded successfully, false otherwise."
+      },
+      {
+        "line": 1010,
+        "text": "  bool loadYaml() {"
+      },
+      {
+        "line": 1012,
+        "text": "      std::string yaml_path = yaml_file_;"
+      },
+      {
+        "line": 1013,
+        "text": "      (void)this->get_parameter(\"yaml_file\", yaml_path);"
+      },
+      {
+        "line": 1014,
+        "text": "      active_yaml_file_ = yaml_path;"
+      },
+      {
+        "line": 1015,
+        "text": "      loaded_route_name_.clear();"
+      },
+      {
+        "line": 1016,
+        "text": "      loaded_route_description_.clear();"
+      },
+      {
+        "line": 1017,
+        "text": "      loaded_has_loop_ = false;"
+      },
+      {
+        "line": 1018,
+        "text": "      loaded_has_loop_set_ = false;"
+      },
+      {
+        "line": 1019,
+        "text": "      loaded_waypoints_.clear();"
+      },
+      {
+        "line": 1021,
+        "text": "      YAML::Node root = YAML::LoadFile(yaml_path);"
+      },
+      {
+        "line": 1022,
+        "text": "      YAML::Node waypoints = root[\"waypoints\"];"
+      },
+      {
+        "line": 1024,
+        "text": "        RCLCPP_ERROR(get_logger(), \"YAML has no 'waypoints' map: %s\", yaml_path.c_str());"
+      },
+      {
+        "line": 1028,
+        "text": "      YAML::Node metadata = root[\"metadata\"];"
+      },
+      {
+        "line": 1030,
+        "text": "        loaded_route_name_ = trimCopy_(nodeScalarOr_(metadata[\"name\"], std::string()));"
+      },
+      {
+        "line": 1031,
+        "text": "        loaded_route_description_ = trimCopy_(nodeScalarOr_(metadata[\"description\"], std::string()));"
+      },
+      {
+        "line": 1033,
+        "text": "          loaded_has_loop_ = parseBoolNode_(metadata[\"has_loop\"], false);"
+      },
+      {
+        "line": 1034,
+        "text": "          loaded_has_loop_set_ = true;"
+      },
+      {
+        "line": 1040,
+        "text": "        const YAML::Node & p = it->second;"
+      },
+      {
+        "line": 1050,
+        "text": "        loaded_waypoints_.push_back({name, pose_stamped});"
+      },
+      {
+        "line": 1054,
+        "text": "    catch (const YAML::BadFile & e) {"
+      },
+      {
+        "line": 1055,
+        "text": "      RCLCPP_ERROR(get_logger(), \"Failed to open YAML file: %s\", e.what());"
+      },
+      {
+        "line": 1059,
+        "text": "      RCLCPP_ERROR(get_logger(), \"YAML error: %s\", e.what());"
+      },
+      {
+        "line": 1089,
+        "text": "  neo_waypoint_follower::msg::Waypoints buildLoadedWaypointsMsg_()"
+      },
+      {
+        "line": 1091,
+        "text": "    return buildWaypointsMsg_(loaded_waypoints_);"
+      },
+      {
+        "line": 1115,
+        "text": "      msg.yaml_file = execution_yaml_file_;"
+      },
+      {
+        "line": 1121,
+        "text": "  void prepareExecutionFromLoadedRoute_()"
+      },
+      {
+        "line": 1123,
+        "text": "    waypoints_ = loaded_waypoints_;"
+      },
+      {
+        "line": 1126,
+        "text": "    execution_yaml_file_ = active_yaml_file_;"
+      },
+      {
+        "line": 1147,
+        "text": "    execution_yaml_file_.clear();"
+      },
+      {
+        "line": 1156,
+        "text": "    execution_yaml_file_.clear();"
+      },
+      {
+        "line": 1163,
+        "text": "  void publishLoadedWaypointsCallback("
+      },
+      {
+        "line": 1167,
+        "text": "    if (!loaded_waypoints_pub_) {"
+      },
+      {
+        "line": 1173,
+        "text": "    // Reload from YAML so updates on disk are reflected here"
+      },
+      {
+        "line": 1174,
+        "text": "    (void)loadYaml();"
+      },
+      {
+        "line": 1176,
+        "text": "    if (loaded_waypoints_.empty()) {"
+      },
+      {
+        "line": 1178,
+        "text": "      res->message = \"No waypoints loaded (YAML empty or load failed)\";"
+      },
+      {
+        "line": 1182,
+        "text": "    loaded_waypoints_pub_->publish(buildLoadedWaypointsMsg_());"
+      },
+      {
+        "line": 1184,
+        "text": "    res->message = \"Published loaded waypoints\";"
+      },
+      {
+        "line": 1198,
+        "text": "    if (loop_idx_ >= effective_repeat_count()) { finish(); return; }"
+      },
+      {
+        "line": 1203,
+        "text": "      if (loop_idx_ >= effective_repeat_count()) { finish(); return; }"
+      },
+      {
+        "line": 1208,
+        "text": "    auto goal = nav2_msgs::action::NavigateToPose::Goal();"
+      },
+      {
+        "line": 1216,
+        "text": "                  loop_idx_ + 1, effective_repeat_count(), pair.first.c_str(),"
+      },
+      {
+        "line": 1228,
+        "text": "    auto options = rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SendGoalOptions();"
+      },
+      {
+        "line": 1231,
+        "text": "      [this](rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::SharedPtr,"
+      },
+      {
+        "line": 1232,
+        "text": "             const std::shared_ptr<const nav2_msgs::action::NavigateToPose::Feedback> fb)"
+      },
+      {
+        "line": 1234,
+        "text": "        if (!running_ || cancel_requested_) {"
+      },
+      {
+        "line": 1244,
+        "text": "      [this](std::shared_ptr<rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>> gh){"
+      },
+      {
+        "line": 1251,
+        "text": "          nav_error_code_ = nav2_msgs::action::NavigateToPose::Result::UNKNOWN;"
+      },
+      {
+        "line": 1261,
+        "text": "      [this](const rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::WrappedResult & result)"
+      },
+      {
+        "line": 1265,
+        "text": "        if (cancel_requested_) {"
+      },
+      {
+        "line": 1266,
+        "text": "          cancel_requested_ = false;"
+      },
+      {
+        "line": 1274,
+        "text": "          nav_error_code_ = nav2_msgs::action::NavigateToPose::Result::UNKNOWN;"
+      },
+      {
+        "line": 1278,
+        "text": "        if (!(paused_ && result.code == rclcpp_action::ResultCode::CANCELED)) {"
+      },
+      {
+        "line": 1289,
+        "text": "          case rclcpp_action::ResultCode::CANCELED:"
+      },
+      {
+        "line": 1294,
+        "text": "            RCLCPP_WARN(this->get_logger(), \"Goal canceled\");"
+      },
+      {
+        "line": 1295,
+        "text": "            status_message_ = nav_error_msg_.empty() ? \"Goal canceled by Nav2\" : nav_error_msg_;"
+      },
+      {
+        "line": 1334,
+        "text": "          ((loop_idx_ + 1) >= effective_repeat_count());"
+      },
+      {
+        "line": 1339,
+        "text": "          if (delay_timer_) delay_timer_->cancel();"
+      },
+      {
+        "line": 1343,
+        "text": "          delay_timer_ = this->create_wall_timer("
+      },
+      {
+        "line": 1346,
+        "text": "              delay_timer_->cancel();"
+      },
+      {
+        "line": 1384,
+        "text": "      RCLCPP_INFO(get_logger(), \"Completed %zu loop(s).\", repeat_count_);"
+      },
+      {
+        "line": 1387,
+        "text": "    cancel_requested_ = false;"
+      },
+      {
+        "line": 1439,
+        "text": "    nav_error_code_ = nav2_msgs::action::NavigateToPose::Result::NONE;"
+      },
+      {
+        "line": 1443,
+        "text": "  // limits"
+      },
+      {
+        "line": 1444,
+        "text": "  static constexpr int kMaxRepeatCount = 100;"
+      },
+      {
+        "line": 1450,
+        "text": "  std::string yaml_file_, frame_id_, action_name_;"
+      },
+      {
+        "line": 1462,
+        "text": "  size_t repeat_count_, loop_idx_, wp_idx_;"
+      },
+      {
+        "line": 1464,
+        "text": "  inline size_t effective_repeat_count() const { return single_goal_mode_ ? 1 : repeat_count_; }"
+      },
+      {
+        "line": 1468,
+        "text": "  std::vector<std::pair<std::string, geometry_msgs::msg::PoseStamped>> loaded_waypoints_;"
+      },
+      {
+        "line": 1469,
+        "text": "  std::string active_yaml_file_;"
+      },
+      {
+        "line": 1470,
+        "text": "  std::string loaded_route_name_;"
+      },
+      {
+        "line": 1471,
+        "text": "  std::string loaded_route_description_;"
+      },
+      {
+        "line": 1472,
+        "text": "  bool loaded_has_loop_ = false;"
+      },
+      {
+        "line": 1473,
+        "text": "  bool loaded_has_loop_set_ = false;"
+      },
+      {
+        "line": 1477,
+        "text": "  std::string execution_yaml_file_;"
+      },
+      {
+        "line": 1478,
+        "text": "  bool cancel_requested_ = false;"
+      },
+      {
+        "line": 1487,
+        "text": "  std::string run_yaml_file_;"
+      },
+      {
+        "line": 1506,
+        "text": "  rclcpp::TimerBase::SharedPtr metrics_timer_;"
+      },
+      {
+        "line": 1507,
+        "text": "  rclcpp::Publisher<neo_waypoint_follower::msg::Waypoints>::SharedPtr loaded_waypoints_pub_;"
+      },
+      {
+        "line": 1517,
+        "text": "  uint16_t nav_error_code_ = nav2_msgs::action::NavigateToPose::Result::NONE;"
+      },
+      {
+        "line": 1521,
+        "text": "  rclcpp_action::Client<nav2_msgs::action::NavigateToPose>::SharedPtr nav_to_pose_client_;"
+      },
+      {
+        "line": 1523,
+        "text": "  start_srv_, cancel_srv_, pause_srv_, resume_srv_, publish_loaded_waypoints_srv_;"
+      },
+      {
+        "line": 1528,
+        "text": "  rclcpp::TimerBase::SharedPtr delay_timer_;"
+      },
+      {
+        "line": 1529,
+        "text": "  rclcpp_action::ClientGoalHandle<nav2_msgs::action::NavigateToPose>::SharedPtr current_goal_;"
+      }
+    ]
+  },
+  {
+    "repo": "neobotix/neo_waypoint_follower",
+    "path": "src/save_waypoints_server.cpp",
+    "commit": "0a9599837fa7ce28bdde21ff588fc8f1ded5f143",
+    "url": "https://github.com/neobotix/neo_waypoint_follower/blob/0a9599837fa7ce28bdde21ff588fc8f1ded5f143/src/save_waypoints_server.cpp",
+    "sha256": "55c45420ae0aaf45639d3efee5a2d2cd49fda6d0fffc61d68680a7b222d05a4b",
+    "lines": 216,
+    "matches": [
+      {
+        "line": 3,
+        "text": " * SaveWaypointsServer"
+      },
+      {
+        "line": 5,
+        "text": " * Subscribes to waypoint markers and provides a service to save them to YAML."
+      },
+      {
+        "line": 15,
+        "text": "#include <yaml-cpp/yaml.h>"
+      },
+      {
+        "line": 23,
+        "text": "class SaveWaypointsServer : public rclcpp::Node"
+      },
+      {
+        "line": 26,
+        "text": "  /// \\brief Construct a new SaveWaypointsServer node."
+      },
+      {
+        "line": 28,
+        "text": "  /// Initializes parameters, subscription to waypoint markers, and save service."
+      },
+      {
+        "line": 29,
+        "text": "  SaveWaypointsServer()"
+      },
+      {
+        "line": 30,
+        "text": "  : Node(\"save_waypoints_server\")"
+      },
+      {
+        "line": 34,
+        "text": "    output_file_     = declare_parameter<std::string>(\"output_file\", std::string(getenv(\"HOME\")) + \"/waypoints.yaml\");"
+      },
+      {
+        "line": 37,
+        "text": "    sub_ = create_subscription<visualization_msgs::msg::MarkerArray>("
+      },
+      {
+        "line": 39,
+        "text": "      std::bind(&SaveWaypointsServer::markersCallback, this, std::placeholders::_1));"
+      },
+      {
+        "line": 41,
+        "text": "    // Service to save waypoints"
+      },
+      {
+        "line": 43,
+        "text": "      \"save_waypoints\","
+      },
+      {
+        "line": 44,
+        "text": "      std::bind(&SaveWaypointsServer::handleSave, this,"
+      },
+      {
+        "line": 47,
+        "text": "    RCLCPP_INFO(get_logger(), \"Listening on %s, service /save_waypoints ready.\", waypoints_topic_.c_str());"
+      },
+      {
+        "line": 55,
+        "text": "  /// Stores the latest marker array for processing when save service is called."
+      },
+      {
+        "line": 64,
+        "text": "  /// \\brief Service callback to save waypoints to YAML file."
+      },
+      {
+        "line": 66,
+        "text": "  /// Extracts waypoints from the latest marker array and saves them to configured file."
+      },
+      {
+        "line": 70,
+        "text": "  void handleSave(const std::shared_ptr<std_srvs::srv::Trigger::Request> /*req*/,"
+      },
+      {
+        "line": 100,
+        "text": "      YAML::Emitter out;"
+      },
+      {
+        "line": 101,
+        "text": "      out << YAML::BeginMap;"
+      },
+      {
+        "line": 102,
+        "text": "      out << YAML::Key << \"waypoints\" << YAML::Value << YAML::BeginMap;"
+      },
+      {
+        "line": 107,
+        "text": "        out << YAML::Key << name << YAML::Value << YAML::BeginMap;"
+      },
+      {
+        "line": 109,
+        "text": "        out << YAML::Key << \"position\" << YAML::Value << YAML::BeginMap;"
+      },
+      {
+        "line": 110,
+        "text": "        out << YAML::Key << \"x\" << YAML::Value << pose.position.x;"
+      },
+      {
+        "line": 111,
+        "text": "        out << YAML::Key << \"y\" << YAML::Value << pose.position.y;"
+      },
+      {
+        "line": 112,
+        "text": "        out << YAML::Key << \"z\" << YAML::Value << pose.position.z;"
+      },
+      {
+        "line": 113,
+        "text": "        out << YAML::EndMap; // position"
+      },
+      {
+        "line": 115,
+        "text": "        out << YAML::Key << \"orientation\" << YAML::Value << YAML::BeginMap;"
+      },
+      {
+        "line": 116,
+        "text": "        out << YAML::Key << \"x\" << YAML::Value << pose.orientation.x;"
+      },
+      {
+        "line": 117,
+        "text": "        out << YAML::Key << \"y\" << YAML::Value << pose.orientation.y;"
+      },
+      {
+        "line": 118,
+        "text": "        out << YAML::Key << \"z\" << YAML::Value << pose.orientation.z;"
+      },
+      {
+        "line": 119,
+        "text": "        out << YAML::Key << \"w\" << YAML::Value << pose.orientation.w;"
+      },
+      {
+        "line": 120,
+        "text": "        out << YAML::EndMap; // orientation"
+      },
+      {
+        "line": 122,
+        "text": "        out << YAML::EndMap; // waypoint"
+      },
+      {
+        "line": 125,
+        "text": "      out << YAML::EndMap;   // waypoints"
+      },
+      {
+        "line": 126,
+        "text": "      out << YAML::EndMap;   // root"
+      },
+      {
+        "line": 132,
+        "text": "      res->message = \"Saved \" + std::to_string(data.size()) + \" waypoints to \" + path;"
+      },
+      {
+        "line": 209,
+        "text": "/// \\brief Main entry point for the SaveWaypointsServer node."
+      },
+      {
+        "line": 213,
+        "text": "  rclcpp::spin(std::make_shared<SaveWaypointsServer>());"
+      }
+    ]
+  },
+  {
+    "repo": "kzm784/waypoint_editor",
+    "path": "README.md",
+    "commit": "911c46402be6e69a74b389cdc79442b50bfa39d2",
+    "url": "https://github.com/kzm784/waypoint_editor/blob/911c46402be6e69a74b389cdc79442b50bfa39d2/README.md",
+    "sha256": "1d088425981231e42efe0cfba42196065ce5da7b54fdde477558bf1633b3a7d6",
+    "lines": 102,
+    "matched_line_numbers": [
+      3,
+      4,
+      15,
+      20,
+      25,
+      46,
+      51,
+      52,
+      53,
+      54,
+      56,
+      70,
+      71,
+      73,
+      75,
+      76,
+      79,
+      98,
+      99,
+      101,
+      102
+    ]
+  },
+  {
+    "repo": "kzm784/waypoint_editor",
+    "path": "LICENSE",
+    "commit": "911c46402be6e69a74b389cdc79442b50bfa39d2",
+    "url": "https://github.com/kzm784/waypoint_editor/blob/911c46402be6e69a74b389cdc79442b50bfa39d2/LICENSE",
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "lines": 201,
+    "matched_line_numbers": [
+      1,
+      3,
+      9,
+      13,
+      24,
+      27,
+      32,
+      36,
+      44,
+      51,
+      52,
+      53,
+      55,
+      66,
+      67,
+      69,
+      70,
+      73,
+      74,
+      76,
+      78,
+      81,
+      85,
+      86,
+      95,
+      117,
+      121,
+      124,
+      128,
+      131,
+      133,
+      135,
+      138,
+      147,
+      151,
+      153,
+      159,
+      160,
+      169,
+      178,
+      180,
+      191,
+      192,
+      193,
+      195,
+      198,
+      200,
+      201
+    ]
+  },
+  {
+    "repo": "kzm784/waypoint_editor",
+    "path": "package.xml",
+    "commit": "911c46402be6e69a74b389cdc79442b50bfa39d2",
+    "url": "https://github.com/kzm784/waypoint_editor/blob/911c46402be6e69a74b389cdc79442b50bfa39d2/package.xml",
+    "sha256": "7c624f094589cc7a1eba24a52a40a87511d8fcbf9453fb5a4374c66fed250100",
+    "lines": 59,
+    "matches": [
+      {
+        "line": 2,
+        "text": "<?xml-model href=\"http://download.ros.org/schema/package_format3.xsd\" schematypens=\"http://www.w3.org/2001/XMLSchema\"?>"
+      },
+      {
+        "line": 5,
+        "text": "  <version>0.0.0</version>"
+      },
+      {
+        "line": 8,
+        "text": "  <license>Apache-2.0</license>"
+      },
+      {
+        "line": 10,
+        "text": "  <buildtool_depend>ament_cmake</buildtool_depend>"
+      },
+      {
+        "line": 12,
+        "text": "  <build_depend>rclcpp</build_depend>"
+      },
+      {
+        "line": 13,
+        "text": "  <build_depend>pluginlib</build_depend>"
+      },
+      {
+        "line": 14,
+        "text": "  <build_depend>rviz_common</build_depend>"
+      },
+      {
+        "line": 15,
+        "text": "  <build_depend>rviz_default_plugins</build_depend>"
+      },
+      {
+        "line": 16,
+        "text": "  <build_depend>interactive_markers</build_depend>"
+      },
+      {
+        "line": 17,
+        "text": "  <build_depend>visualization_msgs</build_depend>"
+      },
+      {
+        "line": 18,
+        "text": "  <build_depend>geometry_msgs</build_depend>"
+      },
+      {
+        "line": 19,
+        "text": "  <build_depend>tf2</build_depend>"
+      },
+      {
+        "line": 20,
+        "text": "  <build_depend>tf2_ros</build_depend>"
+      },
+      {
+        "line": 21,
+        "text": "  <build_depend>tf2_geometry_msgs</build_depend>"
+      },
+      {
+        "line": 22,
+        "text": "  <build_depend>std_srvs</build_depend>"
+      },
+      {
+        "line": 23,
+        "text": "  <build_depend>std_msgs</build_depend>"
+      },
+      {
+        "line": 24,
+        "text": "  <build_depend>nav2_msgs</build_depend>   "
+      },
+      {
+        "line": 25,
+        "text": "  <build_depend>sensor_msgs</build_depend>"
+      },
+      {
+        "line": 26,
+        "text": "  <build_depend>pcl_conversions</build_depend>"
+      },
+      {
+        "line": 27,
+        "text": "  <build_depend>yaml-cpp</build_depend>"
+      },
+      {
+        "line": 28,
+        "text": "  <build_depend condition=\"$ROS_DISTRO == jazzy or $ROS_DISTRO == rolling\">qt6-base-dev</build_depend>"
+      },
+      {
+        "line": 29,
+        "text": "  <build_depend condition=\"$ROS_DISTRO != jazzy and $ROS_DISTRO != rolling\">qtbase5-dev</build_depend>"
+      },
+      {
+        "line": 31,
+        "text": "  <exec_depend>rclcpp</exec_depend>"
+      },
+      {
+        "line": 32,
+        "text": "  <exec_depend>pluginlib</exec_depend>"
+      },
+      {
+        "line": 33,
+        "text": "  <exec_depend>rviz_common</exec_depend>"
+      },
+      {
+        "line": 34,
+        "text": "  <exec_depend>rviz_default_plugins</exec_depend>"
+      },
+      {
+        "line": 35,
+        "text": "  <exec_depend>interactive_markers</exec_depend>"
+      },
+      {
+        "line": 36,
+        "text": "  <exec_depend>visualization_msgs</exec_depend>"
+      },
+      {
+        "line": 37,
+        "text": "  <exec_depend>geometry_msgs</exec_depend>"
+      },
+      {
+        "line": 38,
+        "text": "  <exec_depend>tf2</exec_depend>"
+      },
+      {
+        "line": 39,
+        "text": "  <exec_depend>tf2_ros</exec_depend>"
+      },
+      {
+        "line": 40,
+        "text": "  <exec_depend>tf2_geometry_msgs</exec_depend>"
+      },
+      {
+        "line": 41,
+        "text": "  <exec_depend>std_srvs</exec_depend>"
+      },
+      {
+        "line": 42,
+        "text": "  <exec_depend>std_msgs</exec_depend>"
+      },
+      {
+        "line": 43,
+        "text": "  <exec_depend>nav2_msgs</exec_depend>"
+      },
+      {
+        "line": 44,
+        "text": "  <exec_depend>sensor_msgs</exec_depend>"
+      },
+      {
+        "line": 45,
+        "text": "  <exec_depend>pcl_conversions</exec_depend>"
+      },
+      {
+        "line": 46,
+        "text": "  <exec_depend>yaml-cpp</exec_depend>"
+      },
+      {
+        "line": 47,
+        "text": "  <exec_depend condition=\"$ROS_DISTRO == jazzy or $ROS_DISTRO == rolling\">qt6-base-dev</exec_depend>"
+      },
+      {
+        "line": 48,
+        "text": "  <exec_depend condition=\"$ROS_DISTRO != jazzy and $ROS_DISTRO != rolling\">qtbase5-dev</exec_depend>"
+      },
+      {
+        "line": 49,
+        "text": "  <exec_depend>nav2_map_server</exec_depend>"
+      },
+      {
+        "line": 50,
+        "text": "  <exec_depend>nav2_lifecycle_manager</exec_depend>"
+      },
+      {
+        "line": 51,
+        "text": "  <exec_depend>rviz2</exec_depend>"
+      },
+      {
+        "line": 53,
+        "text": "  <test_depend>ament_lint_auto</test_depend>"
+      },
+      {
+        "line": 54,
+        "text": "  <test_depend>ament_lint_common</test_depend>"
+      }
+    ]
+  },
+  {
+    "repo": "kzm784/waypoint_editor",
+    "path": "src/rviz/waypoint_editor_panel.cpp",
+    "commit": "911c46402be6e69a74b389cdc79442b50bfa39d2",
+    "url": "https://github.com/kzm784/waypoint_editor/blob/911c46402be6e69a74b389cdc79442b50bfa39d2/src/rviz/waypoint_editor_panel.cpp",
+    "sha256": "29c31b1aa9684207e724a8fa7af9ba27033490516545a5681979cc9983f4853b",
+    "lines": 569,
+    "matches": [
+      {
+        "line": 3,
+        "text": "#include <rviz_common/load_resource.hpp>"
+      },
+      {
+        "line": 5,
+        "text": "#include <nav2_msgs/srv/load_map.hpp>"
+      },
+      {
+        "line": 97,
+        "text": "    QPixmap logo = rviz_common::loadPixmap(\"package://waypoint_editor/icons/classes/waypoint_editor_logo.png\");"
+      },
+      {
+        "line": 129,
+        "text": "    load_2d_map_button_    = new QPushButton(\"Load 2D Map\", this);"
+      },
+      {
+        "line": 130,
+        "text": "    load_3d_map_button_    = new QPushButton(\"Load 3D Map\", this);"
+      },
+      {
+        "line": 131,
+        "text": "    load_waypoints_button_ = new QPushButton(\"Load WPs\", this);"
+      },
+      {
+        "line": 132,
+        "text": "    save_waypoints_button_ = new QPushButton(\"Save WPs\", this);"
+      },
+      {
+        "line": 138,
+        "text": "    for (auto *btn : {load_2d_map_button_, load_3d_map_button_, load_waypoints_button_, save_waypoints_button_}) {"
+      },
+      {
+        "line": 154,
+        "text": "    map_row->addWidget(load_2d_map_button_, /*stretch=*/1);"
+      },
+      {
+        "line": 155,
+        "text": "    map_row->addWidget(load_3d_map_button_, /*stretch=*/1);"
+      },
+      {
+        "line": 173,
+        "text": "    wp_row2->addWidget(load_waypoints_button_, /*stretch=*/1);"
+      },
+      {
+        "line": 174,
+        "text": "    wp_row2->addWidget(save_waypoints_button_, /*stretch=*/1);"
+      },
+      {
+        "line": 269,
+        "text": "    connect(load_2d_map_button_, &QPushButton::clicked, this, &WaypointEditorPanel::onLoad2DMapButtonClick);"
+      },
+      {
+        "line": 270,
+        "text": "    connect(load_3d_map_button_, &QPushButton::clicked, this, &WaypointEditorPanel::onLoad3DMapButtonClick);"
+      },
+      {
+        "line": 271,
+        "text": "    connect(load_waypoints_button_, &QPushButton::clicked, this, &WaypointEditorPanel::onLoadWaypointsButtonClick);"
+      },
+      {
+        "line": 272,
+        "text": "    connect(save_waypoints_button_, &QPushButton::clicked, this, &WaypointEditorPanel::onSaveWaypointsButtonClick);"
+      },
+      {
+        "line": 284,
+        "text": "    load_map_client_  = nh_->create_client<nav2_msgs::srv::LoadMap>(\"map_server/load_map\");"
+      },
+      {
+        "line": 285,
+        "text": "    load_client_      = nh_->create_client<std_srvs::srv::Trigger>(\"load_waypoints\");"
+      },
+      {
+        "line": 286,
+        "text": "    save_client_      = nh_->create_client<std_srvs::srv::Trigger>(\"save_waypoints\");"
+      },
+      {
+        "line": 292,
+        "text": "    auto_distance_pub_= nh_->create_publisher<std_msgs::msg::Float64>(\"auto_waypoint_min_distance\", rclcpp::QoS(1).transient_local());"
+      },
+      {
+        "line": 294,
+        "text": "    last_wp_dist_sub_ = nh_->create_subscription<std_msgs::msg::Float64>("
+      },
+      {
+        "line": 301,
+        "text": "    total_wp_dist_sub_ = nh_->create_subscription<std_msgs::msg::Float64>("
+      },
+      {
+        "line": 308,
+        "text": "    cloud_pub_ = nh_->create_publisher<sensor_msgs::msg::PointCloud2>(\"map_cloud\", rclcpp::QoS(rclcpp::KeepLast(1)).transient_local().reliable());"
+      },
+      {
+        "line": 311,
+        "text": "void WaypointEditorPanel::load(const rviz_common::Config &config)"
+      },
+      {
+        "line": 313,
+        "text": "  rviz_common::Panel::load(config);"
+      },
+      {
+        "line": 316,
+        "text": "void WaypointEditorPanel::save(rviz_common::Config config) const"
+      },
+      {
+        "line": 318,
+        "text": "  rviz_common::Panel::save(config);"
+      },
+      {
+        "line": 413,
+        "text": "void WaypointEditorPanel::onLoad2DMapButtonClick()"
+      },
+      {
+        "line": 417,
+        "text": "        tr(\"Open 2D Map YAML\"),"
+      },
+      {
+        "line": 419,
+        "text": "        tr(\"YAML Files (*.yaml)\"));"
+      },
+      {
+        "line": 425,
+        "text": "    if (!load_map_client_->wait_for_service(std::chrono::seconds(2))) {"
+      },
+      {
+        "line": 428,
+        "text": "    auto req = std::make_shared<nav2_msgs::srv::LoadMap::Request>();"
+      },
+      {
+        "line": 430,
+        "text": "    load_map_client_->async_send_request(req,"
+      },
+      {
+        "line": 431,
+        "text": "        [this](rclcpp::Client<nav2_msgs::srv::LoadMap>::SharedFuture future) {"
+      },
+      {
+        "line": 439,
+        "text": "            postStatusMessage(ok ? tr(\"Loaded 2D Map\") : tr(\"Failed to load 2D Map\"));"
+      },
+      {
+        "line": 443,
+        "text": "void WaypointEditorPanel::onLoad3DMapButtonClick()"
+      },
+      {
+        "line": 457,
+        "text": "    int ret = pcl::io::loadPCDFile<pcl::PointXYZ>(path, *cloud);"
+      },
+      {
+        "line": 459,
+        "text": "        postStatusMessage(tr(\"Failed to load 3D Map\"));"
+      },
+      {
+        "line": 468,
+        "text": "    postStatusMessage(tr(\"Loaded 3D Map\"));"
+      },
+      {
+        "line": 471,
+        "text": "void WaypointEditorPanel::onLoadWaypointsButtonClick()"
+      },
+      {
+        "line": 473,
+        "text": "    if (!load_client_->wait_for_service(std::chrono::seconds(1))) {"
+      },
+      {
+        "line": 477,
+        "text": "    load_client_->async_send_request(req,"
+      },
+      {
+        "line": 486,
+        "text": "            postStatusMessage(ok ? tr(\"Loaded WPs\") : tr(\"Failed to load WPs\"));"
+      },
+      {
+        "line": 490,
+        "text": "void WaypointEditorPanel::onSaveWaypointsButtonClick()"
+      },
+      {
+        "line": 492,
+        "text": "    if (!save_client_->wait_for_service(std::chrono::seconds(1))) {"
+      },
+      {
+        "line": 496,
+        "text": "    save_client_->async_send_request(req,"
+      },
+      {
+        "line": 505,
+        "text": "            postStatusMessage(ok ? tr(\"Saved WPs\") : tr(\"Failed to save WPs\"));"
+      }
+    ]
+  },
+  {
+    "repo": "kzm784/waypoint_editor",
+    "path": "src/io/waypoint_yaml.cpp",
+    "commit": "911c46402be6e69a74b389cdc79442b50bfa39d2",
+    "url": "https://github.com/kzm784/waypoint_editor/blob/911c46402be6e69a74b389cdc79442b50bfa39d2/src/io/waypoint_yaml.cpp",
+    "sha256": "3b441bd424c542f00e39bc3e6bddf0e63f07c4e46b34117b353ac8aba241bee1",
+    "lines": 158,
+    "matches": [
+      {
+        "line": 1,
+        "text": "#include \"waypoint_editor/io/waypoint_yaml.hpp\""
+      },
+      {
+        "line": 10,
+        "text": "#include <yaml-cpp/yaml.h>"
+      },
+      {
+        "line": 18,
+        "text": "std::string EscapeYamlString(const std::string &input)"
+      },
+      {
+        "line": 46,
+        "text": "bool WaypointYaml::Save(const std::vector<Waypoint> &waypoints, const std::string &path, std::string &error)"
+      },
+      {
+        "line": 62,
+        "text": "            ofs << \"    command: \\\"\" << EscapeYamlString(wp.function_command) << \"\\\"\\n\";"
+      },
+      {
+        "line": 73,
+        "text": "bool ReadPoseComponent(const YAML::Node &parent, const char *key, double &value)"
+      },
+      {
+        "line": 82,
+        "text": "    } catch (const YAML::Exception &) {"
+      },
+      {
+        "line": 87,
+        "text": "bool PopulatePose(const YAML::Node &pose_node, geometry_msgs::msg::Pose &pose)"
+      },
+      {
+        "line": 106,
+        "text": "bool WaypointYaml::Load(const std::string &path, std::vector<Waypoint> &waypoints, std::string &error)"
+      },
+      {
+        "line": 108,
+        "text": "    YAML::Node root;"
+      },
+      {
+        "line": 110,
+        "text": "        root = YAML::LoadFile(path);"
+      },
+      {
+        "line": 111,
+        "text": "    } catch (const YAML::Exception &ex) {"
+      },
+      {
+        "line": 112,
+        "text": "        error = \"Failed to parse yaml: \" + std::string(ex.what());"
+      },
+      {
+        "line": 118,
+        "text": "        error = \"Missing 'waypoints' list in yaml\";"
+      }
+    ]
+  },
+  {
+    "repo": "pdaugusto/waypoint_navigator",
+    "path": "README.md",
+    "commit": "0498d1d454c086eec41484c62a5dc6aa5db1b883",
+    "url": "https://github.com/pdaugusto/waypoint_navigator/blob/0498d1d454c086eec41484c62a5dc6aa5db1b883/README.md",
+    "sha256": "579f5da348f1b6429dd0042830e324af83324747969d6bf5ea1a8bec319d7789",
+    "lines": 185,
+    "matched_line_numbers": [
+      4,
+      12,
+      13,
+      24,
+      37,
+      71,
+      73,
+      98,
+      103,
+      107,
+      131,
+      147,
+      179,
+      183,
+      185
+    ]
+  },
+  {
+    "repo": "pdaugusto/waypoint_navigator",
+    "path": "package.xml",
+    "commit": "0498d1d454c086eec41484c62a5dc6aa5db1b883",
+    "url": "https://github.com/pdaugusto/waypoint_navigator/blob/0498d1d454c086eec41484c62a5dc6aa5db1b883/package.xml",
+    "sha256": "d5555168020e298d37c516a4d86e6dce3facef2c1e1e57c6f0829d9eebdca8a1",
+    "lines": 31,
+    "matches": [
+      {
+        "line": 2,
+        "text": "<?xml-model href=\"http://download.ros.org/schema/package_format3.xsd\""
+      },
+      {
+        "line": 6,
+        "text": "  <version>1.0.0</version>"
+      },
+      {
+        "line": 13,
+        "text": "  <license>MIT</license>"
+      },
+      {
+        "line": 16,
+        "text": "  <buildtool_depend>ament_python</buildtool_depend>"
+      },
+      {
+        "line": 19,
+        "text": "  <depend>rclpy</depend>"
+      },
+      {
+        "line": 20,
+        "text": "  <depend>nav2_msgs</depend>"
+      },
+      {
+        "line": 21,
+        "text": "  <depend>geometry_msgs</depend>"
+      },
+      {
+        "line": 22,
+        "text": "  <depend>std_msgs</depend>"
+      },
+      {
+        "line": 25,
+        "text": "  <exec_depend>launch</exec_depend>"
+      },
+      {
+        "line": 26,
+        "text": "  <exec_depend>launch_ros</exec_depend>"
+      }
+    ]
+  },
+  {
+    "repo": "pdaugusto/waypoint_navigator",
+    "path": "waypoint_navigator/mission_node.py",
+    "commit": "0498d1d454c086eec41484c62a5dc6aa5db1b883",
+    "url": "https://github.com/pdaugusto/waypoint_navigator/blob/0498d1d454c086eec41484c62a5dc6aa5db1b883/waypoint_navigator/mission_node.py",
+    "sha256": "a8f1798b66b4114be68a19285c1882e8950bebffd84fd181b9d312da45a7fe66",
+    "lines": 150,
+    "matches": [
+      {
+        "line": 4,
+        "text": "from nav2_msgs.action import NavigateToPose"
+      },
+      {
+        "line": 7,
+        "text": "import yaml"
+      },
+      {
+        "line": 27,
+        "text": "        self.status_pub = self.create_publisher(String, '/mission/status', 10)"
+      },
+      {
+        "line": 30,
+        "text": "        self.nav_client = ActionClient(self, NavigateToPose, 'navigate_to_pose')"
+      },
+      {
+        "line": 33,
+        "text": "        self.pose_sub = self.create_subscription("
+      },
+      {
+        "line": 40,
+        "text": "        # --- Carrega waypoints do YAML ---"
+      },
+      {
+        "line": 60,
+        "text": "            dados = yaml.safe_load(f)"
+      },
+      {
+        "line": 64,
+        "text": "            pose = NavigateToPose.Goal()"
+      },
+      {
+        "line": 107,
+        "text": "            rclpy.spin_until_future_complete(self, future)"
+      },
+      {
+        "line": 115,
+        "text": "            rclpy.spin_until_future_complete(self, result_future)"
+      },
+      {
+        "line": 129,
+        "text": "        goal = NavigateToPose.Goal()"
+      }
+    ]
+  },
+  {
+    "repo": "robosoft-ai/SMACC2",
+    "path": "README.md",
+    "commit": "932da4d9fc569b52625539a42292189543613279",
+    "url": "https://github.com/robosoft-ai/SMACC2/blob/932da4d9fc569b52625539a42292189543613279/README.md",
+    "sha256": "362f407d3033e485c60573666fbb18532bfb4a00b643f8f327e286fd3a2a4d0b",
+    "lines": 118,
+    "matched_line_numbers": [
+      9,
+      10,
+      25,
+      27,
+      31,
+      35,
+      40,
+      46,
+      48,
+      49,
+      53,
+      62,
+      70,
+      85
+    ]
+  },
+  {
+    "repo": "robosoft-ai/SMACC2",
+    "path": "LICENSE",
+    "commit": "932da4d9fc569b52625539a42292189543613279",
+    "url": "https://github.com/robosoft-ai/SMACC2/blob/932da4d9fc569b52625539a42292189543613279/LICENSE",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "lines": 202,
+    "matched_line_numbers": [
+      2,
+      4,
+      10,
+      14,
+      25,
+      28,
+      33,
+      37,
+      45,
+      52,
+      53,
+      54,
+      56,
+      67,
+      68,
+      70,
+      71,
+      74,
+      75,
+      77,
+      79,
+      82,
+      86,
+      87,
+      96,
+      118,
+      122,
+      125,
+      129,
+      132,
+      134,
+      136,
+      139,
+      148,
+      152,
+      154,
+      160,
+      161,
+      170,
+      179,
+      181,
+      192,
+      193,
+      194,
+      196,
+      199,
+      201,
+      202
+    ]
+  },
+  {
+    "repo": "robosoft-ai/SMACC2",
+    "path": "smacc2/package.xml",
+    "commit": "932da4d9fc569b52625539a42292189543613279",
+    "url": "https://github.com/robosoft-ai/SMACC2/blob/932da4d9fc569b52625539a42292189543613279/smacc2/package.xml",
+    "sha256": "5dfae41942051c8fe7cb097f8e2470fa23453f1c9b1f4fb0023740219297bfc8",
+    "lines": 33,
+    "matches": [
+      {
+        "line": 2,
+        "text": "<?xml-model href=\"http://download.ros.org/schema/package_format3.xsd\" schematypens=\"http://www.w3.org/2001/XMLSchema\"?>"
+      },
+      {
+        "line": 5,
+        "text": "  <version>3.1.0</version>"
+      },
+      {
+        "line": 10,
+        "text": "  <license>Apache-2.0</license>"
+      },
+      {
+        "line": 14,
+        "text": "  <buildtool_depend>ament_cmake</buildtool_depend>"
+      },
+      {
+        "line": 16,
+        "text": "  <build_depend>libboost-dev</build_depend>  <!-- boost/statechart -->"
+      },
+      {
+        "line": 17,
+        "text": "  <build_depend>libboost-thread-dev</build_depend>"
+      },
+      {
+        "line": 18,
+        "text": "  <build_export_depend>libboost-thread-dev</build_export_depend>"
+      },
+      {
+        "line": 20,
+        "text": "  <build_depend>liblttng-ust-dev</build_depend>"
+      },
+      {
+        "line": 21,
+        "text": "  <depend>rcl</depend>"
+      },
+      {
+        "line": 22,
+        "text": "  <depend>rclcpp</depend>"
+      },
+      {
+        "line": 23,
+        "text": "  <depend>rclcpp_action</depend>"
+      },
+      {
+        "line": 24,
+        "text": "  <depend>smacc2_msgs</depend>"
+      },
+      {
+        "line": 25,
+        "text": "  <depend>tracetools</depend>"
+      },
+      {
+        "line": 26,
+        "text": "  <exec_depend>tracetools_trace</exec_depend>"
+      },
+      {
+        "line": 28,
+        "text": "  <exec_depend>libboost-thread</exec_depend>"
+      }
+    ]
+  },
+  {
+    "repo": "FlexBE/flexible_navigation",
+    "path": "README.md",
+    "commit": "5c5126fba6e80adef83f19d0475aca1f7d4f7ddd",
+    "url": "https://github.com/FlexBE/flexible_navigation/blob/5c5126fba6e80adef83f19d0475aca1f7d4f7ddd/README.md",
+    "sha256": "f89078ee14a8b4914e46807512e245f78e7ca4821f153fcabe7e4ffe0b145d4f",
+    "lines": 110,
+    "matched_line_numbers": [
+      70,
+      80,
+      95,
+      99
+    ]
+  },
+  {
+    "repo": "FlexBE/flexible_navigation",
+    "path": "LICENSE",
+    "commit": "5c5126fba6e80adef83f19d0475aca1f7d4f7ddd",
+    "url": "https://github.com/FlexBE/flexible_navigation/blob/5c5126fba6e80adef83f19d0475aca1f7d4f7ddd/LICENSE",
+    "sha256": "d8b335ee0061d542ac08847ec00ff35ec66bb709352375288c1a505ac850ea61",
+    "lines": 34,
+    "matched_line_numbers": [
+      8,
+      23,
+      27,
+      34
+    ]
+  },
+  {
+    "repo": "FlexBE/flexible_navigation",
+    "path": "flex_nav_controllers/package.xml",
+    "commit": "5c5126fba6e80adef83f19d0475aca1f7d4f7ddd",
+    "url": "https://github.com/FlexBE/flexible_navigation/blob/5c5126fba6e80adef83f19d0475aca1f7d4f7ddd/flex_nav_controllers/package.xml",
+    "sha256": "08aed81b227848603a0a4e18f7d91b26e174d40b192b326c66e8e4c74e954f0b",
+    "lines": 40,
+    "matches": [
+      {
+        "line": 2,
+        "text": "<?xml-model href=\"http://download.ros.org/schema/package_format3.xsd\" schematypens=\"http://www.w3.org/2001/XMLSchema\"?>"
+      },
+      {
+        "line": 5,
+        "text": "\t<version>1.1.2</version>"
+      },
+      {
+        "line": 15,
+        "text": "\t<license>BSD</license>"
+      },
+      {
+        "line": 17,
+        "text": "\t<buildtool_depend>ament_cmake</buildtool_depend>"
+      },
+      {
+        "line": 19,
+        "text": "\t<build_depend>nav2_common</build_depend>"
+      },
+      {
+        "line": 20,
+        "text": "\t<build_depend>rosidl_default_generators</build_depend>"
+      },
+      {
+        "line": 22,
+        "text": "\t<build_depend>flex_nav_common</build_depend>"
+      },
+      {
+        "line": 23,
+        "text": "\t<build_depend>geometry_msgs</build_depend>"
+      },
+      {
+        "line": 24,
+        "text": "\t<build_depend>nav2_core</build_depend>"
+      },
+      {
+        "line": 25,
+        "text": "\t<build_depend>nav2_msgs</build_depend>"
+      },
+      {
+        "line": 26,
+        "text": "\t<build_depend>nav2_controller</build_depend>"
+      },
+      {
+        "line": 27,
+        "text": "\t<build_depend>nav_2d_utils</build_depend>"
+      },
+      {
+        "line": 28,
+        "text": "\t<build_depend>dwb_core</build_depend>"
+      },
+      {
+        "line": 29,
+        "text": "\t<build_depend>rclcpp</build_depend>"
+      },
+      {
+        "line": 30,
+        "text": "\t<build_depend>std_msgs</build_depend>"
+      },
+      {
+        "line": 31,
+        "text": "\t<build_depend>tf2_ros</build_depend>"
+      },
+      {
+        "line": 32,
+        "text": "\t<build_depend>nav2_costmap_2d</build_depend>"
+      },
+      {
+        "line": 33,
+        "text": "\t<build_depend>pluginlib</build_depend>"
+      },
+      {
+        "line": 35,
+        "text": "\t<exec_depend>rosidl_default_runtime</exec_depend>"
+      }
+    ]
+  },
+  {
+    "repo": "FlexBE/flexible_navigation",
+    "path": "flex_nav_controllers/src/follow_path.cpp",
+    "commit": "5c5126fba6e80adef83f19d0475aca1f7d4f7ddd",
+    "url": "https://github.com/FlexBE/flexible_navigation/blob/5c5126fba6e80adef83f19d0475aca1f7d4f7ddd/flex_nav_controllers/src/follow_path.cpp",
+    "sha256": "fbc36e53f4671f540bfd934bf4ec32ce1d9cb9b439c48bcb20641ba2a3740fcd",
+    "lines": 530,
+    "matches": [
+      {
+        "line": 8,
+        "text": "//  modification, are permitted provided that the following conditions are met:"
+      },
+      {
+        "line": 23,
+        "text": "//       LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS"
+      },
+      {
+        "line": 27,
+        "text": "//       BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;"
+      },
+      {
+        "line": 53,
+        "text": "FollowPath::FollowPath(const rclcpp::NodeOptions & options)"
+      },
+      {
+        "line": 55,
+        "text": "  progress_checker_loader_(\"nav2_core\", \"nav2_core::ProgressChecker\"),"
+      },
+      {
+        "line": 58,
+        "text": "  goal_checker_loader_(\"nav2_core\", \"nav2_core::GoalChecker\"),"
+      },
+      {
+        "line": 61,
+        "text": "  lp_loader_(\"nav2_core\", \"nav2_core::Controller\"),"
+      },
+      {
+        "line": 62,
+        "text": "  default_id_{\"FollowPath\"},"
+      },
+      {
+        "line": 88,
+        "text": "FollowPath::~FollowPath()"
+      },
+      {
+        "line": 95,
+        "text": "nav2_util::CallbackReturn FollowPath::on_configure(const rclcpp_lifecycle::State & state)"
+      },
+      {
+        "line": 100,
+        "text": "  fp_server_ = std::make_unique<FollowPathActionServer>("
+      },
+      {
+        "line": 102,
+        "text": "    get_node_waitables_interface(), name_, std::bind(&FollowPath::execute, this));"
+      },
+      {
+        "line": 108,
+        "text": "    std::bind(&FollowPath::clear_costmap, this));"
+      },
+      {
+        "line": 147,
+        "text": "    progress_checker_ = progress_checker_loader_.createUniqueInstance(progress_checker_type_);"
+      },
+      {
+        "line": 159,
+        "text": "    goal_checker_ = goal_checker_loader_.createUniqueInstance(goal_checker_type_);"
+      },
+      {
+        "line": 171,
+        "text": "    controller_ = lp_loader_.createUniqueInstance(controller_type_);"
+      },
+      {
+        "line": 185,
+        "text": "    vel_publisher_ = create_publisher<geometry_msgs::msg::Twist>(vel_publisher_name_, 1);"
+      },
+      {
+        "line": 190,
+        "text": "      create_publisher<geometry_msgs::msg::TwistStamped>(vel_stamp_publisher_name_, 10);"
+      },
+      {
+        "line": 194,
+        "text": "    vel_publisher_ = create_publisher<geometry_msgs::msg::Twist>(\"cmd_vel\", 1);"
+      },
+      {
+        "line": 201,
+        "text": "nav2_util::CallbackReturn FollowPath::on_activate(const rclcpp_lifecycle::State & state)"
+      },
+      {
+        "line": 231,
+        "text": "nav2_util::CallbackReturn FollowPath::on_deactivate(const rclcpp_lifecycle::State & state)"
+      },
+      {
+        "line": 259,
+        "text": "nav2_util::CallbackReturn FollowPath::on_cleanup(const rclcpp_lifecycle::State & state)"
+      },
+      {
+        "line": 275,
+        "text": "nav2_util::CallbackReturn FollowPath::on_shutdown(const rclcpp_lifecycle::State &)"
+      },
+      {
+        "line": 281,
+        "text": "void FollowPath::publishZeroVelocity()"
+      },
+      {
+        "line": 303,
+        "text": "void FollowPath::setPlannerPath(const nav_msgs::msg::Path & path)"
+      },
+      {
+        "line": 319,
+        "text": "void FollowPath::computeAndPublishVelocity(geometry_msgs::msg::PoseStamped& pose)"
+      },
+      {
+        "line": 328,
+        "text": "  auto cmd_vel_2d = controller_->computeVelocityCommands("
+      },
+      {
+        "line": 331,
+        "text": "  cmd_vel_2d.header.frame_id = costmap_ros_->getBaseFrameID();"
+      },
+      {
+        "line": 332,
+        "text": "  cmd_vel_2d.header.stamp = now();"
+      },
+      {
+        "line": 334,
+        "text": "  publishVelocity(cmd_vel_2d, pose);"
+      },
+      {
+        "line": 337,
+        "text": "// void FollowPath::updateGlobalPath()"
+      },
+      {
+        "line": 339,
+        "text": "//   if (fp_server_->is_cancel_requested()) {"
+      },
+      {
+        "line": 348,
+        "text": "void FollowPath::publishVelocity("
+      },
+      {
+        "line": 356,
+        "text": "      auto cmd_vel_stamp = std::make_unique<geometry_msgs::msg::TwistStamped>(velocity);"
+      },
+      {
+        "line": 357,
+        "text": "      vel_stamp_publisher_->publish(std::move(cmd_vel_stamp));"
+      },
+      {
+        "line": 365,
+        "text": "      auto cmd_vel = std::make_unique<geometry_msgs::msg::Twist>(velocity.twist);"
+      },
+      {
+        "line": 366,
+        "text": "      vel_publisher_->publish(std::move(cmd_vel));"
+      },
+      {
+        "line": 370,
+        "text": "  auto feedback = std::make_shared<FollowPathAction::Feedback>();"
+      },
+      {
+        "line": 378,
+        "text": "bool FollowPath::isGoalReached(const geometry_msgs::msg::PoseStamped & pose)"
+      },
+      {
+        "line": 386,
+        "text": "bool FollowPath::getRobotPose(geometry_msgs::msg::PoseStamped & pose)"
+      },
+      {
+        "line": 396,
+        "text": "void FollowPath::execute()"
+      },
+      {
+        "line": 410,
+        "text": "      std::shared_ptr<flex_nav_common::action::FollowPath::Result> abort ="
+      },
+      {
+        "line": 411,
+        "text": "        std::make_shared<flex_nav_common::action::FollowPath::Result>();"
+      },
+      {
+        "line": 413,
+        "text": "      abort->code = flex_nav_common::action::FollowPath::Result::FAILURE;  // Could not set plan"
+      },
+      {
+        "line": 430,
+        "text": "        std::shared_ptr<flex_nav_common::action::FollowPath::Result> abort ="
+      },
+      {
+        "line": 431,
+        "text": "          std::make_shared<flex_nav_common::action::FollowPath::Result>();"
+      },
+      {
+        "line": 432,
+        "text": "        abort->code = flex_nav_common::action::FollowPath::Result::FAILURE;  // Could not set plan"
+      },
+      {
+        "line": 440,
+        "text": "      if (fp_server_->is_cancel_requested()) {"
+      },
+      {
+        "line": 441,
+        "text": "        RCLCPP_INFO(get_logger(), \"Goal was canceled. Stopping the robot.\");"
+      },
+      {
+        "line": 445,
+        "text": "        std::shared_ptr<flex_nav_common::action::FollowPath::Result> abort ="
+      },
+      {
+        "line": 446,
+        "text": "          std::make_shared<flex_nav_common::action::FollowPath::Result>();"
+      },
+      {
+        "line": 448,
+        "text": "        abort->code = flex_nav_common::action::FollowPath::Result::CANCEL;  // Could not set plan"
+      },
+      {
+        "line": 460,
+        "text": "      if (fp_server_->is_cancel_requested()) {"
+      },
+      {
+        "line": 484,
+        "text": "        std::shared_ptr<flex_nav_common::action::FollowPath::Result> result ="
+      },
+      {
+        "line": 485,
+        "text": "          std::make_shared<flex_nav_common::action::FollowPath::Result>();"
+      },
+      {
+        "line": 486,
+        "text": "        result->code = flex_nav_common::action::FollowPath::Result::SUCCESS;"
+      },
+      {
+        "line": 508,
+        "text": "    std::shared_ptr<flex_nav_common::action::FollowPath::Result> abort ="
+      },
+      {
+        "line": 509,
+        "text": "      std::make_shared<flex_nav_common::action::FollowPath::Result>();"
+      },
+      {
+        "line": 511,
+        "text": "    abort->code = flex_nav_common::action::FollowPath::Result::FAILURE;  // Could not set plan"
+      },
+      {
+        "line": 521,
+        "text": "void FollowPath::clear_costmap()"
+      }
+    ]
+  },
+  {
+    "repo": "FlexBE/flexible_navigation",
+    "path": "flex_nav_flexbe_states/flex_nav_flexbe_states/follow_path_state.py",
+    "commit": "5c5126fba6e80adef83f19d0475aca1f7d4f7ddd",
+    "url": "https://github.com/FlexBE/flexible_navigation/blob/5c5126fba6e80adef83f19d0475aca1f7d4f7ddd/flex_nav_flexbe_states/flex_nav_flexbe_states/follow_path_state.py",
+    "sha256": "a8d1dbdaa85be3800df85cfab4b54dd1a9fa2e244d562f625a5373942e3933aa",
+    "lines": 119,
+    "matches": [
+      {
+        "line": 11,
+        "text": "#  modification, are permitted provided that the following conditions are met:"
+      },
+      {
+        "line": 26,
+        "text": "#       LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS"
+      },
+      {
+        "line": 30,
+        "text": "#       BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;"
+      },
+      {
+        "line": 41,
+        "text": "from flex_nav_common.action import FollowPath"
+      },
+      {
+        "line": 44,
+        "text": "class FollowPathState(EventState):"
+      },
+      {
+        "line": 54,
+        "text": "    <= canceled    The state was canceled"
+      },
+      {
+        "line": 60,
+        "text": "        super().__init__(outcomes=['done', 'failed', 'canceled'], input_keys=['plan'])"
+      },
+      {
+        "line": 62,
+        "text": "        ProxyActionClient.initialize(FollowPathState._node)"
+      },
+      {
+        "line": 65,
+        "text": "        self._client = ProxyActionClient({self._action_topic: FollowPath})"
+      },
+      {
+        "line": 79,
+        "text": "                Logger.logerr('%s   canceled' % (self.name))"
+      },
+      {
+        "line": 80,
+        "text": "                self._return = 'canceled'"
+      },
+      {
+        "line": 91,
+        "text": "        result = FollowPath.Goal(path=userdata.plan)"
+      },
+      {
+        "line": 106,
+        "text": "            Logger.logerr('%s   Canceling active goal' % (self.name))"
+      },
+      {
+        "line": 107,
+        "text": "            self._client.cancel(self._action_topic)"
+      },
+      {
+        "line": 112,
+        "text": "            Logger.logerr('%s   Canceling active goal on SM stop' % (self.name))"
+      },
+      {
+        "line": 113,
+        "text": "            self._client.cancel(self._action_topic)"
+      },
+      {
+        "line": 118,
+        "text": "            Logger.logerr('%s   Canceling active goal on SM pause' % (self.name))"
+      },
+      {
+        "line": 119,
+        "text": "            self._client.cancel(self._action_topic)"
+      }
+    ]
+  }
+]
