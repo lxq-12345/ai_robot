@@ -1,0 +1,41 @@
+{
+  "route": "A",
+  "scenario": "open",
+  "passed": false,
+  "targets": [],
+  "method": "isolated evaluation prototype",
+  "thresholds": {
+    "waypoint_m": 0.3,
+    "end_m": 0.25,
+    "end_rad": 0.25
+  },
+  "events": [
+    {
+      "event": "exception",
+      "t": 74107.042203477,
+      "error": "TimeoutError('deadline waiting for <function main.<locals>.<lambda> at 0x74f3aff7cf70>')"
+    }
+  ],
+  "initial_pose": {
+    "t": 74095.663884469,
+    "ros_s": 165.0,
+    "x": 1.8000000861368908,
+    "y": 4.000000000302,
+    "yaw": 1.310663125152651e-11,
+    "odom_pose": {
+      "x": 1.8000000861368755,
+      "y": 4.000000000302,
+      "yaw": 1.310663125152651e-11,
+      "stamp_s": 164.996
+    },
+    "map_odom": {
+      "x": 1.532108714921254e-14,
+      "y": 9.379286261389484e-33,
+      "yaw": -9.330058219393182e-33,
+      "stamp_s": 165.113
+    }
+  },
+  "error": "TimeoutError('deadline waiting for <function main.<locals>.<lambda> at 0x74f3aff7cf70>')",
+  "waypoint_messages": 0,
+  "trace_samples": 82
+}

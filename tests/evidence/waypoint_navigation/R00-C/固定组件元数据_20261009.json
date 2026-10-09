@@ -1,0 +1,69 @@
+{
+  "/opt/ros/humble/share/rclpy/package.xml": {
+    "sha256": "907e628bf9cfb637389628ba0868cb8982549bb1868c211321f0566fe542cca3",
+    "name": "rclpy",
+    "version": "3.3.21",
+    "licenses": [
+      "Apache License 2.0"
+    ]
+  },
+  "/opt/ros/humble/share/nav2_msgs/package.xml": {
+    "sha256": "787a1b9d595d8dde19dce005230d70c77137b51fc97de51abd7b83fafb6e2238",
+    "name": "nav2_msgs",
+    "version": "1.1.20",
+    "licenses": [
+      "Apache-2.0"
+    ]
+  },
+  "/opt/ros/humble/share/nav2_controller/package.xml": {
+    "sha256": "79a576e2b2faf6a368ed7b4e8c5e209f72bd2233f53afc5c2feb27c1e3634e8e",
+    "name": "nav2_controller",
+    "version": "1.1.20",
+    "licenses": [
+      "Apache-2.0"
+    ]
+  },
+  "/opt/ros/humble/share/nav2_navfn_planner/package.xml": {
+    "sha256": "19f2d19445baddece987e5075954349f10b9710c82e5bf9499615cae9c0bfc66",
+    "name": "nav2_navfn_planner",
+    "version": "1.1.20",
+    "licenses": [
+      "Apache-2.0",
+      "BSD-3-Clause"
+    ]
+  },
+  "/opt/ros/humble/share/nav2_regulated_pure_pursuit_controller/package.xml": {
+    "sha256": "21eb08fa3b426d5f61d1b3ead5f262fa5517fdaece6f4b8699fc6801f7bfaf14",
+    "name": "nav2_regulated_pure_pursuit_controller",
+    "version": "1.1.20",
+    "licenses": [
+      "Apache-2.0"
+    ]
+  },
+  "/opt/ros/humble/share/nav2_msgs/action/ComputePathThroughPoses.action": {
+    "sha256": "de13660dbdb5f117e33ff844e0a5089c95df388b6644b608d796b808cf1a4f05"
+  },
+  "/opt/ros/humble/share/nav2_msgs/action/FollowPath.action": {
+    "sha256": "111ca563388f30fd5176121e47a5d272e5e1e81bbeaf7b4f86c5d6cb7a243e53"
+  },
+  "src/waypoint_rviz2_plugin/package.xml": {
+    "sha256": "dd7b37cabad9026b2930ddf4ce19099918e37803c5cbdcca389568eb31098502",
+    "name": "waypoint_rviz2_plugin",
+    "version": "1.0.0",
+    "licenses": [
+      "Apache-2.0"
+    ]
+  },
+  "src/waypoint_rviz2_plugin/README.md": {
+    "sha256": "183d93a1e97c929fe3cb3342805b10bfe8870652de24b0dfc739fa1c9ca8e1e2"
+  },
+  "src/waypoint_rviz2_plugin/src/waypoint_tool.cpp": {
+    "sha256": "784d5e91efde168ba712e9ebe3d9385b4d9bee0e33008731ac1a8cf4656df2c3"
+  },
+  "src/waypoint_rviz2_plugin/src/waypoint_widget.cpp": {
+    "sha256": "873d750125d9cec8a4dec9af922a0890882f1f15ed1c94287b472806f3cc18fc"
+  },
+  "install/waypoint_rviz2_plugin/lib/libwaypoint_rviz2_plugin.so": {
+    "sha256": "06fdf7033c12e5a12c87780921d9cb5c6d18c041ea5a935764fda5529e0e57e2"
+  }
+}

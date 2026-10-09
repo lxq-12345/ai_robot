@@ -1,0 +1,41 @@
+{
+  "route": "A",
+  "scenario": "open",
+  "passed": false,
+  "targets": [],
+  "method": "isolated evaluation prototype",
+  "thresholds": {
+    "waypoint_m": 0.3,
+    "end_m": 0.25,
+    "end_rad": 0.25
+  },
+  "events": [
+    {
+      "event": "exception",
+      "t": 74056.46458527,
+      "error": "NameError(\"name 'yaml' is not defined\")"
+    }
+  ],
+  "initial_pose": {
+    "t": 74056.457291348,
+    "ros_s": 126.2,
+    "x": 1.8000000658650177,
+    "y": 4.000000000129694,
+    "yaw": 1.310663218582974e-11,
+    "odom_pose": {
+      "x": 1.8000000658650024,
+      "y": 4.000000000129694,
+      "yaw": 1.310663218582974e-11,
+      "stamp_s": 126.196
+    },
+    "map_odom": {
+      "x": 1.532108714921254e-14,
+      "y": 9.379286261389484e-33,
+      "yaw": -9.330058219393182e-33,
+      "stamp_s": 126.307
+    }
+  },
+  "error": "NameError(\"name 'yaml' is not defined\")",
+  "waypoint_messages": 0,
+  "trace_samples": 1
+}

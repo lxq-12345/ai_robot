@@ -1,0 +1,8 @@
+真实RViz两点闭环、实际位移、顺序与终点验收通过
+运动取消CANCELED与停止通过
+评估参数恢复原值，显示恢复1024x768
+设计FR-01–13定义未变，接口/单元和恢复引用一致
+tests/helpers/r00b_rviz_input.py: AST语法通过
+tests/helpers/r00b_candidate_probe.py: AST语法通过
+tests/helpers/r00b_goal_checker_profile.py: AST语法通过
+旧规范/计划/手册均存在备份；AGENTS与会话协议仅版本/引用/日期变化

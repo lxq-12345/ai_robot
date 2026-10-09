@@ -1,0 +1,1 @@
+{"event": "exception", "t": 74008.624412848, "error": "RuntimeError('Evaluation toolbar coordinates require the recorded 1500x900 RViz layout')"}

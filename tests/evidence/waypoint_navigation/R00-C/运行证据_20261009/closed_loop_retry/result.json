@@ -1,0 +1,41 @@
+{
+  "route": "A",
+  "scenario": "open",
+  "passed": false,
+  "targets": [],
+  "method": "isolated evaluation prototype",
+  "thresholds": {
+    "waypoint_m": 0.3,
+    "end_m": 0.25,
+    "end_rad": 0.25
+  },
+  "events": [
+    {
+      "event": "exception",
+      "t": 74008.624412848,
+      "error": "RuntimeError('Evaluation toolbar coordinates require the recorded 1500x900 RViz layout')"
+    }
+  ],
+  "initial_pose": {
+    "t": 74008.618797277,
+    "ros_s": 78.7,
+    "x": 1.8000000410476473,
+    "y": 3.999999999918751,
+    "yaw": 1.3106608383296382e-11,
+    "odom_pose": {
+      "x": 1.800000041047632,
+      "y": 3.999999999918751,
+      "yaw": 1.3106608383296382e-11,
+      "stamp_s": 78.696
+    },
+    "map_odom": {
+      "x": 1.532108714921254e-14,
+      "y": 9.379286261389484e-33,
+      "yaw": -9.330058219393182e-33,
+      "stamp_s": 78.801
+    }
+  },
+  "error": "RuntimeError('Evaluation toolbar coordinates require the recorded 1500x900 RViz layout')",
+  "waypoint_messages": 0,
+  "trace_samples": 1
+}

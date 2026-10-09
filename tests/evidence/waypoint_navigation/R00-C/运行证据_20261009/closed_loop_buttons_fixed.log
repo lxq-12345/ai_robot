@@ -1,0 +1,10 @@
+{"event": "rviz_input", "t": 74177.693048791, "frame": "map", "points": [[2.2000010013580322, 3.993753671646118], [2.6000006198883057, 3.9937522411346436]]}
+{"event": "thin_adapter", "t": 74177.693131523, "rule": "inherit parent Path header for empty pose headers"}
+{"event": "input_only_no_local_action", "t": 74179.706501471, "targets": 0}
+{"event": "manual_plan", "t": 74179.706571703}
+{"event": "plan_result", "t": 74179.722415297, "status": 4, "duration": 0.01582391100237146, "poses": 30}
+{"event": "path_end", "t": 74179.72254455, "x": 2.6000006198883057, "y": 3.9937522411346436, "yaw": 0.0, "frame": "map", "stamp_s": 248.1}
+{"event": "execution_transform_policy", "t": 74179.725040415, "policy": "latest TF for poses; original plan age retained", "plan_stamp_s": 248.1}
+{"event": "preview_no_execute", "t": 74179.725355254, "targets": 1}
+{"event": "manual_execute", "t": 74181.734567412}
+{"event": "execute_result", "t": 74186.242251692, "status": 4, "duration": 4.5076313330064295}

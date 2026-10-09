@@ -1,0 +1,162 @@
+{
+  "closed_loop": {
+    "passed": true,
+    "end_error": {
+      "position_m": 0.14264705547997217,
+      "yaw_rad": 0.013618398875673336
+    },
+    "waypoint_minimum_m": [
+      0.007635722339670938,
+      0.14264705142016607
+    ],
+    "displacement_m": 0.656256274349735,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "9877038377844f4ead9df88a09d78642"
+      },
+      {
+        "kind": "execute",
+        "uuid": "c4bc0d0a039c4e86bd2957ae3b2c0db3"
+      }
+    ],
+    "source": "real RViz Path",
+    "gui_button_y": 241
+  },
+  "cancel": {
+    "passed": true,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 74197.634364262,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 74199.635762036,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 74199.635816437
+      },
+      {
+        "event": "plan_result",
+        "t": 74199.652020304,
+        "status": 4,
+        "duration": 0.01618913299171254,
+        "poses": 58
+      },
+      {
+        "event": "path_end",
+        "t": 74199.65225303,
+        "x": 2.6,
+        "y": 5.5,
+        "yaw": 0.0,
+        "frame": "map",
+        "stamp_s": 267.6
+      },
+      {
+        "event": "execution_transform_policy",
+        "t": 74199.655547313,
+        "policy": "latest TF for poses; original plan age retained",
+        "plan_stamp_s": 267.6
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 74199.655975892,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 74201.658484011
+      },
+      {
+        "event": "cancel_precondition",
+        "t": 74202.660096677,
+        "moving": true
+      },
+      {
+        "event": "cancel_reply",
+        "t": 74202.660699707,
+        "return_code": 0,
+        "count": 1
+      },
+      {
+        "event": "execute_result",
+        "t": 74202.665703349,
+        "status": 5,
+        "duration": 1.0071674339997116
+      }
+    ],
+    "last_velocities": [
+      {
+        "t": 74203.205117906,
+        "v": 0.0,
+        "w": 0.0
+      },
+      {
+        "t": 74203.255544223,
+        "v": 0.0,
+        "w": 0.0
+      },
+      {
+        "t": 74203.305176794,
+        "v": 0.0,
+        "w": 0.0
+      },
+      {
+        "t": 74203.355646493,
+        "v": 0.0,
+        "w": 0.0
+      },
+      {
+        "t": 74203.406022029,
+        "v": 0.0,
+        "w": 0.0
+      },
+      {
+        "t": 74203.455428572,
+        "v": 0.0,
+        "w": 0.0
+      },
+      {
+        "t": 74203.505169232,
+        "v": 0.0,
+        "w": 0.0
+      },
+      {
+        "t": 74203.555534414,
+        "v": 0.0,
+        "w": 0.0
+      },
+      {
+        "t": 74203.605214815,
+        "v": 0.0,
+        "w": 0.0
+      },
+      {
+        "t": 74203.655208891,
+        "v": 0.0,
+        "w": 0.0
+      }
+    ]
+  },
+  "profile_before": {
+    "general_goal_checker.stateful": true,
+    "general_goal_checker.xy_goal_tolerance": 0.25,
+    "general_goal_checker.yaw_goal_tolerance": 0.25
+  },
+  "profile_trial": {
+    "general_goal_checker.stateful": false,
+    "general_goal_checker.xy_goal_tolerance": 0.15,
+    "general_goal_checker.yaw_goal_tolerance": 0.2
+  },
+  "profile_restored": {
+    "general_goal_checker.stateful": true,
+    "general_goal_checker.xy_goal_tolerance": 0.25,
+    "general_goal_checker.yaw_goal_tolerance": 0.25
+  },
+  "fixed_requirement_sha256": "f2d2dc7590502eabff9f22f81bc4af371463c4f781c57e1b780fe975398c2fa0",
+  "classification": "R00-C component/architecture/scope acceptance, not U01 or application acceptance"
+}

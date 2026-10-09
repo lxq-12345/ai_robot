@@ -23,6 +23,7 @@ def main():
     ap.add_argument('--scenario', choices=['open', 'turn', 'cancel', 'unreachable', 'input', 'unavailable', 'wall', 'reverse'], required=True)
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--gui', action='store_true')
+    ap.add_argument('--gui-button-y', type=int, default=199, help='Measured Clear/Publish button row in the owned RViz layout')
     ap.add_argument('--latest-path-transforms', action='store_true', help='Resolve map geometry against current TF during execution; retain original plan timestamp in evidence')
     args = ap.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
@@ -32,7 +33,7 @@ def main():
     listener = TransformListener(tf, n)
     messages, trace, velocities = [], [], []
     data = {'route': args.route, 'scenario': args.scenario, 'passed': False, 'targets': [],
-            'method': 'isolated evaluation prototype', 'thresholds': {'waypoint_m': 0.30, 'end_m': 0.25, 'end_rad': 0.25}, 'events': []}
+            'method': 'isolated evaluation prototype', 'gui_button_y': args.gui_button_y, 'thresholds': {'waypoint_m': 0.30, 'end_m': 0.25, 'end_rad': 0.25}, 'events': []}
     nav = None
     active = None
     clients = []
@@ -103,9 +104,9 @@ def main():
             if args.gui:
                 from r00b_rviz_input import RvizInput
                 gui=RvizInput(Path(__file__).resolve().parents[2])
-                gui.click(90,199)  # Clear only the owned evaluation waypoints.
+                gui.click(90,args.gui_button_y)  # Clear only the owned evaluation waypoints.
                 for x,y in xy:gui.waypoint(x,y)
-                gui.click(370,199)
+                gui.click(370,args.gui_button_y)
                 until(lambda:bool(messages),8)
                 goals=messages[-1].poses
                 event('rviz_input', frame=messages[-1].header.frame_id,points=[(p.pose.position.x,p.pose.position.y) for p in goals])

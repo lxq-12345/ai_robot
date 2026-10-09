@@ -1,0 +1,20 @@
+[lifecycle_manager-8] [INFO] [1791584647.490646966] [lifecycle_manager_localization]: Server amcl connected with bond.
+[lifecycle_manager-8] [INFO] [1791584647.490681020] [lifecycle_manager_localization]: [34m[1mManaged nodes are active[0m[0m
+[lifecycle_manager-8] [INFO] [1791584647.490689380] [lifecycle_manager_localization]: [34m[1mCreating bond timer...[0m[0m
+[rviz2-17] [INFO] [1791584659.948425744] [rviz2]: Stereo is NOT SUPPORTED
+[amcl-7] [WARN] [1791584659.993419838] [amcl]: New subscription discovered on topic '/particle_cloud', requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY_QOS_POLICY
+[rviz2-17] [INFO] [1791584660.001125836] [rviz]: Connected on namespace: /waypoint_plugin
+[lifecycle_manager-16] [INFO] [1791584660.756046725] [lifecycle_manager_navigation]: Server velocity_smoother connected with bond.
+[lifecycle_manager-16] [INFO] [1791584660.756078286] [lifecycle_manager_navigation]: [34m[1mManaged nodes are active[0m[0m
+[lifecycle_manager-16] [INFO] [1791584660.756087477] [lifecycle_manager_navigation]: [34m[1mCreating bond timer...[0m[0m
+[controller_server-9] [INFO] [1791584902.279430073] [controller_server]: Received a goal, begin computing control effort.
+[controller_server-9] [INFO] [1791584906.779871991] [controller_server]: Reached the goal!
+[controller_server-9] [INFO] [1791584922.204349847] [controller_server]: Received a goal, begin computing control effort.
+[controller_server-9] [INFO] [1791584923.204463351] [controller_server]: Goal was canceled. Stopping the robot.
+[controller_server-9] [INFO] [1791584923.204500668] [controller_server]: [follow_path] [ActionServer] Client requested to cancel the goal. Cancelling.
+[rviz2-17] [INFO] [1791584970.930566337] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[rviz2-17] [WARN] [1791584970.938478571] [rviz]: Server not available while running, resetting
+[INFO] [gzclient-2]: process has finished cleanly [pid 663657]
+[INFO] [rviz2-17]: process has finished cleanly [pid 665280]
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [lifecycle_manager-16]: sending signal 'SIGINT' to process[lifecycle_manager-16]
