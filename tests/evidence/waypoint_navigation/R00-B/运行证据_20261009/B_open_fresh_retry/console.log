@@ -1,0 +1,1 @@
+{"event": "exception", "t": 27052.564433917, "error": "RuntimeError('Pointer is outside owned RViz frame')"}

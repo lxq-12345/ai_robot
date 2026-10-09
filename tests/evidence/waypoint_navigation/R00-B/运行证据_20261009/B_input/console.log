@@ -1,0 +1,2 @@
+{"event": "synthetic_input", "t": 27338.595596119, "note": "Action backend evaluation; does not prove RViz integration"}
+{"event": "input_only_no_local_action", "t": 27340.596027579, "targets": 0}

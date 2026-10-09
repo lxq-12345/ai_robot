@@ -1,0 +1,1060 @@
+[
+  {
+    "case": "A_cancel",
+    "prototype_passed": true,
+    "evidence_classification": "recorded",
+    "error": null,
+    "end_error": null,
+    "displacement_m": 0.0004641817281735365,
+    "cancel_observation_s": 1.0083068210005877,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "0feb606af5054fc8884900cfc0dcde81"
+      },
+      {
+        "kind": "execute",
+        "uuid": "cd00c20d26aa4d96b9c1e978a57b91cb"
+      }
+    ],
+    "samples": 60,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27317.738381995,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27319.738729342,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 27319.738779766
+      },
+      {
+        "event": "plan_result",
+        "t": 27319.764640275,
+        "status": 4,
+        "duration": 0.025845356998615898,
+        "poses": 70
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 27319.765262255,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 27321.782627888
+      },
+      {
+        "event": "cancel_precondition",
+        "t": 27322.785607196,
+        "moving": true
+      },
+      {
+        "event": "cancel_reply",
+        "t": 27322.786376267,
+        "return_code": 0,
+        "count": 1
+      },
+      {
+        "event": "execute_result",
+        "t": 27322.793369315,
+        "status": 5,
+        "duration": 1.0106935869989684
+      }
+    ]
+  },
+  {
+    "case": "A_cancel_third",
+    "prototype_passed": true,
+    "evidence_classification": "recorded",
+    "error": null,
+    "end_error": null,
+    "displacement_m": 0.016558232318952197,
+    "cancel_observation_s": 1.017815557999711,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "df6128c7729b4e67a102484e767810e6"
+      },
+      {
+        "kind": "execute",
+        "uuid": "d8f06352f9674c6cabeecbe7b1f53a93"
+      }
+    ],
+    "samples": 61,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27421.110277098,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27423.113130799,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 27423.113186617
+      },
+      {
+        "event": "plan_result",
+        "t": 27423.127999393,
+        "status": 4,
+        "duration": 0.014797862997511402,
+        "poses": 64
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 27423.128796669,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 27425.13964496
+      },
+      {
+        "event": "cancel_precondition",
+        "t": 27426.145946368,
+        "moving": true
+      },
+      {
+        "event": "cancel_reply",
+        "t": 27426.146788403,
+        "return_code": 0,
+        "count": 1
+      },
+      {
+        "event": "execute_result",
+        "t": 27426.148176605,
+        "status": 5,
+        "duration": 1.0084787519990641
+      }
+    ]
+  },
+  {
+    "case": "A_input",
+    "prototype_passed": true,
+    "evidence_classification": "recorded",
+    "error": null,
+    "end_error": null,
+    "displacement_m": null,
+    "cancel_observation_s": null,
+    "targets": [],
+    "samples": 20,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27335.43187489,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27337.447089181,
+        "targets": 0
+      }
+    ]
+  },
+  {
+    "case": "A_open_gui",
+    "prototype_passed": false,
+    "evidence_classification": "recorded",
+    "error": "AssertionError('Planning failed')",
+    "end_error": null,
+    "displacement_m": null,
+    "cancel_observation_s": null,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "9e6207be3e054b868dc10f7c8305eac7"
+      }
+    ],
+    "samples": 26,
+    "events": [
+      {
+        "event": "rviz_input",
+        "t": 26861.181976412,
+        "frame": "map",
+        "points": [
+          [
+            2.2000010013580322,
+            3.993753671646118
+          ],
+          [
+            2.6000006198883057,
+            3.9937522411346436
+          ]
+        ]
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 26863.200868768,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 26863.200921424
+      },
+      {
+        "event": "plan_result",
+        "t": 26863.496871482,
+        "status": 6,
+        "duration": 0.29593302400098764,
+        "poses": 0
+      },
+      {
+        "event": "exception",
+        "t": 26863.49692388,
+        "error": "AssertionError('Planning failed')"
+      }
+    ]
+  },
+  {
+    "case": "A_open_gui_fixed",
+    "prototype_passed": true,
+    "evidence_classification": "recorded",
+    "error": null,
+    "end_error": {
+      "position_m": 0.24731502629892305,
+      "yaw_rad": 0.0008796352023209647
+    },
+    "displacement_m": null,
+    "cancel_observation_s": null,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "4abab842a9a3458096364a1fa63ff441"
+      },
+      {
+        "kind": "execute",
+        "uuid": "09a269e2c84d45c9852b06dcd72a6021"
+      }
+    ],
+    "samples": 130,
+    "events": [
+      {
+        "event": "rviz_input",
+        "t": 26888.871073363,
+        "frame": "map",
+        "points": [
+          [
+            2.2000010013580322,
+            3.993753671646118
+          ],
+          [
+            2.6000006198883057,
+            3.9937522411346436
+          ]
+        ]
+      },
+      {
+        "event": "thin_adapter",
+        "t": 26888.871152543,
+        "rule": "inherit parent Path header for empty pose headers"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 26890.871848175,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 26890.87189963
+      },
+      {
+        "event": "plan_result",
+        "t": 26890.886508823,
+        "status": 4,
+        "duration": 0.014591494000342209,
+        "poses": 30
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 26890.886818331,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 26892.90160077
+      },
+      {
+        "event": "execute_result",
+        "t": 26900.85936347,
+        "status": 4,
+        "duration": 7.95771247599987
+      }
+    ]
+  },
+  {
+    "case": "A_open_third",
+    "prototype_passed": false,
+    "evidence_classification": "recorded",
+    "error": "AssertionError()",
+    "end_error": {
+      "position_m": 0.3120874999802514,
+      "yaw_rad": 0.005176665306810212
+    },
+    "displacement_m": 0.4572045333558906,
+    "cancel_observation_s": null,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "677735d969ac4126949d820c9a8a6ddf"
+      },
+      {
+        "kind": "execute",
+        "uuid": "9dd02037366d48d99b693a2a7db8fd79"
+      }
+    ],
+    "samples": 88,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27411.237803534,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27413.245457598,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 27413.245513144
+      },
+      {
+        "event": "plan_result",
+        "t": 27413.26211711,
+        "status": 4,
+        "duration": 0.016589491999184247,
+        "poses": 26
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 27413.262372825,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 27415.265765525
+      },
+      {
+        "event": "execute_result",
+        "t": 27419.073259303,
+        "status": 4,
+        "duration": 3.8074467919977906
+      },
+      {
+        "event": "exception",
+        "t": 27420.075925297,
+        "error": "AssertionError()"
+      }
+    ]
+  },
+  {
+    "case": "A_turn",
+    "prototype_passed": true,
+    "evidence_classification": "recorded",
+    "error": null,
+    "end_error": {
+      "position_m": 0.24048221613639656,
+      "yaw_rad": 0.009958724096354567
+    },
+    "displacement_m": 1.2925126642483553,
+    "cancel_observation_s": null,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "7f1c808095964250b542a71c96fddd0d"
+      },
+      {
+        "kind": "execute",
+        "uuid": "6f71dc30808345dbabceeff728d5284a"
+      }
+    ],
+    "samples": 311,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27104.135849376,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27106.142713085,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 27106.142764241
+      },
+      {
+        "event": "plan_result",
+        "t": 27106.158311914,
+        "status": 4,
+        "duration": 0.015531962999375537,
+        "poses": 60
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 27106.158778363,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 27108.169853998
+      },
+      {
+        "event": "execute_result",
+        "t": 27134.631187077,
+        "status": 4,
+        "duration": 26.461264314999426
+      }
+    ]
+  },
+  {
+    "case": "A_unavailable",
+    "prototype_passed": true,
+    "evidence_classification": "recorded",
+    "error": null,
+    "end_error": null,
+    "displacement_m": null,
+    "cancel_observation_s": null,
+    "targets": [],
+    "samples": 1,
+    "events": [
+      {
+        "event": "missing_server",
+        "t": 27134.745103618,
+        "action": "compute_path_through_poses",
+        "ready": false,
+        "duration": 2.0027481030010676
+      },
+      {
+        "event": "missing_server",
+        "t": 27136.757031515,
+        "action": "follow_path",
+        "ready": false,
+        "duration": 2.0034737630012387
+      }
+    ]
+  },
+  {
+    "case": "A_unreachable",
+    "prototype_passed": true,
+    "evidence_classification": "recorded",
+    "error": null,
+    "end_error": null,
+    "displacement_m": null,
+    "cancel_observation_s": null,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "85dcae677ba44cf5ae2e2e3115aa2053"
+      }
+    ],
+    "samples": 21,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27309.030465367,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27311.032372195,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 27311.032429645
+      },
+      {
+        "event": "plan_result",
+        "t": 27311.049832913,
+        "status": 6,
+        "duration": 0.017386279003403615,
+        "poses": 0
+      }
+    ]
+  },
+  {
+    "case": "A_wall",
+    "prototype_passed": false,
+    "evidence_classification": "recorded",
+    "error": "AssertionError('No meaningful motion; insufficient navigation evidence')",
+    "end_error": {
+      "position_m": 1.6216859102296035,
+      "yaw_rad": 1.622553101818484
+    },
+    "displacement_m": 0.01224314446816614,
+    "cancel_observation_s": null,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "c9c29e12e37d4c0b81b6bbc66a034bef"
+      },
+      {
+        "kind": "execute",
+        "uuid": "e07a8f1069234d518b8350bf304907e0"
+      }
+    ],
+    "samples": 350,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27207.994044175,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27210.002722369,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 27210.002763733
+      },
+      {
+        "event": "plan_result",
+        "t": 27210.02054207,
+        "status": 4,
+        "duration": 0.017764177999197273,
+        "poses": 165
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 27210.021648845,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 27212.033406681
+      },
+      {
+        "event": "execute_result",
+        "t": 27242.492014436,
+        "status": 6,
+        "duration": 30.458558075999463
+      },
+      {
+        "event": "exception",
+        "t": 27243.494732241,
+        "error": "AssertionError('No meaningful motion; insufficient navigation evidence')"
+      }
+    ]
+  },
+  {
+    "case": "B_cancel",
+    "prototype_passed": true,
+    "evidence_classification": "recorded",
+    "error": null,
+    "end_error": null,
+    "displacement_m": 0.0011691100181883004,
+    "cancel_observation_s": 1.0513928549989942,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "046c96eb4ca94a20be8bafe49620437c"
+      },
+      {
+        "kind": "execute",
+        "uuid": "231a76490dcf484585a8b123082327f8"
+      }
+    ],
+    "samples": 61,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27327.005305703,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27329.010829655,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 27329.010879052
+      },
+      {
+        "event": "plan_result",
+        "t": 27329.163907943,
+        "status": 4,
+        "duration": 0.15301265800007968,
+        "poses": 70
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 27329.164597809,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 27331.176529521
+      },
+      {
+        "event": "cancel_precondition",
+        "t": 27332.180250789,
+        "moving": true
+      },
+      {
+        "event": "cancel_reply",
+        "t": 27332.181678468,
+        "note": "Commander API returns no cancellation response"
+      },
+      {
+        "event": "execute_result",
+        "t": 27332.230088802,
+        "status": 5,
+        "duration": 1.0535020620009163
+      }
+    ]
+  },
+  {
+    "case": "B_cancel_third",
+    "prototype_passed": true,
+    "evidence_classification": "recorded",
+    "error": null,
+    "end_error": null,
+    "displacement_m": 0.03141770026216656,
+    "cancel_observation_s": 1.0439708099984273,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "1bb0794ee77d494fa3f3189e25d4ae0c"
+      },
+      {
+        "kind": "execute",
+        "uuid": "32948d3462d543db848023417f69c322"
+      }
+    ],
+    "samples": 63,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27402.253018859,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27404.265943598,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 27404.266010497
+      },
+      {
+        "event": "plan_result",
+        "t": 27404.456124437,
+        "status": 4,
+        "duration": 0.19008915000085835,
+        "poses": 73
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 27404.457116967,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 27406.465884414
+      },
+      {
+        "event": "cancel_precondition",
+        "t": 27407.480642625,
+        "moving": true
+      },
+      {
+        "event": "cancel_reply",
+        "t": 27407.482131034,
+        "note": "Commander API returns no cancellation response"
+      },
+      {
+        "event": "execute_result",
+        "t": 27407.519219598,
+        "status": 5,
+        "duration": 1.0532805059992825
+      }
+    ]
+  },
+  {
+    "case": "B_input",
+    "prototype_passed": true,
+    "evidence_classification": "recorded",
+    "error": null,
+    "end_error": null,
+    "displacement_m": null,
+    "cancel_observation_s": null,
+    "targets": [],
+    "samples": 20,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27338.595596119,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27340.596027579,
+        "targets": 0
+      }
+    ]
+  },
+  {
+    "case": "B_open_backend_fresh",
+    "prototype_passed": false,
+    "evidence_classification": "recorded",
+    "error": "AssertionError()",
+    "end_error": {
+      "position_m": 0.2528045334451615,
+      "yaw_rad": 0.007266778832570917
+    },
+    "displacement_m": 0.5472170799724334,
+    "cancel_observation_s": null,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "055705f323b841e7948fe00a41401f4c"
+      },
+      {
+        "kind": "execute",
+        "uuid": "63ab56c926414f1cb32bea01c19b1183"
+      }
+    ],
+    "samples": 80,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27080.447635241,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27082.452140992,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 27082.452190704
+      },
+      {
+        "event": "plan_result",
+        "t": 27082.646378134,
+        "status": 4,
+        "duration": 0.19417227300073137,
+        "poses": 28
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 27082.647119885,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 27084.652667569
+      },
+      {
+        "event": "execute_result",
+        "t": 27088.707111049,
+        "status": 4,
+        "duration": 4.0543817010002385
+      },
+      {
+        "event": "exception",
+        "t": 27089.711747892,
+        "error": "AssertionError()"
+      }
+    ]
+  },
+  {
+    "case": "B_open_fresh",
+    "prototype_passed": false,
+    "evidence_classification": "recorded",
+    "error": "RuntimeError('RViz lost focus; refusing to click another application')",
+    "end_error": null,
+    "displacement_m": null,
+    "cancel_observation_s": null,
+    "targets": [],
+    "samples": 1,
+    "events": [
+      {
+        "event": "exception",
+        "t": 27009.937616377,
+        "error": "RuntimeError('RViz lost focus; refusing to click another application')"
+      }
+    ]
+  },
+  {
+    "case": "B_open_fresh_retry",
+    "prototype_passed": false,
+    "evidence_classification": "recorded",
+    "error": "RuntimeError('Pointer is outside owned RViz frame')",
+    "end_error": null,
+    "displacement_m": null,
+    "cancel_observation_s": null,
+    "targets": [],
+    "samples": 1,
+    "events": [
+      {
+        "event": "exception",
+        "t": 27052.564433917,
+        "error": "RuntimeError('Pointer is outside owned RViz frame')"
+      }
+    ]
+  },
+  {
+    "case": "B_open_gui",
+    "prototype_passed": true,
+    "evidence_classification": "excluded_as_navigation_success: no meaningful displacement; original prototype lacked motion check",
+    "error": null,
+    "end_error": {
+      "position_m": 0.24731501523279095,
+      "yaw_rad": 0.0008796355600792438
+    },
+    "displacement_m": null,
+    "cancel_observation_s": null,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "08c96ddd32f3421cb95a7dab14c129a1"
+      },
+      {
+        "kind": "execute",
+        "uuid": "c4932cf72a44417ba89b1463eb22e943"
+      }
+    ],
+    "samples": 55,
+    "events": [
+      {
+        "event": "rviz_input",
+        "t": 26913.918802804,
+        "frame": "map",
+        "points": [
+          [
+            2.2000010013580322,
+            3.993753671646118
+          ],
+          [
+            2.6000006198883057,
+            3.9937522411346436
+          ]
+        ]
+      },
+      {
+        "event": "thin_adapter",
+        "t": 26913.918899801,
+        "rule": "inherit parent Path header for empty pose headers"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 26915.928332756,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 26915.928386418
+      },
+      {
+        "event": "plan_result",
+        "t": 26916.107968076,
+        "status": 4,
+        "duration": 0.1795635599992238,
+        "poses": 20
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 26916.108243223,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 26918.122694172
+      },
+      {
+        "event": "execute_result",
+        "t": 26918.125711769,
+        "status": 4,
+        "duration": 0.0029649970019818284
+      }
+    ]
+  },
+  {
+    "case": "B_turn",
+    "prototype_passed": false,
+    "evidence_classification": "recorded",
+    "error": "AssertionError('No meaningful motion; insufficient navigation evidence')",
+    "end_error": {
+      "position_m": 1.2984829529578827,
+      "yaw_rad": 0.054659105587829826
+    },
+    "displacement_m": 0.038271611447377056,
+    "cancel_observation_s": null,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "d6ac54acb6924711824ad70837e575cf"
+      },
+      {
+        "kind": "execute",
+        "uuid": "ace7277b6e6049a7b0774cd5d11d65d2"
+      }
+    ],
+    "samples": 252,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27167.727890897,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27169.745614138,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 27169.745662903
+      },
+      {
+        "event": "plan_result",
+        "t": 27169.897902536,
+        "status": 4,
+        "duration": 0.15222282400281983,
+        "poses": 52
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 27169.898323422,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 27171.902641424
+      },
+      {
+        "event": "execute_result",
+        "t": 27202.256514386,
+        "status": 6,
+        "duration": 30.353826943999593
+      },
+      {
+        "event": "exception",
+        "t": 27203.263293929,
+        "error": "AssertionError('No meaningful motion; insufficient navigation evidence')"
+      }
+    ]
+  },
+  {
+    "case": "B_unreachable",
+    "prototype_passed": true,
+    "evidence_classification": "recorded",
+    "error": null,
+    "end_error": null,
+    "displacement_m": null,
+    "cancel_observation_s": null,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "ad209450312f4d89a917847b4a9a553e"
+      }
+    ],
+    "samples": 22,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27312.862032244,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27314.862922699,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 27314.862986567
+      },
+      {
+        "event": "plan_result",
+        "t": 27315.014632481,
+        "status": 6,
+        "duration": 0.15162361599868746,
+        "poses": 0
+      }
+    ]
+  },
+  {
+    "case": "B_wall",
+    "prototype_passed": false,
+    "evidence_classification": "recorded",
+    "error": "AssertionError('No meaningful motion; insufficient navigation evidence')",
+    "end_error": {
+      "position_m": 1.598146942286647,
+      "yaw_rad": 1.6256726394032517
+    },
+    "displacement_m": 0.02353978968350917,
+    "cancel_observation_s": null,
+    "targets": [
+      {
+        "kind": "plan",
+        "uuid": "9082866bc85549adbdcf99df8f0fc7d8"
+      },
+      {
+        "kind": "execute",
+        "uuid": "b97e24c7ef0f4425b298a7051d539988"
+      }
+    ],
+    "samples": 254,
+    "events": [
+      {
+        "event": "synthetic_input",
+        "t": 27269.755575267,
+        "note": "Action backend evaluation; does not prove RViz integration"
+      },
+      {
+        "event": "input_only_no_local_action",
+        "t": 27271.758224169,
+        "targets": 0
+      },
+      {
+        "event": "manual_plan",
+        "t": 27271.758282216
+      },
+      {
+        "event": "plan_result",
+        "t": 27271.941717841,
+        "status": 4,
+        "duration": 0.18341885799964075,
+        "poses": 166
+      },
+      {
+        "event": "preview_no_execute",
+        "t": 27271.942800783,
+        "targets": 1
+      },
+      {
+        "event": "manual_execute",
+        "t": 27273.952801407
+      },
+      {
+        "event": "execute_result",
+        "t": 27304.408679119,
+        "status": 6,
+        "duration": 30.45562146299926
+      },
+      {
+        "event": "exception",
+        "t": 27305.416069938,
+        "error": "AssertionError('No meaningful motion; insufficient navigation evidence')"
+      }
+    ]
+  }
+]

@@ -1,0 +1,4 @@
+{"event": "synthetic_input", "t": 27309.030465367, "note": "Action backend evaluation; does not prove RViz integration"}
+{"event": "input_only_no_local_action", "t": 27311.032372195, "targets": 0}
+{"event": "manual_plan", "t": 27311.032429645}
+{"event": "plan_result", "t": 27311.049832913, "status": 6, "duration": 0.017386279003403615, "poses": 0}

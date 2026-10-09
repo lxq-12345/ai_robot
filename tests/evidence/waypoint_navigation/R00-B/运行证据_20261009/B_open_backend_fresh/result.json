@@ -1,0 +1,154 @@
+{
+  "route": "B",
+  "scenario": "open",
+  "passed": false,
+  "targets": [
+    {
+      "kind": "plan",
+      "uuid": "055705f323b841e7948fe00a41401f4c"
+    },
+    {
+      "kind": "execute",
+      "uuid": "63ab56c926414f1cb32bea01c19b1183"
+    }
+  ],
+  "method": "isolated evaluation prototype",
+  "thresholds": {
+    "waypoint_m": 0.3,
+    "end_m": 0.25,
+    "end_rad": 0.25
+  },
+  "events": [
+    {
+      "event": "synthetic_input",
+      "t": 27080.447635241,
+      "note": "Action backend evaluation; does not prove RViz integration"
+    },
+    {
+      "event": "input_only_no_local_action",
+      "t": 27082.452140992,
+      "targets": 0
+    },
+    {
+      "event": "manual_plan",
+      "t": 27082.452190704
+    },
+    {
+      "event": "plan_result",
+      "t": 27082.646378134,
+      "status": 4,
+      "duration": 0.19417227300073137,
+      "poses": 28
+    },
+    {
+      "event": "preview_no_execute",
+      "t": 27082.647119885,
+      "targets": 1
+    },
+    {
+      "event": "manual_execute",
+      "t": 27084.652667569
+    },
+    {
+      "event": "execute_result",
+      "t": 27088.707111049,
+      "status": 4,
+      "duration": 4.0543817010002385
+    },
+    {
+      "event": "exception",
+      "t": 27089.711747892,
+      "error": "AssertionError()"
+    }
+  ],
+  "initial_pose": {
+    "t": 27080.44746204,
+    "ros_s": 102.0,
+    "x": 1.8000000532212206,
+    "y": 4.000000000022224,
+    "yaw": 1.3106644064888754e-11
+  },
+  "goals": [
+    {
+      "x": 2.2,
+      "y": 4.0,
+      "yaw": 0.0
+    },
+    {
+      "x": 2.6,
+      "y": 4.0,
+      "yaw": 0.0
+    }
+  ],
+  "end_pose": {
+    "t": 27089.696724078,
+    "ros_s": 111.2,
+    "x": 2.3472102876754835,
+    "y": 3.9972625790762257,
+    "yaw": 0.007266778832570917
+  },
+  "max_displacement_m": 0.5472170799724334,
+  "minimum_distances_m": [
+    0.14655334777362275,
+    0.25280453268682634
+  ],
+  "last_velocities": [
+    {
+      "t": 27089.217342351,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27089.267185739,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27089.317352993,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27089.367147648,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27089.419208126,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27089.467176652,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27089.517374112,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27089.568161403,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27089.617272062,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27089.667319992,
+      "v": 0.0,
+      "w": 0.0
+    }
+  ],
+  "end_error": {
+    "position_m": 0.2528045334451615,
+    "yaw_rad": 0.007266778832570917
+  },
+  "error": "AssertionError()",
+  "waypoint_messages": 0,
+  "trace_samples": 80
+}

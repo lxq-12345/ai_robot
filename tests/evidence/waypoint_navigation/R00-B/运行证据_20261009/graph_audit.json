@@ -1,0 +1,97 @@
+{
+  "nodes": [
+    "velocity_smoother",
+    "lifecycle_manager_navigation",
+    "r00b_graph_audit",
+    "r00b_observer_b",
+    "r00b_commander",
+    "gazebo",
+    "ai_robot_camera_left_driver",
+    "ai_robot_camera_right_driver",
+    "ai_robot_imu_driver",
+    "ai_robot_laser_scan",
+    "ai_robot_diff_drive",
+    "ai_robot_joint_states",
+    "robot_state_publisher",
+    "cmd_vel_guard",
+    "map_server",
+    "controller_server",
+    "local_costmap",
+    "transform_listener_impl_572903da6370",
+    "amcl",
+    "transform_listener_impl_620ff13ebb30",
+    "smoother_server",
+    "transform_listener_impl_5fadc7a3eaa0",
+    "lifecycle_manager_localization",
+    "planner_server",
+    "global_costmap",
+    "transform_listener_impl_55bb8dea9c20",
+    "rviz",
+    "transform_listener_impl_5fc08944b030",
+    "transform_listener_impl_5fc0893f1680",
+    "behavior_server",
+    "transform_listener_impl_5bda7e615880",
+    "bt_navigator",
+    "bt_navigator_navigate_to_pose_rclcpp_node",
+    "bt_navigator_navigate_through_poses_rclcpp_node",
+    "waypoint_follower"
+  ],
+  "publishers": {
+    "/cmd_vel_raw": [
+      {
+        "node": "controller_server",
+        "namespace": "/",
+        "type": "geometry_msgs/msg/Twist"
+      },
+      {
+        "node": "behavior_server",
+        "namespace": "/",
+        "type": "geometry_msgs/msg/Twist"
+      },
+      {
+        "node": "behavior_server",
+        "namespace": "/",
+        "type": "geometry_msgs/msg/Twist"
+      },
+      {
+        "node": "behavior_server",
+        "namespace": "/",
+        "type": "geometry_msgs/msg/Twist"
+      },
+      {
+        "node": "behavior_server",
+        "namespace": "/",
+        "type": "geometry_msgs/msg/Twist"
+      }
+    ],
+    "/cmd_vel": [
+      {
+        "node": "velocity_smoother",
+        "namespace": "/",
+        "type": "geometry_msgs/msg/Twist"
+      }
+    ],
+    "/cmd_vel_safe": [
+      {
+        "node": "cmd_vel_guard",
+        "namespace": "/",
+        "type": "geometry_msgs/msg/Twist"
+      }
+    ],
+    "/waypoint_path": [
+      {
+        "node": "rviz",
+        "namespace": "/",
+        "type": "nav_msgs/msg/Path"
+      }
+    ],
+    "/r00b/a/prepared_path": [],
+    "/r00b/b/prepared_path": [
+      {
+        "node": "r00b_observer_b",
+        "namespace": "/",
+        "type": "nav_msgs/msg/Path"
+      }
+    ]
+  }
+}

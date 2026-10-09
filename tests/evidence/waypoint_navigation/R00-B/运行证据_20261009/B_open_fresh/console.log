@@ -1,0 +1,1 @@
+{"event": "exception", "t": 27009.937616377, "error": "RuntimeError('RViz lost focus; refusing to click another application')"}

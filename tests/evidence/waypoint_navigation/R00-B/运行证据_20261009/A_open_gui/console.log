@@ -1,0 +1,5 @@
+{"event": "rviz_input", "t": 26861.181976412, "frame": "map", "points": [[2.2000010013580322, 3.993753671646118], [2.6000006198883057, 3.9937522411346436]]}
+{"event": "input_only_no_local_action", "t": 26863.200868768, "targets": 0}
+{"event": "manual_plan", "t": 26863.200921424}
+{"event": "plan_result", "t": 26863.496871482, "status": 6, "duration": 0.29593302400098764, "poses": 0}
+{"event": "exception", "t": 26863.49692388, "error": "AssertionError('Planning failed')"}

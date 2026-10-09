@@ -1,0 +1,37 @@
+{
+  "route": "A",
+  "scenario": "unavailable",
+  "passed": true,
+  "targets": [],
+  "method": "isolated evaluation prototype",
+  "thresholds": {
+    "waypoint_m": 0.3,
+    "end_m": 0.25,
+    "end_rad": 0.25
+  },
+  "events": [
+    {
+      "event": "missing_server",
+      "t": 27134.745103618,
+      "action": "compute_path_through_poses",
+      "ready": false,
+      "duration": 2.0027481030010676
+    },
+    {
+      "event": "missing_server",
+      "t": 27136.757031515,
+      "action": "follow_path",
+      "ready": false,
+      "duration": 2.0034737630012387
+    }
+  ],
+  "initial_pose": {
+    "t": 27132.732300195,
+    "ros_s": 153.7,
+    "x": 2.5857514142128863,
+    "y": 5.075590144117088,
+    "yaw": 1.4411626367017427
+  },
+  "waypoint_messages": 0,
+  "trace_samples": 1
+}

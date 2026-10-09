@@ -1,0 +1,29 @@
+{
+  "route": "B",
+  "scenario": "open",
+  "passed": false,
+  "targets": [],
+  "method": "isolated evaluation prototype",
+  "thresholds": {
+    "waypoint_m": 0.3,
+    "end_m": 0.25,
+    "end_rad": 0.25
+  },
+  "events": [
+    {
+      "event": "exception",
+      "t": 27009.937616377,
+      "error": "RuntimeError('RViz lost focus; refusing to click another application')"
+    }
+  ],
+  "initial_pose": {
+    "t": 27008.720961851,
+    "ros_s": 31.2,
+    "x": 1.8000000162302483,
+    "y": 3.999999999707793,
+    "yaw": 1.314394454232764e-11
+  },
+  "error": "RuntimeError('RViz lost focus; refusing to click another application')",
+  "waypoint_messages": 0,
+  "trace_samples": 1
+}

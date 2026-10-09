@@ -1,0 +1,61 @@
+{
+  "route": "A",
+  "scenario": "unreachable",
+  "passed": true,
+  "targets": [
+    {
+      "kind": "plan",
+      "uuid": "85dcae677ba44cf5ae2e2e3115aa2053"
+    }
+  ],
+  "method": "isolated evaluation prototype",
+  "thresholds": {
+    "waypoint_m": 0.3,
+    "end_m": 0.25,
+    "end_rad": 0.25
+  },
+  "events": [
+    {
+      "event": "synthetic_input",
+      "t": 27309.030465367,
+      "note": "Action backend evaluation; does not prove RViz integration"
+    },
+    {
+      "event": "input_only_no_local_action",
+      "t": 27311.032372195,
+      "targets": 0
+    },
+    {
+      "event": "manual_plan",
+      "t": 27311.032429645
+    },
+    {
+      "event": "plan_result",
+      "t": 27311.049832913,
+      "status": 6,
+      "duration": 0.017386279003403615,
+      "poses": 0
+    }
+  ],
+  "initial_pose": {
+    "t": 27309.030312498,
+    "ros_s": 327.8,
+    "x": 2.6282100949728227,
+    "y": 5.289049773118293,
+    "yaw": 1.62567263035657
+  },
+  "goals": [
+    {
+      "x": 2.2,
+      "y": 4.0,
+      "yaw": 0.0
+    },
+    {
+      "x": -20.0,
+      "y": -20.0,
+      "yaw": 0.0
+    }
+  ],
+  "waypoint_messages": 0,
+  "trace_samples": 21
+}

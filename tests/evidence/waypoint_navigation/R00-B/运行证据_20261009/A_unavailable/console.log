@@ -1,0 +1,2 @@
+{"event": "missing_server", "t": 27134.745103618, "action": "compute_path_through_poses", "ready": false, "duration": 2.0027481030010676}
+{"event": "missing_server", "t": 27136.757031515, "action": "follow_path", "ready": false, "duration": 2.0034737630012387}

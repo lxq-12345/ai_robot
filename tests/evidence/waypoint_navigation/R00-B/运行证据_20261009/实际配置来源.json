@@ -1,0 +1,22 @@
+{
+  "install/ai_robot_sim/share/ai_robot_sim/config/nav2_sim.yaml": {
+    "resolved": "/home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/config/nav2_sim.yaml",
+    "sha256": "54f715efacef446c412754f400737f7f3579d179eb0492ffeccc412fa8d405ac"
+  },
+  "install/ai_robot_sim/share/ai_robot_sim/config/au9_nav2.rviz": {
+    "resolved": "/home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/config/au9_nav2.rviz",
+    "sha256": "5752dabe76f6fce04d4b768a4cb35c55ab0a40c482791f07f0a274bbc2835f3a"
+  },
+  "install/ai_robot_sim/share/ai_robot_sim/config/amcl_sim.yaml": {
+    "resolved": "/home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/config/amcl_sim.yaml",
+    "sha256": "0c3e53bc0912d25ffd78f01bf1f3da636e8160e9c1f94f108fbec40f917518d4"
+  },
+  "install/ai_robot_sim/share/ai_robot_sim/maps/apartment_v1.3_nav.yaml": {
+    "resolved": "/home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/maps/apartment_v1.3_nav.yaml",
+    "sha256": "6c1132721beb7873001785d6d271e4425fe37a9d09968f549ceacd0ae2538944"
+  },
+  "install/ai_robot_sim/share/ai_robot_sim/maps/apartment_v1.3_nav.pgm": {
+    "resolved": "/home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/maps/apartment_v1.3_nav.pgm",
+    "sha256": "6107a1c821a37ca0aa8978066a9d1c90071c4b836ac56825169374653ec01c08"
+  }
+}

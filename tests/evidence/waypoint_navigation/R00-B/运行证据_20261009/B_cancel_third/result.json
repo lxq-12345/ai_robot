@@ -1,0 +1,155 @@
+{
+  "route": "B",
+  "scenario": "cancel",
+  "passed": true,
+  "targets": [
+    {
+      "kind": "plan",
+      "uuid": "1bb0794ee77d494fa3f3189e25d4ae0c"
+    },
+    {
+      "kind": "execute",
+      "uuid": "32948d3462d543db848023417f69c322"
+    }
+  ],
+  "method": "isolated evaluation prototype",
+  "thresholds": {
+    "waypoint_m": 0.3,
+    "end_m": 0.25,
+    "end_rad": 0.25
+  },
+  "events": [
+    {
+      "event": "synthetic_input",
+      "t": 27402.253018859,
+      "note": "Action backend evaluation; does not prove RViz integration"
+    },
+    {
+      "event": "input_only_no_local_action",
+      "t": 27404.265943598,
+      "targets": 0
+    },
+    {
+      "event": "manual_plan",
+      "t": 27404.266010497
+    },
+    {
+      "event": "plan_result",
+      "t": 27404.456124437,
+      "status": 4,
+      "duration": 0.19008915000085835,
+      "poses": 73
+    },
+    {
+      "event": "preview_no_execute",
+      "t": 27404.457116967,
+      "targets": 1
+    },
+    {
+      "event": "manual_execute",
+      "t": 27406.465884414
+    },
+    {
+      "event": "cancel_precondition",
+      "t": 27407.480642625,
+      "moving": true
+    },
+    {
+      "event": "cancel_reply",
+      "t": 27407.482131034,
+      "note": "Commander API returns no cancellation response"
+    },
+    {
+      "event": "execute_result",
+      "t": 27407.519219598,
+      "status": 5,
+      "duration": 1.0532805059992825
+    }
+  ],
+  "initial_pose": {
+    "t": 27402.252828661,
+    "ros_s": 16.0,
+    "x": 1.8000000082885086,
+    "y": 3.9999999996401776,
+    "yaw": 1.3401818772195395e-11
+  },
+  "goals": [
+    {
+      "x": 2.6,
+      "y": 4.8,
+      "yaw": 0.0
+    },
+    {
+      "x": 2.6,
+      "y": 5.5,
+      "yaw": 0.0
+    }
+  ],
+  "end_pose": {
+    "t": 27408.508146644,
+    "ros_s": 22.1,
+    "x": 1.830911067459186,
+    "y": 4.0056193236098565,
+    "yaw": 0.29900517581649744
+  },
+  "max_displacement_m": 0.03141770026216656,
+  "minimum_distances_m": [
+    1.105684581428782,
+    1.6801184995605647
+  ],
+  "last_velocities": [
+    {
+      "t": 27408.064809633,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27408.115038886,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27408.164208035,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27408.214752805,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27408.264757589,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27408.314423967,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27408.36449546,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27408.414493447,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27408.464617964,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27408.515303146,
+      "v": 0.0,
+      "w": 0.0
+    }
+  ],
+  "cancel_to_terminal_and_observation_s": 1.0439708099984273,
+  "waypoint_messages": 0,
+  "trace_samples": 63
+}

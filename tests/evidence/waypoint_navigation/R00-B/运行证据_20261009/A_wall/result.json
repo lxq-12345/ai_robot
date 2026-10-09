@@ -1,0 +1,154 @@
+{
+  "route": "A",
+  "scenario": "wall",
+  "passed": false,
+  "targets": [
+    {
+      "kind": "plan",
+      "uuid": "c9c29e12e37d4c0b81b6bbc66a034bef"
+    },
+    {
+      "kind": "execute",
+      "uuid": "e07a8f1069234d518b8350bf304907e0"
+    }
+  ],
+  "method": "isolated evaluation prototype",
+  "thresholds": {
+    "waypoint_m": 0.3,
+    "end_m": 0.25,
+    "end_rad": 0.25
+  },
+  "events": [
+    {
+      "event": "synthetic_input",
+      "t": 27207.994044175,
+      "note": "Action backend evaluation; does not prove RViz integration"
+    },
+    {
+      "event": "input_only_no_local_action",
+      "t": 27210.002722369,
+      "targets": 0
+    },
+    {
+      "event": "manual_plan",
+      "t": 27210.002763733
+    },
+    {
+      "event": "plan_result",
+      "t": 27210.02054207,
+      "status": 4,
+      "duration": 0.017764177999197273,
+      "poses": 165
+    },
+    {
+      "event": "preview_no_execute",
+      "t": 27210.021648845,
+      "targets": 1
+    },
+    {
+      "event": "manual_execute",
+      "t": 27212.033406681
+    },
+    {
+      "event": "execute_result",
+      "t": 27242.492014436,
+      "status": 6,
+      "duration": 30.458558075999463
+    },
+    {
+      "event": "exception",
+      "t": 27243.494732241,
+      "error": "AssertionError('No meaningful motion; insufficient navigation evidence')"
+    }
+  ],
+  "initial_pose": {
+    "t": 27207.993812613,
+    "ros_s": 228.0,
+    "x": 2.616042352607162,
+    "y": 5.29838378637574,
+    "yaw": 1.6254554313846874
+  },
+  "goals": [
+    {
+      "x": 3.5,
+      "y": 5.0,
+      "yaw": 0.0
+    },
+    {
+      "x": 4.2,
+      "y": 5.0,
+      "yaw": 0.0
+    }
+  ],
+  "end_pose": {
+    "t": 27243.393199949,
+    "ros_s": 262.9,
+    "x": 2.60502316357666,
+    "y": 5.29311104160405,
+    "yaw": 1.622553101818484
+  },
+  "max_displacement_m": 0.01224314446816614,
+  "minimum_distances_m": [
+    0.9288462915886045,
+    1.6081782864014014
+  ],
+  "last_velocities": [
+    {
+      "t": 27243.014760068,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27243.064653811,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27243.114702932,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27243.165084332,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27243.214863333,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27243.264679638,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27243.314906439,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27243.364673749,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27243.414943969,
+      "v": 0.0,
+      "w": 0.0
+    },
+    {
+      "t": 27243.464720609,
+      "v": 0.0,
+      "w": 0.0
+    }
+  ],
+  "end_error": {
+    "position_m": 1.6216859102296035,
+    "yaw_rad": 1.622553101818484
+  },
+  "error": "AssertionError('No meaningful motion; insufficient navigation evidence')",
+  "waypoint_messages": 0,
+  "trace_samples": 350
+}

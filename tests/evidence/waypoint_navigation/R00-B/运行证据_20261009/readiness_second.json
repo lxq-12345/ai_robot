@@ -1,0 +1,10 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "check": "exception",
+      "passed": false,
+      "detail": "Service response timeout: /planner_server/get_state"
+    }
+  ]
+}

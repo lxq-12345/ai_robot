@@ -1,0 +1,45 @@
+{
+  "route": "A",
+  "scenario": "input",
+  "passed": true,
+  "targets": [],
+  "method": "isolated evaluation prototype",
+  "thresholds": {
+    "waypoint_m": 0.3,
+    "end_m": 0.25,
+    "end_rad": 0.25
+  },
+  "events": [
+    {
+      "event": "synthetic_input",
+      "t": 27335.43187489,
+      "note": "Action backend evaluation; does not prove RViz integration"
+    },
+    {
+      "event": "input_only_no_local_action",
+      "t": 27337.447089181,
+      "targets": 0
+    }
+  ],
+  "initial_pose": {
+    "t": 27335.431644154,
+    "ros_s": 353.6,
+    "x": 2.627516085030665,
+    "y": 5.2891639933287165,
+    "yaw": 1.6211333933926588
+  },
+  "goals": [
+    {
+      "x": 2.2,
+      "y": 4.0,
+      "yaw": 0.0
+    },
+    {
+      "x": 2.6,
+      "y": 4.0,
+      "yaw": 0.0
+    }
+  ],
+  "waypoint_messages": 0,
+  "trace_samples": 20
+}

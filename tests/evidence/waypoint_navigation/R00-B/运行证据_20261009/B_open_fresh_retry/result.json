@@ -1,0 +1,29 @@
+{
+  "route": "B",
+  "scenario": "open",
+  "passed": false,
+  "targets": [],
+  "method": "isolated evaluation prototype",
+  "thresholds": {
+    "waypoint_m": 0.3,
+    "end_m": 0.25,
+    "end_rad": 0.25
+  },
+  "events": [
+    {
+      "event": "exception",
+      "t": 27052.564433917,
+      "error": "RuntimeError('Pointer is outside owned RViz frame')"
+    }
+  ],
+  "initial_pose": {
+    "t": 27051.159427221,
+    "ros_s": 73.0,
+    "x": 1.8000000380695629,
+    "y": 3.999999999893438,
+    "yaw": 1.3106589795483952e-11
+  },
+  "error": "RuntimeError('Pointer is outside owned RViz frame')",
+  "waypoint_messages": 0,
+  "trace_samples": 1
+}

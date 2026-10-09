@@ -1,0 +1,9 @@
+{"event": "synthetic_input", "t": 27317.738381995, "note": "Action backend evaluation; does not prove RViz integration"}
+{"event": "input_only_no_local_action", "t": 27319.738729342, "targets": 0}
+{"event": "manual_plan", "t": 27319.738779766}
+{"event": "plan_result", "t": 27319.764640275, "status": 4, "duration": 0.025845356998615898, "poses": 70}
+{"event": "preview_no_execute", "t": 27319.765262255, "targets": 1}
+{"event": "manual_execute", "t": 27321.782627888}
+{"event": "cancel_precondition", "t": 27322.785607196, "moving": true}
+{"event": "cancel_reply", "t": 27322.786376267, "return_code": 0, "count": 1}
+{"event": "execute_result", "t": 27322.793369315, "status": 5, "duration": 1.0106935869989684}

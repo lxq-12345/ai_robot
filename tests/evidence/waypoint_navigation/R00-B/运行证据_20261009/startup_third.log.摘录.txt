@@ -1,0 +1,23 @@
+[lifecycle_manager-8] [INFO] [1791538104.163593185] [lifecycle_manager_localization]: Server amcl connected with bond.
+[lifecycle_manager-8] [INFO] [1791538104.163637937] [lifecycle_manager_localization]: [34m[1mManaged nodes are active[0m[0m
+[lifecycle_manager-8] [INFO] [1791538104.163646720] [lifecycle_manager_localization]: [34m[1mCreating bond timer...[0m[0m
+[rviz2-17] [INFO] [1791538116.710486557] [rviz]: Connected on namespace: /waypoint_plugin
+[amcl-7] [WARN] [1791538116.728200890] [amcl]: New subscription discovered on topic '/particle_cloud', requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY_QOS_POLICY
+[rviz2-17] [INFO] [1791538116.809992674] [rviz]: Sending request for interactive markers
+[lifecycle_manager-16] [INFO] [1791538117.862370084] [lifecycle_manager_navigation]: Server velocity_smoother connected with bond.
+[lifecycle_manager-16] [INFO] [1791538117.862404353] [lifecycle_manager_navigation]: [34m[1mManaged nodes are active[0m[0m
+[lifecycle_manager-16] [INFO] [1791538117.862413913] [lifecycle_manager_navigation]: [34m[1mCreating bond timer...[0m[0m
+[rviz2-17] [INFO] [1791538127.153229730] [rviz]: Message Filter dropping message: frame 'laser_link' at time 10.196 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[controller_server-9] [INFO] [1791538128.057384017] [controller_server]: Goal was canceled. Stopping the robot.
+[controller_server-9] [INFO] [1791538128.057425628] [controller_server]: [follow_path] [ActionServer] Client requested to cancel the goal. Cancelling.
+[controller_server-9] [INFO] [1791538135.811446089] [controller_server]: Received a goal, begin computing control effort.
+[controller_server-9] [INFO] [1791538139.611751371] [controller_server]: Reached the goal!
+[controller_server-9] [INFO] [1791538145.686884794] [controller_server]: Received a goal, begin computing control effort.
+[controller_server-9] [INFO] [1791538146.686993580] [controller_server]: Goal was canceled. Stopping the robot.
+[controller_server-9] [INFO] [1791538146.687028282] [controller_server]: [follow_path] [ActionServer] Client requested to cancel the goal. Cancelling.
+[rviz2-17] [INFO] [1791538170.030596795] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[rviz2-17] [WARN] [1791538170.057113419] [rviz]: Server not available while running, resetting
+[INFO] [rviz2-17]: process has finished cleanly [pid 2175625]
+[gzclient-2] [0m[1;33m[0m[1;31m[0m
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [lifecycle_manager-16]: sending signal 'SIGINT' to process[lifecycle_manager-16]

@@ -1,0 +1,77 @@
+{
+  "route": "A",
+  "scenario": "open",
+  "passed": false,
+  "targets": [
+    {
+      "kind": "plan",
+      "uuid": "9e6207be3e054b868dc10f7c8305eac7"
+    }
+  ],
+  "method": "isolated evaluation prototype",
+  "thresholds": {
+    "waypoint_m": 0.3,
+    "end_m": 0.25,
+    "end_rad": 0.25
+  },
+  "events": [
+    {
+      "event": "rviz_input",
+      "t": 26861.181976412,
+      "frame": "map",
+      "points": [
+        [
+          2.2000010013580322,
+          3.993753671646118
+        ],
+        [
+          2.6000006198883057,
+          3.9937522411346436
+        ]
+      ]
+    },
+    {
+      "event": "input_only_no_local_action",
+      "t": 26863.200868768,
+      "targets": 0
+    },
+    {
+      "event": "manual_plan",
+      "t": 26863.200921424
+    },
+    {
+      "event": "plan_result",
+      "t": 26863.496871482,
+      "status": 6,
+      "duration": 0.29593302400098764,
+      "poses": 0
+    },
+    {
+      "event": "exception",
+      "t": 26863.49692388,
+      "error": "AssertionError('Planning failed')"
+    }
+  ],
+  "initial_pose": {
+    "t": 26858.237567191,
+    "ros_s": 83.7,
+    "x": 1.800000043660002,
+    "y": 3.9999999999409557,
+    "yaw": 1.3106605381600294e-11
+  },
+  "goals": [
+    {
+      "x": 2.2000010013580322,
+      "y": 3.993753671646118,
+      "yaw": 0.0
+    },
+    {
+      "x": 2.6000006198883057,
+      "y": 3.9937522411346436,
+      "yaw": 0.0
+    }
+  ],
+  "error": "AssertionError('Planning failed')",
+  "waypoint_messages": 1,
+  "trace_samples": 26
+}

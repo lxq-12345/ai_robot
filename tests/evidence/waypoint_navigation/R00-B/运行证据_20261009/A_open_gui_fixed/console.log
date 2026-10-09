@@ -1,0 +1,8 @@
+{"event": "rviz_input", "t": 26888.871073363, "frame": "map", "points": [[2.2000010013580322, 3.993753671646118], [2.6000006198883057, 3.9937522411346436]]}
+{"event": "thin_adapter", "t": 26888.871152543, "rule": "inherit parent Path header for empty pose headers"}
+{"event": "input_only_no_local_action", "t": 26890.871848175, "targets": 0}
+{"event": "manual_plan", "t": 26890.87189963}
+{"event": "plan_result", "t": 26890.886508823, "status": 4, "duration": 0.014591494000342209, "poses": 30}
+{"event": "preview_no_execute", "t": 26890.886818331, "targets": 1}
+{"event": "manual_execute", "t": 26892.90160077}
+{"event": "execute_result", "t": 26900.85936347, "status": 4, "duration": 7.95771247599987}

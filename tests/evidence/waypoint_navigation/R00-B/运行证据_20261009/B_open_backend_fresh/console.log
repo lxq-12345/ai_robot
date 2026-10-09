@@ -1,0 +1,10 @@
+{"event": "synthetic_input", "t": 27080.447635241, "note": "Action backend evaluation; does not prove RViz integration"}
+{"event": "input_only_no_local_action", "t": 27082.452140992, "targets": 0}
+{"event": "manual_plan", "t": 27082.452190704}
+[INFO] [1791537803.182022364] [r00b_commander]: Getting path...
+{"event": "plan_result", "t": 27082.646378134, "status": 4, "duration": 0.19417227300073137, "poses": 28}
+{"event": "preview_no_execute", "t": 27082.647119885, "targets": 1}
+{"event": "manual_execute", "t": 27084.652667569}
+[INFO] [1791537805.193261663] [r00b_commander]: Executing path...
+{"event": "execute_result", "t": 27088.707111049, "status": 4, "duration": 4.0543817010002385}
+{"event": "exception", "t": 27089.711747892, "error": "AssertionError()"}

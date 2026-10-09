@@ -1,0 +1,5 @@
+tests/helpers/r00b_candidate_probe.py: AST语法检查通过
+tests/helpers/r00b_rviz_input.py: AST语法检查通过
+A真实GUI开放场景和A转弯成功证据存在
+A/B运动中取消证据存在
+B不存在服务器由外部12秒超时终止，未误标通过

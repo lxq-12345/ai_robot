@@ -1,0 +1,8 @@
+{"event": "synthetic_input", "t": 27207.994044175, "note": "Action backend evaluation; does not prove RViz integration"}
+{"event": "input_only_no_local_action", "t": 27210.002722369, "targets": 0}
+{"event": "manual_plan", "t": 27210.002763733}
+{"event": "plan_result", "t": 27210.02054207, "status": 4, "duration": 0.017764177999197273, "poses": 165}
+{"event": "preview_no_execute", "t": 27210.021648845, "targets": 1}
+{"event": "manual_execute", "t": 27212.033406681}
+{"event": "execute_result", "t": 27242.492014436, "status": 6, "duration": 30.458558075999463}
+{"event": "exception", "t": 27243.494732241, "error": "AssertionError('No meaningful motion; insufficient navigation evidence')"}

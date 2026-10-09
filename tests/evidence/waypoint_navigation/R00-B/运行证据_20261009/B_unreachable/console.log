@@ -1,0 +1,6 @@
+{"event": "synthetic_input", "t": 27312.862032244, "note": "Action backend evaluation; does not prove RViz integration"}
+{"event": "input_only_no_local_action", "t": 27314.862922699, "targets": 0}
+{"event": "manual_plan", "t": 27314.862986567}
+[INFO] [1791538035.551016974] [r00b_commander]: Getting path...
+[WARN] [1791538035.553644573] [r00b_commander]: Getting path failed with status code: 6
+{"event": "plan_result", "t": 27315.014632481, "status": 6, "duration": 0.15162361599868746, "poses": 0}
