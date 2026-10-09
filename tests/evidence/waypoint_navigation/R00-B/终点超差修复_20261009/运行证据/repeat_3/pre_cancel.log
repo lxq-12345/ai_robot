@@ -1,0 +1,14 @@
+{"event": "synthetic_input", "t": 29065.096135153, "note": "Action backend evaluation; does not prove RViz integration"}
+{"event": "input_only_no_local_action", "t": 29067.104151302, "targets": 0}
+{"event": "manual_plan", "t": 29067.104212443}
+[INFO] [1791539787.813565348] [r00b_commander]: Getting path...
+{"event": "plan_result", "t": 29067.278852187, "status": 4, "duration": 0.17461634299979778, "poses": 74}
+{"event": "path_end", "t": 29067.27908262, "x": 2.6, "y": 5.5, "yaw": 0.0, "frame": "map", "stamp_s": 16.5}
+{"event": "execution_transform_policy", "t": 29067.283394533, "policy": "latest TF for poses; original plan age retained", "plan_stamp_s": 16.5}
+{"event": "preview_no_execute", "t": 29067.284011657, "targets": 1}
+{"event": "manual_execute", "t": 29069.292273166}
+[INFO] [1791539789.832765817] [r00b_commander]: Executing path...
+{"event": "cancel_precondition", "t": 29070.295452627, "moving": true}
+[INFO] [1791539790.835570014] [r00b_commander]: Canceling current task.
+{"event": "cancel_reply", "t": 29070.297069096, "note": "Commander API returns no cancellation response"}
+{"event": "execute_result", "t": 29070.345235068, "status": 5, "duration": 1.052902005998476}

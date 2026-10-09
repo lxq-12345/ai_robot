@@ -1,0 +1,10 @@
+{
+  "minimum_goal_distance_m": 0.08817437150880472,
+  "xy_0_15_threshold_crossings": 36,
+  "near_end_yaw_range_rad": [
+    -3.1384134345370795,
+    3.105173761268206
+  ],
+  "near_end_samples": 313,
+  "limitation": "Actual RPP carrot/mode not recorded; switch oscillation is a hypothesis, not proven root cause"
+}

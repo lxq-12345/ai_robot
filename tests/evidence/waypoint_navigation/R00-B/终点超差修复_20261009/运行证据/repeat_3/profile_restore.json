@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "before": {
+    "general_goal_checker.stateful": false,
+    "general_goal_checker.xy_goal_tolerance": 0.15,
+    "general_goal_checker.yaw_goal_tolerance": 0.2
+  },
+  "requested": {
+    "general_goal_checker.stateful": true,
+    "general_goal_checker.xy_goal_tolerance": 0.25,
+    "general_goal_checker.yaw_goal_tolerance": 0.25
+  },
+  "results": [
+    {
+      "successful": true,
+      "reason": ""
+    },
+    {
+      "successful": true,
+      "reason": ""
+    },
+    {
+      "successful": true,
+      "reason": ""
+    }
+  ],
+  "after": {
+    "general_goal_checker.stateful": true,
+    "general_goal_checker.xy_goal_tolerance": 0.25,
+    "general_goal_checker.yaw_goal_tolerance": 0.25
+  }
+}

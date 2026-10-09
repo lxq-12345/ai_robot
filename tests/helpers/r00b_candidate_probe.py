@@ -1,5 +1,6 @@
 """Minimal R00-B evaluation client; no velocity publisher or production app."""
 import argparse
+import copy
 import json
 import math
 import time
@@ -19,9 +20,10 @@ from tf2_ros import Buffer, TransformListener
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--route', choices=['A', 'B'], required=True)
-    ap.add_argument('--scenario', choices=['open', 'turn', 'cancel', 'unreachable', 'input', 'unavailable', 'wall'], required=True)
+    ap.add_argument('--scenario', choices=['open', 'turn', 'cancel', 'unreachable', 'input', 'unavailable', 'wall', 'reverse'], required=True)
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--gui', action='store_true')
+    ap.add_argument('--latest-path-transforms', action='store_true', help='Resolve map geometry against current TF during execution; retain original plan timestamp in evidence')
     args = ap.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     rclpy.init()
@@ -47,6 +49,13 @@ def main():
         item = {'t': time.monotonic(), 'ros_s': n.get_clock().now().nanoseconds / 1e9,
                 'x': t.translation.x, 'y': t.translation.y,
                 'yaw': math.atan2(2*(q.w*q.z+q.x*q.y), 1-2*(q.y*q.y+q.z*q.z))}
+        for parent, child, key in [('odom', 'base_footprint', 'odom_pose'), ('map', 'odom', 'map_odom')]:
+            if tf.can_transform(parent, child, Time()):
+                v=tf.lookup_transform(parent, child, Time())
+                z=v.transform.rotation
+                item[key]={'x':v.transform.translation.x,'y':v.transform.translation.y,
+                    'yaw':math.atan2(2*(z.w*z.z+z.x*z.y),1-2*(z.y*z.y+z.z*z.z)),
+                    'stamp_s':v.header.stamp.sec+v.header.stamp.nanosec/1e9}
         trace.append(item)
         pose_log.write(json.dumps(item)+'\n')
     n.create_subscription(PathMessage, '/waypoint_path', lambda m: messages.append(m), 10)
@@ -88,6 +97,7 @@ def main():
                 xy=[(2.2,4.0),(2.6,4.0)]
             elif args.scenario=='turn':xy=[(2.6,4.8),(2.6,5.5 if args.route=='A' else 4.0)]
             elif args.scenario=='wall':xy=[(3.5,5.0),(4.2,5.0)]
+            elif args.scenario=='reverse':xy=[(2.2,4.0),(1.8,4.0)]
             else:xy=[(2.2,4.0),(-20.0,-20.0)]
             goals=[goal(x,y,math.pi/2 if args.scenario=='turn' else 0) for x,y in xy]
             if args.gui:
@@ -140,6 +150,20 @@ def main():
                     data['passed']=True
                 else:
                     assert status==4 and path and path.poses,'Planning failed'
+                    data['planned_path']={'frame':path.header.frame_id,
+                        'stamp_s':path.header.stamp.sec+path.header.stamp.nanosec/1e9,
+                        'poses':[{'x':p.pose.position.x,'y':p.pose.position.y,
+                            'yaw':2*math.atan2(p.pose.orientation.z,p.pose.orientation.w),
+                            'frame':p.header.frame_id,'stamp_s':p.header.stamp.sec+p.header.stamp.nanosec/1e9} for p in path.poses]}
+                    event('path_end', **data['planned_path']['poses'][-1])
+                    execution_path=copy.deepcopy(path)
+                    if args.latest_path_transforms:
+                        # Humble ControllerServer retains the last pose timestamp.
+                        # Map geometry stays fixed; transformation to local odom must
+                        # follow current localization, not the planning-time transform.
+                        for p in execution_path.poses:
+                            p.header.stamp.sec=0;p.header.stamp.nanosec=0
+                        event('execution_transform_policy', policy='latest TF for poses; original plan age retained', plan_stamp_s=data['planned_path']['stamp_s'])
                     pub.publish(path)
                     event('preview_no_execute',targets=len(data['targets']))
                     observe(2)
@@ -147,7 +171,7 @@ def main():
                     if args.route=='A':
                         c=ActionClient(n,FollowPath,'/follow_path');clients.append(c)
                         assert c.wait_for_server(timeout_sec=10)
-                        req=FollowPath.Goal();req.path=path;req.controller_id='FollowPath';req.goal_checker_id='general_goal_checker'
+                        req=FollowPath.Goal();req.path=execution_path;req.controller_id='FollowPath';req.goal_checker_id='general_goal_checker'
                         active=future(c.send_goal_async(req));assert active.accepted
                         data['targets'].append({'kind':'execute','uuid':bytes(active.goal_id.uuid).hex()})
                         rf=active.get_result_async()
@@ -158,7 +182,7 @@ def main():
                             assert cr.goals_canceling
                         result=future(rf,100);status=result.status;active=None
                     else:
-                        assert nav.followPath(path,controller_id='FollowPath',goal_checker_id='general_goal_checker')
+                        assert nav.followPath(execution_path,controller_id='FollowPath',goal_checker_id='general_goal_checker')
                         data['targets'].append({'kind':'execute','uuid':bytes(nav.goal_handle.goal_id.uuid).hex()})
                         if args.scenario=='cancel':
                             until(lambda:time.monotonic()-start>1 or any(abs(v['v'])>.03 for v in velocities if v['t']>start),5)
@@ -166,6 +190,8 @@ def main():
                             cancel_t=time.monotonic();nav.cancelTask();event('cancel_reply',note='Commander API returns no cancellation response')
                         until(lambda:nav.isTaskComplete(),100);status=nav.status
                     event('execute_result',status=status,duration=time.monotonic()-start)
+                    sample()
+                    data['terminal_pose']=trace[-1]
                     observe(1)
                     data['end_pose']=trace[-1]
                     data['max_displacement_m']=max(math.hypot(t['x']-trace[trace_start]['x'],t['y']-trace[trace_start]['y']) for t in trace[trace_start:])

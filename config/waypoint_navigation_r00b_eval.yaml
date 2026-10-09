@@ -1,0 +1,9 @@
+# R00-B candidate-only profile, not a frozen production/U01 baseline.
+# Open-goal regression passed; reverse final-heading regression failed.
+# Do not promote this profile as a globally verified production default.
+# Acceptance remains 0.25 m / 0.25 rad; tighter control leaves a margin.
+controller_server:
+  ros__parameters:
+    general_goal_checker.stateful: false
+    general_goal_checker.xy_goal_tolerance: 0.15
+    general_goal_checker.yaw_goal_tolerance: 0.20

@@ -1,0 +1,18 @@
+[lifecycle_manager-8] [INFO] [1791539734.275739865] [lifecycle_manager_localization]: Server amcl connected with bond.
+[lifecycle_manager-8] [INFO] [1791539734.275773385] [lifecycle_manager_localization]: [34m[1mManaged nodes are active[0m[0m
+[lifecycle_manager-8] [INFO] [1791539734.275781969] [lifecycle_manager_localization]: [34m[1mCreating bond timer...[0m[0m
+[rviz2-17] [INFO] [1791539746.863257779] [rviz2]: Stereo is NOT SUPPORTED
+[amcl-7] [WARN] [1791539746.961589445] [amcl]: New subscription discovered on topic '/particle_cloud', requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY_QOS_POLICY
+[rviz2-17] [INFO] [1791539746.971775223] [rviz]: Connected on namespace: /waypoint_plugin
+[lifecycle_manager-16] [INFO] [1791539747.647787924] [lifecycle_manager_navigation]: Server velocity_smoother connected with bond.
+[lifecycle_manager-16] [INFO] [1791539747.647821219] [lifecycle_manager_navigation]: [34m[1mManaged nodes are active[0m[0m
+[lifecycle_manager-16] [INFO] [1791539747.647830140] [lifecycle_manager_navigation]: [34m[1mCreating bond timer...[0m[0m
+[rviz2-17] [INFO] [1791539757.211154041] [rviz]: Message Filter dropping message: frame 'laser_link' at time 10.635 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[controller_server-9] [INFO] [1791539760.881606984] [controller_server]: Reached the goal!
+[gzclient-2] [0m[1;33m[Wrn] [Event.cc:61] [0m[1;33mWarning: Deleting a connection right after creation. [0m[1;33mMake sure to save the ConnectionPtr from a Connect call
+[rviz2-17] [INFO] [1791539764.857226831] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[rviz2-17] [WARN] [1791539764.869808316] [rviz]: Server not available while running, resetting
+[INFO] [rviz2-17]: process has finished cleanly [pid 2309654]
+[gzclient-2] [0m[1;33m[0m[1;31m[0m
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [lifecycle_manager-16]: sending signal 'SIGINT' to process[lifecycle_manager-16]

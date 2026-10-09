@@ -1,0 +1,10 @@
+{"event": "synthetic_input", "t": 28534.708982324, "note": "Action backend evaluation; does not prove RViz integration"}
+{"event": "input_only_no_local_action", "t": 28536.711698889, "targets": 0}
+{"event": "manual_plan", "t": 28536.711742969}
+{"event": "plan_result", "t": 28536.72452985, "status": 4, "duration": 0.012772246001986787, "poses": 20}
+{"event": "path_end", "t": 28536.72462739, "x": 1.8, "y": 4.0, "yaw": 0.0, "frame": "map", "stamp_s": 151.7}
+{"event": "execution_transform_policy", "t": 28536.725936044, "policy": "latest TF for poses; original plan age retained", "plan_stamp_s": 151.7}
+{"event": "preview_no_execute", "t": 28536.726194425, "targets": 1}
+{"event": "manual_execute", "t": 28538.731106778}
+{"event": "execute_result", "t": 28589.58946385, "status": 6, "duration": 50.85828912899888}
+{"event": "exception", "t": 28590.595362291, "error": "AssertionError()"}

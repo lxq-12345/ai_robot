@@ -1,0 +1,96 @@
+{
+  "diagnosis": {
+    "evidence": "open_28394981836257/result.json",
+    "path_end": {
+      "x": 2.6,
+      "y": 4.0,
+      "yaw": 0.0,
+      "frame": "map",
+      "stamp_s": 15.8
+    },
+    "planning_time_transform_sample": {
+      "x": 1.532108714921254e-14,
+      "y": 9.379286261389484e-33,
+      "yaw": -9.330058219393182e-33,
+      "stamp_s": 15.899000000000001
+    },
+    "approx_historical_goal_in_odom": {
+      "x": 2.5999999999999845,
+      "y": 4.0
+    },
+    "historical_goal_odom_error_at_success_m": 0.24871570595018605,
+    "current_map_error_at_success_m": 0.262796150339712,
+    "limitation": "近邻TF采样重建，不是控制器内部日志；源码与运行结果相互支持"
+  },
+  "repeats": [
+    {
+      "session": 1,
+      "route": "A",
+      "end_error": {
+        "position_m": 0.13946769978196538,
+        "yaw_rad": 0.006100470283142335
+      },
+      "waypoint_minimum_m": [
+        0.0023294617362233736,
+        0.13946769944045218
+      ],
+      "displacement_m": 0.6190945177672573,
+      "runtime_profile": {
+        "general_goal_checker.stateful": false,
+        "general_goal_checker.xy_goal_tolerance": 0.15,
+        "general_goal_checker.yaw_goal_tolerance": 0.2
+      },
+      "restored": {
+        "general_goal_checker.stateful": true,
+        "general_goal_checker.xy_goal_tolerance": 0.25,
+        "general_goal_checker.yaw_goal_tolerance": 0.25
+      }
+    },
+    {
+      "session": 2,
+      "route": "B",
+      "end_error": {
+        "position_m": 0.13402330719302108,
+        "yaw_rad": 0.003227893948243949
+      },
+      "waypoint_minimum_m": [
+        0.2577035887979942,
+        0.13402330719302108
+      ],
+      "displacement_m": 0.6659949898429599,
+      "runtime_profile": {
+        "general_goal_checker.stateful": false,
+        "general_goal_checker.xy_goal_tolerance": 0.15,
+        "general_goal_checker.yaw_goal_tolerance": 0.2
+      },
+      "restored": {
+        "general_goal_checker.stateful": true,
+        "general_goal_checker.xy_goal_tolerance": 0.25,
+        "general_goal_checker.yaw_goal_tolerance": 0.25
+      }
+    },
+    {
+      "session": 3,
+      "route": "A",
+      "end_error": {
+        "position_m": 0.14085136286564273,
+        "yaw_rad": 0.018517712694792767
+      },
+      "waypoint_minimum_m": [
+        0.013642904416892062,
+        0.14085136286564273
+      ],
+      "displacement_m": 0.6254690234334954,
+      "runtime_profile": {
+        "general_goal_checker.stateful": false,
+        "general_goal_checker.xy_goal_tolerance": 0.15,
+        "general_goal_checker.yaw_goal_tolerance": 0.2
+      },
+      "restored": {
+        "general_goal_checker.stateful": true,
+        "general_goal_checker.xy_goal_tolerance": 0.25,
+        "general_goal_checker.yaw_goal_tolerance": 0.25
+      }
+    }
+  ]
+}

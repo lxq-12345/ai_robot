@@ -1,0 +1,3 @@
+三次独立会话原始开放场景通过；参数均恢复；原规划时间戳保留
+tests/helpers/r00b_candidate_probe.py: AST语法通过
+tests/helpers/r00b_goal_checker_profile.py: AST语法通过
