@@ -160,4 +160,3 @@ class RvizInput:
             time.sleep(0.15)
         finally:
             self.button(False)
-
