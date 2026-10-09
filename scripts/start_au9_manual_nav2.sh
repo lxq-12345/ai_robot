@@ -20,10 +20,10 @@ for process_name in gzserver gzclient rviz2; do
 done
 
 cd "${workspace_dir}"
-set +u
-source /opt/ros/humble/setup.bash
-source install/setup.bash
-set -u
+source "${workspace_dir}/scripts/au9_sim_environment.sh"
+# The CLI daemon retains the transport settings from the terminal that first
+# spawned it. Drop this domain's discovery cache before switching profiles.
+timeout 10s ros2 daemon stop
 
 echo "Starting the AU9 manual Nav2 test in Gazebo and RViz2."
 echo "Wait for the map and laser scan, then use 'Nav2 Goal' in RViz2."

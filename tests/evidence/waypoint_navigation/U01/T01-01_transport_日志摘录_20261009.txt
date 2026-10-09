@@ -1,0 +1,12 @@
+运行：transport
+关键启动/关闭日志：
+[lifecycle_manager-8] [INFO] [1791534339.244765405] [lifecycle_manager_localization]: Managed nodes are active
+[amcl-7] [WARN] [1791534351.974398471] [amcl]: New subscription discovered on topic '/particle_cloud', requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY_QOS_POLICY
+[rviz2-17] [ERROR] [1791534351.994009203] [rviz]: point#1 not found in map
+[lifecycle_manager-16] [INFO] [1791534352.696278870] [lifecycle_manager_navigation]: Managed nodes are active
+
+停止输出：
+Sending SIGINT to AU9 process 1867786 (gzclient).
+Sending SIGINT to AU9 process 1869121 (rviz2).
+Sending SIGINT to AU9 process 1867708 (ros2).
+AU9 manual Nav2 processes stopped gracefully.

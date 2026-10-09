@@ -418,7 +418,7 @@ void WaypointTool::save(rviz_common::Config config) const {
 void WaypointTool::load(const rviz_common::Config &config) {
     rviz_common::Config waypoint_config = config.mapGetChild("WaypointTool");
     QString topic, frame;
-    float height;
+    float height = 0.0f;
     if (!waypoint_config.mapGetString("topic", &topic)) {
         topic = "/waypoint_path";
     }

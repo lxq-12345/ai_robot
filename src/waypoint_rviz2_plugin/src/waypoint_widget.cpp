@@ -257,46 +257,10 @@ void WaypointWidget::topicChange() {
 }
 
 void WaypointWidget::heightChange(double value) {
-    auto sn_entry = map_ptr_->end();
-    try {
-        const int selected_marker_idx = std::stoi(
-            selected_marker_name_.substr((strlen((waypoint_name_prefix))))
-        );
-        sn_entry = map_ptr_->find(selected_marker_idx);
-    } catch(const std::logic_error &error) {
-        RCLCPP_ERROR_STREAM(node_->get_logger(), error.what());
-        return;
-    }
-
-    if (sn_entry == map_ptr_->end()) {
-        RCLCPP_ERROR(node_->get_logger(), "%s not found in map", selected_marker_name_.c_str());
-    } else {
-        Ogre::Vector3 position;
-        Ogre::Quaternion quaternion;
-        getPose(position, quaternion);
-
-        sn_entry->second->setPosition(position);
-        sn_entry->second->setOrientation(quaternion);
-
-        std::stringstream wp_name;
-        wp_name << waypoint_name_prefix << sn_entry->first;
-        std::string wp_name_str(wp_name.str());
-
-        visualization_msgs::msg::InteractiveMarker int_marker;
-        if (server_->get(wp_name_str, int_marker)) {
-            int_marker.pose.position.x = position.x;
-            int_marker.pose.position.y = position.y;
-            int_marker.pose.position.z = position.z;
-
-            int_marker.pose.orientation.x = quaternion.x;
-            int_marker.pose.orientation.y = quaternion.y;
-            int_marker.pose.orientation.z = quaternion.z;
-            int_marker.pose.orientation.w = quaternion.w;
-
-            server_->setPose(wp_name_str, int_marker.pose, int_marker.header);
-        }
-        server_->applyChanges();
-    }
+    // This control sets the plane used when creating future waypoints.
+    // Restoring it must not edit a selected marker (there may be none yet).
+    std::lock_guard<std::mutex> lock(frame_updates_mutex_);
+    default_height_ = value;
 }
 
 void WaypointWidget::saveBag(const std::string& filename) {

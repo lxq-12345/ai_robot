@@ -1,0 +1,62 @@
+{
+  "written_at": "2026-10-09 01:35 PDT",
+  "baseline_before_changes": "d7169e9c46d4e419f46f144da89c847f71075ecd",
+  "runs": [
+    {
+      "run": "transport",
+      "probe_passed": true,
+      "checks": 26,
+      "communication_response_timeout": false,
+      "exit_escalation": false,
+      "marker_error": true,
+      "startup_qos_warning": true,
+      "log_sha256": "6dfcb98ca6438478c442f14ba012a0cab23c78b5bb52d5c1e3ab29399200faf5"
+    },
+    {
+      "run": "final",
+      "probe_passed": true,
+      "checks": 26,
+      "communication_response_timeout": false,
+      "exit_escalation": false,
+      "marker_error": false,
+      "startup_qos_warning": true,
+      "log_sha256": "4393ad222f8e8a15a287a1764bbf519b166c0b90e66e928799bab502008bcac8"
+    },
+    {
+      "run": "repeat",
+      "probe_passed": true,
+      "checks": 26,
+      "communication_response_timeout": false,
+      "exit_escalation": false,
+      "marker_error": false,
+      "startup_qos_warning": true,
+      "log_sha256": "07cc008d390376f58e5191365db3cd2f6d41c77944a8fc589ea79fe520954a15"
+    }
+  ],
+  "build_plugin": {
+    "exit_code": 0,
+    "duration_s": 10.6,
+    "warnings": "既有初始化顺序及Ogre废弃API警告，未扩大处理"
+  },
+  "existing_entrypoint_tests": {
+    "passed": 16,
+    "duration_s": 0.02
+  },
+  "shell_syntax_passed": true,
+  "final_cleanup": {
+    "launch_and_stop_exit_code": 0,
+    "gzserver_gzclient_rviz_remaining": false,
+    "nav2_guard_launch_remaining": false,
+    "port_11345_listening": false
+  },
+  "daemon_before_reset": {
+    "ROS_LOCALHOST_ONLY": "0",
+    "FASTRTPS_DEFAULT_PROFILES_FILE": null,
+    "RMW_IMPLEMENTATION": null
+  },
+  "daemon_reset_exit_code": 0,
+  "official_sources": [
+    "https://fast-dds.docs.eprosima.com/en/v2.6.11/fastdds/transport/whitelist.html",
+    "https://fast-dds.docs.eprosima.com/en/2.6.x/fastdds/transport/udp/udp.html"
+  ]
+}
