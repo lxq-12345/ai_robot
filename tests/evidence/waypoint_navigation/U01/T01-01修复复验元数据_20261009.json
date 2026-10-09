@@ -1,0 +1,41 @@
+{
+  "observed_at": "2026-10-09 01:20 PDT",
+  "baseline_commit": "088faf1c15e6e2c01193c5b9096d0eac5e13a993",
+  "build": {
+    "command": "colcon build --packages-select ai_robot_sim",
+    "exit_code": 0,
+    "packages": 1,
+    "duration_s": 1.63
+  },
+  "pytest": {
+    "command": "/usr/bin/python3 -m pytest src/ai_robot_sim/test/test_sim_entrypoints.py -q",
+    "exit_code": 0,
+    "passed": 16,
+    "duration_s": 0.03
+  },
+  "launch_source_installed_identical": true,
+  "robot_state_publisher_use_sim_time": true,
+  "startup_gate": {
+    "result": "failed",
+    "initial_wait_s": 20,
+    "additional_wait_s": 30,
+    "navigation_active_observed": false,
+    "error": "smoother_server/change_state: failed to send response (timeout)"
+  },
+  "planned_runtime_queries_executed": false,
+  "failure_snapshot_query": "timeout 10s ros2 param get /robot_state_publisher use_sim_time",
+  "shutdown_exit_code": 0,
+  "startup_script_final_exit_code": 0,
+  "residual_gazebo_rviz": false,
+  "residual_nav2_guard_launch": false,
+  "port_11345_listening": false,
+  "note": "失败现场pgrep对controller_server超过Linux comm长度限制，不能用其空输出判断controller退出；最终使用ps命令行核对清理。",
+  "raw_hashes": {
+    "pytest.log": "044af7835ebc0e80d6e13d203b5537ecf4f236c8dbcf40820ee786efac8e4bd0",
+    "failure_processes.json": "bb38d3d8f65ccb1e9dbf83129b18ebc18d1b6c0d643418508c6f5d4a5a31a6da",
+    "clock_failure_snapshot.txt": "ce2b1a5018dc8fb72a72ab8e96335de61991f45bc0626cf4efcdb6bb8dad8f5a",
+    "startup.log": "7a7a935e59d2962c92d3816aa74b90a3143d79d32a32c5bb0b2b36d015f9d37d",
+    "build.log": "a915cc244ea3cc0c6dcd96f4ccbb28e6b08c140440e5a0a4c7a789e08e75296e",
+    "shutdown.log": "457d2df2a36459de9f612796f07f1e0e122b38b36b312c333dd59fd59c2d8405"
+  }
+}

@@ -1,0 +1,43 @@
+构建输出：
+Starting >>> ai_robot_sim
+Finished <<< ai_robot_sim [1.09s]
+
+Summary: 1 package finished [1.63s]
+
+已有入口检查：
+................                                                         [100%]
+16 passed in 0.03s
+
+启动关键上下文：
+[gzserver-1] 
+[lifecycle_manager-8] [INFO] [1791533848.750549690] [lifecycle_manager_localization]: Server amcl connected with bond.
+[lifecycle_manager-8] [INFO] [1791533848.750580842] [lifecycle_manager_localization]: Managed nodes are active
+[lifecycle_manager-8] [INFO] [1791533848.750589706] [lifecycle_manager_localization]: Creating bond timer...
+[gzserver-1] [Wrn] [gazebo_ros_init.cpp:178] 
+[smoother_server-10] [INFO] [1791533859.066589073] [smoother_server]: Created smoother : simple_smoother of type nav2_smoother::SimpleSmoother
+[smoother_server-10] [INFO] [1791533859.067558621] [smoother_server]: Smoother Server has simple_smoother  smoothers available.
+[smoother_server-10] [WARN] [1791533859.176900932] [smoother_server.rclcpp]: failed to send response to /smoother_server/change_state (timeout): client will not receive response, at ./src/rmw_response.cpp:154, at ./src/rcl/service.c:314
+[INFO] [rviz2-17]: process started with pid [1816987]
+[rviz2-17] [INFO] [1791533861.259362222] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-17] [INFO] [1791533861.259430383] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-17] [INFO] [1791533861.378779805] [rviz2]: Stereo is NOT SUPPORTED
+[amcl-7] [WARN] [1791533861.422044587] [amcl]: New subscription discovered on topic '/particle_cloud', requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY_QOS_POLICY
+[rviz2-17] [INFO] [1791533861.428725244] [rviz]: Connected on namespace: /waypoint_plugin
+[rviz2-17] [ERROR] [1791533861.437518558] [rviz]: point#1 not found in map
+[rviz2-17] [INFO] [1791533861.537899823] [rviz]: Sending request for interactive markers
+[rviz2-17] [INFO] [1791533861.575596144] [rviz2]: Trying to create a map of size 144 x 170 using 1 swatches
+[ERROR] [lifecycle_manager-16]: process[lifecycle_manager-16] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+[INFO] [lifecycle_manager-16]: sending signal 'SIGTERM' to process[lifecycle_manager-16]
+[ERROR] [lifecycle_manager-16]: process[lifecycle_manager-16] failed to terminate '10.0' seconds after receiving 'SIGTERM', escalating to 'SIGKILL'
+[INFO] [lifecycle_manager-16]: sending signal 'SIGKILL' to process[lifecycle_manager-16]
+[ERROR] [lifecycle_manager-16]: process has died [pid 1816756, exit code -9, cmd '/opt/ros/humble/lib/nav2_lifecycle_manager/lifecycle_manager --ros-args --log-level info --ros-args -r __node:=lifecycle_manager_navigation --params-file /tmp/launch_params_1hjwgvt0 --params-file /tmp/launch_params_yicdneir --params-file /tmp/launch_params_0h41zioy -r /cmd_vel:=/cmd_vel_raw'].
+No AU9 manual Nav2 processes found.
+
+失败现场时间参数查询：
+Boolean value is: True
+
+关闭输出：
+Sending SIGINT to AU9 process 1815705 (gzclient).
+Sending SIGINT to AU9 process 1816987 (rviz2).
+Sending SIGINT to AU9 process 1815599 (ros2).
+AU9 manual Nav2 processes stopped gracefully.
