@@ -1,0 +1,23 @@
+启动日志相关上下文（非完整日志）：
+[lifecycle_manager-8] [INFO] [1791533087.649417958] [lifecycle_manager_localization]: Server amcl connected with bond.
+[lifecycle_manager-8] [INFO] [1791533087.649450964] [lifecycle_manager_localization]: Managed nodes are active
+[lifecycle_manager-8] [INFO] [1791533087.649459468] [lifecycle_manager_localization]: Creating bond timer...
+[gzserver-1] [Msg] Publicized address: 192.168.1.98
+[gzserver-1] [Msg] Loading world file [/home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/worlds/apartment_v1.3.world]
+[gzserver-1] [Wrn] [Event.cc:61] Warning: Deleting a connection right after creation. Make sure to save the ConnectionPtr from a Connect call
+[rviz2-17] [INFO] [1791533100.170025293] [rviz2]: Stereo is NOT SUPPORTED
+[amcl-7] [WARN] [1791533100.236543278] [amcl]: New subscription discovered on topic '/particle_cloud', requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY_QOS_POLICY
+[rviz2-17] [INFO] [1791533100.246321996] [rviz]: Connected on namespace: /waypoint_plugin
+[rviz2-17] [ERROR] [1791533100.282930052] [rviz]: point#1 not found in map
+[rviz2-17] [INFO] [1791533100.386876514] [rviz]: Sending request for interactive markers
+[lifecycle_manager-16] [INFO] [1791533101.232682948] [lifecycle_manager_navigation]: Server velocity_smoother connected with bond.
+[lifecycle_manager-16] [INFO] [1791533101.232722824] [lifecycle_manager_navigation]: Managed nodes are active
+[lifecycle_manager-16] [INFO] [1791533101.232732121] [lifecycle_manager_navigation]: Creating bond timer...
+
+关闭输出：
+Sending SIGINT to AU9 process 1761061 (gzclient).
+Sending SIGINT to AU9 process 1762334 (rviz2).
+Sending SIGINT to AU9 process 1760943 (ros2).
+AU9 manual Nav2 processes stopped gracefully.
+
+关闭后gzserver/gzclient/rviz2及planner/controller/amcl/guard未发现，11345无监听。

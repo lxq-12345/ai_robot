@@ -1,0 +1,406 @@
+{
+  "observed_date": "2026-10-09 PDT",
+  "git_baseline": "178a01f12d6cd1d0ad8991269f8443b2e7df40ca",
+  "scope": "仅T01-01；无目标或速度发布；首次查询失败后未重跑",
+  "queries": [
+    {
+      "command": [
+        "ros2",
+        "node",
+        "list"
+      ],
+      "returncode": 0,
+      "stdout": "/ai_robot_camera_left_driver\n/ai_robot_camera_right_driver\n/ai_robot_diff_drive\n/ai_robot_imu_driver\n/ai_robot_joint_states\n/ai_robot_laser_scan\n/amcl\n/bt_navigator\n/bt_navigator_navigate_through_poses_rclcpp_node\n/bt_navigator_navigate_to_pose_rclcpp_node\n/cmd_vel_guard\n/gazebo\n/global_costmap/global_costmap\n/lifecycle_manager_localization\n/map_server\n/planner_server\n/robot_state_publisher\n/rviz\n/smoother_server\n/transform_listener_impl_560196267f10\n/transform_listener_impl_57110b76b410\n/transform_listener_impl_5f3d63555dc0\n/transform_listener_impl_5f3d6362ec00\n/transform_listener_impl_64628fe6ee10\n/velocity_smoother\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "action",
+        "list",
+        "-t"
+      ],
+      "returncode": 0,
+      "stdout": "/compute_path_through_poses [nav2_msgs/action/ComputePathThroughPoses]\n/compute_path_to_pose [nav2_msgs/action/ComputePathToPose]\n/follow_waypoints [nav2_msgs/action/FollowWaypoints]\n/navigate_to_pose [nav2_msgs/action/NavigateToPose]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "lifecycle",
+        "get",
+        "/planner_server"
+      ],
+      "returncode": 0,
+      "stdout": "active [3]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "lifecycle",
+        "get",
+        "/controller_server"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Node not found\n"
+    },
+    {
+      "command": [
+        "ros2",
+        "lifecycle",
+        "get",
+        "/amcl"
+      ],
+      "returncode": 0,
+      "stdout": "active [3]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "lifecycle",
+        "get",
+        "/map_server"
+      ],
+      "returncode": 124,
+      "stdout": "",
+      "stderr": "",
+      "timeout_s": 10
+    },
+    {
+      "command": [
+        "ros2",
+        "node",
+        "info",
+        "/controller_server"
+      ],
+      "returncode": 0,
+      "stdout": "/controller_server\n  Subscribers:\n    /bond: bond/msg/Status\n    /clock: rosgraph_msgs/msg/Clock\n    /odom: nav_msgs/msg/Odometry\n    /parameter_events: rcl_interfaces/msg/ParameterEvent\n    /speed_limit: nav2_msgs/msg/SpeedLimit\n  Publishers:\n    /bond: bond/msg/Status\n    /cmd_vel_raw: geometry_msgs/msg/Twist\n    /controller_server/transition_event: lifecycle_msgs/msg/TransitionEvent\n    /lookahead_collision_arc: nav_msgs/msg/Path\n    /lookahead_point: geometry_msgs/msg/PointStamped\n    /parameter_events: rcl_interfaces/msg/ParameterEvent\n    /received_global_plan: nav_msgs/msg/Path\n    /rosout: rcl_interfaces/msg/Log\n  Service Servers:\n    /controller_server/change_state: lifecycle_msgs/srv/ChangeState\n    /controller_server/describe_parameters: rcl_interfaces/srv/DescribeParameters\n    /controller_server/get_available_states: lifecycle_msgs/srv/GetAvailableStates\n    /controller_server/get_available_transitions: lifecycle_msgs/srv/GetAvailableTransitions\n    /controller_server/get_parameter_types: rcl_interfaces/srv/GetParameterTypes\n    /controller_server/get_parameters: rcl_interfaces/srv/GetParameters\n    /controller_server/get_state: lifecycle_msgs/srv/GetState\n    /controller_server/get_transition_graph: lifecycle_msgs/srv/GetAvailableTransitions\n    /controller_server/list_parameters: rcl_interfaces/srv/ListParameters\n    /controller_server/set_parameters: rcl_interfaces/srv/SetParameters\n    /controller_server/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically\n  Service Clients:\n\n  Action Servers:\n    /follow_path: nav2_msgs/action/FollowPath\n  Action Clients:\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "node",
+        "info",
+        "/velocity_smoother"
+      ],
+      "returncode": 0,
+      "stdout": "/velocity_smoother\n  Subscribers:\n    /bond: bond/msg/Status\n    /clock: rosgraph_msgs/msg/Clock\n    /cmd_vel_raw: geometry_msgs/msg/Twist\n    /parameter_events: rcl_interfaces/msg/ParameterEvent\n  Publishers:\n    /bond: bond/msg/Status\n    /cmd_vel: geometry_msgs/msg/Twist\n    /parameter_events: rcl_interfaces/msg/ParameterEvent\n    /rosout: rcl_interfaces/msg/Log\n    /velocity_smoother/transition_event: lifecycle_msgs/msg/TransitionEvent\n  Service Servers:\n    /velocity_smoother/change_state: lifecycle_msgs/srv/ChangeState\n    /velocity_smoother/describe_parameters: rcl_interfaces/srv/DescribeParameters\n    /velocity_smoother/get_available_states: lifecycle_msgs/srv/GetAvailableStates\n    /velocity_smoother/get_available_transitions: lifecycle_msgs/srv/GetAvailableTransitions\n    /velocity_smoother/get_parameter_types: rcl_interfaces/srv/GetParameterTypes\n    /velocity_smoother/get_parameters: rcl_interfaces/srv/GetParameters\n    /velocity_smoother/get_state: lifecycle_msgs/srv/GetState\n    /velocity_smoother/get_transition_graph: lifecycle_msgs/srv/GetAvailableTransitions\n    /velocity_smoother/list_parameters: rcl_interfaces/srv/ListParameters\n    /velocity_smoother/set_parameters: rcl_interfaces/srv/SetParameters\n    /velocity_smoother/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically\n  Service Clients:\n\n  Action Servers:\n\n  Action Clients:\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "node",
+        "info",
+        "/cmd_vel_guard"
+      ],
+      "returncode": 0,
+      "stdout": "/cmd_vel_guard\n  Subscribers:\n    /cmd_vel: geometry_msgs/msg/Twist\n    /scan: sensor_msgs/msg/LaserScan\n  Publishers:\n    /cmd_vel_safe: geometry_msgs/msg/Twist\n    /parameter_events: rcl_interfaces/msg/ParameterEvent\n    /rosout: rcl_interfaces/msg/Log\n  Service Servers:\n    /cmd_vel_guard/describe_parameters: rcl_interfaces/srv/DescribeParameters\n    /cmd_vel_guard/get_parameter_types: rcl_interfaces/srv/GetParameterTypes\n    /cmd_vel_guard/get_parameters: rcl_interfaces/srv/GetParameters\n    /cmd_vel_guard/list_parameters: rcl_interfaces/srv/ListParameters\n    /cmd_vel_guard/set_parameters: rcl_interfaces/srv/SetParameters\n    /cmd_vel_guard/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically\n  Service Clients:\n\n  Action Servers:\n\n  Action Clients:\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "topic",
+        "info",
+        "/cmd_vel_nav",
+        "--verbose"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Unknown topic '/cmd_vel_nav'\n"
+    },
+    {
+      "command": [
+        "ros2",
+        "topic",
+        "info",
+        "/cmd_vel_raw",
+        "--verbose"
+      ],
+      "returncode": 0,
+      "stdout": "Type: geometry_msgs/msg/Twist\n\nPublisher count: 5\n\nNode name: controller_server\nNode namespace: /\nTopic type: geometry_msgs/msg/Twist\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.1e.e3.ec.89.00.00.00.00.00.00.51.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: behavior_server\nNode namespace: /\nTopic type: geometry_msgs/msg/Twist\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.24.e3.bf.bb.00.00.00.00.00.00.2c.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: behavior_server\nNode namespace: /\nTopic type: geometry_msgs/msg/Twist\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.24.e3.bf.bb.00.00.00.00.00.00.35.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: behavior_server\nNode namespace: /\nTopic type: geometry_msgs/msg/Twist\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.24.e3.bf.bb.00.00.00.00.00.00.3e.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: behavior_server\nNode namespace: /\nTopic type: geometry_msgs/msg/Twist\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.24.e3.bf.bb.00.00.00.00.00.00.47.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nSubscription count: 1\n\nNode name: velocity_smoother\nNode namespace: /\nTopic type: geometry_msgs/msg/Twist\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.2a.e3.b4.46.00.00.00.00.00.00.1f.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "topic",
+        "info",
+        "/cmd_vel",
+        "--verbose"
+      ],
+      "returncode": 0,
+      "stdout": "Type: geometry_msgs/msg/Twist\n\nPublisher count: 1\n\nNode name: velocity_smoother\nNode namespace: /\nTopic type: geometry_msgs/msg/Twist\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.2a.e3.b4.46.00.00.00.00.00.00.1e.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nSubscription count: 1\n\nNode name: cmd_vel_guard\nNode namespace: /\nTopic type: geometry_msgs/msg/Twist\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.29.df.c8.32.00.00.00.00.00.00.12.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "topic",
+        "info",
+        "/cmd_vel_safe",
+        "--verbose"
+      ],
+      "returncode": 0,
+      "stdout": "Type: geometry_msgs/msg/Twist\n\nPublisher count: 1\n\nNode name: cmd_vel_guard\nNode namespace: /\nTopic type: geometry_msgs/msg/Twist\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.29.df.c8.32.00.00.00.00.00.00.11.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nSubscription count: 1\n\nNode name: ai_robot_diff_drive\nNode namespace: /\nTopic type: geometry_msgs/msg/Twist\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.23.df.34.aa.00.00.00.00.00.00.8a.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "topic",
+        "info",
+        "/waypoint_path",
+        "--verbose"
+      ],
+      "returncode": 0,
+      "stdout": "Type: nav_msgs/msg/Path\n\nPublisher count: 1\n\nNode name: rviz\nNode namespace: /\nTopic type: nav_msgs/msg/Path\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.1e.e4.9c.53.00.00.00.00.00.00.3f.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nSubscription count: 0\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "topic",
+        "info",
+        "/particle_cloud",
+        "--verbose"
+      ],
+      "returncode": 0,
+      "stdout": "Type: nav2_msgs/msg/ParticleCloud\n\nPublisher count: 1\n\nNode name: amcl\nNode namespace: /\nTopic type: nav2_msgs/msg/ParticleCloud\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.30.df.9e.01.00.00.00.00.00.00.24.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: BEST_EFFORT\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nSubscription count: 1\n\nNode name: rviz\nNode namespace: /\nTopic type: nav2_msgs/msg/ParticleCloud\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.1e.e4.9c.53.00.00.00.00.00.00.4a.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: BEST_EFFORT\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "topic",
+        "info",
+        "/tf",
+        "--verbose"
+      ],
+      "returncode": 0,
+      "stdout": "Type: tf2_msgs/msg/TFMessage\n\nPublisher count: 3\n\nNode name: ai_robot_diff_drive\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.23.df.34.aa.00.00.00.00.00.00.8d.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: robot_state_publisher\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.27.df.e5.fc.00.00.00.00.00.00.12.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: amcl\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.30.df.9e.01.00.00.00.00.00.00.22.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nSubscription count: 8\n\nNode name: transform_listener_impl_5a4b30d63f80\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.1e.e3.ec.89.00.00.00.00.00.00.3b.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: transform_listener_impl_5f3d6362ec00\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.1e.e4.9c.53.00.00.00.00.00.00.16.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: transform_listener_impl_5f3d63555dc0\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.1e.e4.9c.53.00.00.00.00.00.00.44.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: transform_listener_impl_560196267f10\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.20.e3.18.9f.00.00.00.00.00.00.20.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: transform_listener_impl_64628fe6ee10\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.22.e3.1d.3d.00.00.00.00.00.00.3b.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: transform_listener_impl_5fe0c4ecb4d0\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.24.e3.bf.bb.00.00.00.00.00.00.20.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: bt_navigator\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.26.e3.82.23.00.00.00.00.00.00.1e.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: transform_listener_impl_57110b76b410\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.30.df.9e.01.00.00.00.00.00.00.20.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "topic",
+        "info",
+        "/tf_static",
+        "--verbose"
+      ],
+      "returncode": 0,
+      "stdout": "Type: tf2_msgs/msg/TFMessage\n\nPublisher count: 1\n\nNode name: robot_state_publisher\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: PUBLISHER\nGID: 01.0f.f4.c2.27.df.e5.fc.00.00.00.00.00.00.13.03.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: TRANSIENT_LOCAL\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nSubscription count: 8\n\nNode name: transform_listener_impl_5a4b30d63f80\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.1e.e3.ec.89.00.00.00.00.00.00.3c.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: TRANSIENT_LOCAL\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: transform_listener_impl_5f3d6362ec00\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.1e.e4.9c.53.00.00.00.00.00.00.17.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: TRANSIENT_LOCAL\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: transform_listener_impl_5f3d63555dc0\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.1e.e4.9c.53.00.00.00.00.00.00.45.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: TRANSIENT_LOCAL\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: transform_listener_impl_560196267f10\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.20.e3.18.9f.00.00.00.00.00.00.21.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: TRANSIENT_LOCAL\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: transform_listener_impl_64628fe6ee10\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.22.e3.1d.3d.00.00.00.00.00.00.3c.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: TRANSIENT_LOCAL\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: transform_listener_impl_5fe0c4ecb4d0\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.24.e3.bf.bb.00.00.00.00.00.00.21.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: TRANSIENT_LOCAL\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: bt_navigator\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.26.e3.82.23.00.00.00.00.00.00.1f.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: TRANSIENT_LOCAL\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nNode name: transform_listener_impl_57110b76b410\nNode namespace: /\nTopic type: tf2_msgs/msg/TFMessage\nEndpoint type: SUBSCRIPTION\nGID: 01.0f.f4.c2.30.df.9e.01.00.00.00.00.00.00.21.04.00.00.00.00.00.00.00.00\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: TRANSIENT_LOCAL\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/planner_server",
+        "use_sim_time"
+      ],
+      "returncode": 0,
+      "stdout": "Boolean value is: True\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/controller_server",
+        "use_sim_time"
+      ],
+      "returncode": 0,
+      "stdout": "Boolean value is: True\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/amcl",
+        "use_sim_time"
+      ],
+      "returncode": 0,
+      "stdout": "Boolean value is: True\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/map_server",
+        "use_sim_time"
+      ],
+      "returncode": 0,
+      "stdout": "Boolean value is: True\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/velocity_smoother",
+        "use_sim_time"
+      ],
+      "returncode": 0,
+      "stdout": "Boolean value is: True\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/rviz",
+        "use_sim_time"
+      ],
+      "returncode": 0,
+      "stdout": "Boolean value is: True\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/robot_state_publisher",
+        "use_sim_time"
+      ],
+      "returncode": 0,
+      "stdout": "Boolean value is: False\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/gazebo",
+        "use_sim_time"
+      ],
+      "returncode": 0,
+      "stdout": "Boolean value is: True\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/cmd_vel_guard",
+        "require_scan"
+      ],
+      "returncode": 0,
+      "stdout": "Boolean value is: True\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/cmd_vel_guard",
+        "input_topic"
+      ],
+      "returncode": 0,
+      "stdout": "String value is: /cmd_vel\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/cmd_vel_guard",
+        "output_topic"
+      ],
+      "returncode": 0,
+      "stdout": "String value is: /cmd_vel_safe\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/cmd_vel_guard",
+        "command_timeout"
+      ],
+      "returncode": 0,
+      "stdout": "Double value is: 0.5\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/cmd_vel_guard",
+        "scan_timeout"
+      ],
+      "returncode": 0,
+      "stdout": "Double value is: 0.75\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/controller_server",
+        "controller_plugins"
+      ],
+      "returncode": 0,
+      "stdout": "String values are: ['FollowPath']\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/controller_server",
+        "general_goal_checker.xy_goal_tolerance"
+      ],
+      "returncode": 0,
+      "stdout": "Double value is: 0.25\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/controller_server",
+        "general_goal_checker.yaw_goal_tolerance"
+      ],
+      "returncode": 0,
+      "stdout": "Double value is: 0.25\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ros2",
+        "param",
+        "get",
+        "/planner_server",
+        "planner_plugins"
+      ],
+      "returncode": 0,
+      "stdout": "String values are: ['GridBased']\n",
+      "stderr": ""
+    }
+  ]
+}
