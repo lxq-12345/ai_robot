@@ -9,11 +9,11 @@ Summary: 1 package finished [1.63s]
 16 passed in 0.03s
 
 启动关键上下文：
-[gzserver-1] 
+[gzserver-1]
 [lifecycle_manager-8] [INFO] [1791533848.750549690] [lifecycle_manager_localization]: Server amcl connected with bond.
 [lifecycle_manager-8] [INFO] [1791533848.750580842] [lifecycle_manager_localization]: Managed nodes are active
 [lifecycle_manager-8] [INFO] [1791533848.750589706] [lifecycle_manager_localization]: Creating bond timer...
-[gzserver-1] [Wrn] [gazebo_ros_init.cpp:178] 
+[gzserver-1] [Wrn] [gazebo_ros_init.cpp:178]
 [smoother_server-10] [INFO] [1791533859.066589073] [smoother_server]: Created smoother : simple_smoother of type nav2_smoother::SimpleSmoother
 [smoother_server-10] [INFO] [1791533859.067558621] [smoother_server]: Smoother Server has simple_smoother  smoothers available.
 [smoother_server-10] [WARN] [1791533859.176900932] [smoother_server.rclcpp]: failed to send response to /smoother_server/change_state (timeout): client will not receive response, at ./src/rmw_response.cpp:154, at ./src/rcl/service.c:314
