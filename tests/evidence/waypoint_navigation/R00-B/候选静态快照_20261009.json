@@ -1,0 +1,14 @@
+{
+  "kind": "static_preparation_not_runtime_evidence",
+  "date": "2026-10-09",
+  "head": "eb9d39063a4afbf6d463c392ec1e98898353d552",
+  "files": {
+    "/opt/ros/humble/lib/python3.10/site-packages/nav2_simple_commander/robot_navigator.py": "c887e9bd994bad57b1903781a1f29659656854053b8fee5797951dc35234bfed",
+    "/opt/ros/humble/share/nav2_msgs/action/ComputePathThroughPoses.action": "de13660dbdb5f117e33ff844e0a5089c95df388b6644b608d796b808cf1a4f05",
+    "/opt/ros/humble/share/nav2_msgs/action/FollowPath.action": "111ca563388f30fd5176121e47a5d272e5e1e81bbeaf7b4f86c5d6cb7a243e53",
+    "config/nav2_sim.yaml": "54f715efacef446c412754f400737f7f3579d179eb0492ffeccc412fa8d405ac",
+    "config/rviz2/au9_nav2.rviz": "5752dabe76f6fce04d4b768a4cb35c55ab0a40c482791f07f0a274bbc2835f3a",
+    "scripts/au9_sim_environment.sh": "cafbab1495e8f459282817338bc4dc44ea86dbd43b419c0448ffc5fb1bbbfaf5"
+  },
+  "installed_packages": "ros-humble-nav2-controller 1.1.20-1jammy.20260607.083252\nros-humble-nav2-msgs 1.1.20-1jammy.20260605.153126\nros-humble-nav2-planner 1.1.20-1jammy.20260607.083248\nros-humble-nav2-simple-commander 1.1.20-1jammy.20260605.153954\n"
+}
