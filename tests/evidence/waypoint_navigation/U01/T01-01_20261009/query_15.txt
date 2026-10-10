@@ -1,0 +1,2 @@
+$ ros2 param get /amcl use_sim_time
+Boolean value is: True

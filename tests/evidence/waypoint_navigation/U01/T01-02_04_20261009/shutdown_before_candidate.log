@@ -1,0 +1,4 @@
+Sending SIGINT to AU9 process 992888 (gzclient).
+Sending SIGINT to AU9 process 994083 (rviz2).
+Sending SIGINT to AU9 process 992816 (ros2).
+AU9 manual Nav2 processes stopped gracefully.

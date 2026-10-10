@@ -1,0 +1,2 @@
+$ ros2 param get /planner_server use_sim_time
+Boolean value is: True

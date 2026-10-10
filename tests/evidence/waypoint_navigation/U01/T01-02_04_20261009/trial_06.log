@@ -1,0 +1,1 @@
+FAILED: Pointer outside owned RViz frame: child=0x2a00004, frame=0x400646, root=0x1d8, pointer=(1667,476), main=(1500, 1074, 40, 151)

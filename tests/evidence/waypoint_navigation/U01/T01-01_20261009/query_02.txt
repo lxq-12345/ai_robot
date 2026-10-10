@@ -1,0 +1,2 @@
+$ ros2 lifecycle get /planner_server
+active [3]

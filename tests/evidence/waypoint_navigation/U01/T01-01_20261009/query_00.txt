@@ -1,0 +1,2 @@
+$ ros2 lifecycle get /map_server
+active [3]

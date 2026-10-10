@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/ai_robot_ws/tests/helpers/u01_gui_baseline.py", line 289, in <module>
+    raise SystemExit(main())
+  File "/home/ubuntu/ai_robot_ws/tests/helpers/u01_gui_baseline.py", line 59, in main
+    gui = RvizInput(workspace)
+  File "/home/ubuntu/ai_robot_ws/tests/helpers/u01_gui_baseline.py", line 35, in __init__
+    super().__init__(workspace, required_size=(1500, 900))
+  File "/home/ubuntu/ai_robot_ws/tests/helpers/r00b_rviz_input.py", line 26, in __init__
+    raise RuntimeError('RViz layout differs from the explicitly required size: '+str(required_size))
+RuntimeError: RViz layout differs from the explicitly required size: (1500, 900)

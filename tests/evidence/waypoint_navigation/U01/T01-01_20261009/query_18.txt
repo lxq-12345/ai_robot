@@ -1,0 +1,2 @@
+$ ros2 param get /bt_navigator use_sim_time
+Boolean value is: True

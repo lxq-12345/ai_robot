@@ -1,0 +1,2 @@
+$ ros2 param get /robot_state_publisher use_sim_time
+Boolean value is: True

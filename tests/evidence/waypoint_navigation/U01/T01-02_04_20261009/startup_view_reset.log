@@ -1,0 +1,789 @@
+The daemon is not running
+Starting the AU9 manual Nav2 test in Gazebo and RViz2.
+Wait for the map and laser scan, then use 'Nav2 Goal' in RViz2.
+Safe first targets: (2.20, 4.00), then (2.60, 4.00).
+Press Ctrl+C in this terminal to stop the complete test environment.
+[INFO] [launch]: All log files can be found below /home/ubuntu/.ros/log/2026-10-09-20-39-22-840409-ubuntu-951715
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gzserver-1]: process started with pid [951785]
+[INFO] [gzclient-2]: process started with pid [951787]
+[INFO] [robot_state_publisher-3]: process started with pid [951790]
+[INFO] [cmd_vel_guard-4]: process started with pid [951796]
+[INFO] [spawn_entity.py-5]: process started with pid [951798]
+[INFO] [map_server-6]: process started with pid [951800]
+[INFO] [amcl-7]: process started with pid [951802]
+[INFO] [lifecycle_manager-8]: process started with pid [951806]
+[lifecycle_manager-8] [INFO] [1791603563.694577502] [lifecycle_manager_localization]: Creating
+[lifecycle_manager-8] [INFO] [1791603563.697667521] [lifecycle_manager_localization]: [34m[1mCreating and initializing lifecycle service clients[0m[0m
+[robot_state_publisher-3] [INFO] [1791603563.711026893] [robot_state_publisher]: got segment base_footprint
+[robot_state_publisher-3] [INFO] [1791603563.712597687] [robot_state_publisher]: got segment base_link
+[robot_state_publisher-3] [INFO] [1791603563.712621557] [robot_state_publisher]: got segment camera_left_link
+[robot_state_publisher-3] [INFO] [1791603563.712627471] [robot_state_publisher]: got segment camera_left_optical_frame
+[robot_state_publisher-3] [INFO] [1791603563.712632494] [robot_state_publisher]: got segment camera_link
+[robot_state_publisher-3] [INFO] [1791603563.712636999] [robot_state_publisher]: got segment camera_right_link
+[robot_state_publisher-3] [INFO] [1791603563.712685052] [robot_state_publisher]: got segment camera_right_optical_frame
+[robot_state_publisher-3] [INFO] [1791603563.712693439] [robot_state_publisher]: got segment equipment_box
+[robot_state_publisher-3] [INFO] [1791603563.712727933] [robot_state_publisher]: got segment front_bumper_bar
+[robot_state_publisher-3] [INFO] [1791603563.712733658] [robot_state_publisher]: got segment front_bumper_left_bracket
+[robot_state_publisher-3] [INFO] [1791603563.712738304] [robot_state_publisher]: got segment front_bumper_right_bracket
+[robot_state_publisher-3] [INFO] [1791603563.712742854] [robot_state_publisher]: got segment imu_link
+[robot_state_publisher-3] [INFO] [1791603563.712747597] [robot_state_publisher]: got segment laser_link
+[robot_state_publisher-3] [INFO] [1791603563.712752036] [robot_state_publisher]: got segment left_front_wheel
+[robot_state_publisher-3] [INFO] [1791603563.712756881] [robot_state_publisher]: got segment left_front_wheel_hub
+[robot_state_publisher-3] [INFO] [1791603563.712761433] [robot_state_publisher]: got segment left_rear_wheel
+[robot_state_publisher-3] [INFO] [1791603563.712773133] [robot_state_publisher]: got segment left_rear_wheel_hub
+[robot_state_publisher-3] [INFO] [1791603563.712784188] [robot_state_publisher]: got segment lidar_housing
+[robot_state_publisher-3] [INFO] [1791603563.712789837] [robot_state_publisher]: got segment rear_bumper_bar
+[robot_state_publisher-3] [INFO] [1791603563.712794272] [robot_state_publisher]: got segment rear_bumper_left_bracket
+[robot_state_publisher-3] [INFO] [1791603563.712799157] [robot_state_publisher]: got segment rear_bumper_right_bracket
+[robot_state_publisher-3] [INFO] [1791603563.712803708] [robot_state_publisher]: got segment right_front_wheel
+[robot_state_publisher-3] [INFO] [1791603563.712808319] [robot_state_publisher]: got segment right_front_wheel_hub
+[robot_state_publisher-3] [INFO] [1791603563.712812939] [robot_state_publisher]: got segment right_rear_wheel
+[robot_state_publisher-3] [INFO] [1791603563.712887504] [robot_state_publisher]: got segment right_rear_wheel_hub
+[map_server-6] [INFO] [1791603563.712899638] [map_server]: 
+[map_server-6] 	map_server lifecycle node launched. 
+[map_server-6] 	Waiting on external lifecycle transitions to activate
+[map_server-6] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[map_server-6] [INFO] [1791603563.712988014] [map_server]: Creating
+[robot_state_publisher-3] [INFO] [1791603563.712976128] [robot_state_publisher]: got segment stereo_housing
+[robot_state_publisher-3] [INFO] [1791603563.712982505] [robot_state_publisher]: got segment stereo_mount
+[robot_state_publisher-3] [INFO] [1791603563.712986988] [robot_state_publisher]: got segment top_deck
+[amcl-7] [INFO] [1791603563.745529245] [amcl]: 
+[amcl-7] 	amcl lifecycle node launched. 
+[amcl-7] 	Waiting on external lifecycle transitions to activate
+[amcl-7] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[amcl-7] [INFO] [1791603563.745934504] [amcl]: Creating
+[lifecycle_manager-8] [INFO] [1791603563.815024556] [lifecycle_manager_localization]: [34m[1mStarting managed nodes bringup...[0m[0m
+[lifecycle_manager-8] [INFO] [1791603563.815068206] [lifecycle_manager_localization]: [34m[1mConfiguring map_server[0m[0m
+[map_server-6] [INFO] [1791603563.815298687] [map_server]: Configuring
+[map_server-6] [INFO] [1791603563.815346061] [map_io]: Loading yaml file: /home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/maps/apartment_v1.3_nav.yaml
+[map_server-6] [INFO] [1791603563.815535686] [map_io]: resolution: 0.05
+[map_server-6] [INFO] [1791603563.815544524] [map_io]: origin[0]: -0.5
+[map_server-6] [INFO] [1791603563.815548721] [map_io]: origin[1]: -0.5
+[map_server-6] [INFO] [1791603563.815552594] [map_io]: origin[2]: 0
+[map_server-6] [INFO] [1791603563.815556471] [map_io]: free_thresh: 0.25
+[map_server-6] [INFO] [1791603563.815560440] [map_io]: occupied_thresh: 0.65
+[map_server-6] [INFO] [1791603563.815564508] [map_io]: mode: trinary
+[map_server-6] [INFO] [1791603563.815569006] [map_io]: negate: 0
+[map_server-6] [INFO] [1791603563.815729311] [map_io]: Loading image_file: /home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/maps/apartment_v1.3_nav.pgm
+[map_server-6] [INFO] [1791603563.822006739] [map_io]: Read map /home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/maps/apartment_v1.3_nav.pgm: 144 X 170 map @ 0.05 m/cell
+[lifecycle_manager-8] [INFO] [1791603563.828546487] [lifecycle_manager_localization]: [34m[1mConfiguring amcl[0m[0m
+[amcl-7] [INFO] [1791603563.828709573] [amcl]: Configuring
+[amcl-7] [INFO] [1791603563.828772380] [amcl]: initTransforms
+[amcl-7] [INFO] [1791603563.836564479] [amcl]: initPubSub
+[amcl-7] [INFO] [1791603563.841567891] [amcl]: Subscribed to map topic.
+[lifecycle_manager-8] [INFO] [1791603563.846342470] [lifecycle_manager_localization]: [34m[1mActivating map_server[0m[0m
+[map_server-6] [INFO] [1791603563.846520164] [map_server]: Activating
+[map_server-6] [INFO] [1791603563.846646664] [map_server]: Creating bond (map_server) to lifecycle manager.
+[amcl-7] [INFO] [1791603563.846732139] [amcl]: Received a 144 X 170 map @ 0.050 m/pix
+[gzclient-2] Gazebo multi-robot simulator, version 11.10.2
+[gzclient-2] Copyright (C) 2012 Open Source Robotics Foundation.
+[gzclient-2] Released under the Apache 2 License.
+[gzclient-2] http://gazebosim.org
+[gzclient-2] 
+[gzserver-1] Gazebo multi-robot simulator, version 11.10.2
+[gzserver-1] Copyright (C) 2012 Open Source Robotics Foundation.
+[gzserver-1] Released under the Apache 2 License.
+[gzserver-1] http://gazebosim.org
+[gzserver-1] 
+[lifecycle_manager-8] [INFO] [1791603563.957914298] [lifecycle_manager_localization]: Server map_server connected with bond.
+[lifecycle_manager-8] [INFO] [1791603563.957945305] [lifecycle_manager_localization]: [34m[1mActivating amcl[0m[0m
+[amcl-7] [INFO] [1791603563.958292466] [amcl]: Activating
+[amcl-7] [INFO] [1791603563.958320719] [amcl]: initialPoseReceived
+[amcl-7] [INFO] [1791603563.958373407] [amcl]: Setting pose (0.000000): 1.800 4.000 0.000
+[amcl-7] [INFO] [1791603563.958486864] [amcl]: Creating bond (amcl) to lifecycle manager.
+[lifecycle_manager-8] [INFO] [1791603564.066086310] [lifecycle_manager_localization]: Server amcl connected with bond.
+[lifecycle_manager-8] [INFO] [1791603564.066137206] [lifecycle_manager_localization]: [34m[1mManaged nodes are active[0m[0m
+[lifecycle_manager-8] [INFO] [1791603564.066149072] [lifecycle_manager_localization]: [34m[1mCreating bond timer...[0m[0m
+[spawn_entity.py-5] [INFO] [1791603564.120944781] [spawn_entity]: Spawn Entity started
+[spawn_entity.py-5] [INFO] [1791603564.121347484] [spawn_entity]: Loading entity XML from file /home/ubuntu/ai_robot_ws/install/ai_robot_description/share/ai_robot_description/models/small_yellow_car_v1.2.sdf
+[spawn_entity.py-5] [INFO] [1791603564.122521078] [spawn_entity]: Waiting for service /spawn_entity, timeout = 30
+[spawn_entity.py-5] [INFO] [1791603564.122828530] [spawn_entity]: Waiting for service /spawn_entity
+[gzserver-1] [1;33m[Wrn] [gazebo_ros_init.cpp:178] [0m[1;33m
+[gzserver-1] #     # ####### ####### ###  #####  #######
+[gzserver-1] ##    # #     #    #     #  #     # #
+[gzserver-1] # #   # #     #    #     #  #       #
+[gzserver-1] #  #  # #     #    #     #  #       #####
+[gzserver-1] #   # # #     #    #     #  #       #
+[gzserver-1] #    ## #     #    #     #  #     # #
+[gzserver-1] #     # #######    #    ###  #####  #######
+[gzserver-1] 
+[gzserver-1] This version of Gazebo, now called Gazebo classic, reaches end-of-life
+[gzserver-1] in January 2025. Users are highly encouraged to migrate to the new Gazebo
+[gzserver-1] using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration?utm_source=gazebo_ros_pkgs&utm_medium=cli)
+[gzserver-1] 
+[gzserver-1] [0m[1;33m
+[spawn_entity.py-5] [INFO] [1791603565.127149722] [spawn_entity]: Calling service /spawn_entity
+[gzserver-1] [1;32m[Msg] [0m[1;32mWaiting for master.[0m[1;32m
+[gzserver-1] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mConnected to gazebo master @ [0m[1;32mhttp://127.0.0.1:11345[0m[1;32m
+[gzserver-1] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mPublicized address: [0m[1;32m192.168.1.98[0m[1;32m
+[gzserver-1] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mLoading world file [[0m[1;32m/home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/worlds/apartment_v1.3.world[0m[1;32m][0m[1;32m
+[gzserver-1] [0m[1;33m[0m[1;33m[0m[1;33m[Wrn] [Event.cc:61] [0m[1;33mWarning: Deleting a connection right after creation. [0m[1;33mMake sure to save the ConnectionPtr from a Connect call
+[gzclient-2] [1;32m[Msg] [0m[1;32mWaiting for master.[0m[1;32m
+[gzclient-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mConnected to gazebo master @ [0m[1;32mhttp://127.0.0.1:11345[0m[1;32m
+[gzclient-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mPublicized address: [0m[1;32m192.168.1.98[0m[1;32m
+[gzclient-2] [1;33m[Wrn] [Event.cc:61] [0m[1;33mWarning: Deleting a connection right after creation. [0m[1;33mMake sure to save the ConnectionPtr from a Connect call
+[gzserver-1] [0m[INFO] [1791603566.033866644] [ai_robot_camera_left_driver]: Publishing camera info to [/camera/camera_info]
+[gzserver-1] [INFO] [1791603566.046319768] [ai_robot_camera_right_driver]: Publishing camera info to [/camera/right/camera_info]
+[spawn_entity.py-5] [INFO] [1791603566.174551601] [spawn_entity]: Spawn status: SpawnEntity: Successfully spawned entity [ai_robot]
+[gzserver-1] [INFO] [1791603566.293150267] [ai_robot_diff_drive]: Wheel pair 1 separation set to [0.420000m]
+[gzserver-1] [INFO] [1791603566.293188754] [ai_robot_diff_drive]: Wheel pair 2 separation set to [0.420000m]
+[gzserver-1] [INFO] [1791603566.293199214] [ai_robot_diff_drive]: Wheel pair 1 diameter set to [0.150000m]
+[gzserver-1] [INFO] [1791603566.293207455] [ai_robot_diff_drive]: Wheel pair 2 diameter set to [0.150000m]
+[gzserver-1] [INFO] [1791603566.294295655] [ai_robot_diff_drive]: Subscribed to [/cmd_vel_safe]
+[gzserver-1] [INFO] [1791603566.296888870] [ai_robot_diff_drive]: Advertise odometry on [/odom]
+[gzserver-1] [INFO] [1791603566.300395810] [ai_robot_diff_drive]: Publishing odom transforms between [odom] and [base_footprint]
+[gzserver-1] [INFO] [1791603566.315113676] [ai_robot_joint_states]: Going to publish joint [left_front_wheel_joint]
+[gzserver-1] [INFO] [1791603566.315729343] [ai_robot_joint_states]: Going to publish joint [left_rear_wheel_joint]
+[gzserver-1] [INFO] [1791603566.315750497] [ai_robot_joint_states]: Going to publish joint [right_front_wheel_joint]
+[gzserver-1] [INFO] [1791603566.315761990] [ai_robot_joint_states]: Going to publish joint [right_rear_wheel_joint]
+[INFO] [spawn_entity.py-5]: process has finished cleanly [pid 951798]
+[amcl-7] [INFO] [1791603566.417735408] [amcl]: createLaserObject
+[INFO] [controller_server-9]: process started with pid [952767]
+[INFO] [smoother_server-10]: process started with pid [952769]
+[INFO] [planner_server-11]: process started with pid [952771]
+[INFO] [behavior_server-12]: process started with pid [952773]
+[INFO] [bt_navigator-13]: process started with pid [952775]
+[INFO] [waypoint_follower-14]: process started with pid [952777]
+[INFO] [velocity_smoother-15]: process started with pid [952779]
+[INFO] [lifecycle_manager-16]: process started with pid [952781]
+[lifecycle_manager-16] [INFO] [1791603573.943380138] [lifecycle_manager_navigation]: Creating
+[lifecycle_manager-16] [INFO] [1791603573.960135691] [lifecycle_manager_navigation]: [34m[1mCreating and initializing lifecycle service clients[0m[0m
+[smoother_server-10] [INFO] [1791603573.964409976] [smoother_server]: 
+[smoother_server-10] 	smoother_server lifecycle node launched. 
+[smoother_server-10] 	Waiting on external lifecycle transitions to activate
+[smoother_server-10] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[smoother_server-10] [INFO] [1791603573.975430195] [smoother_server]: Creating smoother server
+[behavior_server-12] [INFO] [1791603573.993284912] [behavior_server]: 
+[behavior_server-12] 	behavior_server lifecycle node launched. 
+[behavior_server-12] 	Waiting on external lifecycle transitions to activate
+[behavior_server-12] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[planner_server-11] [INFO] [1791603574.002498659] [planner_server]: 
+[planner_server-11] 	planner_server lifecycle node launched. 
+[planner_server-11] 	Waiting on external lifecycle transitions to activate
+[planner_server-11] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[planner_server-11] [INFO] [1791603574.004681970] [planner_server]: Creating
+[waypoint_follower-14] [INFO] [1791603574.005230856] [waypoint_follower]: 
+[waypoint_follower-14] 	waypoint_follower lifecycle node launched. 
+[waypoint_follower-14] 	Waiting on external lifecycle transitions to activate
+[waypoint_follower-14] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[waypoint_follower-14] [INFO] [1791603574.005935971] [waypoint_follower]: Creating
+[controller_server-9] [INFO] [1791603574.008320573] [controller_server]: 
+[controller_server-9] 	controller_server lifecycle node launched. 
+[controller_server-9] 	Waiting on external lifecycle transitions to activate
+[controller_server-9] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[controller_server-9] [INFO] [1791603574.023433799] [controller_server]: Creating controller server
+[bt_navigator-13] [INFO] [1791603574.056633842] [bt_navigator]: 
+[bt_navigator-13] 	bt_navigator lifecycle node launched. 
+[bt_navigator-13] 	Waiting on external lifecycle transitions to activate
+[bt_navigator-13] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[bt_navigator-13] [INFO] [1791603574.056748176] [bt_navigator]: Creating
+[velocity_smoother-15] [INFO] [1791603574.073259473] [velocity_smoother]: 
+[velocity_smoother-15] 	velocity_smoother lifecycle node launched. 
+[velocity_smoother-15] 	Waiting on external lifecycle transitions to activate
+[velocity_smoother-15] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[planner_server-11] [INFO] [1791603574.077896347] [global_costmap.global_costmap]: 
+[planner_server-11] 	global_costmap lifecycle node launched. 
+[planner_server-11] 	Waiting on external lifecycle transitions to activate
+[planner_server-11] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[controller_server-9] [INFO] [1791603574.078837643] [local_costmap.local_costmap]: 
+[controller_server-9] 	local_costmap lifecycle node launched. 
+[controller_server-9] 	Waiting on external lifecycle transitions to activate
+[controller_server-9] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[controller_server-9] [INFO] [1791603574.079268174] [local_costmap.local_costmap]: Creating Costmap
+[planner_server-11] [INFO] [1791603574.080598368] [global_costmap.global_costmap]: Creating Costmap
+[lifecycle_manager-16] [INFO] [1791603574.290304930] [lifecycle_manager_navigation]: [34m[1mStarting managed nodes bringup...[0m[0m
+[lifecycle_manager-16] [INFO] [1791603574.290352934] [lifecycle_manager_navigation]: [34m[1mConfiguring controller_server[0m[0m
+[controller_server-9] [INFO] [1791603574.292008915] [controller_server]: Configuring controller interface
+[controller_server-9] [INFO] [1791603574.292236618] [controller_server]: getting goal checker plugins..
+[controller_server-9] [INFO] [1791603574.292545760] [controller_server]: Controller frequency set to 20.0000Hz
+[controller_server-9] [INFO] [1791603574.292577142] [local_costmap.local_costmap]: Configuring
+[controller_server-9] [INFO] [1791603574.298671636] [local_costmap.local_costmap]: Using plugin "voxel_layer"
+[controller_server-9] [INFO] [1791603574.301462271] [local_costmap.local_costmap]: Subscribed to Topics: scan
+[controller_server-9] [INFO] [1791603574.307498568] [local_costmap.local_costmap]: Initialized plugin "voxel_layer"
+[controller_server-9] [INFO] [1791603574.307529141] [local_costmap.local_costmap]: Using plugin "inflation_layer"
+[controller_server-9] [INFO] [1791603574.307852547] [local_costmap.local_costmap]: Initialized plugin "inflation_layer"
+[controller_server-9] [INFO] [1791603574.319934101] [controller_server]: Created progress_checker : progress_checker of type nav2_controller::SimpleProgressChecker
+[controller_server-9] [INFO] [1791603574.320391306] [controller_server]: Created goal checker : general_goal_checker of type nav2_controller::SimpleGoalChecker
+[controller_server-9] [INFO] [1791603574.320537802] [controller_server]: Controller Server has general_goal_checker  goal checkers available.
+[controller_server-9] [INFO] [1791603574.321759716] [controller_server]: Created controller : FollowPath of type nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController
+[controller_server-9] [INFO] [1791603574.326380725] [controller_server]: Controller Server has FollowPath  controllers available.
+[lifecycle_manager-16] [INFO] [1791603574.334606659] [lifecycle_manager_navigation]: [34m[1mConfiguring smoother_server[0m[0m
+[smoother_server-10] [INFO] [1791603574.334802059] [smoother_server]: Configuring smoother server
+[smoother_server-10] [INFO] [1791603574.345733706] [smoother_server]: Created smoother : simple_smoother of type nav2_smoother::SimpleSmoother
+[smoother_server-10] [INFO] [1791603574.345942314] [smoother_server]: Smoother Server has simple_smoother  smoothers available.
+[lifecycle_manager-16] [INFO] [1791603574.352758307] [lifecycle_manager_navigation]: [34m[1mConfiguring planner_server[0m[0m
+[planner_server-11] [INFO] [1791603574.352962871] [planner_server]: Configuring
+[planner_server-11] [INFO] [1791603574.352990032] [global_costmap.global_costmap]: Configuring
+[planner_server-11] [INFO] [1791603574.363079715] [global_costmap.global_costmap]: Using plugin "static_layer"
+[planner_server-11] [INFO] [1791603574.368800290] [global_costmap.global_costmap]: Subscribing to the map topic (/map) with transient local durability
+[planner_server-11] [INFO] [1791603574.370442663] [global_costmap.global_costmap]: Initialized plugin "static_layer"
+[planner_server-11] [INFO] [1791603574.370469760] [global_costmap.global_costmap]: Using plugin "obstacle_layer"
+[planner_server-11] [INFO] [1791603574.372549039] [global_costmap.global_costmap]: Subscribed to Topics: scan
+[planner_server-11] [INFO] [1791603574.379333307] [global_costmap.global_costmap]: Initialized plugin "obstacle_layer"
+[planner_server-11] [INFO] [1791603574.379387107] [global_costmap.global_costmap]: Using plugin "inflation_layer"
+[planner_server-11] [INFO] [1791603574.382605197] [global_costmap.global_costmap]: Initialized plugin "inflation_layer"
+[planner_server-11] [INFO] [1791603574.398548470] [global_costmap.global_costmap]: StaticLayer: Resizing costmap to 144 X 170 at 0.050000 m/pix
+[planner_server-11] [INFO] [1791603574.398775643] [planner_server]: Created global planner plugin GridBased of type nav2_navfn_planner/NavfnPlanner
+[planner_server-11] [INFO] [1791603574.398797678] [planner_server]: Configuring plugin GridBased of type NavfnPlanner
+[planner_server-11] [INFO] [1791603574.399028272] [planner_server]: Planner Server has GridBased  planners available.
+[lifecycle_manager-16] [INFO] [1791603574.411720409] [lifecycle_manager_navigation]: [34m[1mConfiguring behavior_server[0m[0m
+[behavior_server-12] [INFO] [1791603574.412065047] [behavior_server]: Configuring
+[behavior_server-12] [INFO] [1791603574.426502645] [behavior_server]: Creating behavior plugin backup of type nav2_behaviors/BackUp
+[behavior_server-12] [INFO] [1791603574.427600306] [behavior_server]: Configuring backup
+[behavior_server-12] [INFO] [1791603574.434986073] [behavior_server]: Creating behavior plugin spin of type nav2_behaviors/Spin
+[behavior_server-12] [INFO] [1791603574.435600328] [behavior_server]: Configuring spin
+[behavior_server-12] [INFO] [1791603574.440440037] [behavior_server]: Creating behavior plugin drive_on_heading of type nav2_behaviors/DriveOnHeading
+[behavior_server-12] [INFO] [1791603574.441421621] [behavior_server]: Configuring drive_on_heading
+[behavior_server-12] [INFO] [1791603574.449388235] [behavior_server]: Creating behavior plugin assisted_teleop of type nav2_behaviors/AssistedTeleop
+[behavior_server-12] [INFO] [1791603574.450890236] [behavior_server]: Configuring assisted_teleop
+[lifecycle_manager-16] [INFO] [1791603574.461761943] [lifecycle_manager_navigation]: [34m[1mConfiguring bt_navigator[0m[0m
+[bt_navigator-13] [INFO] [1791603574.462041760] [bt_navigator]: Configuring
+[lifecycle_manager-16] [INFO] [1791603574.548501254] [lifecycle_manager_navigation]: [34m[1mConfiguring waypoint_follower[0m[0m
+[waypoint_follower-14] [INFO] [1791603574.548746097] [waypoint_follower]: Configuring
+[waypoint_follower-14] [INFO] [1791603574.564667210] [waypoint_follower]: Created waypoint_task_executor : wait_at_waypoint of type nav2_waypoint_follower::WaitAtWaypoint
+[lifecycle_manager-16] [INFO] [1791603574.565579126] [lifecycle_manager_navigation]: [34m[1mConfiguring velocity_smoother[0m[0m
+[velocity_smoother-15] [INFO] [1791603574.565811880] [velocity_smoother]: Configuring velocity smoother
+[lifecycle_manager-16] [INFO] [1791603574.567765691] [lifecycle_manager_navigation]: [34m[1mActivating controller_server[0m[0m
+[controller_server-9] [INFO] [1791603574.567968060] [controller_server]: Activating
+[controller_server-9] [INFO] [1791603574.567996183] [local_costmap.local_costmap]: Activating
+[controller_server-9] [INFO] [1791603574.568006119] [local_costmap.local_costmap]: Checking transform
+[controller_server-9] [INFO] [1791603574.568077057] [local_costmap.local_costmap]: start
+[controller_server-9] [INFO] [1791603574.769157544] [controller_server]: Activating controller: FollowPath of type regulated_pure_pursuit_controller::RegulatedPurePursuitController
+[controller_server-9] [INFO] [1791603574.769197263] [controller_server]: Creating bond (controller_server) to lifecycle manager.
+[lifecycle_manager-16] [INFO] [1791603574.876756270] [lifecycle_manager_navigation]: Server controller_server connected with bond.
+[lifecycle_manager-16] [INFO] [1791603574.876831449] [lifecycle_manager_navigation]: [34m[1mActivating smoother_server[0m[0m
+[smoother_server-10] [INFO] [1791603574.877127077] [smoother_server]: Activating
+[smoother_server-10] [INFO] [1791603574.877160818] [smoother_server]: Creating bond (smoother_server) to lifecycle manager.
+[lifecycle_manager-16] [INFO] [1791603574.983657455] [lifecycle_manager_navigation]: Server smoother_server connected with bond.
+[lifecycle_manager-16] [INFO] [1791603574.983709198] [lifecycle_manager_navigation]: [34m[1mActivating planner_server[0m[0m
+[planner_server-11] [INFO] [1791603574.984485488] [planner_server]: Activating
+[planner_server-11] [INFO] [1791603574.984525431] [global_costmap.global_costmap]: Activating
+[planner_server-11] [INFO] [1791603574.984540403] [global_costmap.global_costmap]: Checking transform
+[planner_server-11] [INFO] [1791603574.984677726] [global_costmap.global_costmap]: start
+[INFO] [rviz2-17]: process started with pid [953051]
+[planner_server-11] [INFO] [1791603575.987871279] [planner_server]: Activating plugin GridBased of type NavfnPlanner
+[planner_server-11] [INFO] [1791603575.991068254] [planner_server]: Creating bond (planner_server) to lifecycle manager.
+[lifecycle_manager-16] [INFO] [1791603576.100421482] [lifecycle_manager_navigation]: Server planner_server connected with bond.
+[lifecycle_manager-16] [INFO] [1791603576.100455146] [lifecycle_manager_navigation]: [34m[1mActivating behavior_server[0m[0m
+[behavior_server-12] [INFO] [1791603576.100885069] [behavior_server]: Activating
+[behavior_server-12] [INFO] [1791603576.100906157] [behavior_server]: Activating backup
+[behavior_server-12] [INFO] [1791603576.100916477] [behavior_server]: Activating spin
+[behavior_server-12] [INFO] [1791603576.100923712] [behavior_server]: Activating drive_on_heading
+[behavior_server-12] [INFO] [1791603576.101620270] [behavior_server]: Activating assisted_teleop
+[behavior_server-12] [INFO] [1791603576.101642106] [behavior_server]: Creating bond (behavior_server) to lifecycle manager.
+[lifecycle_manager-16] [INFO] [1791603576.218872648] [lifecycle_manager_navigation]: Server behavior_server connected with bond.
+[lifecycle_manager-16] [INFO] [1791603576.218906340] [lifecycle_manager_navigation]: [34m[1mActivating bt_navigator[0m[0m
+[bt_navigator-13] [INFO] [1791603576.219124239] [bt_navigator]: Activating
+[bt_navigator-13] [INFO] [1791603576.322477347] [bt_navigator]: Creating bond (bt_navigator) to lifecycle manager.
+[lifecycle_manager-16] [INFO] [1791603576.431364558] [lifecycle_manager_navigation]: Server bt_navigator connected with bond.
+[lifecycle_manager-16] [INFO] [1791603576.431400123] [lifecycle_manager_navigation]: [34m[1mActivating waypoint_follower[0m[0m
+[waypoint_follower-14] [INFO] [1791603576.431828153] [waypoint_follower]: Activating
+[waypoint_follower-14] [INFO] [1791603576.431858642] [waypoint_follower]: Creating bond (waypoint_follower) to lifecycle manager.
+[rviz2-17] [INFO] [1791603576.533193680] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-17] [INFO] [1791603576.533261346] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[lifecycle_manager-16] [INFO] [1791603576.540483414] [lifecycle_manager_navigation]: Server waypoint_follower connected with bond.
+[lifecycle_manager-16] [INFO] [1791603576.540518989] [lifecycle_manager_navigation]: [34m[1mActivating velocity_smoother[0m[0m
+[velocity_smoother-15] [INFO] [1791603576.540751562] [velocity_smoother]: Activating
+[velocity_smoother-15] [INFO] [1791603576.540799734] [velocity_smoother]: Creating bond (velocity_smoother) to lifecycle manager.
+[lifecycle_manager-16] [INFO] [1791603576.652603119] [lifecycle_manager_navigation]: Server velocity_smoother connected with bond.
+[lifecycle_manager-16] [INFO] [1791603576.652657145] [lifecycle_manager_navigation]: [34m[1mManaged nodes are active[0m[0m
+[lifecycle_manager-16] [INFO] [1791603576.652667428] [lifecycle_manager_navigation]: [34m[1mCreating bond timer...[0m[0m
+[rviz2-17] [INFO] [1791603576.656089080] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-17] [INFO] [1791603576.715164297] [rviz]: Connected on namespace: /waypoint_plugin
+[amcl-7] [WARN] [1791603576.717848304] [amcl]: New subscription discovered on topic '/particle_cloud', requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY_QOS_POLICY
+[rviz2-17] [INFO] [1791603576.847253179] [rviz]: Sending request for interactive markers
+[rviz2-17] [INFO] [1791603576.886347969] [rviz2]: Trying to create a map of size 144 x 170 using 1 swatches
+[rviz2-17] [INFO] [1791603576.914903630] [rviz]: Service response received for initialization
+[rviz2-17] [INFO] [1791603577.975410913] [rviz2]: Trying to create a map of size 60 x 60 using 1 swatches
+[rviz2-17] [INFO] [1791603578.006147085] [rviz2]: Trying to create a map of size 144 x 170 using 1 swatches
+[rviz2-17] [INFO] [1791603586.953059979] [rviz]: Message Filter dropping message: frame 'laser_link' at time 10.451 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[controller_server-9] [INFO] [1791603637.105024856] [controller_server]: Received a goal, begin computing control effort.
+[controller_server-9] [INFO] [1791603637.105586132] [controller_server]: Reached the goal!
+[controller_server-9] [INFO] [1791603655.775289478] [controller_server]: Received a goal, begin computing control effort.
+[controller_server-9] [ERROR] [1791603690.175462248] [controller_server]: Failed to make progress
+[controller_server-9] [WARN] [1791603690.175549064] [controller_server]: [follow_path] [ActionServer] Aborting handle.
+[controller_server-9] [INFO] [1791603747.184140883] [controller_server]: Received a goal, begin computing control effort.
+[controller_server-9] [WARN] [1791603750.334391205] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603750.984434020] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603751.084420066] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603751.234389647] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603751.334414090] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603751.434395735] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603751.584423716] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603751.684404800] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603751.834420385] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603751.884379059] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603751.984494146] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603752.084419854] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603752.184409234] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603752.284374450] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603752.384404278] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603752.484409417] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603752.635144163] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603752.734500683] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603752.834412203] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603752.935376383] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603753.034405193] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603753.134433088] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603753.234418138] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603753.334428332] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603753.434491193] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603753.534410835] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603753.634437309] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603753.684584975] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603753.784372760] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603753.834418807] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603753.934553131] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603753.984368101] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.084386704] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.134391123] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.234420994] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.284375338] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.384403841] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.434423209] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.534415555] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.584363308] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.684381158] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.734396969] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.834478798] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.884415106] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603754.984390921] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603755.084448216] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603755.134843047] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603755.336275686] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603755.386779333] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603755.484514916] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603755.584414440] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603755.684410123] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603755.784401071] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603755.884421875] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603755.934780432] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603756.034654496] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603756.184637223] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603756.334379033] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603756.484423979] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603756.584435979] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603756.734406154] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603756.834477529] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603756.984432712] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603757.034365175] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603757.084389172] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603757.134456537] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603757.234387389] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603757.334363677] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603757.434409902] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603757.534364810] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603757.634446674] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603757.734534823] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603757.834478238] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603757.934867756] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.034755220] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.084978036] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.184590113] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.234414749] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.334381879] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.386871516] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.484440635] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.534392511] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.634421749] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.684447695] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.784531998] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.834389233] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603758.934388619] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603759.034384820] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603759.084443275] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603759.184510634] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603759.234410490] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603759.334406908] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603759.434470779] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603759.484432243] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603759.584397737] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603759.634370909] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603759.734371319] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603759.834400111] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603759.934465223] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603760.034412550] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603760.084388512] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603760.134366633] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603760.234402327] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603760.334395402] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603760.434377424] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603760.534365190] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603760.634402351] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603760.734365991] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603760.834372642] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603760.934399244] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603760.984734201] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603761.084461410] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603761.134452215] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603761.234464886] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603761.337279619] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603761.384461689] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603761.484425310] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603761.534428680] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603761.684456039] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603761.734466500] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603761.784455637] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603761.884431934] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603761.934517437] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603762.034457421] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603762.084453836] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603762.184438415] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603762.234440447] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603762.334552584] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603762.434475271] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603762.484455456] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603762.584501574] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603762.684436696] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603762.784435856] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603762.884448966] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603763.034477056] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603763.134402540] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603763.234416592] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603763.334435862] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603763.434683579] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603763.534418433] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603763.634425051] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603763.734434577] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603763.834476119] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603763.934459563] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603764.034461501] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603764.134472170] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603764.234423996] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603764.334427613] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603764.434445288] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603764.534443049] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603764.635553308] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603764.734421852] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603764.834541092] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603764.934425789] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603765.035166824] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603765.084407535] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603765.134428322] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603766.634444439] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603766.684464161] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603766.734422222] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603768.134492608] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603768.334525840] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603768.534900720] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603768.684411411] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603768.784514334] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603768.884420201] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603768.984410087] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603769.134457091] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603769.234426379] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603769.334458558] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603769.484445099] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603769.584444656] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603769.684432741] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603769.834449094] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603769.934422673] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603769.984422735] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603770.084451205] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603770.184419131] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603770.284431808] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603770.384446267] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603770.484416524] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603770.584432945] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603770.684402471] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603770.784435062] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603770.884452344] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603770.984394877] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603771.084400376] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603771.184418403] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603771.284384665] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603771.384556884] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603771.484416184] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603771.584380013] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603771.684379716] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603771.784448458] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603771.884405093] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603771.984433479] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603772.084415926] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603772.184368851] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603772.284381671] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603772.384374415] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603772.484400128] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603772.584376811] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603772.684398148] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603772.784390509] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603772.884384603] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603772.984418298] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603773.084384765] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603773.134505432] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603773.284425795] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603773.384373811] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603773.534428561] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603773.634425706] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603773.734452551] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603773.884374083] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603773.984373976] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603774.134400365] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603774.234415473] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603774.384459676] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603774.434411117] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603774.534408163] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603774.634407428] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603774.734421472] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603774.834412708] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603774.934469277] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603775.034409839] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603775.134392372] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603775.234445846] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603775.334446143] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603775.434444911] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603775.534437542] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603775.634428886] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603775.734445536] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603775.834398756] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603775.934410458] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603776.034456957] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603776.134443072] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603776.234388026] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603776.334401661] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603776.434381622] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603776.534412892] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603776.634448181] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603776.736231147] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603776.784402437] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603776.885341835] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603776.984435413] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603777.034396681] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603777.085201541] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603777.134394273] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603777.234569522] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603777.284413576] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603777.334381199] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603777.584409474] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603777.634373650] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [WARN] [1791603777.734372745] [controller_server]: RegulatedPurePursuitController detected collision ahead!
+[controller_server-9] [ERROR] [1791603780.434292147] [controller_server]: Failed to make progress
+[controller_server-9] [WARN] [1791603780.434368183] [controller_server]: [follow_path] [ActionServer] Aborting handle.
+[bt_navigator-13] [INFO] [1791603794.104036118] [bt_navigator]: Begin navigating from current location (2.91, 3.85) to (1.80, 4.00)
+[controller_server-9] [INFO] [1791603794.124525148] [controller_server]: Received a goal, begin computing control effort.
+[controller_server-9] [WARN] [1791603794.124578953] [controller_server]: No goal checker was specified in parameter 'current_goal_checker'. Server will use only plugin loaded general_goal_checker . This warning will appear once.
+[controller_server-9] [INFO] [1791603795.174762094] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603796.224691606] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603797.224664510] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603798.274672269] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603799.274824013] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603800.324692842] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603801.374694977] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603802.375293082] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603803.424666900] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603804.424666170] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603805.475156641] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603806.474672493] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603807.524699235] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603808.524674490] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603809.574754570] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603810.624689741] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603811.624664890] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603812.674665348] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603813.674876204] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603814.724686923] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603815.774668571] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603816.774693414] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603817.824657424] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603818.824662287] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603819.874664300] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603820.924664060] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603821.924663405] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603822.974919549] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603823.974687801] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603825.024672239] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603826.024663561] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603827.074694390] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603828.074887442] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603829.124670150] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603830.174681404] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603831.174667720] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603832.224693216] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603833.224664645] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603834.274691317] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603835.274665018] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603836.324693641] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603837.374731593] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603838.374664016] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603839.424662911] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603840.424662256] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603841.474737964] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603842.524673319] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603843.524668297] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603844.574668468] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603845.574687926] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603846.624663796] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603847.624664910] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603848.674664903] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603849.674662740] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603850.724693128] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603851.724764305] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603852.774693280] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603853.824950928] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603854.824692029] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603855.874665094] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603856.874662822] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603857.924662944] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603858.974768837] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603859.974836299] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603861.024662870] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603862.024662164] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603863.074694253] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603864.124671097] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603865.124708065] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603866.174876908] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603867.174832297] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603868.224687801] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603869.224663665] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603870.274687991] [controller_server]: Passing new path to controller.
+[controller_server-9] [INFO] [1791603871.324667235] [controller_server]: Passing new path to controller.
+[controller_server-9] [ERROR] [1791603871.724696301] [controller_server]: Failed to make progress
+[controller_server-9] [WARN] [1791603871.724768316] [controller_server]: [follow_path] [ActionServer] Aborting handle.
+[behavior_server-12] [INFO] [1791603871.744729394] [behavior_server]: Running backup
+[behavior_server-12] [INFO] [1791603871.744904807] [behavior_server]: DriveOnHeading: no acceleration or deceleration limits set
+[behavior_server-12] [INFO] [1791603873.845017279] [behavior_server]: backup completed successfully
+[bt_navigator-13] [WARN] [1791603873.874326907] [bt_navigator_navigate_to_pose_rclcpp_node]: Avoidance turn skipped: scan invalid or obstacle not classified (6)
+[bt_navigator-13] [WARN] [1791603873.884172342] [bt_navigator]: [navigate_to_pose] [ActionServer] Aborting handle.
+[bt_navigator-13] [ERROR] [1791603873.884389817] [bt_navigator]: Goal failed
+[gzclient-2] [0m[1;33m[Wrn] [Event.cc:61] [0m[1;33mWarning: Deleting a connection right after creation. [0m[1;33mMake sure to save the ConnectionPtr from a Connect call
+[rviz2-17] [INFO] [1791603884.892731617] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[rviz2-17] [WARN] [1791603884.921186630] [rviz]: Server not available while running, resetting
+[INFO] [gzclient-2]: process has finished cleanly [pid 951787]
+[gzclient-2] [0m[1;32m[0m[1;32m[0m[1;36m[0m[1;32m[0m
+[gzclient-2] [0m[1;33m[0m[1;31m[0m
+[INFO] [rviz2-17]: process has finished cleanly [pid 953051]
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [lifecycle_manager-16]: sending signal 'SIGINT' to process[lifecycle_manager-16]
+[INFO] [velocity_smoother-15]: sending signal 'SIGINT' to process[velocity_smoother-15]
+[INFO] [waypoint_follower-14]: sending signal 'SIGINT' to process[waypoint_follower-14]
+[INFO] [bt_navigator-13]: sending signal 'SIGINT' to process[bt_navigator-13]
+[INFO] [behavior_server-12]: sending signal 'SIGINT' to process[behavior_server-12]
+[INFO] [planner_server-11]: sending signal 'SIGINT' to process[planner_server-11]
+[INFO] [smoother_server-10]: sending signal 'SIGINT' to process[smoother_server-10]
+[INFO] [controller_server-9]: sending signal 'SIGINT' to process[controller_server-9]
+[INFO] [lifecycle_manager-8]: sending signal 'SIGINT' to process[lifecycle_manager-8]
+[INFO] [amcl-7]: sending signal 'SIGINT' to process[amcl-7]
+[INFO] [map_server-6]: sending signal 'SIGINT' to process[map_server-6]
+[INFO] [cmd_vel_guard-4]: sending signal 'SIGINT' to process[cmd_vel_guard-4]
+[INFO] [robot_state_publisher-3]: sending signal 'SIGINT' to process[robot_state_publisher-3]
+[INFO] [gzserver-1]: sending signal 'SIGINT' to process[gzserver-1]
+[lifecycle_manager-16] [INFO] [1791603885.305714281] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[lifecycle_manager-16] [INFO] [1791603885.305782700] [lifecycle_manager_navigation]: Running Nav2 LifecycleManager rcl preshutdown (lifecycle_manager_navigation)
+[lifecycle_manager-16] [INFO] [1791603885.305811518] [lifecycle_manager_navigation]: [34m[1mTerminating bond timer...[0m[0m
+[velocity_smoother-15] [INFO] [1791603885.311134816] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[velocity_smoother-15] [INFO] [1791603885.311213388] [velocity_smoother]: Running Nav2 LifecycleNode rcl preshutdown (velocity_smoother)
+[velocity_smoother-15] [INFO] [1791603885.311291381] [velocity_smoother]: Deactivating
+[velocity_smoother-15] [INFO] [1791603885.311311426] [velocity_smoother]: Destroying bond (velocity_smoother) to lifecycle manager.
+[waypoint_follower-14] [INFO] [1791603885.317325774] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[waypoint_follower-14] [INFO] [1791603885.317394590] [waypoint_follower]: Running Nav2 LifecycleNode rcl preshutdown (waypoint_follower)
+[waypoint_follower-14] [INFO] [1791603885.317443647] [waypoint_follower]: Deactivating
+[waypoint_follower-14] [INFO] [1791603885.317459632] [waypoint_follower]: Destroying bond (waypoint_follower) to lifecycle manager.
+[bt_navigator-13] [INFO] [1791603885.318144705] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[bt_navigator-13] [INFO] [1791603885.318187431] [bt_navigator]: Running Nav2 LifecycleNode rcl preshutdown (bt_navigator)
+[bt_navigator-13] [INFO] [1791603885.318230686] [bt_navigator]: Deactivating
+[bt_navigator-13] [INFO] [1791603885.318248370] [bt_navigator]: Destroying bond (bt_navigator) to lifecycle manager.
+[velocity_smoother-15] [INFO] [1791603885.322272333] [velocity_smoother]: Cleaning up
+[velocity_smoother-15] [INFO] [1791603885.322309082] [velocity_smoother]: Destroying bond (velocity_smoother) to lifecycle manager.
+[behavior_server-12] [INFO] [1791603885.323317827] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[behavior_server-12] [INFO] [1791603885.323356568] [behavior_server]: Running Nav2 LifecycleNode rcl preshutdown (behavior_server)
+[behavior_server-12] [INFO] [1791603885.323393670] [behavior_server]: Deactivating
+[behavior_server-12] [INFO] [1791603885.323414271] [behavior_server]: Destroying bond (behavior_server) to lifecycle manager.
+[planner_server-11] [INFO] [1791603885.327192008] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[planner_server-11] [INFO] [1791603885.327249446] [planner_server]: Running Nav2 LifecycleNode rcl preshutdown (planner_server)
+[planner_server-11] [INFO] [1791603885.327296439] [planner_server]: Deactivating
+[planner_server-11] [INFO] [1791603885.327319971] [global_costmap.global_costmap]: Deactivating
+[waypoint_follower-14] [INFO] [1791603885.327786068] [waypoint_follower]: Cleaning up
+[bt_navigator-13] [INFO] [1791603885.328522822] [bt_navigator]: Cleaning up
+[velocity_smoother-15] [INFO] [1791603885.333529295] [velocity_smoother]: Destroying
+[behavior_server-12] [INFO] [1791603885.333599554] [behavior_server]: Cleaning up
+[smoother_server-10] [INFO] [1791603885.339466278] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[smoother_server-10] [INFO] [1791603885.339706298] [smoother_server]: Running Nav2 LifecycleNode rcl preshutdown (smoother_server)
+[smoother_server-10] [INFO] [1791603885.339941013] [smoother_server]: Deactivating
+[smoother_server-10] [INFO] [1791603885.340068577] [smoother_server]: Destroying bond (smoother_server) to lifecycle manager.
+[controller_server-9] [INFO] [1791603885.349838635] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[controller_server-9] [INFO] [1791603885.349890335] [controller_server]: Running Nav2 LifecycleNode rcl preshutdown (controller_server)
+[controller_server-9] [INFO] [1791603885.349947557] [controller_server]: Deactivating
+[controller_server-9] [INFO] [1791603885.349962929] [controller_server]: Deactivating controller: FollowPath of type regulated_pure_pursuit_controller::RegulatedPurePursuitController
+[controller_server-9] [INFO] [1791603885.349978899] [local_costmap.local_costmap]: Deactivating
+[smoother_server-10] [INFO] [1791603885.351860287] [smoother_server]: Cleaning up
+[lifecycle_manager-8] [INFO] [1791603885.353743806] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[lifecycle_manager-8] [INFO] [1791603885.353829803] [lifecycle_manager_localization]: Running Nav2 LifecycleManager rcl preshutdown (lifecycle_manager_localization)
+[lifecycle_manager-8] [INFO] [1791603885.353861062] [lifecycle_manager_localization]: [34m[1mTerminating bond timer...[0m[0m
+[waypoint_follower-14] [INFO] [1791603885.354280670] [waypoint_follower]: Destroying bond (waypoint_follower) to lifecycle manager.
+[amcl-7] [INFO] [1791603885.355665344] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[amcl-7] [INFO] [1791603885.355737269] [amcl]: Running Nav2 LifecycleNode rcl preshutdown (amcl)
+[amcl-7] [INFO] [1791603885.355783140] [amcl]: Deactivating
+[amcl-7] [INFO] [1791603885.355797402] [amcl]: Destroying bond (amcl) to lifecycle manager.
+[waypoint_follower-14] [INFO] [1791603885.357581717] [waypoint_follower]: Destroying
+[map_server-6] [INFO] [1791603885.357981229] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[map_server-6] [INFO] [1791603885.358055931] [map_server]: Running Nav2 LifecycleNode rcl preshutdown (map_server)
+[map_server-6] [INFO] [1791603885.358098575] [map_server]: Deactivating
+[map_server-6] [INFO] [1791603885.358118971] [map_server]: Destroying bond (map_server) to lifecycle manager.
+[robot_state_publisher-3] [INFO] [1791603885.362556931] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[amcl-7] [INFO] [1791603885.365992504] [amcl]: Cleaning up
+[controller_server-9] [INFO] [1791603885.368369844] [controller_server]: Destroying bond (controller_server) to lifecycle manager.
+[map_server-6] [INFO] [1791603885.370066569] [map_server]: Cleaning up
+[map_server-6] [INFO] [1791603885.370103233] [map_server]: Destroying bond (map_server) to lifecycle manager.
+[behavior_server-12] [INFO] [1791603885.378592188] [behavior_server]: Destroying bond (behavior_server) to lifecycle manager.
+[controller_server-9] [INFO] [1791603885.378864074] [controller_server]: Cleaning up
+[controller_server-9] [INFO] [1791603885.378890095] [controller_server]: Cleaning up controller: FollowPath of type regulated_pure_pursuit_controller::RegulatedPurePursuitController
+[controller_server-9] [INFO] [1791603885.378926809] [local_costmap.local_costmap]: Cleaning up
+[smoother_server-10] [INFO] [1791603885.379543686] [smoother_server]: Destroying bond (smoother_server) to lifecycle manager.
+[map_server-6] [INFO] [1791603885.391515500] [map_server]: Destroying
+[amcl-7] [INFO] [1791603885.393679951] [amcl]: Destroying bond (amcl) to lifecycle manager.
+[smoother_server-10] [INFO] [1791603885.394221461] [smoother_server]: Destroying
+[lifecycle_manager-8] [INFO] [1791603885.399340269] [lifecycle_manager_localization]: Destroying lifecycle_manager_localization
+[amcl-7] [INFO] [1791603885.399703224] [amcl]: Destroying
+[behavior_server-12] [INFO] [1791603885.413500545] [behavior_server]: Destroying
+[lifecycle_manager-16] [INFO] [1791603885.417891536] [lifecycle_manager_navigation]: Destroying lifecycle_manager_navigation
+[controller_server-9] [INFO] [1791603885.436898119] [controller_server]: Destroying bond (controller_server) to lifecycle manager.
+[controller_server-9] [INFO] [1791603885.441134164] [local_costmap.local_costmap]: Destroying
+[controller_server-9] [INFO] [1791603885.450386769] [controller_server]: Destroying
+[cmd_vel_guard-4] Traceback (most recent call last):
+[cmd_vel_guard-4]   File "/home/ubuntu/ai_robot_ws/install/ai_robot_sim/lib/ai_robot_sim/cmd_vel_guard", line 33, in <module>
+[cmd_vel_guard-4]     sys.exit(load_entry_point('ai-robot-sim==0.1.0', 'console_scripts', 'cmd_vel_guard')())
+[cmd_vel_guard-4]   File "/home/ubuntu/ai_robot_ws/install/ai_robot_sim/lib/python3.10/site-packages/ai_robot_sim/cmd_vel_guard.py", line 75, in main
+[bt_navigator-13] [INFO] [1791603885.473537102] [bt_navigator]: Completed Cleaning up
+[bt_navigator-13] [INFO] [1791603885.473596371] [bt_navigator]: Destroying bond (bt_navigator) to lifecycle manager.
+[cmd_vel_guard-4]     rclpy.spin(node)
+[cmd_vel_guard-4]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 229, in spin
+[cmd_vel_guard-4]     executor.spin_once()
+[cmd_vel_guard-4]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 808, in spin_once
+[cmd_vel_guard-4]     self._spin_once_impl(timeout_sec)
+[cmd_vel_guard-4]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 805, in _spin_once_impl
+[cmd_vel_guard-4]     raise handler.exception()
+[cmd_vel_guard-4]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/task.py", line 272, in _execute_coroutine_step
+[cmd_vel_guard-4]     result = coro.send(None)
+[cmd_vel_guard-4]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 478, in handler
+[cmd_vel_guard-4]     arg = take_from_wait_list(entity)
+[cmd_vel_guard-4]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 400, in _take_subscription
+[cmd_vel_guard-4]     msg_info = sub.handle.take_message(sub.msg_type, sub.raw)
+[cmd_vel_guard-4] RuntimeError: Unable to convert call argument to Python object (compile in debug mode for details)
+[bt_navigator-13] [INFO] [1791603885.479778783] [bt_navigator]: Destroying
+[INFO] [velocity_smoother-15]: process has finished cleanly [pid 952779]
+[INFO] [robot_state_publisher-3]: process has finished cleanly [pid 951790]
+[INFO] [waypoint_follower-14]: process has finished cleanly [pid 952777]
+[INFO] [map_server-6]: process has finished cleanly [pid 951800]
+[INFO] [smoother_server-10]: process has finished cleanly [pid 952769]
+[INFO] [amcl-7]: process has finished cleanly [pid 951802]
+[INFO] [lifecycle_manager-8]: process has finished cleanly [pid 951806]
+[INFO] [lifecycle_manager-16]: process has finished cleanly [pid 952781]
+[INFO] [behavior_server-12]: process has finished cleanly [pid 952773]
+[INFO] [controller_server-9]: process has finished cleanly [pid 952767]
+[INFO] [bt_navigator-13]: process has finished cleanly [pid 952775]
+[ERROR] [cmd_vel_guard-4]: process has died [pid 951796, exit code 1, cmd '/home/ubuntu/ai_robot_ws/install/ai_robot_sim/lib/ai_robot_sim/cmd_vel_guard --ros-args --params-file /home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/config/sim_base.yaml --params-file /tmp/launch_params_nao7y0ar'].
+[INFO] [gzserver-1]: process has finished cleanly [pid 951785]
+[gzserver-1] [0m[1;32m[0m[1;32m[0m[1;36m[0m[1;32m[0m
+[gzserver-1] [1;33m[0m[1;31m[0m
+[planner_server-11] [INFO] [1791603885.984947795] [planner_server]: Deactivating plugin GridBased of type NavfnPlanner
+[planner_server-11] [INFO] [1791603885.985020733] [planner_server]: Destroying bond (planner_server) to lifecycle manager.
+[planner_server-11] [INFO] [1791603885.995250357] [planner_server]: Cleaning up
+[planner_server-11] [INFO] [1791603885.998613396] [global_costmap.global_costmap]: Cleaning up
+[planner_server-11] [INFO] [1791603886.000402587] [planner_server]: Cleaning up plugin GridBased of type NavfnPlanner
+[planner_server-11] [INFO] [1791603886.000573468] [planner_server]: Destroying plugin GridBased of type NavfnPlanner
+[planner_server-11] [INFO] [1791603886.002728575] [planner_server]: Destroying bond (planner_server) to lifecycle manager.
+[planner_server-11] [INFO] [1791603886.004219595] [global_costmap.global_costmap]: Destroying
+[planner_server-11] [INFO] [1791603886.006242762] [planner_server]: Destroying
+[INFO] [planner_server-11]: process has finished cleanly [pid 952771]
+No AU9 manual Nav2 processes found.

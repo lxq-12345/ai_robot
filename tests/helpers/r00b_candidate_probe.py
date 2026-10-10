@@ -13,7 +13,7 @@ from rclpy.time import Time
 from nav2_msgs.action import ComputePathThroughPoses, FollowPath
 from nav2_simple_commander.robot_navigator import BasicNavigator
 from nav_msgs.msg import Path as PathMessage
-from geometry_msgs.msg import PoseStamped, Twist
+from geometry_msgs.msg import PointStamped, PoseStamped, Twist
 from tf2_ros import Buffer, TransformListener
 
 
@@ -38,6 +38,17 @@ def main():
     active = None
     clients = []
     pose_log = (args.output / 'trajectory.jsonl').open('w')
+    diagnostic_log = (args.output / 'controller_diagnostics.jsonl').open('w')
+    def diagnostic(topic, message):
+        item = {'t': time.monotonic(), 'topic': topic}
+        if isinstance(message, Twist):
+            item.update(v=message.linear.x, w=message.angular.z)
+        else:
+            item.update(frame=message.header.frame_id, x=message.point.x,
+                        y=message.point.y)
+        diagnostic_log.write(json.dumps(item)+'\n')
+    n.create_subscription(PointStamped, '/lookahead_point', lambda m: diagnostic('/lookahead_point', m), 10)
+    n.create_subscription(Twist, '/cmd_vel_raw', lambda m: diagnostic('/cmd_vel_raw', m), 10)
     def event(name, **detail):
         item = {'event': name, 't': time.monotonic(), **detail}
         data['events'].append(item)
@@ -98,9 +109,9 @@ def main():
                 xy=[(2.2,4.0),(2.6,4.0)]
             elif args.scenario=='turn':xy=[(2.6,4.8),(2.6,5.5 if args.route=='A' else 4.0)]
             elif args.scenario=='wall':xy=[(3.5,5.0),(4.2,5.0)]
-            elif args.scenario=='reverse':xy=[(2.2,4.0),(1.8,4.0)]
+            elif args.scenario=='reverse':xy=[(2.2,4.0),(2.6,4.0)]
             else:xy=[(2.2,4.0),(-20.0,-20.0)]
-            goals=[goal(x,y,math.pi/2 if args.scenario=='turn' else 0) for x,y in xy]
+            goals=[goal(x,y,math.pi/2 if args.scenario=='turn' else (math.pi if args.scenario=='reverse' and i==len(xy)-1 else 0)) for i,(x,y) in enumerate(xy)]
             if args.gui:
                 from r00b_rviz_input import RvizInput
                 gui=RvizInput(Path(__file__).resolve().parents[2])
@@ -227,6 +238,7 @@ def main():
         data['waypoint_messages']=len(messages)
         data['trace_samples']=len(trace)
         pose_log.close()
+        diagnostic_log.close()
         for c in clients:c.destroy()
         if nav:nav.destroy_node()
         n.destroy_node();rclpy.shutdown()

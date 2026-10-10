@@ -8,10 +8,6 @@ Panels:
         - /Navigation1
       Splitter Ratio: 0.55
     Tree Height: 620
-  - Class: rviz_common/Tool Properties
-    Name: Tool Properties
-  - Class: rviz_common/Views
-    Name: Views
   - Class: nav2_rviz_plugins/Navigation 2
     Name: Navigation 2
 Visualization Manager:
@@ -123,6 +119,14 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Best Effort
         Value: /particle_cloud
+      Value: true
+    - Class: rviz_default_plugins/InteractiveMarkers
+      Enable Transparency: true
+      Name: Waypoint Interactive Markers
+      Interactive Markers Namespace: /waypoint_plugin
+      Show Axes: true
+      Show Descriptions: true
+      Show Visual Aids: true
       Value: true
     - Class: rviz_common/Group
       Displays:
@@ -246,6 +250,20 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /initialpose
     - Class: nav2_rviz_plugins/GoalTool
+    - Class: waypoint_rviz2_plugin/WaypointTool
+      WaypointTool:
+        default_height: 0
+        frame_id: map
+        topic: /waypoint_path
+    - Class: rviz_default_plugins/Interact
+      Hide Inactive Objects: true
+    - Class: rviz_default_plugins/SetGoal
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: goal_pose
   Transformation:
     Current:
       Class: rviz_default_plugins/TF
@@ -272,8 +290,6 @@ Window Geometry:
   Height: 900
   Hide Left Dock: false
   Hide Right Dock: false
-  Navigation 2:
-    collapsed: false
   Width: 1500
   X: 40
   Y: 40

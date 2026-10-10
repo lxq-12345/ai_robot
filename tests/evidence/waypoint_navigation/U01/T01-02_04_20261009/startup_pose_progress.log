@@ -1,0 +1,180 @@
+The daemon is not running
+Starting the AU9 manual Nav2 test in Gazebo and RViz2.
+Wait for the map and laser scan, then use 'Nav2 Goal' in RViz2.
+Safe first targets: (2.20, 4.00), then (2.60, 4.00).
+Press Ctrl+C in this terminal to stop the complete test environment.
+[INFO] [launch]: All log files can be found below /home/ubuntu/.ros/log/2026-10-09-20-49-28-939776-ubuntu-1014591
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gzserver-1]: process started with pid [1014673]
+[INFO] [gzclient-2]: process started with pid [1014675]
+[INFO] [robot_state_publisher-3]: process started with pid [1014677]
+[INFO] [cmd_vel_guard-4]: process started with pid [1014679]
+[INFO] [spawn_entity.py-5]: process started with pid [1014681]
+[INFO] [map_server-6]: process started with pid [1014683]
+[INFO] [amcl-7]: process started with pid [1014685]
+[INFO] [lifecycle_manager-8]: process started with pid [1014689]
+[amcl-7] [INFO] [1791604169.794122277] [amcl]: 
+[amcl-7] 	amcl lifecycle node launched. 
+[amcl-7] 	Waiting on external lifecycle transitions to activate
+[amcl-7] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[amcl-7] [INFO] [1791604169.794501928] [amcl]: Creating
+[map_server-6] [INFO] [1791604169.809282345] [map_server]: 
+[map_server-6] 	map_server lifecycle node launched. 
+[map_server-6] 	Waiting on external lifecycle transitions to activate
+[map_server-6] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[map_server-6] [INFO] [1791604169.809375442] [map_server]: Creating
+[robot_state_publisher-3] [INFO] [1791604169.817110372] [robot_state_publisher]: got segment base_footprint
+[robot_state_publisher-3] [INFO] [1791604169.817226290] [robot_state_publisher]: got segment base_link
+[robot_state_publisher-3] [INFO] [1791604169.817235720] [robot_state_publisher]: got segment camera_left_link
+[robot_state_publisher-3] [INFO] [1791604169.817240868] [robot_state_publisher]: got segment camera_left_optical_frame
+[robot_state_publisher-3] [INFO] [1791604169.817246091] [robot_state_publisher]: got segment camera_link
+[robot_state_publisher-3] [INFO] [1791604169.817250760] [robot_state_publisher]: got segment camera_right_link
+[robot_state_publisher-3] [INFO] [1791604169.817255266] [robot_state_publisher]: got segment camera_right_optical_frame
+[robot_state_publisher-3] [INFO] [1791604169.817260460] [robot_state_publisher]: got segment equipment_box
+[robot_state_publisher-3] [INFO] [1791604169.817265078] [robot_state_publisher]: got segment front_bumper_bar
+[robot_state_publisher-3] [INFO] [1791604169.817269907] [robot_state_publisher]: got segment front_bumper_left_bracket
+[robot_state_publisher-3] [INFO] [1791604169.817274456] [robot_state_publisher]: got segment front_bumper_right_bracket
+[robot_state_publisher-3] [INFO] [1791604169.817278887] [robot_state_publisher]: got segment imu_link
+[robot_state_publisher-3] [INFO] [1791604169.817283435] [robot_state_publisher]: got segment laser_link
+[robot_state_publisher-3] [INFO] [1791604169.817287845] [robot_state_publisher]: got segment left_front_wheel
+[robot_state_publisher-3] [INFO] [1791604169.817292333] [robot_state_publisher]: got segment left_front_wheel_hub
+[robot_state_publisher-3] [INFO] [1791604169.817296883] [robot_state_publisher]: got segment left_rear_wheel
+[robot_state_publisher-3] [INFO] [1791604169.817301388] [robot_state_publisher]: got segment left_rear_wheel_hub
+[robot_state_publisher-3] [INFO] [1791604169.817305950] [robot_state_publisher]: got segment lidar_housing
+[robot_state_publisher-3] [INFO] [1791604169.817310549] [robot_state_publisher]: got segment rear_bumper_bar
+[robot_state_publisher-3] [INFO] [1791604169.817314976] [robot_state_publisher]: got segment rear_bumper_left_bracket
+[robot_state_publisher-3] [INFO] [1791604169.817319656] [robot_state_publisher]: got segment rear_bumper_right_bracket
+[robot_state_publisher-3] [INFO] [1791604169.817324062] [robot_state_publisher]: got segment right_front_wheel
+[robot_state_publisher-3] [INFO] [1791604169.817328549] [robot_state_publisher]: got segment right_front_wheel_hub
+[robot_state_publisher-3] [INFO] [1791604169.817333552] [robot_state_publisher]: got segment right_rear_wheel
+[robot_state_publisher-3] [INFO] [1791604169.817338128] [robot_state_publisher]: got segment right_rear_wheel_hub
+[robot_state_publisher-3] [INFO] [1791604169.817342576] [robot_state_publisher]: got segment stereo_housing
+[robot_state_publisher-3] [INFO] [1791604169.817347061] [robot_state_publisher]: got segment stereo_mount
+[robot_state_publisher-3] [INFO] [1791604169.817351490] [robot_state_publisher]: got segment top_deck
+[lifecycle_manager-8] [INFO] [1791604169.820986237] [lifecycle_manager_localization]: Creating
+[lifecycle_manager-8] [INFO] [1791604169.824355641] [lifecycle_manager_localization]: [34m[1mCreating and initializing lifecycle service clients[0m[0m
+[lifecycle_manager-8] [INFO] [1791604169.878347527] [lifecycle_manager_localization]: [34m[1mStarting managed nodes bringup...[0m[0m
+[lifecycle_manager-8] [INFO] [1791604169.878390783] [lifecycle_manager_localization]: [34m[1mConfiguring map_server[0m[0m
+[map_server-6] [INFO] [1791604169.879525510] [map_server]: Configuring
+[map_server-6] [INFO] [1791604169.879583595] [map_io]: Loading yaml file: /home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/maps/apartment_v1.3_nav.yaml
+[map_server-6] [INFO] [1791604169.879784336] [map_io]: resolution: 0.05
+[map_server-6] [INFO] [1791604169.879793211] [map_io]: origin[0]: -0.5
+[map_server-6] [INFO] [1791604169.879797252] [map_io]: origin[1]: -0.5
+[map_server-6] [INFO] [1791604169.879801007] [map_io]: origin[2]: 0
+[map_server-6] [INFO] [1791604169.879804894] [map_io]: free_thresh: 0.25
+[map_server-6] [INFO] [1791604169.879808754] [map_io]: occupied_thresh: 0.65
+[map_server-6] [INFO] [1791604169.879813223] [map_io]: mode: trinary
+[map_server-6] [INFO] [1791604169.879824900] [map_io]: negate: 0
+[map_server-6] [INFO] [1791604169.880011839] [map_io]: Loading image_file: /home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/maps/apartment_v1.3_nav.pgm
+[map_server-6] [INFO] [1791604169.883858307] [map_io]: Read map /home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/maps/apartment_v1.3_nav.pgm: 144 X 170 map @ 0.05 m/cell
+[lifecycle_manager-8] [INFO] [1791604169.892895119] [lifecycle_manager_localization]: [34m[1mConfiguring amcl[0m[0m
+[amcl-7] [INFO] [1791604169.893054811] [amcl]: Configuring
+[amcl-7] [INFO] [1791604169.893118910] [amcl]: initTransforms
+[amcl-7] [INFO] [1791604169.901155607] [amcl]: initPubSub
+[amcl-7] [INFO] [1791604169.907279491] [amcl]: Subscribed to map topic.
+[lifecycle_manager-8] [INFO] [1791604169.912823348] [lifecycle_manager_localization]: [34m[1mActivating map_server[0m[0m
+[map_server-6] [INFO] [1791604169.913055983] [map_server]: Activating
+[map_server-6] [INFO] [1791604169.913780967] [map_server]: Creating bond (map_server) to lifecycle manager.
+[amcl-7] [INFO] [1791604169.914928818] [amcl]: Received a 144 X 170 map @ 0.050 m/pix
+[gzclient-2] Gazebo multi-robot simulator, version 11.10.2
+[gzclient-2] Copyright (C) 2012 Open Source Robotics Foundation.
+[gzclient-2] Released under the Apache 2 License.
+[gzclient-2] http://gazebosim.org
+[gzclient-2] 
+[lifecycle_manager-8] [INFO] [1791604170.021421381] [lifecycle_manager_localization]: Server map_server connected with bond.
+[lifecycle_manager-8] [INFO] [1791604170.022889898] [lifecycle_manager_localization]: [34m[1mActivating amcl[0m[0m
+[amcl-7] [INFO] [1791604170.023125663] [amcl]: Activating
+[amcl-7] [INFO] [1791604170.023161265] [amcl]: initialPoseReceived
+[amcl-7] [INFO] [1791604170.023225902] [amcl]: Setting pose (0.000000): 1.800 4.000 0.000
+[amcl-7] [INFO] [1791604170.023344568] [amcl]: Creating bond (amcl) to lifecycle manager.
+[gzserver-1] Gazebo multi-robot simulator, version 11.10.2
+[gzserver-1] Copyright (C) 2012 Open Source Robotics Foundation.
+[gzserver-1] Released under the Apache 2 License.
+[gzserver-1] http://gazebosim.org
+[gzserver-1] 
+[lifecycle_manager-8] [INFO] [1791604170.130351697] [lifecycle_manager_localization]: Server amcl connected with bond.
+[lifecycle_manager-8] [INFO] [1791604170.130381962] [lifecycle_manager_localization]: [34m[1mManaged nodes are active[0m[0m
+[lifecycle_manager-8] [INFO] [1791604170.130390143] [lifecycle_manager_localization]: [34m[1mCreating bond timer...[0m[0m
+[spawn_entity.py-5] [INFO] [1791604170.220460635] [spawn_entity]: Spawn Entity started
+[spawn_entity.py-5] [INFO] [1791604170.220865834] [spawn_entity]: Loading entity XML from file /home/ubuntu/ai_robot_ws/install/ai_robot_description/share/ai_robot_description/models/small_yellow_car_v1.2.sdf
+[spawn_entity.py-5] [INFO] [1791604170.221957852] [spawn_entity]: Waiting for service /spawn_entity, timeout = 30
+[spawn_entity.py-5] [INFO] [1791604170.222255315] [spawn_entity]: Waiting for service /spawn_entity
+[gzserver-1] [1;33m[Wrn] [gazebo_ros_init.cpp:178] [0m[1;33m
+[gzserver-1] #     # ####### ####### ###  #####  #######
+[gzserver-1] ##    # #     #    #     #  #     # #
+[gzserver-1] # #   # #     #    #     #  #       #
+[gzserver-1] #  #  # #     #    #     #  #       #####
+[gzserver-1] #   # # #     #    #     #  #       #
+[gzserver-1] #    ## #     #    #     #  #     # #
+[gzserver-1] #     # #######    #    ###  #####  #######
+[gzserver-1] 
+[gzserver-1] This version of Gazebo, now called Gazebo classic, reaches end-of-life
+[gzserver-1] in January 2025. Users are highly encouraged to migrate to the new Gazebo
+[gzserver-1] using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration?utm_source=gazebo_ros_pkgs&utm_medium=cli)
+[gzserver-1] 
+[gzserver-1] [0m[1;33m
+[spawn_entity.py-5] [INFO] [1791604171.226664222] [spawn_entity]: Calling service /spawn_entity
+[gzserver-1] [1;32m[Msg] [0m[1;32mWaiting for master.[0m[1;32m
+[gzserver-1] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mConnected to gazebo master @ [0m[1;32mhttp://127.0.0.1:11345[0m[1;32m
+[gzserver-1] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mPublicized address: [0m[1;32m192.168.1.98[0m[1;32m
+[gzserver-1] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mLoading world file [[0m[1;32m/home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/worlds/apartment_v1.3.world[0m[1;32m][0m[1;32m
+[gzserver-1] [0m[1;33m[0m[1;33m[0m[1;33m[Wrn] [Event.cc:61] [0m[1;33mWarning: Deleting a connection right after creation. [0m[1;33mMake sure to save the ConnectionPtr from a Connect call
+[gzserver-1] [0m[INFO] [1791604171.993430792] [ai_robot_camera_left_driver]: Publishing camera info to [/camera/camera_info]
+[gzserver-1] [INFO] [1791604172.003623974] [ai_robot_camera_right_driver]: Publishing camera info to [/camera/right/camera_info]
+[spawn_entity.py-5] [INFO] [1791604172.115787883] [spawn_entity]: Spawn status: SpawnEntity: Successfully spawned entity [ai_robot]
+[gzserver-1] [INFO] [1791604172.232444202] [ai_robot_diff_drive]: Wheel pair 1 separation set to [0.420000m]
+[gzserver-1] [INFO] [1791604172.232483284] [ai_robot_diff_drive]: Wheel pair 2 separation set to [0.420000m]
+[gzserver-1] [INFO] [1791604172.232493566] [ai_robot_diff_drive]: Wheel pair 1 diameter set to [0.150000m]
+[gzserver-1] [INFO] [1791604172.232502026] [ai_robot_diff_drive]: Wheel pair 2 diameter set to [0.150000m]
+[gzserver-1] [INFO] [1791604172.233640395] [ai_robot_diff_drive]: Subscribed to [/cmd_vel_safe]
+[gzserver-1] [INFO] [1791604172.236009967] [ai_robot_diff_drive]: Advertise odometry on [/odom]
+[gzserver-1] [INFO] [1791604172.238846540] [ai_robot_diff_drive]: Publishing odom transforms between [odom] and [base_footprint]
+[gzserver-1] [INFO] [1791604172.252084331] [ai_robot_joint_states]: Going to publish joint [left_front_wheel_joint]
+[gzserver-1] [INFO] [1791604172.252132456] [ai_robot_joint_states]: Going to publish joint [left_rear_wheel_joint]
+[gzserver-1] [INFO] [1791604172.252141275] [ai_robot_joint_states]: Going to publish joint [right_front_wheel_joint]
+[gzserver-1] [INFO] [1791604172.252147882] [ai_robot_joint_states]: Going to publish joint [right_rear_wheel_joint]
+[gzclient-2] [1;32m[Msg] [0m[1;32mWaiting for master.[0m[1;32m
+[gzclient-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mConnected to gazebo master @ [0m[1;32mhttp://127.0.0.1:11345[0m[1;32m
+[gzclient-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mPublicized address: [0m[1;32m192.168.1.98[0m[1;32m
+[gzclient-2] [1;33m[Wrn] [Event.cc:61] [0m[1;33mWarning: Deleting a connection right after creation. [0m[1;33mMake sure to save the ConnectionPtr from a Connect call
+[INFO] [spawn_entity.py-5]: process has finished cleanly [pid 1014681]
+[amcl-7] [INFO] [1791604172.356585172] [amcl]: createLaserObject
+[gzclient-2] [0m[1;33m[Wrn] [Event.cc:61] [0m[1;33mWarning: Deleting a connection right after creation. [0m[1;33mMake sure to save the ConnectionPtr from a Connect call
+[INFO] [gzclient-2]: process has finished cleanly [pid 1014675]
+[gzclient-2] [0m[1;32m[0m[1;32m[0m[1;36m[0m[1;32m[0m
+[gzclient-2] [0m[1;33m[0m[1;31m[0m
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [lifecycle_manager-8]: sending signal 'SIGINT' to process[lifecycle_manager-8]
+[INFO] [amcl-7]: sending signal 'SIGINT' to process[amcl-7]
+[INFO] [map_server-6]: sending signal 'SIGINT' to process[map_server-6]
+[INFO] [cmd_vel_guard-4]: sending signal 'SIGINT' to process[cmd_vel_guard-4]
+[INFO] [robot_state_publisher-3]: sending signal 'SIGINT' to process[robot_state_publisher-3]
+[INFO] [gzserver-1]: sending signal 'SIGINT' to process[gzserver-1]
+[lifecycle_manager-8] [INFO] [1791604174.113323758] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[lifecycle_manager-8] [INFO] [1791604174.113404804] [lifecycle_manager_localization]: Running Nav2 LifecycleManager rcl preshutdown (lifecycle_manager_localization)
+[lifecycle_manager-8] [INFO] [1791604174.113439864] [lifecycle_manager_localization]: [34m[1mTerminating bond timer...[0m[0m
+[amcl-7] [INFO] [1791604174.114287423] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[amcl-7] [INFO] [1791604174.114357931] [amcl]: Running Nav2 LifecycleNode rcl preshutdown (amcl)
+[amcl-7] [INFO] [1791604174.114398046] [amcl]: Deactivating
+[amcl-7] [INFO] [1791604174.114412219] [amcl]: Destroying bond (amcl) to lifecycle manager.
+[map_server-6] [INFO] [1791604174.115207844] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[map_server-6] [INFO] [1791604174.115276412] [map_server]: Running Nav2 LifecycleNode rcl preshutdown (map_server)
+[map_server-6] [INFO] [1791604174.115315517] [map_server]: Deactivating
+[map_server-6] [INFO] [1791604174.115329353] [map_server]: Destroying bond (map_server) to lifecycle manager.
+[robot_state_publisher-3] [INFO] [1791604174.116738099] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[amcl-7] [INFO] [1791604174.124602064] [amcl]: Cleaning up
+[map_server-6] [INFO] [1791604174.125514686] [map_server]: Cleaning up
+[map_server-6] [INFO] [1791604174.125551299] [map_server]: Destroying bond (map_server) to lifecycle manager.
+[amcl-7] [INFO] [1791604174.128523900] [amcl]: Destroying bond (amcl) to lifecycle manager.
+[map_server-6] [INFO] [1791604174.130763955] [map_server]: Destroying
+[amcl-7] [INFO] [1791604174.131161090] [amcl]: Destroying
+[lifecycle_manager-8] [INFO] [1791604174.139809525] [lifecycle_manager_localization]: Destroying lifecycle_manager_localization
+[INFO] [robot_state_publisher-3]: process has finished cleanly [pid 1014677]
+[INFO] [map_server-6]: process has finished cleanly [pid 1014683]
+[INFO] [amcl-7]: process has finished cleanly [pid 1014685]
+[INFO] [lifecycle_manager-8]: process has finished cleanly [pid 1014689]
+[INFO] [cmd_vel_guard-4]: process has finished cleanly [pid 1014679]
+[INFO] [gzserver-1]: process has finished cleanly [pid 1014673]
+[gzserver-1] [0m[1;32m[0m[1;32m[0m[1;36m[0m[1;32m[0m
+[gzserver-1] [1;33m[0m[1;31m[0m
+No AU9 manual Nav2 processes found.

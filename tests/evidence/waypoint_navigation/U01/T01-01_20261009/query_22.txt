@@ -1,0 +1,2 @@
+$ ros2 param get /cmd_vel_guard use_sim_time
+Boolean value is: False

@@ -1,0 +1,38 @@
+{
+  "config/nav2_sim.yaml": {
+    "sha256": "54f715efacef446c412754f400737f7f3579d179eb0492ffeccc412fa8d405ac",
+    "same_as_first_run": true
+  },
+  "config/sim_base.yaml": {
+    "sha256": "b1d72c3de42054a1afc679d927467a689302ec852f0301ba01d590ec106dce19",
+    "same_as_first_run": true
+  },
+  "config/amcl_sim.yaml": {
+    "sha256": "0c3e53bc0912d25ffd78f01bf1f3da636e8160e9c1f94f108fbec40f917518d4",
+    "same_as_first_run": true
+  },
+  "config/fastdds/au9_udp_loopback.xml": {
+    "sha256": "bc3737c8be48321d7d12eb83da59d70cb461aa3f1c652c37c7e6518bde8e845d",
+    "same_as_first_run": true
+  },
+  "src/ai_robot_sim/maps/apartment_v1.3_nav.yaml": {
+    "sha256": "6c1132721beb7873001785d6d271e4425fe37a9d09968f549ceacd0ae2538944",
+    "same_as_first_run": true
+  },
+  "src/ai_robot_sim/maps/apartment_v1.3_nav.pgm": {
+    "sha256": "6107a1c821a37ca0aa8978066a9d1c90071c4b836ac56825169374653ec01c08",
+    "same_as_first_run": true
+  },
+  "src/ai_robot_sim/worlds/apartment_v1.3.world": {
+    "sha256": "5a9974fcef9a6af0bbeb44554679f702526d94bf3523cfa1166a62f4fd4c9103",
+    "same_as_first_run": true
+  },
+  "src/ai_robot_description/urdf/small_yellow_car_v1.2.urdf.xacro": {
+    "sha256": "b41ad0cf13eda38ebccabd2fdc92141d4d0ed93c29f5d6d7701d5402bda74eb7",
+    "same_as_first_run": true
+  },
+  "src/ai_robot_description/models/small_yellow_car_v1.2.sdf": {
+    "sha256": "fdc30de599fe43f04b252f75a5316ddb1e5cb996ed82f18f7a3546dcc209de43",
+    "same_as_first_run": true
+  }
+}

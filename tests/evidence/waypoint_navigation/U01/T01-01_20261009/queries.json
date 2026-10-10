@@ -1,0 +1,256 @@
+[
+  {
+    "command": [
+      "ros2",
+      "lifecycle",
+      "get",
+      "/map_server"
+    ],
+    "exit_code": 0,
+    "file": "query_00.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "lifecycle",
+      "get",
+      "/amcl"
+    ],
+    "exit_code": 0,
+    "file": "query_01.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "lifecycle",
+      "get",
+      "/planner_server"
+    ],
+    "exit_code": 0,
+    "file": "query_02.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "lifecycle",
+      "get",
+      "/controller_server"
+    ],
+    "exit_code": 0,
+    "file": "query_03.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "lifecycle",
+      "get",
+      "/bt_navigator"
+    ],
+    "exit_code": 0,
+    "file": "query_04.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "lifecycle",
+      "get",
+      "/behavior_server"
+    ],
+    "exit_code": 0,
+    "file": "query_05.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "lifecycle",
+      "get",
+      "/velocity_smoother"
+    ],
+    "exit_code": 0,
+    "file": "query_06.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "action",
+      "list",
+      "-t"
+    ],
+    "exit_code": 0,
+    "file": "query_07.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "interface",
+      "show",
+      "nav2_msgs/action/ComputePathThroughPoses"
+    ],
+    "exit_code": 0,
+    "file": "query_08.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "interface",
+      "show",
+      "nav2_msgs/action/FollowPath"
+    ],
+    "exit_code": 0,
+    "file": "query_09.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "topic",
+      "info",
+      "/waypoint_path",
+      "--verbose"
+    ],
+    "exit_code": 0,
+    "file": "query_10.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "topic",
+      "info",
+      "/cmd_vel_raw",
+      "--verbose"
+    ],
+    "exit_code": 0,
+    "file": "query_11.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "topic",
+      "info",
+      "/cmd_vel",
+      "--verbose"
+    ],
+    "exit_code": 0,
+    "file": "query_12.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "topic",
+      "info",
+      "/cmd_vel_safe",
+      "--verbose"
+    ],
+    "exit_code": 0,
+    "file": "query_13.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "param",
+      "get",
+      "/map_server",
+      "use_sim_time"
+    ],
+    "exit_code": 0,
+    "file": "query_14.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "param",
+      "get",
+      "/amcl",
+      "use_sim_time"
+    ],
+    "exit_code": 0,
+    "file": "query_15.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "param",
+      "get",
+      "/planner_server",
+      "use_sim_time"
+    ],
+    "exit_code": 0,
+    "file": "query_16.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "param",
+      "get",
+      "/controller_server",
+      "use_sim_time"
+    ],
+    "exit_code": 0,
+    "file": "query_17.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "param",
+      "get",
+      "/bt_navigator",
+      "use_sim_time"
+    ],
+    "exit_code": 0,
+    "file": "query_18.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "param",
+      "get",
+      "/behavior_server",
+      "use_sim_time"
+    ],
+    "exit_code": 0,
+    "file": "query_19.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "param",
+      "get",
+      "/velocity_smoother",
+      "use_sim_time"
+    ],
+    "exit_code": 0,
+    "file": "query_20.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "param",
+      "get",
+      "/robot_state_publisher",
+      "use_sim_time"
+    ],
+    "exit_code": 0,
+    "file": "query_21.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "param",
+      "get",
+      "/cmd_vel_guard",
+      "use_sim_time"
+    ],
+    "exit_code": 0,
+    "file": "query_22.txt"
+  },
+  {
+    "command": [
+      "ros2",
+      "param",
+      "get",
+      "/rviz",
+      "use_sim_time"
+    ],
+    "exit_code": 124,
+    "file": "query_23.txt"
+  }
+]

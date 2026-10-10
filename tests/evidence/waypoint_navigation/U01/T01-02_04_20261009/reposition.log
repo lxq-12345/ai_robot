@@ -1,0 +1,26 @@
+Waiting for an action server to become available...
+Sending goal:
+     pose:
+  header:
+    stamp:
+      sec: 0
+      nanosec: 0
+    frame_id: map
+  pose:
+    position:
+      x: 1.8
+      y: 4.0
+      z: 0.0
+    orientation:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      w: 1.0
+behavior_tree: ''
+
+Goal accepted with ID: 69a563d66a994f3281a7b16149297b7e
+
+Result:
+    result: {}
+
+Goal finished with status: ABORTED

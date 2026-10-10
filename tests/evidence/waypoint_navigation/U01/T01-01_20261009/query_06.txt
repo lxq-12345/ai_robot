@@ -1,0 +1,2 @@
+$ ros2 lifecycle get /velocity_smoother
+active [3]

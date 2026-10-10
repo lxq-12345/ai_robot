@@ -1,0 +1,2 @@
+$ ros2 param get /map_server use_sim_time
+Boolean value is: True

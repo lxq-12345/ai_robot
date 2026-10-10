@@ -1,0 +1,2 @@
+$ ros2 param get /controller_server use_sim_time
+Boolean value is: True

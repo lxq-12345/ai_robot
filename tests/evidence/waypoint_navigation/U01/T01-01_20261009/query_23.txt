@@ -1,0 +1,1 @@
+$ ros2 param get /rviz use_sim_time

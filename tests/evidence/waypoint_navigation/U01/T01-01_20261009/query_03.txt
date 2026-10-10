@@ -1,0 +1,2 @@
+$ ros2 lifecycle get /controller_server
+active [3]

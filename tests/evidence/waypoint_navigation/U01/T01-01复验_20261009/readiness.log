@@ -1,0 +1,26 @@
+{"check": "lifecycle:planner_server", "passed": true, "detail": {"id": 3, "label": "active"}}
+{"check": "lifecycle:controller_server", "passed": true, "detail": {"id": 3, "label": "active"}}
+{"check": "lifecycle:amcl", "passed": true, "detail": {"id": 3, "label": "active"}}
+{"check": "lifecycle:map_server", "passed": true, "detail": {"id": 3, "label": "active"}}
+{"check": "clock:planner_server", "passed": true, "detail": {"type": 1, "value": true}}
+{"check": "clock:controller_server", "passed": true, "detail": {"type": 1, "value": true}}
+{"check": "clock:amcl", "passed": true, "detail": {"type": 1, "value": true}}
+{"check": "clock:map_server", "passed": true, "detail": {"type": 1, "value": true}}
+{"check": "clock:velocity_smoother", "passed": true, "detail": {"type": 1, "value": true}}
+{"check": "clock:rviz", "passed": true, "detail": {"type": 1, "value": true}}
+{"check": "clock:robot_state_publisher", "passed": true, "detail": {"type": 1, "value": true}}
+{"check": "clock:gazebo", "passed": true, "detail": {"type": 1, "value": true}}
+{"check": "action:compute_path_through_poses", "passed": true, "detail": {"server_ready": true}}
+{"check": "action:compute_path_to_pose", "passed": true, "detail": {"server_ready": true}}
+{"check": "action:follow_path", "passed": true, "detail": {"server_ready": true}}
+{"check": "action:navigate_to_pose", "passed": true, "detail": {"server_ready": true}}
+{"check": "action:navigate_through_poses", "passed": true, "detail": {"server_ready": true}}
+{"check": "tf:map->base_footprint", "passed": true, "detail": {"parent": "map", "child": "base_footprint", "stamp_s": 14.675, "translation": [1.8000000075988256, 3.999999999634301, -0.0524614763426082]}}
+{"check": "tf:base_footprint->base_link", "passed": true, "detail": {"parent": "base_footprint", "child": "base_link", "stamp_s": 0.0, "translation": [0.0, 0.0, 0.0]}}
+{"check": "tf:base_link->laser_link", "passed": true, "detail": {"parent": "base_link", "child": "laser_link", "stamp_s": 0.0, "translation": [-0.025, 0.0, 0.385]}}
+{"check": "sim_clock", "passed": true, "detail": {"now_s": 14.7}}
+{"check": "topic:/cmd_vel_raw", "passed": true, "detail": {"publishers": [{"node": "controller_server", "type": "geometry_msgs/msg/Twist", "reliability": "RELIABLE", "durability": "VOLATILE"}, {"node": "behavior_server", "type": "geometry_msgs/msg/Twist", "reliability": "RELIABLE", "durability": "VOLATILE"}, {"node": "behavior_server", "type": "geometry_msgs/msg/Twist", "reliability": "RELIABLE", "durability": "VOLATILE"}, {"node": "behavior_server", "type": "geometry_msgs/msg/Twist", "reliability": "RELIABLE", "durability": "VOLATILE"}, {"node": "behavior_server", "type": "geometry_msgs/msg/Twist", "reliability": "RELIABLE", "durability": "VOLATILE"}], "subscribers": [{"node": "velocity_smoother", "type": "geometry_msgs/msg/Twist", "reliability": "RELIABLE", "durability": "VOLATILE"}]}}
+{"check": "topic:/cmd_vel", "passed": true, "detail": {"publishers": [{"node": "velocity_smoother", "type": "geometry_msgs/msg/Twist", "reliability": "RELIABLE", "durability": "VOLATILE"}], "subscribers": [{"node": "cmd_vel_guard", "type": "geometry_msgs/msg/Twist", "reliability": "RELIABLE", "durability": "VOLATILE"}]}}
+{"check": "topic:/cmd_vel_safe", "passed": true, "detail": {"publishers": [{"node": "cmd_vel_guard", "type": "geometry_msgs/msg/Twist", "reliability": "RELIABLE", "durability": "VOLATILE"}], "subscribers": [{"node": "ai_robot_diff_drive", "type": "geometry_msgs/msg/Twist", "reliability": "RELIABLE", "durability": "VOLATILE"}]}}
+{"check": "topic:/waypoint_path", "passed": true, "detail": {"publishers": [{"node": "rviz", "type": "nav_msgs/msg/Path", "reliability": "RELIABLE", "durability": "VOLATILE"}], "subscribers": []}}
+{"check": "topic:/particle_cloud", "passed": true, "detail": {"publishers": [{"node": "amcl", "type": "nav2_msgs/msg/ParticleCloud", "reliability": "BEST_EFFORT", "durability": "VOLATILE"}], "subscribers": [{"node": "rviz", "type": "nav2_msgs/msg/ParticleCloud", "reliability": "BEST_EFFORT", "durability": "VOLATILE"}]}}

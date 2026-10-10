@@ -194,7 +194,10 @@ if not wait_for_exit(gui, 10):
 
 # Launch owns backend termination. Do not signal its children in normal exit.
 send(list(owned.values()) if orphan else [root], signal.SIGINT)
-if not wait_for_exit(list(owned.values()), 15, refresh=True):
+# Launch itself has a 5 s SIGINT + 10 s SIGTERM escalation sequence for a
+# child. Give it time to reap that child and finish its own shutdown before
+# falling back to termination of the parent session.
+if not wait_for_exit(list(owned.values()), 30, refresh=True):
     abnormal = True
     print('ERROR: Graceful shutdown timed out; sending SIGTERM to remaining AU9 processes.', file=sys.stderr)
     send(list(owned.values()), signal.SIGTERM)

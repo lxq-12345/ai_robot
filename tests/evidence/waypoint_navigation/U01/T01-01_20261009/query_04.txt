@@ -1,0 +1,2 @@
+$ ros2 lifecycle get /bt_navigator
+active [3]

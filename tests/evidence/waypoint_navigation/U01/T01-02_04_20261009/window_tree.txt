@@ -1,0 +1,165 @@
+
+xwininfo: Window id: 0x1d8 (the root window) (has no name)
+
+  Root window id: 0x1d8 (the root window) (has no name)
+  Parent window id: 0x0 (none)
+     65 children:
+     0x220b745 (has no name): ("ToDesk" "ToDesk")  24x192+1896+878  +1896+878
+        1 child:
+        0x220b746 (has no name): ()  1x1+-1+-1  +1895+877
+     0x40000a "gnome-shell": ("gnome-shell" "Gnome-shell")  1x1+-200+-200  +-200+-200
+        1 child:
+        0x40000b (has no name): ()  1x1+-1+-1  +-201+-201
+     0x4005d1 (has no name): ()  1520x955+60+32  +60+32
+        1 child:
+        0x5e00106 "/home/ubuntu/ai_robot_ws/install/ai_robot_sim/share/ai_robot_sim/config/au9_nav2.rviz* - RViz": ("rviz2" "rviz2")  1500x900+10+45  +70+77
+           2 children:
+           0x5e00109 "Qt NET_WM User Time Window": ()  1x1+-1+-1  +69+76
+           0x5e00013 "rviz2": ("rviz2" "rviz2")  873x792+602+70  +672+147
+              2 children:
+              0x5e00108 "Qt NET_WM User Time Window": ()  1x1+-1+-1  +671+146
+              0x6400004 (has no name): ()  873x792+0+0  +672+147
+     0x6200001 (has no name): ()  1x1+0+0  +0+0
+        1 child:
+        0x6400002 (has no name): ()  1x1+0+0  +0+0
+     0x5e00008 "rviz2": ()  1x1+0+0  +0+0
+     0x6000001 "rviz2": ("rviz2" "Rviz2")  10x10+10+10  +10+10
+     0x5e00004 "Qt Selection Owner for rviz2": ()  3x3+0+0  +0+0
+     0x5a00006 "gazebo": ("gazebo" "gazebo")  576x320+672+380  +672+380
+     0x2a00004 "ai_robot_ws - Visual Studio Code": ("code" "code")  1850x1053+70+27  +70+27
+        1 child:
+        0x3e0001c (has no name): ()  1850x1053+0+0  +70+27
+     0x4005ac (has no name): ()  1042x969+877+19  +877+19
+        1 child:
+        0x5a00010 "Gazebo": ("gazebo" "gazebo")  1022x914+10+45  +887+64
+           3 children:
+           0x5a0004e "Qt NET_WM User Time Window": ()  1x1+-1+-1  +886+63
+           0x5a0003b "gazebo": ("gazebo" "gazebo")  1022x25+0+0  +887+64
+              1 child:
+              0x5a0004d "Qt NET_WM User Time Window": ()  1x1+-1+-1  +886+63
+           0x5a00012 "gazebo": ("gazebo" "gazebo")  1022x889+0+25  +887+89
+              3 children:
+              0x5a0003a "Qt NET_WM User Time Window": ()  1x1+-1+-1  +886+88
+              0x5a00017 "gazebo": ("gazebo" "gazebo")  1004x854+9+9  +896+98
+                 7 children:
+                 0x5a00043 "gazebo": ("gazebo" "gazebo")  10x854+994+0  +1890+98
+                    1 child:
+                    0x5a0004c "Qt NET_WM User Time Window": ()  1x1+-1+-1  +1889+97
+                 0x5a00041 "gazebo": ("gazebo" "gazebo")  10x854+250+0  +1146+98
+                    1 child:
+                    0x5a0004b "Qt NET_WM User Time Window": ()  1x1+-1+-1  +1145+97
+                 0x5a0003f "gazebo": ("gazebo" "gazebo")  100x30+0+0  +896+98
+                 0x5a0003d "gazebo": ("gazebo" "gazebo")  250x854+0+0  +896+98
+                    1 child:
+                    0x5a00046 "Qt NET_WM User Time Window": ()  1x1+-1+-1  +895+97
+                 0x5a00039 "Qt NET_WM User Time Window": ()  1x1+-1+-1  +895+97
+                 0x5a0001b "gazebo": ("gazebo" "gazebo")  734x854+260+0  +1156+98
+                    2 children:
+                    0x5a00038 "Qt NET_WM User Time Window": ()  1x1+-1+-1  +1155+97
+                    0x5a0001d "gazebo": ("gazebo" "gazebo")  734x854+0+0  +1156+98
+                       3 children:
+                       0x5a00037 "Qt NET_WM User Time Window": ()  1x1+-1+-1  +1155+97
+                       0x5a00035 "gazebo": ("gazebo" "gazebo")  732x49+1+804  +1157+902
+                          1 child:
+                          0x5a00045 "Qt NET_WM User Time Window": ()  1x1+-1+-1  +1156+901
+                       0x5a0001f "gazebo": ("gazebo" "gazebo")  732x803+1+1  +1157+99
+                          7 children:
+                          0x5a00034 "Qt NET_WM User Time Window": ()  1x1+-1+-1  +1156+98
+                          0x5a00032 "gazebo": ("gazebo" "gazebo")  100x30+0+0  +1157+99
+                          0x5a00030 "gazebo": ("gazebo" "gazebo")  100x30+0+0  +1157+99
+                          0x5a0002e "gazebo": ("gazebo" "gazebo")  98x4+1+13  +1158+112
+                          0x5a00025 "gazebo": ("gazebo" "gazebo")  732x803+0+0  +1157+99
+                             3 children:
+                             0x5a0002d "Qt NET_WM User Time Window": ()  1x1+-1+-1  +1156+98
+                             0x5a0002a "gazebo": ("gazebo" "gazebo")  732x765+0+38  +1157+137
+                                3 children:
+                                0x5a00053 "gazebo": ("gazebo" "gazebo")  160x160+0+0  +1157+137
+                                0x5800004 (has no name): ()  732x765+0+0  +1157+137
+                                0x5a0002c "Qt NET_WM User Time Window": ()  1x1+-1+-1  +1156+136
+                             0x5a00027 "gazebo": ("gazebo" "gazebo")  732x38+0+0  +1157+99
+                                1 child:
+                                0x5a00029 "Qt NET_WM User Time Window": ()  1x1+-1+-1  +1156+98
+                          0x5a00023 "gazebo": ("gazebo" "gazebo")  990x1+0+0  +1157+99
+                          0x5a00021 "gazebo": ("gazebo" "gazebo")  990x1+0+0  +1157+99
+                 0x5a00019 "gazebo": ("gazebo" "gazebo")  1x456+-1+-457  +895+-359
+              0x5a00014 "gazebo": ("gazebo" "gazebo")  17x17+996+863  +1883+952
+                 1 child:
+                 0x5a00016 "Qt NET_WM User Time Window": ()  1x1+-1+-1  +1882+951
+     0x5a00008 "gazebo": ()  1x1+0+0  +0+0
+     0x5c00001 "gzclient": ("gzclient" "Gzclient")  10x10+10+10  +10+10
+     0x5a00004 "Qt Selection Owner for gazebo": ()  3x3+0+0  +0+0
+     0x5600001 (has no name): ()  1x1+0+0  +0+0
+        1 child:
+        0x5800002 (has no name): ()  1x1+0+0  +0+0
+     0x5000001 (has no name): ()  1x1+0+0  +0+0
+        1 child:
+        0x5400002 (has no name): ()  1x1+0+0  +0+0
+     0x5200008 (has no name): ()  1x1+-1+-1  +-1+-1
+     0x5200003 "@!0,0;BDHF": ("gjs" "Gjs")  1920x1080+0+0  +0+0
+        1 child:
+        0x5200004 (has no name): ()  1x1+-1+-1  +-1+-1
+     0x5200001 "gjs": ("gjs" "Gjs")  10x10+10+10  +10+10
+     0x4000f7 "gnome-shell": ()  10x10+-100+-100  +-100+-100
+     0x3200003 "code": ("code" "Code")  200x200+0+0  +0+0
+        1 child:
+        0x3200004 (has no name): ()  1x1+-1+-1  +-1+-1
+     0x380000b "EncGL": ()  16x16+8+36  +8+36
+     0x3800008 "pEncGL": ()  16x16+8+36  +8+36
+     0x3800002 "ppEncGL": ()  16x16+8+36  +8+36
+     0x3800004 "AppEncGL": ()  16x16+8+36  +8+36
+     0x600001 (has no name): ()  10x10+-20+-20  +-20+-20
+     0x420000c (has no name): ()  1x1+-1+-1  +-1+-1
+     0x4200001 "更新通知": ("update-notifier" "Update-notifier")  10x10+10+10  +10+10
+     0x4a00002 "snapd-desktop-integration": ("snapd-desktop-integration" "snapd-desktop-integration")  1x1+0+0  +0+0
+        1 child:
+        0x4a00003 (has no name): ()  1x1+-1+-1  +-1+-1
+     0x2200021 (has no name): ()  1x1+-1+-1  +-1+-1
+     0x2a0000a (has no name): ()  1x1+0+0  +0+0
+     0x4400001 (has no name): ()  1x1+-10+-10  +-10+-10
+     0x220001c "ToDesk": ("ToDesk" "ToDesk")  800x600+0+0  +0+0
+        1 child:
+        0x220001d (has no name): ()  1x1+-1+-1  +-1+-1
+     0x3200001 "code": ("code" "Code")  10x10+10+10  +10+10
+     0x2c00001 "WebKitWebProcess": ("WebKitWebProcess" "WebKitWebProcess")  10x10+10+10  +10+10
+     0x2a00000 "Chromium clipboard": ()  10x10+-100+-100  +-100+-100
+     0x1c00009 (has no name): ()  1x1+-1+-1  +-1+-1
+     0x2200018 (has no name): ("ToDesk" "ToDesk")  200x200+0+0  +0+0
+        1 child:
+        0x2200019 (has no name): ()  1x1+-1+-1  +-1+-1
+     0x400038 (has no name): ()  1x1+-1+-1  +-1+-1
+     0x2600001 "xdg-desktop-portal-gtk": ("xdg-desktop-portal-gtk" "Xdg-desktop-portal-gtk")  10x10+10+10  +10+10
+     0x2400000 (has no name): ()  1x1+0+0  +0+0
+     0x2200001 "ToDesk": ("ToDesk" "ToDesk")  10x10+10+10  +10+10
+     0x1c00001 "clash-verge": ("clash-verge" "Clash-verge")  10x10+10+10  +10+10
+     0x1600002 (has no name): ("" "")  1x1+-100+-100  +-100+-100
+        1 child:
+        0x1600003 (has no name): ()  1x1+-1+-1  +-101+-101
+     0x2000001 "evolution-alarm-notify": ("evolution-alarm-notify" "Evolution-alarm-notify")  10x10+10+10  +10+10
+     0xe00001 "gsd-power": ("gsd-power" "Gsd-power")  10x10+10+10  +10+10
+     0xc00002 (has no name): ()  10x10+0+0  +0+0
+     0x1a00003 "ibus-xim": ()  1x1+0+0  +0+0
+        1 child:
+        0x1a00004 (has no name): ()  1x1+-1+-1  +-1+-1
+     0x1800001 "ibus-extension-gtk3": ("ibus-extension-gtk3" "Ibus-extension-gtk3")  10x10+10+10  +10+10
+     0x1a00001 "ibus-x11": ("ibus-x11" "Ibus-x11")  10x10+10+10  +10+10
+     0x1400001 "gsd-media-keys": ("gsd-media-keys" "Gsd-media-keys")  10x10+10+10  +10+10
+     0xc00001 "gsd-xsettings": ("gsd-xsettings" "Gsd-xsettings")  10x10+10+10  +10+10
+     0x1200001 "gsd-wacom": ("gsd-wacom" "Gsd-wacom")  10x10+10+10  +10+10
+     0x1000001 "gsd-color": ("gsd-color" "Gsd-color")  10x10+10+10  +10+10
+     0xa00001 "gsd-keyboard": ("gsd-keyboard" "Gsd-keyboard")  10x10+10+10  +10+10
+     0x400011 (has no name): ()  1x1+-100+-100  +-100+-100
+     0x40000f (has no name): ()  1x1+-100+-100  +-100+-100
+     0x40000e (has no name): ()  1x1+-1+-1  +-1+-1
+     0x400008 (has no name): ()  1x1+-100+-100  +-100+-100
+     0x400007 (has no name): ()  1x1+-100+-100  +-100+-100
+     0x400006 "GNOME Shell": ()  1x1+-100+-100  +-100+-100
+     0x400001 "gnome-shell": ("gnome-shell" "Gnome-shell")  10x10+10+10  +10+10
+     0x200007 (has no name): ()  1x1+-100+-100  +-100+-100
+     0x400010 "mutter guard window": ()  1920x1080+0+0  +0+0
+     0x1c00003 "Clash Verge": ("clash-verge" "Clash-verge")  1850x1053+70+27  +70+27
+        1 child:
+        0x1c00004 (has no name): ()  1x1+-1+-1  +69+26
+     0x2200003 "ToDesk": ("ToDesk" "ToDesk")  770x520+575+280  +575+280
+        1 child:
+        0x2200004 (has no name): ()  1x1+-1+-1  +574+279
+

@@ -1,0 +1,2 @@
+$ ros2 lifecycle get /behavior_server
+active [3]
