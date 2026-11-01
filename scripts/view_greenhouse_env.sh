@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Static environment only. No robot, ROS, Nav2 or motion commands.
 set -euo pipefail
+: "${GAZEBO_RESOURCE_PATH:=}"
+: "${GAZEBO_PLUGIN_PATH:=}"
+: "${LD_LIBRARY_PATH:=}"
+: "${GAZEBO_MODEL_PATH:=}"
 root_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 source /usr/share/gazebo-11/setup.sh
 export GAZEBO_IP=127.0.0.1
