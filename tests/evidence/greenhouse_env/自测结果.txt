@@ -1,0 +1,18 @@
+[test_result.log]
+Summary: 4 tests, 0 errors, 0 failures, 0 skipped
+
+[sdf.log]
+Check complete
+Check complete
+Check complete
+
+[determinism.log]
+PASS: 15 resource files identical after regeneration.
+
+[install_assets.log]
+PASS: 14 installed assets match source bytes.
+
+[runtime_final.log]
+PASS: actual world loaded, Gazebo window captured; model checks 60 planting + 58 track passed
+
+Cleanup: no test gzserver/gzclient remains; port 11365 released.

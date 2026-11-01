@@ -1,0 +1,70 @@
+<sdf version="1.6">
+  <model name="greenhouse_track_pair">
+    <static>true</static>
+    <link name="body">
+      <visual name="base_visual">
+        <pose>0 0 .15 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>30 .7 .3</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <script>
+            <uri>model://greenhouse_track_pair/materials/scripts</uri>
+            <uri>model://greenhouse_track_pair/materials/textures</uri>
+            <name>Greenhouse/concrete</name>
+          </script>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+      <collision name="base_collision">
+        <pose>0 0 .15 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>30 .7 .3</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="rail_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://greenhouse_track_pair/meshes/rail.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>.95 .67 .035 1</ambient>
+          <diffuse>.95 .67 .035 1</diffuse>
+          <specular>0.16 0.16 0.12 1</specular>
+        </material>
+      </visual>
+      <collision name="rail_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://greenhouse_track_pair/meshes/rail.dae</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,17 @@
+material Greenhouse/substrate
+{
+  technique
+  {
+    pass
+    {
+      ambient 1 1 1 1
+      diffuse 1 1 1 1
+      specular 0.01 0.01 0.01 1 8
+      texture_unit
+      {
+        texture substrate.png
+        scale 12 12
+      }
+    }
+  }
+}

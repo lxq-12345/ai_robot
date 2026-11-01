@@ -1,4 +1,5 @@
 from glob import glob
+from pathlib import Path
 from setuptools import setup
 
 package_name = "ai_robot_sim"
@@ -28,7 +29,12 @@ setup(
         ("share/ai_robot_sim/worlds", glob("worlds/*.world")),
         ("share/ai_robot_sim/maps", glob("maps/*")),
         ("share/ai_robot_sim/launch", glob("launch/*.py")),
+        *[("share/ai_robot_sim/" + str(directory),
+           [str(p) for p in directory.iterdir() if p.is_file()])
+          for directory in sorted(Path("models").rglob("*")) if directory.is_dir()],
     ],
+    # Preserve model directory layout, including nested meshes and materials.
+    # Other package resources keep their existing installation rules.
     install_requires=["setuptools"],
     tests_require=["pytest"],
     zip_safe=True,

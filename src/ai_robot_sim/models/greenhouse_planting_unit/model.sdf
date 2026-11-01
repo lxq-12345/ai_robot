@@ -1,0 +1,189 @@
+<sdf version="1.6">
+  <model name="greenhouse_planting_unit">
+    <static>true</static>
+    <link name="body">
+      <visual name="substrate_visual">
+        <pose>0 0 1.045 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>30 .25 .01</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <script>
+            <uri>model://greenhouse_planting_unit/materials/scripts</uri>
+            <uri>model://greenhouse_planting_unit/materials/textures</uri>
+            <name>Greenhouse/substrate</name>
+          </script>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+      <visual name="tomato_row_visual">
+        <pose>0 0 1.55 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>30 .5 1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <script>
+            <uri>model://greenhouse_planting_unit/materials/scripts</uri>
+            <uri>model://greenhouse_planting_unit/materials/textures</uri>
+            <name>Greenhouse/foliage</name>
+          </script>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+      <collision name="tomato_row_collision">
+        <pose>0 0 1.55 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>30 .5 1</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="fruit_0_visual">
+        <pose>-13.5 -0.215 1.25 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>.035</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>.72 .035 .02 1</ambient>
+          <diffuse>.72 .035 .02 1</diffuse>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+      <visual name="fruit_1_visual">
+        <pose>-10.5 0.215 1.47 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>.035</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>.72 .035 .02 1</ambient>
+          <diffuse>.72 .035 .02 1</diffuse>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+      <visual name="fruit_2_visual">
+        <pose>-7.5 -0.215 1.69 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>.035</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>.72 .035 .02 1</ambient>
+          <diffuse>.72 .035 .02 1</diffuse>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+      <visual name="fruit_3_visual">
+        <pose>-4.5 0.215 1.25 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>.035</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>.72 .035 .02 1</ambient>
+          <diffuse>.72 .035 .02 1</diffuse>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+      <visual name="fruit_4_visual">
+        <pose>-1.5 -0.215 1.47 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>.035</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>.72 .035 .02 1</ambient>
+          <diffuse>.72 .035 .02 1</diffuse>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+      <visual name="fruit_5_visual">
+        <pose>1.5 0.215 1.69 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>.035</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>.72 .035 .02 1</ambient>
+          <diffuse>.72 .035 .02 1</diffuse>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+      <visual name="fruit_6_visual">
+        <pose>4.5 -0.215 1.25 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>.035</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>.72 .035 .02 1</ambient>
+          <diffuse>.72 .035 .02 1</diffuse>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+      <visual name="fruit_7_visual">
+        <pose>7.5 0.215 1.47 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>.035</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>.72 .035 .02 1</ambient>
+          <diffuse>.72 .035 .02 1</diffuse>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+      <visual name="fruit_8_visual">
+        <pose>10.5 -0.215 1.69 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>.035</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>.72 .035 .02 1</ambient>
+          <diffuse>.72 .035 .02 1</diffuse>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+      <visual name="fruit_9_visual">
+        <pose>13.5 0.215 1.25 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>.035</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>.72 .035 .02 1</ambient>
+          <diffuse>.72 .035 .02 1</diffuse>
+          <specular>0.015 0.015 0.015 1</specular>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
