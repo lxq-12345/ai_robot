@@ -1,0 +1,39 @@
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <unit name="meter" meter="1" />
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_geometries>
+    <geometry id="gable_panel">
+      <mesh>
+        <source id="gable_positions">
+          <float_array id="gable_positions_array" count="18">-0.005000000 -22.075000000 2.500000000 -0.005000000 22.075000000 2.500000000 -0.005000000 0.000000000 6.392418099 0.005000000 -22.075000000 2.500000000 0.005000000 22.075000000 2.500000000 0.005000000 0.000000000 6.392418099</float_array>
+          <technique_common>
+            <accessor source="#gable_positions_array" count="6" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="gable_vertices">
+          <input semantic="POSITION" source="#gable_positions" />
+        </vertices>
+        <triangles count="8">
+          <input semantic="VERTEX" source="#gable_vertices" offset="0" />
+          <p>0 2 1 3 4 5 0 1 4 0 4 3 1 2 5 1 5 4 2 0 3 2 3 5</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene">
+      <node id="gable-panel-node">
+        <instance_geometry url="#gable_panel" />
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

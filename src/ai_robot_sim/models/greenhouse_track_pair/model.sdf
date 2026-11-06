@@ -9,6 +9,7 @@
             <size>30 .7 .3</size>
           </box>
         </geometry>
+        <cast_shadows>false</cast_shadows>
         <material>
           <ambient>1 1 1 1</ambient>
           <diffuse>1 1 1 1</diffuse>
@@ -43,6 +44,7 @@
             <uri>model://greenhouse_track_pair/meshes/rail.dae</uri>
           </mesh>
         </geometry>
+        <cast_shadows>false</cast_shadows>
         <material>
           <ambient>.95 .67 .035 1</ambient>
           <diffuse>.95 .67 .035 1</diffuse>

@@ -1,0 +1,50 @@
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <unit name="meter" meter="1" />
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_geometries>
+    <geometry id="door_post">
+      <mesh>
+        <source id="door_post_positions">
+          <float_array id="door_post_positions_array" count="24">-0.025000000 -0.025000000 -1.200000000 -0.025000000 0.025000000 -1.200000000 -0.025000000 0.025000000 1.200000000 -0.025000000 -0.025000000 1.200000000 0.025000000 -0.025000000 -1.200000000 0.025000000 0.025000000 -1.200000000 0.025000000 0.025000000 1.200000000 0.025000000 -0.025000000 1.200000000</float_array>
+          <technique_common>
+            <accessor source="#door_post_positions_array" count="8" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="door_post_vertices">
+          <input semantic="POSITION" source="#door_post_positions" />
+        </vertices>
+        <source id="door_post_normals">
+          <float_array id="door_post_normals_array" count="36">-1.000000000 0.000000000 0.000000000 -1.000000000 0.000000000 0.000000000 1.000000000 0.000000000 0.000000000 1.000000000 0.000000000 0.000000000 0.000000000 0.000000000 -1.000000000 0.000000000 0.000000000 -1.000000000 0.000000000 1.000000000 0.000000000 0.000000000 1.000000000 0.000000000 0.000000000 0.000000000 1.000000000 -0.000000000 0.000000000 1.000000000 0.000000000 -1.000000000 0.000000000 0.000000000 -1.000000000 0.000000000</float_array>
+          <technique_common>
+            <accessor source="#door_post_normals_array" count="12" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <triangles count="12">
+          <input semantic="VERTEX" source="#door_post_vertices" offset="0" />
+          <input semantic="NORMAL" source="#door_post_normals" offset="1" />
+          <p>0 0 3 0 2 0 0 1 2 1 1 1 4 2 5 2 6 2 4 3 6 3 7 3 0 4 1 4 5 4 0 5 5 5 4 5 1 6 2 6 6 6 1 7 6 7 5 7 2 8 3 8 7 8 2 9 7 9 6 9 3 10 0 10 4 10 3 11 4 11 7 11</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene">
+      <node id="door-post-node">
+        <instance_geometry url="#door_post" />
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

@@ -1,0 +1,21 @@
+<sdf version="1.6">
+  <model name="greenhouse_vertical_glass_panel">
+    <static>true</static>
+    <link name="body">
+      <visual name="vertical_glass_panel_visual">
+        <geometry>
+          <mesh>
+            <uri>model://greenhouse_vertical_glass_panel/meshes/vertical_glass_panel.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="vertical_glass_panel_collision">
+        <geometry>
+          <mesh>
+            <uri>model://greenhouse_vertical_glass_panel/meshes/vertical_glass_panel.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

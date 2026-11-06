@@ -1,0 +1,21 @@
+<sdf version="1.6">
+  <model name="greenhouse_gable_panel">
+    <static>true</static>
+    <link name="body">
+      <visual name="gable_panel_visual">
+        <geometry>
+          <mesh>
+            <uri>model://greenhouse_gable_panel/meshes/gable_panel.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="gable_panel_collision">
+        <geometry>
+          <mesh>
+            <uri>model://greenhouse_gable_panel/meshes/gable_panel.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>
