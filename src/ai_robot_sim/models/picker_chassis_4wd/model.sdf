@@ -1,0 +1,428 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sdf version="1.6">
+  <model name="picker_chassis_4wd">
+    <link name="base_link">
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0.16 0 0 0</pose>
+        <mass>60</mass>
+        <inertia>
+          <ixx>3.26</ixx>
+          <iyy>10.25</iyy>
+          <izz>12.61</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="blue_shell">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/base_link_blue_shell.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.03 0.32 0.76 1</ambient>
+          <diffuse>0.03 0.32 0.76 1</diffuse>
+        </material>
+      </visual>
+      <visual name="metal_top">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/base_link_metal_top.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.67 0.70 0.73 1</ambient>
+          <diffuse>0.67 0.70 0.73 1</diffuse>
+        </material>
+      </visual>
+      <visual name="trim">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/base_link_trim.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.12 0.13 0.15 1</ambient>
+          <diffuse>0.12 0.13 0.15 1</diffuse>
+        </material>
+      </visual>
+      <!-- Yellow top deck and sensor installation appearance, based on picker chassis v0.7.
+           These are visual-only approximations; chassis collision and dynamics are unchanged. -->
+      <visual name="yellow_top_plate">
+        <pose>0 0 0.297 0 0 0</pose>
+        <geometry><box><size>1.400 0.750 0.006</size></box></geometry>
+        <material><ambient>0.92 0.62 0.02 1</ambient><diffuse>0.98 0.70 0.02 1</diffuse></material>
+      </visual>
+      <visual name="server_mount_foot_front_left">
+        <pose>0.160 0.110 0.305 0 0 0</pose><geometry><box><size>0.030 0.030 0.010</size></box></geometry>
+        <material><ambient>0.25 0.27 0.29 1</ambient><diffuse>0.32 0.34 0.36 1</diffuse></material>
+      </visual>
+      <visual name="server_mount_foot_front_right">
+        <pose>0.160 -0.110 0.305 0 0 0</pose><geometry><box><size>0.030 0.030 0.010</size></box></geometry>
+        <material><ambient>0.25 0.27 0.29 1</ambient><diffuse>0.32 0.34 0.36 1</diffuse></material>
+      </visual>
+      <visual name="server_mount_foot_rear_left">
+        <pose>-0.160 0.110 0.305 0 0 0</pose><geometry><box><size>0.030 0.030 0.010</size></box></geometry>
+        <material><ambient>0.25 0.27 0.29 1</ambient><diffuse>0.32 0.34 0.36 1</diffuse></material>
+      </visual>
+      <visual name="server_mount_foot_rear_right">
+        <pose>-0.160 -0.110 0.305 0 0 0</pose><geometry><box><size>0.030 0.030 0.010</size></box></geometry>
+        <material><ambient>0.25 0.27 0.29 1</ambient><diffuse>0.32 0.34 0.36 1</diffuse></material>
+      </visual>
+      <visual name="server_case">
+        <pose>0 0 0.430 0 0 0</pose><geometry><box><size>0.400 0.300 0.240</size></box></geometry>
+        <material><ambient>0.25 0.28 0.31 1</ambient><diffuse>0.31 0.34 0.37 1</diffuse></material>
+      </visual>
+      <visual name="server_lid">
+        <pose>0 0 0.555 0 0 0</pose><geometry><box><size>0.404 0.304 0.010</size></box></geometry>
+        <material><ambient>0.48 0.51 0.54 1</ambient><diffuse>0.58 0.61 0.64 1</diffuse></material>
+      </visual>
+      <!-- RPLIDAR S2 installation: scan-plane center at base_link Z=0.660 m.
+           Vendor housing dimensions were not supplied; the visible cylindrical envelope is schematic. -->
+      <visual name="lidar_mount_plate">
+        <pose>0 0 0.565 0 0 0</pose><geometry><box><size>0.080 0.080 0.008</size></box></geometry>
+        <material><ambient>0.10 0.11 0.12 1</ambient><diffuse>0.14 0.15 0.16 1</diffuse></material>
+      </visual>
+      <visual name="lidar_standoff">
+        <pose>0 0 0.5975 0 0 0</pose><geometry><cylinder><radius>0.016</radius><length>0.065</length></cylinder></geometry>
+        <material><ambient>0.62 0.65 0.67 1</ambient><diffuse>0.72 0.74 0.76 1</diffuse></material>
+      </visual>
+      <visual name="rplidar_s2_envelope">
+        <pose>0 0 0.660 0 0 0</pose><geometry><cylinder><radius>0.040</radius><length>0.060</length></cylinder></geometry>
+        <material><ambient>0.08 0.09 0.10 1</ambient><diffuse>0.10 0.11 0.12 1</diffuse></material>
+      </visual>
+      <visual name="rplidar_s2_scan_band">
+        <pose>0 0 0.660 0 0 0</pose><geometry><cylinder><radius>0.041</radius><length>0.008</length></cylinder></geometry>
+        <material><ambient>0.02 0.16 0.18 1</ambient><diffuse>0.02 0.42 0.48 1</diffuse></material>
+      </visual>
+      <!-- D456 camera support at (0.650, 0, 0.380) m; shown at the default 10-degree down angle. -->
+      <visual name="camera_yaw_turntable">
+        <pose>0.650 0 0.305 0 0 0</pose><geometry><box><size>0.090 0.090 0.010</size></box></geometry>
+        <material><ambient>0.12 0.13 0.14 1</ambient><diffuse>0.18 0.19 0.20 1</diffuse></material>
+      </visual>
+      <visual name="camera_support_post">
+        <pose>0.650 0 0.3425 0 0 0</pose><geometry><box><size>0.025 0.025 0.065</size></box></geometry>
+        <material><ambient>0.58 0.60 0.62 1</ambient><diffuse>0.68 0.70 0.72 1</diffuse></material>
+      </visual>
+      <visual name="camera_pitch_bracket">
+        <pose>0.650 0 0.377 0 0 0</pose><geometry><box><size>0.055 0.150 0.014</size></box></geometry>
+        <material><ambient>0.12 0.13 0.14 1</ambient><diffuse>0.18 0.19 0.20 1</diffuse></material>
+      </visual>
+      <visual name="realsense_d456_envelope">
+        <pose>0.650 0 0.380 0 0.17453293 0</pose>
+        <geometry><box><size>0.026 0.124 0.029</size></box></geometry>
+        <material><ambient>0.12 0.13 0.14 1</ambient><diffuse>0.18 0.19 0.20 1</diffuse></material>
+      </visual>
+      <visual name="camera_left_lens">
+        <pose>0.664 0.0475 0.3825 0 1.74532925 0</pose>
+        <geometry><cylinder><radius>0.008</radius><length>0.002</length></cylinder></geometry>
+        <material><ambient>0.015 0.018 0.020 1</ambient><diffuse>0.025 0.030 0.035 1</diffuse></material>
+      </visual>
+      <visual name="camera_right_lens">
+        <pose>0.664 -0.0475 0.3825 0 1.74532925 0</pose>
+        <geometry><cylinder><radius>0.008</radius><length>0.002</length></cylinder></geometry>
+        <material><ambient>0.015 0.018 0.020 1</ambient><diffuse>0.025 0.030 0.035 1</diffuse></material>
+      </visual>
+      <collision name="upper_body">
+        <pose>0 0 0.24 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.4 0.75 0.12</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name="inner_floor">
+        <pose>0 0 0.0315 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.394 0.420 0.003</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="seat_front_left">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/base_link_seat_front_left.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.40 0.42 0.44 1</ambient>
+          <diffuse>0.40 0.42 0.44 1</diffuse>
+        </material>
+      </visual>
+      <visual name="seat_rear_left">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/base_link_seat_rear_left.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.40 0.42 0.44 1</ambient>
+          <diffuse>0.40 0.42 0.44 1</diffuse>
+        </material>
+      </visual>
+      <visual name="seat_front_right">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/base_link_seat_front_right.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.40 0.42 0.44 1</ambient>
+          <diffuse>0.40 0.42 0.44 1</diffuse>
+        </material>
+      </visual>
+      <visual name="seat_rear_right">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/base_link_seat_rear_right.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.40 0.42 0.44 1</ambient>
+          <diffuse>0.40 0.42 0.44 1</diffuse>
+        </material>
+      </visual>
+    </link>
+    <link name="drive_front_left">
+      <pose>0.450 0.275 0.050 0 0 0</pose>
+      <inertial>
+        <pose>0 0.04 0 0 0 0</pose>
+        <mass>2.5</mass>
+        <inertia>
+          <ixx>0.012</ixx>
+          <iyy>0.02</iyy>
+          <izz>0.012</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="tire">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/drive_left_tire.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.50 0.23 0.09 1</ambient>
+          <diffuse>0.50 0.23 0.09 1</diffuse>
+        </material>
+      </visual>
+      <visual name="hub">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/drive_left_hub.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.10 0.11 0.12 1</ambient>
+          <diffuse>0.10 0.11 0.12 1</diffuse>
+        </material>
+      </visual>
+      <collision name="tire_simple"><pose>0 0.0295 0 1.57079633 0 0</pose><geometry><cylinder><radius>0.124</radius><length>0.109</length></cylinder></geometry></collision></link>
+    <joint name="drive_front_left_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>drive_front_left</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e16</lower>
+          <upper>1e16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.04</damping>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="drive_front_right">
+      <pose>0.450 -0.275 0.050 0 0 0</pose>
+      <inertial>
+        <pose>0 -0.04 0 0 0 0</pose>
+        <mass>2.5</mass>
+        <inertia>
+          <ixx>0.012</ixx>
+          <iyy>0.02</iyy>
+          <izz>0.012</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="tire">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/drive_right_tire.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.50 0.23 0.09 1</ambient>
+          <diffuse>0.50 0.23 0.09 1</diffuse>
+        </material>
+      </visual>
+      <visual name="hub">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/drive_right_hub.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.10 0.11 0.12 1</ambient>
+          <diffuse>0.10 0.11 0.12 1</diffuse>
+        </material>
+      </visual>
+      <collision name="tire_simple"><pose>0 -0.0295 0 1.57079633 0 0</pose><geometry><cylinder><radius>0.124</radius><length>0.109</length></cylinder></geometry></collision></link>
+    <joint name="drive_front_right_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>drive_front_right</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e16</lower>
+          <upper>1e16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.04</damping>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="drive_rear_left">
+      <pose>-0.450 0.275 0.050 0 0 0</pose>
+      <inertial>
+        <pose>0 0.04 0 0 0 0</pose>
+        <mass>2.5</mass>
+        <inertia>
+          <ixx>0.012</ixx>
+          <iyy>0.02</iyy>
+          <izz>0.012</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="tire">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/drive_left_tire.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.50 0.23 0.09 1</ambient>
+          <diffuse>0.50 0.23 0.09 1</diffuse>
+        </material>
+      </visual>
+      <visual name="hub">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/drive_left_hub.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.10 0.11 0.12 1</ambient>
+          <diffuse>0.10 0.11 0.12 1</diffuse>
+        </material>
+      </visual>
+      <collision name="tire_simple"><pose>0 0.0295 0 1.57079633 0 0</pose><geometry><cylinder><radius>0.124</radius><length>0.109</length></cylinder></geometry></collision></link>
+    <joint name="drive_rear_left_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>drive_rear_left</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e16</lower>
+          <upper>1e16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.04</damping>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="drive_rear_right">
+      <pose>-0.450 -0.275 0.050 0 0 0</pose>
+      <inertial>
+        <pose>0 -0.04 0 0 0 0</pose>
+        <mass>2.5</mass>
+        <inertia>
+          <ixx>0.012</ixx>
+          <iyy>0.02</iyy>
+          <izz>0.012</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="tire">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/drive_right_tire.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.50 0.23 0.09 1</ambient>
+          <diffuse>0.50 0.23 0.09 1</diffuse>
+        </material>
+      </visual>
+      <visual name="hub">
+        <geometry>
+          <mesh>
+            <uri>model://picker_chassis_4wd/meshes/drive_right_hub.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.10 0.11 0.12 1</ambient>
+          <diffuse>0.10 0.11 0.12 1</diffuse>
+        </material>
+      </visual>
+      <collision name="tire_simple"><pose>0 -0.0295 0 1.57079633 0 0</pose><geometry><cylinder><radius>0.124</radius><length>0.109</length></cylinder></geometry></collision></link>
+    <joint name="drive_rear_right_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>drive_rear_right</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e16</lower>
+          <upper>1e16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.04</damping>
+        </dynamics>
+      </axis>
+    </joint>
+    <plugin name="picker_4wd_diff_drive" filename="libgazebo_ros_diff_drive.so">
+      <ros>
+        <namespace>/picker_test</namespace>
+      </ros>
+      <update_rate>100</update_rate>
+      <num_wheel_pairs>2</num_wheel_pairs>
+      <left_joint>drive_front_left_joint</left_joint>
+      <right_joint>drive_front_right_joint</right_joint>
+      <wheel_separation>0.55</wheel_separation>
+      <left_joint>drive_rear_left_joint</left_joint>
+      <right_joint>drive_rear_right_joint</right_joint>
+      <wheel_separation>0.55</wheel_separation>
+      <wheel_diameter>0.248</wheel_diameter>
+      <wheel_diameter>0.248</wheel_diameter>
+      <max_wheel_torque>40</max_wheel_torque>
+      <max_wheel_acceleration>1.0</max_wheel_acceleration>
+      <command_topic>cmd_vel</command_topic>
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>true</publish_wheel_tf>
+      <odometry_topic>odom</odometry_topic>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+    </plugin>
+    <plugin name="picker_4wd_joint_states" filename="libgazebo_ros_joint_state_publisher.so">
+      <ros>
+        <namespace>/picker_test</namespace>
+      </ros>
+      <update_rate>100</update_rate>
+      <joint_name>drive_front_left_joint</joint_name>
+      <joint_name>drive_front_right_joint</joint_name>
+      <joint_name>drive_rear_left_joint</joint_name>
+      <joint_name>drive_rear_right_joint</joint_name>
+    </plugin>
+  </model>
+</sdf>
